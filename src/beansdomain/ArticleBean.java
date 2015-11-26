@@ -7,6 +7,9 @@ import daodto.ArticleDAO;
 import daodto.ArticleDTO;
 import daodto.ImageDTO;
 
+
+
+
 public class ArticleBean {
 	private int article_id;
 	private String title;
