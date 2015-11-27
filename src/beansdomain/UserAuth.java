@@ -38,7 +38,7 @@ public class UserAuth {
 		this.userDTO.setModified(this.modified);
 	}
 
-	/**
+/**
 	 * ユーザのログイン。Set:user_name, password
 	 *
 	 * @throws Exception
@@ -46,13 +46,14 @@ public class UserAuth {
 	public boolean loginUserName(String user_name, String password) throws Exception {
 
 		boolean login_flag = false;
+		String hash_pass = null;
 		this.userDAO = new UserDAO();
-		this.password = ToSHA2.getDigest(user_name + password);
-		System.out.println(password);
+		hash_pass = ToSHA2.getDigest(user_name + password);
+
 		setUserDTO();
 
 		// 戻り値のユーザDTOのニックネームがNullであればログイン失敗
-		if (userDAO.login(userDTO.getUser_name(), userDTO.getPassword())
+		if (userDAO.login(user_name, hash_pass)
 				.getNickname() == null) {
 
 		} else {
