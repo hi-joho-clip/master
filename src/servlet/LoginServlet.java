@@ -21,8 +21,6 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated constructor stub
 	}
 
-
-
 	@Override
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -32,36 +30,59 @@ public class LoginServlet extends HttpServlet {
 
 	private void perform(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String inputid = request.getParameter("user_name");
-		String inputmailaddress = request.getParameter("mailaddress");
-		String inputpassword = request.getParameter("password");
+		/*String inputid = request.getParameter("user_name");
+		String inputmailaddress = request.getParameter("mailaddress");*/
+
+		String inputid = request.getParameter("id");
+		String inputpass = request.getParameter("password");
 
 		UserAuth userauth = new UserAuth();
 		User userbeans = null;
 		int user_id = -1;
-
+		boolean hantei = false;
 
 		if(inputid != null){
 			if(inputid.matches(".*@.*")){      //メールアドレスの場合
-
-
-
-			}else{                             //ユーザIDの場合
 				try {
-					user_id = Integer.parseInt(inputid);
+					hantei = userauth.loginMailaddress(inputid, inputpass);
+					user_id = userauth.getUser_id();
 					userbeans = new User(user_id);
 				} catch (Exception e) {
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
 				}
-				if(userauth.login()){         //ログイン成功
+				if(hantei){         //ログイン成功
 					//ユーザ情報を格納するセッションを生成
 					HttpSession sessionuser = request.getSession(true);
 					//そのセッションに従業員情報のオブジェクトを格納
 					sessionuser.setAttribute("User", userbeans);
 
 					//ログイン後の宛先
-					request.getRequestDispatcher("/.jsp").forward(request, response);
+					/*request.getRequestDispatcher("/MyListServlet").forward(request, response);*/
+					request.getRequestDispatcher("/test.jsp").forward(request, response);
+				}else{
+					//パスワードが一致しなかったので再入力させる。
+					request.getRequestDispatcher("/login.jsp").forward(request, response);
+				}
+
+			}else{                             //ユーザ名の場合
+				try {
+					hantei = userauth.loginUserName(inputid,inputpass);
+					user_id = userauth.getUser_id();
+					userbeans = new User(user_id);
+				} catch (Exception e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+				if(hantei){         //ログイン成功
+					//ユーザ情報を格納するセッションを生成
+					HttpSession sessionuser = request.getSession(true);
+					//そのセッションに従業員情報のオブジェクトを格納
+					sessionuser.setAttribute("User", userbeans);
+
+					//ログイン後の宛先
+					/*request.getRequestDispatcher("/MyListServlet").forward(request, response);*/
+					request.getRequestDispatcher("/test.jsp").forward(request, response);
 				}else{
 					//パスワードが一致しなかったので再入力させる。
 					request.getRequestDispatcher("/login.jsp").forward(request, response);

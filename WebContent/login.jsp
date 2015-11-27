@@ -6,13 +6,13 @@
 ログイン<br>
 <form method="post" action="login">
 <p>
-ユーザID OR メールアドレス:<input type="text" name="id">
+ユーザ名 OR メールアドレス:<input type="text" name="id">
 </p>
 <p>
 パスワード:<input type="password" name="password">
 </p>
 <p>
-<input type="submit" value="ログイン" >GORI
+<input type="submit" value="ログイン" >
 </p>
 </form>
 
