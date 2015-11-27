@@ -5,17 +5,30 @@
 <title>キャッシュ有効</title>
 </head>
 <body>
-
-
-<p> Ajaxのテスト
 <script type="text/javascript" src="js/jquery/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="js/test_ajax.js"></script>
+<script type="text/javascript" src="js/lib/kagedb.js"></script>
+
+<p> Ajaxのテスト
+
 
 <input type="button" onclick="javascript:getFriendList()" name ="search" value="検索"><br />
 
 <br />
 
+<p>ローカル参照のテスト
+<input type="button" onclick="javascript:getIndexedDB()" name="DBFriend" value="ローカル検索"><br />
+
+<br />
+
+<p>IndexedDB可能テスト</p>
+<input type="button" onclick="javascript:checkAvailable()" name ="search" value="確認"><br />
+
+
+
 <div id="friendList" style="width:500px"></div>
+
+
 
 </body>
 </html>
