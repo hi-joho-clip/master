@@ -41,11 +41,11 @@ public class ArticleServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(true);
 		String inputbutton = request.getParameter("button");
-		if(セッション情報があるなら){
+		/*if(セッション情報があるなら){
 			//何もしない
 		}else if(セッション情報がないなら){
 			//ログイン画面に戻る
-		}
+		}*/
 
 		//一覧表示、記事表示、追加、削除、付与
 
