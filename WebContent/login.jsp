@@ -12,7 +12,7 @@
 パスワード:<input type="password" name="password">
 </p>
 <p>
-<input type="submit" value="ログイン" >
+<input type="submit" value="ログイン" >GORI
 </p>
 </form>
 
