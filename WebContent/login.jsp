@@ -4,7 +4,7 @@
 <head><title>ログイン</title></head>
 <body>
 ログイン<br>
-<form method="post" action="LoginServlet">
+<form method="post" action="login">
 <p>
 ユーザID OR メールアドレス:<input type="text" name="id">
 </p>

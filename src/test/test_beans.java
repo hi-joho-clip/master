@@ -10,7 +10,7 @@ public class test_beans {
 	public static void main(String[] args) {
 		// TODO 自動生成されたメソッド・スタブ
 
-		test_addUser();
+		//test_addUser();
 
 		//test_updateUser_username(25, "nagao");
 

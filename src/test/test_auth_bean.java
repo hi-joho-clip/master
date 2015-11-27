@@ -18,9 +18,7 @@ public class test_auth_bean {
 		try {
 			UserAuth authuserBean = new UserAuth();
 
-			authuserBean.setUser_name("gori");
-			authuserBean.setPassword("password");
-			System.out.println(authuserBean.login());
+			System.out.println(authuserBean.loginMailaddress("2133@gmail.com", "password"));
 
 
 

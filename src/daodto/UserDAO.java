@@ -312,6 +312,81 @@ public class UserDAO {
 
 	}
 
+
+	/**
+	 * メールアドレスから1件のユーザ情報を取得
+	 * @param user_id
+	 * @return
+	 * @throws Exception
+	 */
+	public UserDTO viewMail(String mailaddress) throws Exception {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		UserDTO userDTO = new UserDTO();
+		String sql = "select * from users where mailaddress  = ?";
+
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, mailaddress);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				userDTO.setUser_id(rs.getInt("user_id"));
+				userDTO.setUser_name(rs.getString("user_name"));
+				userDTO.setNickname(rs.getString("nickname"));
+				userDTO.setPassword(rs.getString("password"));
+				userDTO.setMailaddress(rs.getString("mailaddress"));
+				userDTO.setFriend_flag(rs.getInt("friend_flag"));
+				userDTO.setCreated(DateEncode.toDate(rs.getString("created")));
+				userDTO.setModified(DateEncode.toDate(rs.getString("modified")));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception();
+		} finally {
+			pstmt.close();
+		}
+		return userDTO;
+
+	}
+
+	/**
+	 * ユーザ名とパスワードから検索
+	 * @param user_name
+	 * @param password
+	 * @return
+	 * @throws Exception
+	 */
+	public UserDTO loginMail(String mailaddress, String password) throws Exception {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		UserDTO userDTO = new UserDTO();
+		String sql = "select * from users where mailaddress = ? and password = ?";
+
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, mailaddress);
+			pstmt.setString(2, password);
+			System.out.println(pstmt);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				userDTO.setUser_id(rs.getInt("user_id"));
+				userDTO.setUser_name(rs.getString("user_name"));
+				userDTO.setNickname(rs.getString("nickname"));
+				userDTO.setPassword(rs.getString("password"));
+				userDTO.setMailaddress(rs.getString("mailaddress"));
+				userDTO.setFriend_flag(rs.getInt("friend_flag"));
+				userDTO.setCreated(DateEncode.toDate(rs.getString("created")));
+				userDTO.setModified(DateEncode.toDate(rs.getString("modified")));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception();
+		} finally {
+			pstmt.close();
+		}
+		return userDTO;
+	}
+
 	/**
 	 * ユーザ名とパスワードから検索
 	 * @param user_name
