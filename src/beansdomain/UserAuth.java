@@ -19,14 +19,12 @@ public class UserAuth {
 	private Date created;
 	private Date modified;
 
-
 	private HashMap<String, String> ErrorMessages = new HashMap<String, String>();
 
 	private UserDAO userDAO;
 	private UserDTO userDTO;
 
 	private ArrayList<UserDTO> userlists = new ArrayList<UserDTO>();
-
 
 	public void setUserDTO() {
 		this.userDTO = new UserDTO();
@@ -40,21 +38,22 @@ public class UserAuth {
 		this.userDTO.setModified(this.modified);
 	}
 
-
 	/**
 	 * ユーザのログイン。Set:user_name, password
+	 *
 	 * @throws Exception
 	 */
-	public boolean login() throws Exception {
+	public boolean loginUserName(String user_name, String password) throws Exception {
 
 		boolean login_flag = false;
 		this.userDAO = new UserDAO();
-		this.password = ToSHA2.getDigest(this.user_name + this.password);
-		System.out.println(this.password);
+		this.password = ToSHA2.getDigest(user_name + password);
+		System.out.println(password);
 		setUserDTO();
 
 		// 戻り値のユーザDTOのニックネームがNullであればログイン失敗
-		if (userDAO.login(userDTO.getUser_name(), userDTO.getPassword()).getNickname() == null) {
+		if (userDAO.login(userDTO.getUser_name(), userDTO.getPassword())
+				.getNickname() == null) {
 
 		} else {
 			login_flag = true;
@@ -64,6 +63,42 @@ public class UserAuth {
 
 	}
 
+	/**
+	 * ユーザのログイン。Set:user_name, password
+	 *
+	 * @throws Exception
+	 */
+	public boolean loginMailaddress(String mailaddress, String password)
+			throws Exception {
+
+		boolean login_flag = false;
+		this.userDAO = new UserDAO();
+		this.userDTO = userDAO.viewMail(mailaddress);
+		String user_name = this.userDTO.getUser_name();
+		String hash_pass = null;
+
+		if (user_name == null) {
+			return login_flag;
+		}
+
+		this.user_name = user_name;
+		hash_pass = (ToSHA2.getDigest(user_name
+				+ password));
+		this.mailaddress = mailaddress;
+		System.out.println("1:" + this.userDTO.getPassword());
+		setUserDTO();
+
+
+		// 戻り値のユーザDTOのニックネームがNullであればログイン失敗
+		if (userDAO.loginMail(mailaddress, hash_pass).getNickname() == null) {
+
+		} else {
+			login_flag = true;
+		}
+
+		return login_flag;
+
+	}
 
 	public int getUser_id() {
 		return user_id;
@@ -152,8 +187,5 @@ public class UserAuth {
 	public void setUserDTO(UserDTO userDTO) {
 		this.userDTO = userDTO;
 	}
-
-
-
 
 }
