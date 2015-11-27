@@ -310,8 +310,4 @@ public class ArticleBean {
 		this.blob_image = blob_image;
 	}
 
-	/*
-	 * テストアップデート
-	 */
-
 }
