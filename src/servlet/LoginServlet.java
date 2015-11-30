@@ -30,10 +30,7 @@ public class LoginServlet extends HttpServlet {
 
 	private void perform(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		/*String inputid = request.getParameter("user_name");
-		String inputmailaddress = request.getParameter("mailaddress");*/
-
-		String inputid = request.getParameter("id");
+		String inputid = request.getParameter("mail_or_name");
 		String inputpass = request.getParameter("password");
 
 		UserAuth userauth = new UserAuth();
@@ -47,6 +44,7 @@ public class LoginServlet extends HttpServlet {
 					hantei = userauth.loginMailaddress(inputid, inputpass);
 					user_id = userauth.getUser_id();
 					userbeans = new User(user_id);
+					System.out.println("メールアドレス入力された"  +  inputid);
 				} catch (Exception e) {
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
@@ -59,10 +57,11 @@ public class LoginServlet extends HttpServlet {
 
 					//ログイン後の宛先
 					/*request.getRequestDispatcher("/MyListServlet").forward(request, response);*/
-					request.getRequestDispatcher("/test.jsp").forward(request, response);
+					request.getRequestDispatcher("login/Articletest.html").forward(request, response);
 				}else{
 					//パスワードが一致しなかったので再入力させる。
-					request.getRequestDispatcher("/login.jsp").forward(request, response);
+					request.getRequestDispatcher("login/Login.html").forward(request, response);
+					System.out.println("記入ミス(メール)"  +  inputpass);
 				}
 
 			}else{                             //ユーザ名の場合
@@ -70,6 +69,7 @@ public class LoginServlet extends HttpServlet {
 					hantei = userauth.loginUserName(inputid,inputpass);
 					user_id = userauth.getUser_id();
 					userbeans = new User(user_id);
+					System.out.println("ユーザ名入力された"  +  inputid);
 				} catch (Exception e) {
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
@@ -82,15 +82,16 @@ public class LoginServlet extends HttpServlet {
 
 					//ログイン後の宛先
 					/*request.getRequestDispatcher("/MyListServlet").forward(request, response);*/
-					request.getRequestDispatcher("/test.jsp").forward(request, response);
+					request.getRequestDispatcher("login/Articletest.html").forward(request, response);
 				}else{
 					//パスワードが一致しなかったので再入力させる。
-					request.getRequestDispatcher("/login.jsp").forward(request, response);
+					request.getRequestDispatcher("login/Login.html").forward(request, response);
+					System.out.println("記入ミス(ユーザ)"  +  inputpass);
 				}
 			}
 		}else{
 			//IDが入力されなかったので再入力させる。
-			request.getRequestDispatcher("/login.jsp").forward(request, response);
+			request.getRequestDispatcher("login/Login.html").forward(request, response);
 		}
 
 	}
