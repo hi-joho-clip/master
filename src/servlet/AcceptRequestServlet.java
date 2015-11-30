@@ -26,10 +26,13 @@ public class AcceptRequestServlet extends HttpServlet {
 	private void perform(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession(true);
+		Friend friendbeans = new Friend();
+		
+		
+		
 		int own_user_id = Integer.parseInt(request.getParameter("own_user_id"));
 		int friend_user_id = Integer.parseInt(request.getParameter("friend_user_id"));
 
-		Friend friendbeans = new Friend();
 
 		try {
 			friendbeans.acceptRequest(own_user_id, friend_user_id);

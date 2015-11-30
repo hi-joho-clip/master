@@ -29,11 +29,12 @@ public class SearchFriendServlet extends HttpServlet {
 	private void perform(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession(true);
-		int own_user_id = Integer.parseInt(request.getParameter("own_user_id"));
-		String str = request.getParameter("str");
-
 		Friend friendbeans = new Friend();
 		ArrayList<User> friend_list = new ArrayList<User>();
+
+		friendbeans = (Friend)session.getAttribute("");
+		int own_user_id = friendbeans.getOwn_user_id();
+		String str = request.getParameter("str");
 
 		try {
 			friend_list = friendbeans.searchFriend(own_user_id, str);
