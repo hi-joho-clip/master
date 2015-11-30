@@ -59,19 +59,21 @@ public class TagDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public void update(TagDTO tag) throws Exception {
+	public boolean update(TagDTO tag) throws Exception {
 		PreparedStatement pstmt = null;
+		boolean flag = false;
 		String sql = "UPDATE tags SET tag_body = ?,modified = now() WHERE tag_id = ?";
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, tag.getTag_body());
 			pstmt.setInt(2, tag.getTag_id());
 			pstmt.executeUpdate();
+			flag = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
 		}
-		return;
+		return flag;
 	}
 
 	/**
@@ -80,18 +82,20 @@ public class TagDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public void delete(int tag_id) throws Exception {
+	public boolean delete(int tag_id) throws Exception {
 		PreparedStatement pstmt = null;
+		boolean flag = false;
 		String sql = "DELETE FROM tags WHERE tag_id =?";
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, tag_id);
 			pstmt.executeUpdate();
+			flag = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
 		}
-		return;
+		return flag;
 	}
 
 	/**
