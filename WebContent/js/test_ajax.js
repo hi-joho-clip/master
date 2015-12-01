@@ -3,7 +3,7 @@
 function getFriendList() {
 	var xmlResult = new XMLHttpRequest();
 	var jsonParam = "user_id=2";
-	var xmlURL = "http://localhost:8080/clipdb/ajax_test";
+	var xmlURL = "http://localhost:8080/clipMaster/ajax_test";
 
 	xmlResult.open("POST", xmlURL, true);
 	xmlResult.responseText = "json";
@@ -34,6 +34,6 @@ function getFriendList() {
 
 }
 
-$('button').click(function() {
-	getFriendList();
-});
+//$('button').click(function() {
+//	getFriendList();
+//});
