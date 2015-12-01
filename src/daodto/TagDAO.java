@@ -116,6 +116,7 @@ public class TagDAO {
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				TagDTO tag = new TagDTO();
+				tag.setTag_id(rs.getInt("tag_id"));
 				tag.setTag_body(rs.getString("tag_body"));
 				tag.setLastest(rs.getDate("lastest"));
 				tagList.add(tag);
