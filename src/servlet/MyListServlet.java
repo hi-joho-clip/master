@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -10,12 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.arnx.jsonic.JSON;
+
 import beansdomain.ArticleBean;
 
 /**
  * Servlet implementation class MylistServlet
  */
-@WebServlet("/MyListServlet")
+@WebServlet("/mylist")
 public class MyListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -32,6 +35,7 @@ public class MyListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		perform(request, response);
 	}
 
 	/**
@@ -39,7 +43,11 @@ public class MyListServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		perform(request, response);
+	}
+	protected void perform(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(true);
+		System.out.println("来ている"+request.getParameter("user_id"));
 		/*if(セッション情報があるなら){
 			//何もしない
 		}else if(セッション情報がないなら){
@@ -49,17 +57,19 @@ public class MyListServlet extends HttpServlet {
 		*サイドメニューのマイリストを押したとき*
 		****************************************/
 		//記事一覧表示
-		int user_id =0;//sessionからuser_idを取得
+		int user_id =1;//sessionからuser_idを取得
 		ArticleBean articlebean = new ArticleBean();
 		ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
 		try {
 			article_list=articlebean.viewArticleList(user_id);
-			session.setAttribute("articlelist", article_list);
-			request.getRequestDispatcher("/").forward(request, response);//リンク先で値をGETして記事一覧表示
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
+		response.setContentType("application/json;charset=UTF-8");
+		response.setHeader("Cache-Control", "private");
+		PrintWriter out = response.getWriter();
+		out.println(JSON.encode(article_list, true).toString());
 	}
 
 }
