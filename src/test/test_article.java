@@ -12,15 +12,15 @@ public class test_article {
 	public static void main(String[] args) {
 
 		//test_add(1);//記事の追加○
-		test_delete(21);//記事の削除○
+		//test_delete(21);//記事の削除○
 		//test_view_article_list(1);//記事一覧表示○
 		//test_view_fav_list(1);//お気に入りの記事一覧表示○
 		//test_tag_fav_list(1);//タグ内でお気に入りした記事一覧○
 		//test_update_article(1);//記事の更新○
 		//test_add_fav_article(1,1);//記事にお気に入りとして追加○
 		//test_fav_delete(1,1);//お気に入りの解除○
-		//test_share_add("http://share",2);//記事にシェアURLを追加○
-		//test_share_delete(1);//シェア記事の削除○
+		//test_share_add("http://sharesan",16);//記事にシェアURLを追加○
+		//test_share_delete(18);//シェア記事の削除○
 		//test_share_article_list(25,18);//シェアしている記事一覧表示○
 		//test_add_tag(21,1);//記事にタグを追加○
 		//test_tag_search(1)//特定のタグの記事一覧表示○
