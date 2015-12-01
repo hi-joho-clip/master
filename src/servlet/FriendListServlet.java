@@ -9,7 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.arnx.jsonic.JSON;
 
@@ -35,13 +34,12 @@ public class FriendListServlet extends HttpServlet {
 
 	private void perform(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		HttpSession session = request.getSession(true);
 		Friend friendbeans = new Friend();
 		ArrayList<Friend> friend_list = new ArrayList<Friend>();
 
 
 		//セッション情報の名前は変更する必要あり
-		int own_user_id = own_user_id= 2;
+		int own_user_id = 2;
 		//Integer.parseInt(request.getParameter("user_id"));
 
 
@@ -57,7 +55,6 @@ public class FriendListServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		out.println(JSON.encode(friend_list, true).toString());
-		//フレンド一覧するページへ
 
 	}
 }
