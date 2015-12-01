@@ -52,9 +52,9 @@ public class AddArticleServlet extends HttpServlet {
 		****************************************/
 		//記事の追加
 		int user_id =0;//sessionからuser_idを取得
-		String title = request.getParameter("title");//JSON
-		String body = request.getParameter("body");//JSON
-		String url = request.getParameter("url");//JSON
+		String title = request.getParameter("article_json.article.title");//JSON
+		String body = request.getParameter("article_json.article.body");//JSON
+		String url = request.getParameter("article_json.article.url");//JSON
 		ArticleBean articlebean = new ArticleBean();
 		ArrayList<String> uri_list = new ArrayList<String>();
 		ArrayList<byte[]> image_list = new ArrayList<byte[]>();
@@ -83,9 +83,12 @@ public class AddArticleServlet extends HttpServlet {
 			articlebean.setBlob_image(image_list.get(i));
 			image.add(articlebean.getImageDTO());
 		}
-
 		try {
-			articlebean.addArticle(user_id,image);
+			if(articlebean.addArticle(user_id,image)){
+				//成功したポップアップを表示
+			}else{
+				//失敗したポップアップを表示
+			}
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();

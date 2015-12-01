@@ -21,19 +21,19 @@ public class TagBean {
 	 * @return
 	 * @throws Exception
 	 */
-	public void addTag() throws Exception{
+	public boolean addTag() throws Exception{
 		this.tagDAO = new TagDAO();
 		setTagDTO();
-		this.tagDAO.add(this.tagDTO);
+		return this.tagDAO.add(this.tagDTO);
 	}
 	/**
 	 * タグの削除
 	 * @return
 	 * @throws Exception
 	 */
-	public void deleteTag(int tag_id) throws Exception{
+	public boolean deleteTag(int tag_id) throws Exception{
 		this.tagDAO = new TagDAO();
-		this.tagDAO.delete(tag_id);
+		return this.tagDAO.delete(tag_id);
 
 	}
 	/**
@@ -44,9 +44,7 @@ public class TagBean {
 	public boolean updateTag() throws Exception{
 		this.tagDAO = new TagDAO();
 		setTagDTO();
-		this.tagDAO.update(this.tagDTO);
-
-		return false;
+		return this.tagDAO.update(this.tagDTO);
 	}
 	/**
 	 * タグの一覧表示
