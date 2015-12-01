@@ -57,6 +57,7 @@ public class TagBean {
 		taglists = tagDAO.lists(user_id);
 		for(int i=0; i< taglists.size(); i++){
 			TagBean tagBean = new TagBean();
+			tagBean.setTag_id(taglists.get(i).getTag_id());
 			tagBean.setTag_body(taglists.get(i).getTag_body());
 			tagBean.setLastest(taglists.get(i).getLastest());
 			tagList.add(tagBean);

@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -10,12 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.arnx.jsonic.JSON;
+
 import beansdomain.ArticleBean;
 
 /**
  * Servlet implementation class TagArticleListServlet
  */
-@WebServlet("/TagArticleListServlet")
+@WebServlet("/tagarticlelist")
 public class TagArticleListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -32,6 +35,7 @@ public class TagArticleListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		perform(request, response);
 	}
 
 	/**
@@ -39,6 +43,9 @@ public class TagArticleListServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		perform(request, response);
+	}
+	protected void perform(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(true);
 		/*if(セッション情報があるなら){
 			//何もしない
@@ -50,18 +57,19 @@ public class TagArticleListServlet extends HttpServlet {
 		****************************************/
 		//特定のタグの記事一覧表示
 		ArrayList<String> tag_body_list = new ArrayList<String>();
-		int user_id =0;//sessionからuser_idを取得
+		int user_id =1;//sessionからuser_idを取得
 		tag_body_list = null; //クライアントからタグリストをもらう
-		//タグ内でお気に入りした記事一覧
+		ArticleBean articlebean = new ArticleBean();
+		ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
 		try {
-			ArticleBean articlebean = new ArticleBean();
-			ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
 			article_list=articlebean.viewTag(tag_body_list,user_id);
-			session.setAttribute("articlelist", article_list);
-			request.getRequestDispatcher("/").forward(request, response);//リンク先で値をGETして記事一覧表示
 		} catch (Exception e) {
 			e.getStackTrace();
 		}
+		response.setContentType("application/json;charset=UTF-8");
+		response.setHeader("Cache-Control", "private");
+		PrintWriter out = response.getWriter();
+		out.println(JSON.encode(article_list, true).toString());
 	}
 
 }
