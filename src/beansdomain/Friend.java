@@ -118,36 +118,55 @@ public class Friend {
 
 	}
 
-	public void acceptRequest(int own_user_id , int friend_user_id) throws Exception {
+	public boolean addRequest(int own_user_id , int friend_user_id) throws Exception {
+
+		boolean flag = false;
 
 		this.friendDAO = new FriendDAO();
-		this.friendDAO.acceptRequest(own_user_id, friend_user_id);
+		flag = this.friendDAO.addRequest(own_user_id, friend_user_id);
 
-
+		return flag;
 	}
 
-	public void denyRequest(int own_user_id , int friend_user_id) throws Exception {
+
+	public boolean acceptRequest(int own_user_id , int friend_user_id) throws Exception {
+
+		boolean flag = false;
 
 		this.friendDAO = new FriendDAO();
-		this.friendDAO.denyRequest(own_user_id, friend_user_id);
+		flag = this.friendDAO.acceptRequest(own_user_id, friend_user_id);
 
-
+		return flag;
 	}
 
-	public void deleteRequest(int own_user_id , int friend_user_id) throws Exception {
+	public boolean denyRequest(int own_user_id , int friend_user_id) throws Exception {
+
+		boolean flag = false;
 
 		this.friendDAO = new FriendDAO();
-		this.friendDAO.deleteRequest(own_user_id, friend_user_id);
+		flag = this.friendDAO.denyRequest(own_user_id, friend_user_id);
 
-
+		return flag;
 	}
 
-	public void deleteFriend(int own_user_id , int friend_user_id) throws Exception {
+	public boolean deleteRequest(int own_user_id , int friend_user_id) throws Exception {
+
+		boolean flag = false;
+
+		this.friendDAO = new FriendDAO();
+		flag = this.friendDAO.deleteRequest(own_user_id, friend_user_id);
+
+		return flag;
+	}
+
+	public boolean deleteFriend(int own_user_id , int friend_user_id) throws Exception {
+
+		boolean flag = false;
 
 		this.friendDAO = new FriendDAO();
 		this.friendDAO.deleteFriend(own_user_id, friend_user_id);
 
-
+		return flag;
 	}
 
 

@@ -217,14 +217,19 @@ public class FriendDAO {
 				"or friend_user_id = ? and own_user_id = ?";
 
 		boolean flag = false;
+		int count = 0;
+
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, own_user_id);
 			pstmt.setInt(2, friend_user_id);
 			pstmt.setInt(3, own_user_id);
 			pstmt.setInt(4, friend_user_id);
-			pstmt.executeUpdate();
-			flag = true;
+			count = pstmt.executeUpdate();
+
+			if(count != 0){
+				flag = true;
+			}
 
 		} catch (Exception e) {
 			e.getStackTrace();

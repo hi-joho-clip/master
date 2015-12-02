@@ -42,7 +42,8 @@ public class ajax_test extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		String user_id = req.getParameter("user_id");
+		String user_id = "2";
+		user_id = req.getParameter("user_id");
 
 		System.out.println(user_id);
 

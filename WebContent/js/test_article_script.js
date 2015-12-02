@@ -1,0 +1,164 @@
+
+//ひとつの記事にarticleはひとつ。ひとつの記事にarticle_imageの中身は複数存在する
+var article_json = {
+		"article": [
+					{ "title":"テストの冒険1" , "body":"TESTが死んだ","url":"http://test1.com"}
+				],
+		"article_image": [
+	        		{ "image":"image01(binary)","uri":"1" },
+	        		{ "image":"image02(binary)","uri":"2" },
+	        		{ "image":"image03(binary)","uri":"3" },
+	        		{ "image":"image04(binary)","uri":"4" }
+	        	]
+	};
+
+document.write("<B>title:</B>"+article_json.article[0].title+"<B>body:</B>"+article_json.article[0].body+"<B>url:</B>"+article_json.article[0].url+"<BR>");
+document.write("<B>image:</B>"+article_json.article_image[0].image+"<B>uri:</B>"+article_json.article_image[0].uri+"<BR>");
+
+//マイリスト
+function getMyList(){
+	var xmlResult = new XMLHttpRequest();
+	var jsonParam = null;//送りたいデータ
+	var xmlURL = "http://localhost:8080/clipMaster/mylist";
+
+	xmlResult.open("POST", xmlURL, true);
+	xmlResult.responseText = "json";
+	xmlResult.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	// イベントリスナー
+	//readyState プロパティが変わるごとに自動的に呼ばれる関数(あるいは関数名)を格納する
+	xmlResult.onreadystatechange = checkStatus;
+
+	function checkStatus() {
+		//4: リクエストは終了してレスポンスの準備が完了
+		if (xmlResult.readyState == 4) {
+			var myList = "";
+			var jsonResult = JSON.parse(xmlResult.responseText);
+			for ( var i = 0; i < jsonResult.length ; i++) {
+				myList += "ID:"+jsonResult[i].article_id+"<br>"+"タイトル:" + jsonResult[i].title + "<br>" + "URL:"+jsonResult[i].url+"<br>"+"作成日:"+jsonResult[i].created+"<br><br>";
+			}
+			document.getElementById('myList').innerHTML = myList;
+			xmlResult = null;
+			jsonResult = null;
+		}
+	}
+	xmlResult.send(jsonParam);
+	return true;
+}
+//お気に入り一覧
+function getFavList(){
+	var xmlResult = new XMLHttpRequest();
+	var jsonParam = null;//送りたいデータ
+	var xmlURL = "http://localhost:8080/clipMaster/favlist";
+
+	xmlResult.open("POST", xmlURL, true);
+	xmlResult.responseText = "json";
+	xmlResult.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	// イベントリスナー
+	//readyState プロパティが変わるごとに自動的に呼ばれる関数(あるいは関数名)を格納する
+	xmlResult.onreadystatechange = checkStatus;
+
+	function checkStatus() {
+		//4: リクエストは終了してレスポンスの準備が完了
+		if (xmlResult.readyState == 4) {
+			var favList = "";
+			var jsonResult = JSON.parse(xmlResult.responseText);
+			for ( var i = 0; i < jsonResult.length ; i++) {
+				favList += "ID:"+jsonResult[i].article_id+"<br>"+"タイトル:" + jsonResult[i].title + "<br>" + "URL:"+jsonResult[i].url+"<br>"+"作成日:"+jsonResult[i].created+"<br><br>";
+			}
+			document.getElementById('favList').innerHTML = favList;
+			xmlResult = null;
+			jsonResult = null;
+		}
+	}
+	xmlResult.send(jsonParam);
+	return true;
+}
+//シェア記事一覧
+function getShareList(){
+	var xmlResult = new XMLHttpRequest();
+	var jsonParam = null;//送りたいデータ
+	var xmlURL = "http://localhost:8080/clipMaster/sharelist";
+
+	xmlResult.open("POST", xmlURL, true);
+	xmlResult.responseText = "json";
+	xmlResult.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	// イベントリスナー
+	//readyState プロパティが変わるごとに自動的に呼ばれる関数(あるいは関数名)を格納する
+	xmlResult.onreadystatechange = checkStatus;
+
+	function checkStatus() {
+		//4: リクエストは終了してレスポンスの準備が完了
+		if (xmlResult.readyState == 4) {
+			var shareList = "";
+			var jsonResult = JSON.parse(xmlResult.responseText);
+			for ( var i = 0; i < jsonResult.length ; i++) {
+				shareList += "ID:"+jsonResult[i].article_id+"<br>"+"タイトル:" + jsonResult[i].title + "<br>" + "URL:"+jsonResult[i].url+"<br>"+"作成日:"+jsonResult[i].created+"<br><br>";
+			}
+			document.getElementById('shareList').innerHTML = shareList;
+			xmlResult = null;
+			jsonResult = null;
+		}
+	}
+	xmlResult.send(jsonParam);
+	return true;
+}
+//記事に付与されているタグ一覧
+function getTagArticleList(){
+
+}
+//タグ内お気に入り一覧
+function getTagFavList(){
+
+}
+//タグ一覧
+function getTagList(){
+	var xmlResult = new XMLHttpRequest();
+	var jsonParam = null;//送りたいデータ
+	var xmlURL = "http://localhost:8080/clipMaster/taglist";
+
+	xmlResult.open("POST", xmlURL, true);
+	xmlResult.responseText = "json";
+	xmlResult.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	// イベントリスナー
+	//readyState プロパティが変わるごとに自動的に呼ばれる関数(あるいは関数名)を格納する
+	xmlResult.onreadystatechange = checkStatus;
+
+	function checkStatus() {
+		//4: リクエストは終了してレスポンスの準備が完了
+		if (xmlResult.readyState == 4) {
+			var tagList = "";
+			var jsonResult = JSON.parse(xmlResult.responseText);
+			for ( var i = 0; i < jsonResult.length ; i++) {
+				tagList += "タグID"+jsonResult[i].tag_id+"<br>"+"タグ名:" + jsonResult[i].tag_body + "<br>" + "使用日時:"+ jsonResult[i].lastest +"<br><br>";
+			}
+			document.getElementById('tagList').innerHTML = tagList;
+			xmlResult = null;
+			jsonResult = null;
+		}
+	}
+	xmlResult.send(jsonParam);
+	return true;
+}
+
+$('button').click(function() {
+	switch(button.getAttribute('name')){
+	case 'mylist':
+		getMyList();
+		break;
+	case 'favlist':
+		getFavList();
+		break;
+	case 'sharelist':
+		getShareList();
+		break;
+	case 'tagarticlelist':
+		getTagArticleList();
+		break;
+	case 'tagfavlist':
+		getTagFavList();
+		break;
+	case 'taglist':
+		getTagList();
+		break;
+	}
+});
