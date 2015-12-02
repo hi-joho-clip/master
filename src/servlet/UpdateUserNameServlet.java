@@ -39,9 +39,9 @@ public class UpdateUserNameServlet extends HttpServlet {
 		String ErrorMessage = null;
 
 		//本来では、セッション情報のユーザIDを取得
-		int user_id = 2;
+		int user_id = 3;
 
-		String inputname = request.getParameter("username");
+		String inputname = request.getParameter("newusername");
 		String inputpass = request.getParameter("password");
 
 
@@ -53,6 +53,8 @@ public class UpdateUserNameServlet extends HttpServlet {
 
 		try {
 			userbean = new User(user_id);
+			System.out.println("変更前の名前" + userbean.getUser_name());
+			System.out.println("変更後の名前" + inputname );
 
 			if(inputpass.equals(userbean.getPassword())){
 				userbean.setUser_name(inputname);
@@ -68,7 +70,7 @@ public class UpdateUserNameServlet extends HttpServlet {
 				ErrorMessage = userbean.getErrorMessages().get("user_name");
 			}else {
 
-				ErrorMessage = "無事,ユーザーネームを更新できました。";
+				ErrorMessage = "無事,ユーザーネームを更新することができました。";
 			}
 
 		} catch (Exception e) {
