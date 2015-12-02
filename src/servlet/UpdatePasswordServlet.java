@@ -14,11 +14,11 @@ import net.arnx.jsonic.JSON;
 import beansdomain.User;
 
 
-@WebServlet("/updatemailaddress")
-public class UpdateMailAddressServlet extends HttpServlet {
+@WebServlet("/updatepassword")
+public class UpdatePasswordServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public UpdateMailAddressServlet() {
+    public UpdatePasswordServlet() {
         super();
     }
 
@@ -41,8 +41,8 @@ public class UpdateMailAddressServlet extends HttpServlet {
 		//本来では、セッション情報のユーザIDを取得
 		int user_id = 2;
 
-		String inputmail = request.getParameter("mailaddress");
-		String inputpass = request.getParameter("password");
+		String inputpass = request.getParameter("pass");
+		String newpass = request.getParameter("newpass");
 
 
 		response.setContentType("application/json; charset=utf-8");
@@ -55,21 +55,20 @@ public class UpdateMailAddressServlet extends HttpServlet {
 			userbean = new User(user_id);
 
 			if(inputpass.equals(userbean.getPassword())){
-				userbean.setMailaddress(inputmail);
-				userbean.updateMailaddress();
+				userbean.setPassword(newpass);
+				userbean.updatePassword();
 			}else{
 				//パスワードが一致しなかった処理
 			}
 
 
 			//メッセージ処理
-			if (userbean.getErrorMessages().containsKey("mailaddress")) {
-				//メールアドレスが既に存在していたので  エラーメッセージを出す
-				System.out.println(userbean.getErrorMessages().get("mailaddress"));
-				ErrorMessage = userbean.getErrorMessages().get("mailaddress");
+			if (userbean.getErrorMessages().containsKey("password")) {
+				System.out.println(userbean.getErrorMessages().get("password"));
+				ErrorMessage = userbean.getErrorMessages().get("password");
 			}else {
 
-				ErrorMessage = "無事、メールアドレスを更新できました。";
+				ErrorMessage = "無事,パスワードを更新できました。";
 			}
 
 		} catch (Exception e) {
