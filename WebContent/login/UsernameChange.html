@@ -1,0 +1,33 @@
+
+<link rel="stylesheet" type="text/css" href="css/Login.css">
+
+<div class="form-wrapper">
+
+  <h1>ユーザーネーム変更</h1><br>
+
+  現在のユーザーネーム:*********<br>
+
+  <!--　変更  -->
+  <form  method="post" action="UserData.html">
+    <div class="form-item">
+      <!--　ユーザネーム  -->
+      <label for="newusername"></label>
+      <input type="text" name="newusername" required="required" placeholder="New User Name"></input>
+    </div>
+    <div class="form-item">
+      <!--　パスワード  -->
+      <label for="password"></label>
+      <input type="password" name="password" required="required" placeholder="Password"></input>
+    </div>
+      <!--　変更ボタン  -->
+    <div class="button-panel">
+      <input type="submit" class="button" title="Change" value="Change"></input>
+    </div>
+  </form>
+  <div class="form-footer">
+
+   <!--　戻る  -->
+    <p><a href="UserData.html">BACK</a></p>
+
+  </div>
+</div>

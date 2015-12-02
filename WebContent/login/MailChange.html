@@ -1,0 +1,38 @@
+
+<link rel="stylesheet" type="text/css" href="css/Login.css">
+
+<div class="form-wrapper">
+
+  <h1>メールアドレス変更</h1><br>
+
+  現在のメールアドレス:*********<br>
+
+  <!--　変更  -->
+  <form  method="post" action="UserData.html">
+    <div class="form-item">
+      <!--　メールアドレス  -->
+      <label for="newemail"></label>
+      <input type="email" name="newemail" required="required" placeholder="New Mail Address"></input>
+    </div>
+      <div class="form-item">
+      <!--　メールアドレス（確認）  -->
+      <label for="newemail2"></label>
+      <input type="email" name="newemail2" required="required" placeholder="New Mail Address(確認)"></input>
+    </div>
+    <div class="form-item">
+      <!--　パスワード  -->
+      <label for="password"></label>
+      <input type="password" name="password" required="required" placeholder="Password"></input>
+    </div>
+      <!--　変更ボタン  -->
+    <div class="button-panel">
+      <input type="submit" class="button" title="Change" value="Change"></input>
+    </div>
+  </form>
+  <div class="form-footer">
+
+   <!--　戻る  -->
+    <p><a href="UserData.html">BACK</a></p>
+
+  </div>
+</div>
