@@ -1,0 +1,38 @@
+
+<link rel="stylesheet" type="text/css" href="css/Login.css">
+
+<div class="form-wrapper">
+
+  <h1>パスワード変更</h1><br>
+
+
+
+  <!--　変更  -->
+  <form  method="post" action="UserData.html">
+    <div class="form-item">
+      <!--　新しいパスワード  -->
+      <label for="newpassword"></label>
+      <input type="password" name="newpassword" required="required" placeholder="New Password"></input>
+    </div>
+       <div class="form-item">
+      <!--　新しいパスワード（確認）  -->
+      <label for="newpassword2"></label>
+      <input type="password" name="newpassword2" required="required" placeholder="New Password(確認)"></input>
+    </div>
+       <div class="form-item">
+      <!--　現在のパスワード  -->
+      <label for="password"></label>
+      <input type="password" name="password" required="required" placeholder="Password(現在)"></input>
+    </div>
+      <!--　変更ボタン  -->
+    <div class="button-panel">
+      <input type="submit" class="button" title="Change" value="Change"></input>
+    </div>
+  </form>
+  <div class="form-footer">
+
+   <!--　戻る  -->
+    <p><a href="UserData.html">BACK</a></p>
+
+  </div>
+</div>
