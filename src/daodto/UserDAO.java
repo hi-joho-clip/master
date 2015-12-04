@@ -101,7 +101,7 @@ public class UserDAO {
 	}
 
 	/**
-	 * メールアドレスとパスワードからユーザ名検索
+	 * メールアドレスとユーザ名からパスワード検索
 	 * @param userDTO
 	 * @return 有効：true 無効：false
 	 */

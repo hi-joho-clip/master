@@ -39,7 +39,7 @@ public class AddUserServlet extends HttpServlet {
 		String user_name = request.getParameter("username");
 		String nickname = request.getParameter("nickname");
 		String inputpass = request.getParameter("password"); //パスワードを取得
-		String inputmail = request.getParameter("mailaddress"); //メールアドレス取得
+		String inputmail = request.getParameter("email"); //メールアドレス取得
 
 
 		response.setContentType("application/json; charset=utf-8");
@@ -53,7 +53,6 @@ public class AddUserServlet extends HttpServlet {
 
 
 		try {
-			userbean.addUser();
 
 			if (userbean.getErrorMessages().containsKey("user_name")) {
 				System.out.println(userbean.getErrorMessages().get("user_name"));
@@ -63,13 +62,11 @@ public class AddUserServlet extends HttpServlet {
 				System.out.println(userbean.getErrorMessages().get("mailaddress"));
 				ErrorMessage = userbean.getErrorMessages().get("mailaddress");
 			}
-			if (userbean.getErrorMessages().containsKey("nickname")) {
-				System.out.println(userbean.getErrorMessages().get("nickname"));
-				ErrorMessage = userbean.getErrorMessages().get("nickname");
-			}
 			if(ErrorMessage == null){
+				userbean.addUser();
 				ErrorMessage = "無事新規作成できました。";
 			}
+
 
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
