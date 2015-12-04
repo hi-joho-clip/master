@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.arnx.jsonic.JSON;
 
 import beansdomain.User;
+import beansdomain.UserAuth;
 
 
 @WebServlet("/updatemailaddress")
@@ -36,12 +37,14 @@ public class UpdateMailAddressServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 
 		User userbean = null;
+		UserAuth userauth = new UserAuth();
 		String ErrorMessage = null;
+		boolean hantei = false;
 
 		//本来では、セッション情報のユーザIDを取得
 		int user_id = 2;
 
-		String inputmail = request.getParameter("mailaddress");
+		String inputmail = request.getParameter("newmail");
 		String inputpass = request.getParameter("password");
 
 
@@ -53,9 +56,11 @@ public class UpdateMailAddressServlet extends HttpServlet {
 
 		try {
 			userbean = new User(user_id);
+			hantei = userauth.loginUserName(userbean.getUser_name(), inputpass);
 
-			if(inputpass.equals(userbean.getPassword())){
+			if(hantei){
 				userbean.setMailaddress(inputmail);
+				userbean.setPassword(inputpass);
 				userbean.updateMailaddress();
 			}else{
 				//パスワードが一致しなかった処理
@@ -64,12 +69,12 @@ public class UpdateMailAddressServlet extends HttpServlet {
 
 			//メッセージ処理
 			if (userbean.getErrorMessages().containsKey("mailaddress")) {
-				//メールアドレスが既に存在していたので  エラーメッセージを出す
+				//メールアドレスが既に存在していたのでメッセージを出す
 				System.out.println(userbean.getErrorMessages().get("mailaddress"));
 				ErrorMessage = userbean.getErrorMessages().get("mailaddress");
 			}else {
 
-				ErrorMessage = "無事、メールアドレスを更新できました。";
+				ErrorMessage = "更新できました。";
 			}
 
 		} catch (Exception e) {

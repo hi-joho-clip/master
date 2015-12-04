@@ -50,12 +50,6 @@ public class DeleteUserServlet extends HttpServlet {
 			userbean.deleteUser();
 
 
-			//メッセージを出す処理
-			if (userbean.getErrorMessages().containsKey("user_name")) {
-				System.out.println(userbean.getErrorMessages().get("user_name"));
-				ErrorMessage = userbean.getErrorMessages().get("user_name");
-			}
-
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();

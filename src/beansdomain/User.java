@@ -104,6 +104,19 @@ public class User {
 		return validate_flag;
 
 	}
+	
+	/**
+	 * パスワード検索
+	 */
+	public void searchPassword() throws Exception{
+		this.userDAO = new UserDAO();
+		setUserDTO();
+		userDTO = userDAO.searchPassword(this.user_name , this.mailaddress);
+		
+		
+	}
+	
+	
 
 	/**
 	 * フレンド申請の許可設定

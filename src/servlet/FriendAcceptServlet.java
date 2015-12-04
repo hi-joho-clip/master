@@ -1,11 +1,17 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.arnx.jsonic.JSON;
+
+import beansdomain.User;
 
 @WebServlet("/friendaccept")
 public class FriendAcceptServlet extends HttpServlet {
@@ -29,7 +35,25 @@ public class FriendAcceptServlet extends HttpServlet {
 	private void perform(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
+		User userbean = new User();
 
 
+		//本来では、セッション情報のユーザIDを取得
+		int user_id = 2;
+
+
+		response.setContentType("application/json; charset=utf-8");
+		response.setHeader("Cache-Control", "private");
+		PrintWriter out = response.getWriter();
+
+
+		try {
+			userbean.setUser_id(user_id);
+			userbean.friend_accept();
+		} catch (Exception e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		out.println(JSON.encode("" , true).toString());
 	}
 }

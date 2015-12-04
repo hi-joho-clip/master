@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.arnx.jsonic.JSON;
 
 import beansdomain.User;
+import beansdomain.UserAuth;
 
 
 @WebServlet("/updatepassword")
@@ -36,13 +37,14 @@ public class UpdatePasswordServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 
 		User userbean = null;
-		String ErrorMessage = null;
+		UserAuth userauth = new UserAuth();
+		boolean hantei = false;
 
 		//本来では、セッション情報のユーザIDを取得
 		int user_id = 2;
 
-		String inputpass = request.getParameter("pass");
-		String newpass = request.getParameter("newpass");
+		String inputpass = request.getParameter("password");
+		String newpass = request.getParameter("newpassword");
 
 
 		response.setContentType("application/json; charset=utf-8");
@@ -53,29 +55,20 @@ public class UpdatePasswordServlet extends HttpServlet {
 
 		try {
 			userbean = new User(user_id);
+			hantei = userauth.loginUserName(userbean.getUser_name(), inputpass);
 
-			if(inputpass.equals(userbean.getPassword())){
+			if(hantei){
 				userbean.setPassword(newpass);
 				userbean.updatePassword();
 			}else{
 				//パスワードが一致しなかった処理
 			}
 
-
-			//メッセージ処理
-			if (userbean.getErrorMessages().containsKey("password")) {
-				System.out.println(userbean.getErrorMessages().get("password"));
-				ErrorMessage = userbean.getErrorMessages().get("password");
-			}else {
-
-				ErrorMessage = "無事,パスワードを更新できました。";
-			}
-
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-		out.println(JSON.encode(ErrorMessage , true).toString());
+		out.println(JSON.encode(hantei , true).toString());
 	}
 
 }

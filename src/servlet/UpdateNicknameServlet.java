@@ -38,7 +38,6 @@ public class UpdateNicknameServlet extends HttpServlet {
 
 		User userbean = null;
 		UserAuth userauth = new UserAuth();
-		String ErrorMessage = null;
 		boolean hantei = false;
 
 		//本来では、セッション情報のユーザIDを取得
@@ -66,21 +65,11 @@ public class UpdateNicknameServlet extends HttpServlet {
 				//パスワードが一致しなかった処理
 			}
 
-
-			//メッセージ処理
-			if (userbean.getErrorMessages().containsKey("nickname")) {
-				System.out.println(userbean.getErrorMessages().get("nickname"));
-				ErrorMessage = userbean.getErrorMessages().get("nickname");
-			}else {
-
-				ErrorMessage = "無事,ニックネームを更新できました。";
-			}
-
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-		out.println(JSON.encode(ErrorMessage , true).toString());
+		out.println(JSON.encode(hantei , true).toString());
 	}
 
 }
