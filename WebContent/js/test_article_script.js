@@ -34,7 +34,7 @@ function getMyList(){
 			var myList = "";
 			var jsonResult = JSON.parse(xmlResult.responseText);
 			for ( var i = 0; i < jsonResult.length ; i++) {
-				myList += "ID:"+jsonResult[i].article_id+"<br>"+"タイトル:" + jsonResult[i].title + "<br>" + "URL:"+jsonResult[i].url+"<br>"+"作成日:"+jsonResult[i].created+"<br><br>";
+				myList += "ID:"+jsonResult[i].article_id+"<br>"+"タイトル:" + jsonResult[i].title + "<br>" + "URL:"+jsonResult[i].url+"<br>"+"作成日:"+jsonResult[i].created+"<br>"+"サムネイル："+jsonResult[i].thum+"<br><br>";
 			}
 			document.getElementById('myList').innerHTML = myList;
 			xmlResult = null;
@@ -63,7 +63,7 @@ function getFavList(){
 			var favList = "";
 			var jsonResult = JSON.parse(xmlResult.responseText);
 			for ( var i = 0; i < jsonResult.length ; i++) {
-				favList += "ID:"+jsonResult[i].article_id+"<br>"+"タイトル:" + jsonResult[i].title + "<br>" + "URL:"+jsonResult[i].url+"<br>"+"作成日:"+jsonResult[i].created+"<br><br>";
+				favList += "ID:"+jsonResult[i].article_id+"<br>"+"タイトル:" + jsonResult[i].title + "<br>" + "URL:"+jsonResult[i].url+"<br>"+"作成日:"+jsonResult[i].created+"<br>"+"サムネイル："+jsonResult[i].thum+"<br><br>";
 			}
 			document.getElementById('favList').innerHTML = favList;
 			xmlResult = null;
@@ -92,7 +92,7 @@ function getShareList(){
 			var shareList = "";
 			var jsonResult = JSON.parse(xmlResult.responseText);
 			for ( var i = 0; i < jsonResult.length ; i++) {
-				shareList += "ID:"+jsonResult[i].article_id+"<br>"+"タイトル:" + jsonResult[i].title + "<br>" + "URL:"+jsonResult[i].url+"<br>"+"作成日:"+jsonResult[i].created+"<br><br>";
+				shareList += "ID:"+jsonResult[i].article_id+"<br>"+"タイトル:" + jsonResult[i].title + "<br>" + "URL:"+jsonResult[i].url+"<br>"+"作成日:"+jsonResult[i].created+"<br>"+"サムネイル："+jsonResult[i].thum+"<br><br>";
 			}
 			document.getElementById('shareList').innerHTML = shareList;
 			xmlResult = null;

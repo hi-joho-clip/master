@@ -12,6 +12,7 @@ public class ArticleDTO {
 	private String share_url;
 	private Date share_expior;
 	private int mylist_id;
+	private byte[] thum;
 	private ArrayList<ImageDTO> imageDTO;
 
 
@@ -23,6 +24,7 @@ public class ArticleDTO {
 		this.created=null;
 		this.share_url=null;
 		this.share_expior=null;
+		this.thum=null;
 	}
 
 	public int getArticle_id() {
@@ -95,6 +97,14 @@ public class ArticleDTO {
 
 	public void setMylist_id(int mylist_id) {
 		this.mylist_id = mylist_id;
+	}
+
+	public byte[] getThum() {
+		return thum;
+	}
+
+	public void setThum(byte[] thum) {
+		this.thum = thum;
 	}
 
 }
