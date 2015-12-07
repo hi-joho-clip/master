@@ -5,23 +5,7 @@ function checkAvailable() {
 
 		document.getElementById("friendList").innerHTML = "利用可能です。";
 
-		// KAGEインスタンスでDB定義
-		var tutorial = new KageDB({
-			name : "tutorial",
-			migration : {
-				1 : function(ctx, next) {
-					var db = ctx.db;
-					var todo = db.createObjectStore("todo", {
-						keyPath : "id",
-						autoIncrement : true
-					});
-					todo.createIndex("name", "name", {
-						unique : true
-					});
-					next();
-				}
-			}
-		});
+		var tutorial = getInstance();
 
 		// // DB 作成
 		// tutorial.tx(["todo"], function (tx, todo) {
@@ -64,4 +48,44 @@ function checkAvailable() {
 		document.getElementById("friendList").innerHTML = "利用できません。";
 	}
 
+};
+
+function getInstance() {
+	// KAGEインスタンスでDB定義
+	var tutorial = new KageDB({
+		name : "tutorial",
+		migration : {
+			1 : function(ctx, next) {
+				var db = ctx.db;
+				var todo = db.createObjectStore("todo", {
+					keyPath : "id",
+					autoIncrement : true
+				});
+				todo.createIndex("name", "name", {
+					unique : true
+				});
+				next();
+			}
+		}
+	});
+	return tutorial;
+};
+
+function getRecord() {
+	if (KageDB.isAvailable) {
+
+		var tutorial = getInstance();
+
+		tutorial.tx(["todo"], function (tx, todo) {
+		    todo.fetch({ filter: sample_filter }, function (values) {
+		        console.log("values = " + JSON.stringify(values));
+		        console.log("done.");
+		    });
+		});
+
+	}
+};
+
+function sample_filter(record) {
+    return record.priority === "D" || record.priority === "B";
 }
