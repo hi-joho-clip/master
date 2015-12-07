@@ -21,6 +21,7 @@ public class ArticleBean {
 	private ArrayList<ArticleDTO> article;
 	private int image_id;
 	private String uri;
+	private byte[] thum;
 	private byte[] blob_image;
 	private ImageDTO imageDTO;
 	/**
@@ -60,6 +61,7 @@ public class ArticleBean {
 			articleBean.setCreated(article.get(i).getCreated());
 			articleBean.setShare_url(article.get(i).getShare_url());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
+			articleBean.setThum(article.get(i).getThum());
 			articleList.add(articleBean);
 		}
 		return articleList;
@@ -81,6 +83,7 @@ public class ArticleBean {
 			articleBean.setCreated(article.get(i).getCreated());
 			articleBean.setShare_url(article.get(i).getShare_url());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
+			articleBean.setThum(article.get(i).getThum());
 			articleList.add(articleBean);
 		}
 		return articleList;
@@ -102,6 +105,7 @@ public class ArticleBean {
 			articleBean.setCreated(article.get(i).getCreated());
 			articleBean.setShare_url(article.get(i).getShare_url());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
+			articleBean.setThum(article.get(i).getThum());
 			articleList.add(articleBean);
 		}
 		return articleList;
@@ -195,6 +199,7 @@ public class ArticleBean {
 			articleBean.setCreated(article.get(i).getCreated());
 			articleBean.setShare_url(article.get(i).getShare_url());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
+			articleBean.setThum(article.get(i).getThum());
 			articleList.add(articleBean);
 		}
 		return articleList;
@@ -225,6 +230,7 @@ public class ArticleBean {
 			articleBean.setCreated(article.get(i).getCreated());
 			articleBean.setShare_url(article.get(i).getShare_url());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
+			articleBean.setThum(article.get(i).getThum());
 			articleList.add(articleBean);
 		}
 		return articleList;
@@ -308,6 +314,12 @@ public class ArticleBean {
 	}
 	public void setBlob_image(byte[] blob_image) {
 		this.blob_image = blob_image;
+	}
+	public byte[] getThum() {
+		return thum;
+	}
+	public void setThum(byte[] thum) {
+		this.thum = thum;
 	}
 
 }
