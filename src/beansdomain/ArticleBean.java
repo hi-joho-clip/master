@@ -6,6 +6,7 @@ import java.util.Date;
 import daodto.ArticleDAO;
 import daodto.ArticleDTO;
 import daodto.ImageDTO;
+import beansdomain.ArticleBean;
 
 
 public class ArticleBean {
@@ -167,18 +168,20 @@ public class ArticleBean {
 		setArticleDTO();
 		articleDTO = articleDAO.view(this.articleDTO.getArticle_id());
 
-		this.article_id = articleDTO.getArticle_id();
-		this.title=articleDTO.getTitle();
-		this.body=articleDTO.getBody();
-
-
-			for (ImageDTO imgDTO : articleDTO.getImageDTO()) {
-				ArticleBean articleBean = new ArticleBean();
-				articleBean.setUri(imgDTO.getUri());
-				articleBean.setBlob_image(imgDTO.getBlob_image());
-				articleList.add(articleBean);
-			}
-			//画像のリスト
+		for (ImageDTO imgDTO : articleDTO.getImageDTO()) {
+			ArticleBean articleBean = new ArticleBean();
+			articleBean.setArticle_id(articleDTO.getArticle_id());
+			articleBean.setBody(articleDTO.getBody());
+			articleBean.setTitle(articleDTO.getTitle());
+			articleBean.setUrl(articleDTO.getUrl());
+			articleBean.setCreated(articleDTO.getCreated());
+			articleBean.setShare_url(articleDTO.getShare_url());
+			articleBean.setShare_expior(articleDTO.getShare_expior());
+			articleBean.setUri(imgDTO.getUri());
+			articleBean.setBlob_image(imgDTO.getBlob_image());
+			articleList.add(articleBean);
+		}
+		//画像のリスト
 
 		return articleList;
 	}

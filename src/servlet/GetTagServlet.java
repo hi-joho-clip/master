@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import net.arnx.jsonic.JSON;
 
 import beansdomain.TagBean;
 
@@ -55,12 +58,14 @@ public class GetTagServlet extends HttpServlet {
 		ArrayList<TagBean> tag_list = new ArrayList<TagBean>();
 		try {
 			tag_list = tagbean.viewExistingTag(user_id, article_id);
-			session.setAttribute("taglist", tag_list);
-			request.getRequestDispatcher("/").forward(request, response);//リンク先で値をGETして既存タグ一覧表示
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
+		response.setContentType("application/json;charset=UTF-8");
+		response.setHeader("Cache-Control", "private");
+		PrintWriter out = response.getWriter();
+		out.println(JSON.encode(tag_list, true).toString());
 	}
 
 }
