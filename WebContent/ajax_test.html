@@ -23,6 +23,10 @@
 	<input id="dbtest" type="button" name="check" value="確認">
 	<br />
 
+	<p>IndexedDB検索テスト</p>
+	<input id="gettest" type="button" name="check" value="確認">
+	<br />
+
 	<p>プロミス確認テスト</p>
 	<input id="promisetest" type="button" name="check" value="確認">
 	<br />
@@ -44,6 +48,11 @@
 			$('#dbtest').click(function() {
 				checkAvailable();
 			});
+
+			$('#gettest').click(function() {
+				getRecord();
+			});
+
 
 			// なんやかんやと処理
 			$('#localtest').click(function() {
