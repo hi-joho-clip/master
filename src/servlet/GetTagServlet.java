@@ -18,7 +18,7 @@ import beansdomain.TagBean;
 /**
  * Servlet implementation class GetTagServlet
  */
-@WebServlet("/GetTagServlet")
+@WebServlet("/gettag")
 public class GetTagServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -35,6 +35,7 @@ public class GetTagServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		perform(request, response);
 	}
 
 	/**
@@ -42,6 +43,9 @@ public class GetTagServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		perform(request, response);
+	}
+	protected void perform(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(true);
 		/*if(セッション情報があるなら){
 			//何もしない
@@ -52,8 +56,9 @@ public class GetTagServlet extends HttpServlet {
 		*記事についているタグを編集するとき*****
 		****************************************/
 		//記事に付与されたタグを取得
-		int user_id =0;//sessionからuser_idを取得
-		int article_id = Integer.parseInt(request.getParameter("article_id"));
+		int user_id =1;//sessionからuser_idを取得
+		//int article_id = Integer.parseInt(request.getParameter("article_id"));
+		int article_id =1;
 		TagBean tagbean = new TagBean();
 		ArrayList<TagBean> tag_list = new ArrayList<TagBean>();
 		try {
@@ -67,5 +72,4 @@ public class GetTagServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		out.println(JSON.encode(tag_list, true).toString());
 	}
-
 }
