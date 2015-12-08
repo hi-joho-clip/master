@@ -50,6 +50,10 @@ function checkAvailable() {
 
 };
 
+/**
+ * ここでデータベースのスキーマを定義する
+ * @returns {KageDB}
+ */
 function getInstance() {
 	// KAGEインスタンスでDB定義
 	var tutorial = new KageDB({
@@ -82,9 +86,6 @@ function getRecord() {
 		        console.log("done.");
 		    });
 		});
-
-
-
 
 	}
 };
