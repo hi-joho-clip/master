@@ -20,7 +20,7 @@ import beansdomain.ArticleBean;
 /**
  * Servlet implementation class ViewArticleServlet
  */
-@WebServlet("/ViewArticleServlet")
+@WebServlet("/viewarticle")
 public class ViewArticleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -54,6 +54,7 @@ public class ViewArticleServlet extends HttpServlet {
 		}else if(セッション情報がないなら){
 			//ログイン画面に戻る
 		}*/
+		System.out.println("kiteru");
 		/***************************************
 		******ある記事を選択して表示した際******
 		****************************************/
