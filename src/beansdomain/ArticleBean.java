@@ -6,7 +6,6 @@ import java.util.Date;
 import daodto.ArticleDAO;
 import daodto.ArticleDTO;
 import daodto.ImageDTO;
-import beansdomain.ArticleBean;
 
 
 public class ArticleBean {
@@ -17,6 +16,7 @@ public class ArticleBean {
 	private Date created;
 	private String share_url;
 	private Date share_expior;
+	private int mylist_id;
 	private ArticleDTO articleDTO;
 	private ArticleDAO articleDAO;
 	private ArrayList<ArticleDTO> article;
@@ -62,6 +62,7 @@ public class ArticleBean {
 			articleBean.setCreated(article.get(i).getCreated());
 			articleBean.setShare_url(article.get(i).getShare_url());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
+			articleBean.setMylist_id(article.get(i).getMylist_id());
 			articleBean.setThum(article.get(i).getThum());
 			articleList.add(articleBean);
 		}
@@ -84,6 +85,7 @@ public class ArticleBean {
 			articleBean.setCreated(article.get(i).getCreated());
 			articleBean.setShare_url(article.get(i).getShare_url());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
+			articleBean.setMylist_id(article.get(i).getMylist_id());
 			articleBean.setThum(article.get(i).getThum());
 			articleList.add(articleBean);
 		}
@@ -106,6 +108,7 @@ public class ArticleBean {
 			articleBean.setCreated(article.get(i).getCreated());
 			articleBean.setShare_url(article.get(i).getShare_url());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
+			articleBean.setMylist_id(article.get(i).getMylist_id());
 			articleBean.setThum(article.get(i).getThum());
 			articleList.add(articleBean);
 		}
@@ -177,6 +180,7 @@ public class ArticleBean {
 			articleBean.setCreated(articleDTO.getCreated());
 			articleBean.setShare_url(articleDTO.getShare_url());
 			articleBean.setShare_expior(articleDTO.getShare_expior());
+			articleBean.setMylist_id(articleDTO.getMylist_id());
 			articleBean.setUri(imgDTO.getUri());
 			articleBean.setBlob_image(imgDTO.getBlob_image());
 			articleList.add(articleBean);
@@ -201,6 +205,7 @@ public class ArticleBean {
 			articleBean.setUrl(article.get(i).getUrl());
 			articleBean.setCreated(article.get(i).getCreated());
 			articleBean.setShare_url(article.get(i).getShare_url());
+			articleBean.setMylist_id(article.get(i).getMylist_id());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
 			articleBean.setThum(article.get(i).getThum());
 			articleList.add(articleBean);
@@ -232,6 +237,7 @@ public class ArticleBean {
 			articleBean.setUrl(article.get(i).getUrl());
 			articleBean.setCreated(article.get(i).getCreated());
 			articleBean.setShare_url(article.get(i).getShare_url());
+			articleBean.setMylist_id(article.get(i).getMylist_id());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
 			articleBean.setThum(article.get(i).getThum());
 			articleList.add(articleBean);
@@ -247,6 +253,7 @@ public class ArticleBean {
 		this.articleDTO.setUrl(this.url);
 		this.articleDTO.setCreated(this.created);
 		this.articleDTO.setShare_url(this.share_url);
+		this.articleDTO.setMylist_id(this.mylist_id);
 		this.articleDTO.setShare_expior(this.share_expior);
 	}
 
@@ -323,6 +330,12 @@ public class ArticleBean {
 	}
 	public void setThum(byte[] thum) {
 		this.thum = thum;
+	}
+	public int getMylist_id() {
+		return mylist_id;
+	}
+	public void setMylist_id(int mylist_id) {
+		this.mylist_id = mylist_id;
 	}
 
 }
