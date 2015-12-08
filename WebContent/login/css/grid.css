@@ -36,11 +36,12 @@ body {
 
 .grid-item {
   float: left;
-  height: 100px;
+  height: 200px;
   background: #0D8;
   border: 2px solid #333;
   border-color: hsla(0, 0%, 0%, 0.7);
 }
 
 .grid-item--width2 { width: 40%; }
+.grid-item--3 { width: 40%;  height: 400px; }
 .grid-item--height2 { height: 200px; }
