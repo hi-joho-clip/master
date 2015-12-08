@@ -1,9 +1,12 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,6 +41,7 @@ public class LoginServlet extends HttpServlet {
 		User userbeans = null;
 		int user_id = -1;
 		boolean hantei = false;
+
 			if (inputid != null) {
 				if (inputid.matches(".*@.*")) { // メールアドレスの場合
 					try {
@@ -50,10 +54,22 @@ public class LoginServlet extends HttpServlet {
 						e.printStackTrace();
 					}
 					if (hantei) { // ログイン成功
-						// ユーザ情報を格納するセッションを生成
-						HttpSession sessionuser = request.getSession(true);
-						// そのセッションに従業員情報のオブジェクトを格納
-						sessionuser.setAttribute("User", userbeans);
+
+						UUID guid = UUID.randomUUID();
+						UUID nonce = UUID.randomUUID();
+						Date date = new Date();
+
+						/**
+						 * CSRF対策
+						 */
+						Cookie c_guid = new Cookie("guid",guid.toString());
+						response.addCookie(c_guid);
+						Cookie c_nonce = new Cookie("nonce", nonce.toString());
+						response.addCookie(c_nonce);
+						Cookie c_start_time = new Cookie("start_time",date.toString());
+						response.addCookie(c_start_time);
+
+
 
 						// ログイン後の宛先
 						/*

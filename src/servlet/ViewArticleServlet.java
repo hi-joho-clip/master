@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -10,12 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.arnx.jsonic.JSON;
+
+import beansdomain.TagBean;
+
 import beansdomain.ArticleBean;
 
 /**
  * Servlet implementation class ViewArticleServlet
  */
-@WebServlet("/ViewArticleServlet")
+@WebServlet("/viewarticle")
 public class ViewArticleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -30,8 +35,9 @@ public class ViewArticleServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		perform(request, response);
 	}
 
 	/**
@@ -39,29 +45,37 @@ public class ViewArticleServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		perform(request, response);
+	}
+	private void perform(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(true);
 		/*if(セッション情報があるなら){
 			//何もしない
 		}else if(セッション情報がないなら){
 			//ログイン画面に戻る
 		}*/
+		System.out.println("kiteru");
 		/***************************************
 		******ある記事を選択して表示した際******
 		****************************************/
 		//記事を表示
-		int article_id = Integer.parseInt(request.getParameter("article_id"));
+		int user_id =1;//sessionからuser_idを取得
+		//int article_id = Integer.parseInt(request.getParameter("article_id"));
+		int article_id = 1;
+		ArticleBean articlebean = new ArticleBean();
+		ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
+		TagBean tagbean = new TagBean();
+		ArrayList<TagBean> tag_list = new ArrayList<TagBean>();
 		try {
-
-			ArticleBean articlebean = new ArticleBean();
-			ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
 			articlebean.setArticle_id(article_id);
 			article_list=articlebean.viewArticle();
-			session.setAttribute("articlelist", article_list);
-			request.getRequestDispatcher("/").forward(request, response);//リンク先で値をGETして記事一覧表示
-
+			tag_list = tagbean.viewExistingTag(user_id, article_id);
 		} catch (Exception e) {
 			e.getStackTrace();
 		}
+		response.setContentType("application/json;charset=UTF-8");
+		response.setHeader("Cache-Control", "private");
+		PrintWriter out = response.getWriter();
+		out.println(JSON.encode(article_list, true).toString()+JSON.encode(tag_list, true).toString());
 	}
-
 }

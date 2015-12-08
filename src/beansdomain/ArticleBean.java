@@ -16,11 +16,13 @@ public class ArticleBean {
 	private Date created;
 	private String share_url;
 	private Date share_expior;
+	private int mylist_id;
 	private ArticleDTO articleDTO;
 	private ArticleDAO articleDAO;
 	private ArrayList<ArticleDTO> article;
 	private int image_id;
 	private String uri;
+	private byte[] thum;
 	private byte[] blob_image;
 	private ImageDTO imageDTO;
 	/**
@@ -60,6 +62,8 @@ public class ArticleBean {
 			articleBean.setCreated(article.get(i).getCreated());
 			articleBean.setShare_url(article.get(i).getShare_url());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
+			articleBean.setMylist_id(article.get(i).getMylist_id());
+			articleBean.setThum(article.get(i).getThum());
 			articleList.add(articleBean);
 		}
 		return articleList;
@@ -81,6 +85,8 @@ public class ArticleBean {
 			articleBean.setCreated(article.get(i).getCreated());
 			articleBean.setShare_url(article.get(i).getShare_url());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
+			articleBean.setMylist_id(article.get(i).getMylist_id());
+			articleBean.setThum(article.get(i).getThum());
 			articleList.add(articleBean);
 		}
 		return articleList;
@@ -102,6 +108,8 @@ public class ArticleBean {
 			articleBean.setCreated(article.get(i).getCreated());
 			articleBean.setShare_url(article.get(i).getShare_url());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
+			articleBean.setMylist_id(article.get(i).getMylist_id());
+			articleBean.setThum(article.get(i).getThum());
 			articleList.add(articleBean);
 		}
 		return articleList;
@@ -163,18 +171,21 @@ public class ArticleBean {
 		setArticleDTO();
 		articleDTO = articleDAO.view(this.articleDTO.getArticle_id());
 
-		this.article_id = articleDTO.getArticle_id();
-		this.title=articleDTO.getTitle();
-		this.body=articleDTO.getBody();
-
-
-			for (ImageDTO imgDTO : articleDTO.getImageDTO()) {
-				ArticleBean articleBean = new ArticleBean();
-				articleBean.setUri(imgDTO.getUri());
-				articleBean.setBlob_image(imgDTO.getBlob_image());
-				articleList.add(articleBean);
-			}
-			//画像のリスト
+		for (ImageDTO imgDTO : articleDTO.getImageDTO()) {
+			ArticleBean articleBean = new ArticleBean();
+			articleBean.setArticle_id(articleDTO.getArticle_id());
+			articleBean.setBody(articleDTO.getBody());
+			articleBean.setTitle(articleDTO.getTitle());
+			articleBean.setUrl(articleDTO.getUrl());
+			articleBean.setCreated(articleDTO.getCreated());
+			articleBean.setShare_url(articleDTO.getShare_url());
+			articleBean.setShare_expior(articleDTO.getShare_expior());
+			articleBean.setMylist_id(articleDTO.getMylist_id());
+			articleBean.setUri(imgDTO.getUri());
+			articleBean.setBlob_image(imgDTO.getBlob_image());
+			articleList.add(articleBean);
+		}
+		//画像のリスト
 
 		return articleList;
 	}
@@ -194,7 +205,9 @@ public class ArticleBean {
 			articleBean.setUrl(article.get(i).getUrl());
 			articleBean.setCreated(article.get(i).getCreated());
 			articleBean.setShare_url(article.get(i).getShare_url());
+			articleBean.setMylist_id(article.get(i).getMylist_id());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
+			articleBean.setThum(article.get(i).getThum());
 			articleList.add(articleBean);
 		}
 		return articleList;
@@ -224,7 +237,9 @@ public class ArticleBean {
 			articleBean.setUrl(article.get(i).getUrl());
 			articleBean.setCreated(article.get(i).getCreated());
 			articleBean.setShare_url(article.get(i).getShare_url());
+			articleBean.setMylist_id(article.get(i).getMylist_id());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
+			articleBean.setThum(article.get(i).getThum());
 			articleList.add(articleBean);
 		}
 		return articleList;
@@ -238,6 +253,7 @@ public class ArticleBean {
 		this.articleDTO.setUrl(this.url);
 		this.articleDTO.setCreated(this.created);
 		this.articleDTO.setShare_url(this.share_url);
+		this.articleDTO.setMylist_id(this.mylist_id);
 		this.articleDTO.setShare_expior(this.share_expior);
 	}
 
@@ -308,6 +324,18 @@ public class ArticleBean {
 	}
 	public void setBlob_image(byte[] blob_image) {
 		this.blob_image = blob_image;
+	}
+	public byte[] getThum() {
+		return thum;
+	}
+	public void setThum(byte[] thum) {
+		this.thum = thum;
+	}
+	public int getMylist_id() {
+		return mylist_id;
+	}
+	public void setMylist_id(int mylist_id) {
+		this.mylist_id = mylist_id;
 	}
 
 }

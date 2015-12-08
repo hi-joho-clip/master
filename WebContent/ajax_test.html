@@ -13,6 +13,7 @@
 	<script type="text/javascript" src="js/test_ajax.js"></script>
 	<script type="text/javascript" src="js/indexeddb.js"></script>
 	<script type="text/javascript" src="js/lib/kagedb.js"></script>
+	<script type="text/javascript" src="js/browsersupport.js"></script>
 	<p>
 		Ajaxのテスト <input type="button" onclick="javascript:getFriendList()"
 			name="search" value="検索"><br /> <br />
@@ -23,6 +24,10 @@
 	<input id="dbtest" type="button" name="check" value="確認">
 	<br />
 
+	<p>IndexedDB検索テスト</p>
+	<input id="gettest" type="button" name="check" value="確認">
+	<br />
+
 	<p>プロミス確認テスト</p>
 	<input id="promisetest" type="button" name="check" value="確認">
 	<br />
@@ -30,6 +35,10 @@
 
 	<p>ワーカー確認テスト</p>
 	<input id="workertest" type="button" name="check" value="確認">
+	<br />
+
+	<p>ブラウザ確認テスト</p>
+	<input id="browsertest" type="button" name="check" value="確認">
 	<br />
 
 
@@ -43,6 +52,14 @@
 			// なんやかんやと処理
 			$('#dbtest').click(function() {
 				checkAvailable();
+			});
+
+			$('#gettest').click(function() {
+				getRecord();
+			});
+
+			$('#browsertest').click(function() {
+				alert(isSupported(['chrome','safari','opera','firefox','ie11']));
 			});
 
 			// なんやかんやと処理

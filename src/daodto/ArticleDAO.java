@@ -240,6 +240,7 @@ public class ArticleDAO {
 				article.setCreated(rs.getDate("created"));
 				article.setShare_url(rs.getString("share_url"));
 				article.setShare_expior(rs.getDate("share_expior"));
+				article.setThum(rs.getBytes("thum"));
 				articleList.add(article);
 			}
 		} catch (Exception e) {
@@ -412,6 +413,7 @@ public class ArticleDAO {
 				article.setCreated(rs.getDate("created"));
 				article.setShare_url(rs.getString("share_url"));
 				article.setShare_expior(rs.getDate("share_expior"));
+				article.setThum(rs.getBytes("thum"));
 				articleList.add(article);
 			}
 		} catch (Exception e) {
@@ -501,6 +503,7 @@ public class ArticleDAO {
 				article.setCreated(rs.getDate("created"));
 				article.setShare_url(rs.getString("share_url"));
 				article.setShare_expior(rs.getDate("share_expior"));
+				article.setThum(rs.getBytes("thum"));
 				articleList.add(article);
 			}
 		} catch (Exception e) {

@@ -57,7 +57,11 @@ public class UpdateArticleServlet extends HttpServlet {
 		articlebean.setBody(body);
 		articlebean.setUrl(url);
 		try {
-			articlebean.updateArticle();
+			if(articlebean.updateArticle()){
+				//成功したポップアップを表示
+			}else{
+				//失敗したポップアップを表示
+			}
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
