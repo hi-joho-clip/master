@@ -2,23 +2,27 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>一覧表示</title>
 </head>
 <body>
 <script type="text/javascript" src="js/jquery/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="./js/test_article_script.js">
 </script>
-<input type="button" onclick="javascript:getMyList()" name ="mylist" value="マイリスト"><br />
+<input type="button" onclick="javascript:getMyList()" name ="mylist" value="マイリスト">user_idを送信<br />
 <div id="myList" style="width:500px"></div>
-<input type="button" onclick="javascript:getFavList()" name ="favlist" value="お気に入り一覧"><br />
+<input type="button" onclick="javascript:getFavList()" name ="favlist" value="お気に入り一覧">user_idを送信<br />
 <div id="favList" style="width:500px"></div>
-<input type="button" onclick="javascript:getShareList()" name ="sharelist" value="シェア記事一覧"><br />
+<input type="button" onclick="javascript:getShareList()" name ="sharelist" value="シェア記事一覧">user_idとfriend_user_idを送信<br />
 <div id="shareList" style="width:500px"></div>
-<input type="button" onclick="javascript:getTagArticleList()" name ="tagarticlelist" value="記事に付与されているタグ一覧"><br />
+<input type="button" onclick="javascript:getTagArticleList()" name ="tagarticlelist" value="特定のタグの記事一覧">((tag_body_list))とuser_idを送信<br />
 <div id="tagArticleList" style="width:500px"></div>
-<input type="button" onclick="javascript:getTagFavList()" name ="tagfavlist" value="タグ内お気に入り一覧"><br />
+<input type="button" onclick="javascript:getTagFavList()" name ="tagfavlist" value="タグ内お気に入り一覧">user_idと((tag_body_list))を送信<br />
 <div id="tagFavList" style="width:500px"></div>
-<input type="button" onclick="javascript:getTagList()" name ="taglist" value="タグ一覧"><br />
+<input type="button" onclick="javascript:getTagList()" name ="taglist" value="タグ一覧">user_idを送信<br />
 <div id="tagList" style="width:500px"></div>
+<input type="button" onclick="javascript:getTag()" name ="gettag" value="記事に付与されたタグ一覧">user_idとarticle_idを送信<br />
+<div id="getTag" style="width:500px"></div>
+<input type="button" onclick="javascript:getViewArticle()" name ="viewarticle" value="記事表示">user_idとarticle_idを送信<br />
+<div id="viewArticle" style="width:500px"></div>
 </body>
 </html>
