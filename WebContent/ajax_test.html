@@ -13,6 +13,7 @@
 	<script type="text/javascript" src="js/test_ajax.js"></script>
 	<script type="text/javascript" src="js/indexeddb.js"></script>
 	<script type="text/javascript" src="js/lib/kagedb.js"></script>
+	<script type="text/javascript" src="js/browsersupport.js"></script>
 	<p>
 		Ajaxのテスト <input type="button" onclick="javascript:getFriendList()"
 			name="search" value="検索"><br /> <br />
@@ -36,6 +37,10 @@
 	<input id="workertest" type="button" name="check" value="確認">
 	<br />
 
+	<p>ブラウザ確認テスト</p>
+	<input id="browsertest" type="button" name="check" value="確認">
+	<br />
+
 
 	<div id="friendList" style="width: 500px"></div>
 
@@ -53,6 +58,9 @@
 				getRecord();
 			});
 
+			$('#browsertest').click(function() {
+				alert(isSupported(['chrome','safari','opera','firefox','ie11']));
+			});
 
 			// なんやかんやと処理
 			$('#localtest').click(function() {
