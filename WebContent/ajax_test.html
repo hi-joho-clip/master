@@ -14,18 +14,29 @@
 	<script type="text/javascript" src="js/indexeddb.js"></script>
 	<script type="text/javascript" src="js/lib/kagedb.js"></script>
 	<script type="text/javascript" src="js/browsersupport.js"></script>
+	<script type="text/javascript" src="js/lib/operative.js"></script>
+	<script type="text/javascript" src="js/lib/es6-promise.min.js"></script>
+	<script type="text/javascript" src="js/xhrService.js"></script>
+
+	<noscript>
+JavaScriptが無効になっています。
+</noscript>
 	<p>
 		Ajaxのテスト <input type="button" onclick="javascript:getFriendList()"
 			name="search" value="検索"><br /> <br />
 	<p>
 		ローカル参照のテスト <input id="localtest" type="button" name="DBFriend"
 			value="ローカル検索"><br /> <br />
-	<p>IndexedDB可能テスト</p>
+	<p>Indexed書き込み</p>
 	<input id="dbtest" type="button" name="check" value="確認">
 	<br />
 
 	<p>IndexedDB検索テスト</p>
 	<input id="gettest" type="button" name="check" value="確認">
+	<br />
+
+	<p>DB削除</p>
+	<input id="dbdelete" type="button" name="check" value="確認">
 	<br />
 
 	<p>プロミス確認テスト</p>
@@ -50,16 +61,45 @@
 	<script>
 		$(window).load(function() {
 			// なんやかんやと処理
+			$('#dbdelete').click(function() {
+
+				deleteDatabase("article");
+
+			});
+
 			$('#dbtest').click(function() {
-				checkAvailable();
+				/**
+				 * operativeを使うのはサーバと通信するときのみ
+				 */
+
+				for (var i = 0; i < 30 ; i++) {
+					var article = {
+								"article_id" : i,
+								"acceptdate" : null,
+								"created" : 1448330151000,
+								"friendList" : [],
+								"friend_id" : 11,
+								"friend_user_id" : 2000,
+								"friendlists" : [],
+								"modified" : 1448330151000,
+								"nickname" : "dummy7485"
+					};
+					var guid = 'aaa';
+					updateArticle(article, guid);
+				}
 			});
 
 			$('#gettest').click(function() {
-				getRecord();
+
+				var article_id = 2;
+				var guid = 'aaa';
+
+				getAllArticleList(article_id, guid);
+
 			});
 
 			$('#browsertest').click(function() {
-				alert(isSupported(['chrome','safari','opera','firefox','ie11']));
+				alert(isSupported(['chrome','opera','firefox','ie11', 'ie10']));
 			});
 
 			// なんやかんやと処理
@@ -78,7 +118,7 @@
 
 			$('#workertest').click(function() {
 				if (window.Worker){
-					console.log('WORKER:POSSIBLE');
+					getArticleAsync();
 				} else {
 					console.log('WORKER:DISABLE');
 				}

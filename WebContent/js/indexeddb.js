@@ -1,48 +1,88 @@
+/*
+ * 必要な処理
+ * 全記事のリスト取得：更新する記事の決定
+ * 1件分の記事取得：更新する記事の選択
+ *
+ * 閲覧
+ * 全件表示での記事
+ * タグ検索での記事
+ * 記事タイトル検索での記事：
+ *
+ */
 
-function checkAvailable() {
+/**
+ * JSON形式でArticleIDの記事を取得する 画像も取得して返す
+ *
+ * @param article_id
+ * @param guid
+ */
+function getArticle(article_id, guid) {
+	if (KageDB.isAvailable()) {
+		// 成功の場合
+		var tutorial = getArticleInstance();
+
+		tutorial.tx([ "article" ], function(tx, todo) {
+			todo.fetch({
+				filter : article_filter
+			}, function(values) {
+				console.log("values = " + JSON.stringify(values));
+				console.log("done.");
+				console.log(values.body.created);
+			});
+		});
+	} else {
+		// エラー処理のコールバック
+	}
+	function article_filter(record) {
+		// GUIDが自身であり、アーティクルIDが同一
+		return record.guid == guid && revord.article_id == article_id;
+	}
+};
+
+/**
+ * 記事の件数分ループさせて更新する
+ *
+ * @param article
+ *            記事本体のデータ
+ * @param guid
+ *            一時的なトークンID
+ */
+function updateArticle(article, guid, page) {
 
 	if (KageDB.isAvailable) {
 
-		document.getElementById("friendList").innerHTML = "利用可能です。";
+		// スキーマのインスタンス取得
+		var tutorial = getArticleInstance();
 
-		var tutorial = getInstance();
+		var modified = article.modified;
 
-		// // DB 作成
-		// tutorial.tx(["todo"], function (tx, todo) {
-		// todo.add({ name: "プログラミング2", priority: "E" }, "readwrite", function
-		// (key) {
-		// console.log("done. key = " + key);
-		// });
-		// });
+		var share_id = 2;
 
-		tutorial.tx(["todo"], function (tx, todo) {
-		    todo.index("name").fetch({ el: "プロ" }, function (values) {
-		        console.log("values = " + JSON.stringify(values));
-		        console.log("done.");
-		    });
-		});
+		// article = {
+		// "acceptdate" : null,
+		// "created" : 1448330151000,
+		// "friendList" : [],
+		// "friend_id" : 11,
+		// "friend_user_id" : 2000,
+		// "friendlists" : [],
+		// "modified" : null,
+		// "nickname" : "dummy7485"
+		// };
 
-//		// 書き込み
-//		tutorial.tx([ "todo" ], "readwrite", function(tx, todo) {
-//			todo.put({
-//				name : "プログラミング4",
-//				priority : "F"
-//			}, function(key) {
-//				console.log("done. key = " + key);
-//			});
-//		});
-
-		// 書き込み
-		tutorial.tx([ "todo" ], "readwrite", function(tx, todo) {
+		// 更新処理
+		tutorial.tx([ "article" ], "readwrite", function(tx, todo) {
 			todo.put({
-				id : 115,
-				name : "プログラミングwwww",
-				priority : "D"
+				article_id : article.article_id,
+				body : article,
+				share_id : share_id,
+				guid : guid,
+				// 登録日時はサーバで管理するべき（ブラウザ依存は排除）
+				modified : article.modified
+			// ローカルストレージのGUIDを参照
 			}, function(key) {
 				console.log("done. key = " + key);
 			});
 		});
-
 
 	} else {
 		document.getElementById("friendList").innerHTML = "利用できません。";
@@ -51,21 +91,125 @@ function checkAvailable() {
 };
 
 /**
- * ここでデータベースのスキーマを定義する
+ * データベース内の記事一覧のJSONを取得 なお画像は関係ない模様
+ *
+ * @param article
+ * @param guid
+ * @param page
+ */
+function getArticleList(article, guid, page) {
+
+	if (KageDB.isAvailable) {
+
+		console.log(article + guid + page);
+
+		var offset_filter = {
+			filter : guid_filter,
+			// 20件ずつ表示
+			offset : page * 20 - 20,
+			limit : 20
+		};
+
+		console.log(offset_filter);
+		var tutorial = getArticleInstance();
+
+		tutorial.tx([ "article" ], function(tx, todo) {
+			todo.fetch(offset_filter, function(values) {
+				console.log("values = " + JSON.stringify(values));
+				console.log("done.");
+			});
+		});
+
+	}
+
+	function guid_filter(record) {
+		return record.guid === guid;
+	}
+
+};
+
+/**
+ * サーバと同期するためのDB内のリスト送信
+ *
+ * @param article
+ * @param guid
+ * @param page
+ */
+function getAllArticleList(article, guid) {
+
+	if (KageDB.isAvailable) {
+		var filter = {
+			filter : guid_filter,
+		};
+		var tutorial = getArticleInstance();
+
+		tutorial.tx([ "article" ], function(tx, todo) {
+			todo.fetch(filter, function(values) {
+				// ボディやサムネの画像は削除しておく
+				// やっぱりループで一つ一つ削除するしかなさそう
+				for ( var i in values) {
+					delete values[i]["body"];
+				}
+				console.log("values = " + JSON.stringify(values, null, ' '));
+				console.log("done.");
+			});
+		});
+
+	}
+
+	function guid_filter(record) {
+		return record.guid === guid;
+	}
+
+};
+
+/**
+ * 記事のデータベーススキーマ
+ *
  * @returns {KageDB}
  */
-function getInstance() {
-	// KAGEインスタンスでDB定義
+function getArticleInstance() {
 	var tutorial = new KageDB({
-		name : "tutorial",
+		name : "clip",
+		version : 2,
 		migration : {
 			1 : function(ctx, next) {
 				var db = ctx.db;
-				var todo = db.createObjectStore("todo", {
+				var todo = db.createObjectStore("article", {
+					keyPath : "article_id",
+					autoIncrement : true
+				});
+				// todo.createIndex("article_id", "article_id", {
+				// unique : true
+				// });
+				next();
+			}
+
+		}
+	}, onerror = function(event) {
+		// エラーの詳細をコンソールに出力する
+		console.error(event.kage_message);
+	});
+
+	return tutorial;
+};
+
+/**
+ * 画像のデータベーススキーマ
+ *
+ * @returns {KageDB}
+ */
+function getImageInstance() {
+	var tutorial = new KageDB({
+		name : "clip",
+		migration : {
+			1 : function(ctx, next) {
+				var db = ctx.db;
+				var todo = db.createObjectStore("image", {
 					keyPath : "id",
 					autoIncrement : true
 				});
-				todo.createIndex("name", "name", {
+				todo.createIndex("article_id", "article_id", {
 					unique : true
 				});
 				next();
@@ -75,21 +219,36 @@ function getInstance() {
 	return tutorial;
 };
 
-function getRecord() {
-	if (KageDB.isAvailable) {
 
-		var tutorial = getInstance();
-
-		tutorial.tx(["todo"], function (tx, todo) {
-		    todo.fetch({ filter: sample_filter }, function (values) {
-		        console.log("values = " + JSON.stringify(values));
-		        console.log("done.");
-		    });
-		});
-
+/**
+ * データベース名を指定してデータベースを削除[article, image, friend]
+ *
+ * @param database
+ */
+function deleteDatabase(database) {
+	if (KageDB.isAvailable()) {
+		if (database == "article") {
+			var tutorial = getArticleInstance();
+			tutorial.deleteDatabase(function() {
+				console.log("done");
+			});
+		} else if (database == "image") {
+			// 画像テーブルの削除
+		} else if (database == "friend") {
+			// フレンドテーブルの削除
+		} else {
+			console.log("not found DB");
+		}
+	} else {
+		console.log("indexedDB not supported");
 	}
-};
+}
 
-function sample_filter(record) {
-    return record.priority === "D" || record.priority === "B";
+/**
+ * GUIDの更新を行う。 GUIDの期限が切れていた場合に、再度ログインした際更新する必要がある
+ *
+ * @param guid
+ */
+function updateGuid(guid) {
+
 }
