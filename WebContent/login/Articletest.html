@@ -8,11 +8,38 @@
 
 <link href="css/normalize.css" rel="stylesheet">
 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link href="css/demo.css" rel="stylesheet">
+<link href="css/articlemenu.css" rel="stylesheet">
+<link href="css/grid.css" rel="stylesheet">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="js/demo.js"></script>
+<script src="js/articlemenu.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="../js/jquery/isotope.pkgd.min.js"></script>
 
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.isotope').isotope({
+	itemSelector: '.item',
+	masonry: {
+		columnWidth: 100
+	}
+	});
+});
+</script>
+
+<script>
+$(document).ready( function() {
+
+  $('.grid').isotope({
+    itemSelector: '.grid-item',
+    percentPosition: true,
+    masonry: {
+      columnWidth: '.grid-sizer'
+    }
+  });
+
+});
+</script>
 </head>
 <body>
 
@@ -47,18 +74,35 @@
 <div class="container">
 <div style="margin:100px auto;">
 <h1>記事　テスト</h1>
-<p>
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-</p>
+
+<h1>Isotope - masonry fluid sizing</h1>
+
+<div class="grid">
+  <div class="grid-sizer">1</div>
+  <div class="grid-item grid-item--width2">2</div>
+  <div class="grid-item grid-item--height2">3</div>
+  <div class="grid-item">4</div>
+  <div class="grid-item">5</div>
+  <div class="grid-item grid-item--width2 grid-item--height2">6</div>
+  <div class="grid-item grid-item--width2">7</div>
+  <div class="grid-item grid-item--width2">8</div>
+  <div class="grid-item grid-item--height2">9</div>
+  <div class="grid-item">10</div>
+  <div class="grid-item grid-item--width2">11</div>
+  <div class="grid-item grid-item--height2">12</div>
+  <div class="grid-item">13</div>
+  <div class="grid-item">14</div>
+</div>
+
+
+
+
 </div>
 </div>
 
 
 </section>
 
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
 
 </body>
 </html>
