@@ -15,6 +15,8 @@
 <script src="js/articlemenu.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="../js/jquery/isotope.pkgd.min.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery.cookie.js"></script>
+<script type="text/javascript" src="../js/article_script.js">
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -28,9 +30,10 @@ $(document).ready(function() {
 </script>
 
 <script>
+var $grid;
 $(document).ready( function() {
 
-  $('.grid').isotope({
+  $grid = $('.grid').isotope({
     itemSelector: '.grid-item',
     percentPosition: true,
     masonry: {
@@ -38,6 +41,20 @@ $(document).ready( function() {
     }
   });
 
+  switch($.cookie("viewMode")){
+	case "0"://マイリスト画面を表示しているとき
+		$('.grid').empty();
+		getMyList();
+		break;
+	case "1"://お気に入り画面を表示しているとき
+		$('.grid').empty();
+		getFavList();
+		break;
+	case "2"://タグ画面を表示しているとき
+		$('.grid').empty();
+		getTagList();
+		break;
+  }
 });
 </script>
 </head>
@@ -47,9 +64,9 @@ $(document).ready( function() {
 
 <div class="wh DSmenu">
 <ul>
-<a href="#"><li>マイリスト</li></a>
-<a href="#"><li>お気に入り</li></a>
-<a href="#"><li>タグ</li></a>
+<a href="#" onclick="javascript:getMyList();return false;"><li>マイリスト</li></a>
+<a href="#" onclick="javascript:getFavList();return false;"><li>お気に入り</li></a>
+<a href="#" onclick="javascript:getTagList();return false;"><li>タグ</li></a>
 <a href="#"><li>フレンド</li></a>
 
 </ul>
@@ -70,22 +87,7 @@ $(document).ready( function() {
 <h1>Isotope - masonry fluid sizing</h1>
 
 <div class="grid">
-  <div class="grid-sizer"></div>
-  <div class="grid-item grid-item--width2">2</div>
-  <div class="grid-item grid-item--height2">3</div>
-  <div class="grid-item">4</div>
-  <div class="grid-item grid-item--3">5</div>
-  <div class="grid-item grid-item--width2 grid-item--height2">6</div>
-  <div class="grid-item grid-item--width2">7</div>
-  <div class="grid-item grid-item--width2">8</div>
-  <div class="grid-item grid-item--height2">9</div>
-  <div class="grid-item">10</div>
-  <div class="grid-item grid-item--width2">11</div>
-  <div class="grid-item grid-item--height2">12</div>
-  <div class="grid-item grid-item--3">13</div>
-  <div class="grid-item">14</div>
 </div>
-
 
 <section class="section">
 <div class="head-bar">
