@@ -27,6 +27,8 @@ $(document).ready(function() {
 	}
 	});
 });
+
+
 </script>
 
 <script>
@@ -39,6 +41,9 @@ $(document).ready( function() {
     masonry: {
       columnWidth: '.grid-sizer'
     }
+  });
+  $('.grid').on('click', '.grid-item', function(){
+	  getViewArticle(this.id);
   });
 
   switch($.cookie("viewMode")){
@@ -54,6 +59,7 @@ $(document).ready( function() {
 		$('.grid').empty();
 		getTagList();
 		break;
+
   }
 });
 </script>
@@ -88,7 +94,8 @@ $(document).ready( function() {
 
 <div class="grid">
 </div>
-
+<div class="viewArticle">
+</div>
 <section class="section">
 <div class="head-bar">
 <div class="container-fluid">
