@@ -37,16 +37,13 @@ function getMyList(){
 			$myList = $("<div class='grid-sizer'></div>");
 			$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
 			for ( var i =jsonResult.length-1 ; i >= 0 ; i--) {
-				$myList = $("<div class='"+item_class[i]+"'>"+
-							"ID:"+jsonResult[i].article_id+"<br>"+
+				$myList = $("<div id='"+jsonResult[i].article_id+"'class='"+item_class[i]+"'>"+
 							"タイトル:" + jsonResult[i].title + "<br>" +
 							"URL:"+jsonResult[i].url+"<br>"+
 							"サムネイル："+jsonResult[i].thum+"<br>"
 							+"</div>");
-				console.log($myList);
 				$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
 			}
-			//document.getElementById('myList').innerHTML = myList;
 			xmlResult = null;
 			jsonResult = null;
 		}
@@ -76,20 +73,16 @@ function getFavList(){
 		if (xmlResult.readyState == 4) {
 			var $favList = "";
 			var jsonResult = JSON.parse(xmlResult.responseText);
-			//i=8, 876543210
 			$favList = $("<div class='grid-sizer'></div>");
 			$grid.prepend($favList).isotope('prepended', $favList).trigger('create');
 			for ( var i =jsonResult.length-1 ; i >= 0 ; i--) {
-				$favList = $("<div class='"+item_class[i]+"'>"+
-							"ID:"+jsonResult[i].article_id+"<br>"+
-							"タイトル:" + jsonResult[i].title + "<br>" +
-							"URL:"+jsonResult[i].url+"<br>"+
-							"サムネイル："+jsonResult[i].thum+"<br>"
-							+"</div>");
-				console.log($favList);
+				$favList = $("<div id='"+jsonResult[i].article_id+"'class='"+item_class[i]+"'>"+
+						"タイトル:" + jsonResult[i].title + "<br>" +
+						"URL:"+jsonResult[i].url+"<br>"+
+						"サムネイル："+jsonResult[i].thum+"<br>"
+						+"</div>");
 				$grid.prepend($favList).isotope('prepended', $favList).trigger('create');
 			}
-			//document.getElementById('myList').innerHTML = myList;
 			xmlResult = null;
 			jsonResult = null;
 		}
@@ -252,9 +245,10 @@ function getTag(){
 	return true;
 }
 //記事の表示（内容と画像の表示がよくわからん）
-function getViewArticle(){
+function getViewArticle(article_id){
+	//$('.grid').empty();
 	var xmlResult = new XMLHttpRequest();
-	var jsonParam = null;//送りたいデータ
+	var jsonParam = "article_id="+article_id;//送りたいデータ
 	var xmlURL = "http://localhost:8080/clipMaster/viewarticle";
 
 	xmlResult.open("POST", xmlURL, true);
@@ -273,7 +267,7 @@ function getViewArticle(){
 			for ( var i = 0; i < jsonResult.length ; i++) {
 				viewArticle += "ID"+jsonResult[i].article_id+"<br>"+"タイトル:" + jsonResult[i].title + "<br>" + "内容:"+ jsonResult[i].body +"<br>"+"画像："+jsonResult[i].blob_image+"<br><br>";
 			}
-			document.getElementById('viewArticle').innerHTML = viewArticle;
+			//document.getElementById('viewArticle').innerHTML = viewArticle;
 			xmlResult = null;
 			jsonResult = null;
 		}
