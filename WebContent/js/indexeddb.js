@@ -11,32 +11,38 @@
  */
 
 /**
- * JSON形式でArticleIDの記事を取得する 画像も取得して返す
+ * JSON形式でArticleIDの記事を取得する 画像も取得して返す(Promiseなのね）
  *
  * @param article_id
  * @param guid
  */
 function getArticle(article_id, guid) {
-	if (KageDB.isAvailable()) {
-		// 成功の場合
-		var tutorial = getArticleInstance();
 
-		tutorial.tx([ "article" ], function(tx, todo) {
-			todo.fetch({
-				filter : article_filter
-			}, function(values) {
-				console.log("values = " + JSON.stringify(values));
-				console.log("done.");
-				console.log(values.body.created);
+	return new Promise(function(resolve, reject) {
+		if (KageDB.isAvailable()) {
+			// 成功の場合
+			var tutorial = getArticleInstance();
+
+			tutorial.tx([ "article" ], function(tx, todo) {
+				todo.fetch({
+					filter : article_filter
+				}, function(values) {
+					console.log("values = " + JSON.stringify(values));
+					console.log("done.");
+					console.log(values.body.created);
+				});
 			});
-		});
-	} else {
-		// エラー処理のコールバック
-	}
-	function article_filter(record) {
-		// GUIDが自身であり、アーティクルIDが同一
-		return record.guid == guid && revord.article_id == article_id;
-	}
+		} else {
+			// エラー処理のコールバック
+			rejece(new Error());
+
+		}
+		function article_filter(record) {
+			// GUIDが自身であり、アーティクルIDが同一
+			return record.guid == guid && revord.article_id == article_id;
+		}
+		;
+	});
 };
 
 /**
@@ -91,17 +97,16 @@ function updateArticle(article, guid, page) {
 };
 
 /**
- * データベース内の記事一覧のJSONを取得 なお画像は関係ない模様
+ * データベース内の記事一覧のJSONを取得 なお画像は関係ない模様 (Promise)
  *
- * @param article
  * @param guid
  * @param page
  */
-function getArticleList(article, guid, page) {
+function getIDEArticleList(guid, page) {
 
-	if (KageDB.isAvailable) {
+	return new Promise(function(resolve, reject) {
 
-		console.log(article + guid + page);
+		console.log(guid + page);
 
 		var offset_filter = {
 			filter : guid_filter,
@@ -115,51 +120,65 @@ function getArticleList(article, guid, page) {
 
 		tutorial.tx([ "article" ], function(tx, todo) {
 			todo.fetch(offset_filter, function(values) {
-				console.log("values = " + JSON.stringify(values));
-				console.log("done.");
+				if (values) {
+					console.log("values = " + JSON.stringify(values));
+					console.log("done.");
+					resolve(values);
+				} else {
+					reject(new Error("not found"));
+				}
+
 			});
 		});
 
-	}
-
-	function guid_filter(record) {
-		return record.guid === guid;
-	}
-
+		function guid_filter(record) {
+			return record.guid === guid;
+		}
+	});
 };
 
 /**
  * サーバと同期するためのDB内のリスト送信
  *
- * @param article
  * @param guid
- * @param page
  */
-function getAllArticleList(article, guid) {
+function getIDBAllArticleList(guid) {
 
-	if (KageDB.isAvailable) {
+	return new Promise(function(resolve, reject) {
 		var filter = {
 			filter : guid_filter,
 		};
-		var tutorial = getArticleInstance();
 
-		tutorial.tx([ "article" ], function(tx, todo) {
+		// DBのインスタンス取得
+		var article_db = getArticleInstance();
+		article_db.onerror = function(event) {
+				// エラーの詳細をコンソールに出力する
+				reject(event.kage_message);
+		};
+
+		article_db.tx([ "article" ], function(tx, todo) {
 			todo.fetch(filter, function(values) {
-				// ボディやサムネの画像は削除しておく
-				// やっぱりループで一つ一つ削除するしかなさそう
-				for ( var i in values) {
-					delete values[i]["body"];
+				if (values) {
+					// ボディやサムネの画像は削除しておく
+					// やっぱりループで一つ一つ削除するしかなさそう
+					for ( var i in values) {
+						delete values[i]["body"];
+					}
+					console
+							.log("values = "
+									+ JSON.stringify(values, null, ' '));
+					console.log("done.");
+					resolve(values);
+				} else {
+					reject(new Error("not found"));
 				}
-				console.log("values = " + JSON.stringify(values, null, ' '));
-				console.log("done.");
 			});
 		});
 
-	}
-
-	function guid_filter(record) {
-		return record.guid === guid;
-	}
+		function guid_filter(record) {
+			return record.guid === guid;
+		};
+	});
 
 };
 
@@ -184,11 +203,7 @@ function getArticleInstance() {
 				// });
 				next();
 			}
-
 		}
-	}, onerror = function(event) {
-		// エラーの詳細をコンソールに出力する
-		console.error(event.kage_message);
 	});
 
 	return tutorial;
@@ -218,7 +233,6 @@ function getImageInstance() {
 	});
 	return tutorial;
 };
-
 
 /**
  * データベース名を指定してデータベースを削除[article, image, friend]
@@ -251,4 +265,15 @@ function deleteDatabase(database) {
  */
 function updateGuid(guid) {
 
+}
+
+
+function test(guid) {
+
+	// GUIDがなかった場合はエラー
+	if (!guid) {
+		return Promise.reject("GUID error");
+	}
+
+	return getIDBAllArticleList(guid);
 }

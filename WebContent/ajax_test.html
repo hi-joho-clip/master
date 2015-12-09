@@ -16,7 +16,7 @@
 	<script type="text/javascript" src="js/browsersupport.js"></script>
 	<script type="text/javascript" src="js/lib/operative.js"></script>
 	<script type="text/javascript" src="js/lib/es6-promise.min.js"></script>
-	<script type="text/javascript" src="js/xhrService.js"></script>
+	<script type="text/javascript" src="js/json-xhr.js"></script>
 
 	<noscript>
 JavaScriptが無効になっています。
@@ -51,6 +51,8 @@ JavaScriptが無効になっています。
 	<p>ブラウザ確認テスト</p>
 	<input id="browsertest" type="button" name="check" value="確認">
 	<br />
+
+
 
 
 	<div id="friendList" style="width: 500px"></div>
@@ -91,10 +93,18 @@ JavaScriptが無効になっています。
 
 			$('#gettest').click(function() {
 
-				var article_id = 2;
-				var guid = 'aaa';
-
-				getAllArticleList(article_id, guid);
+//				var guid = "aaa";
+//
+//
+//				var worker = new Worker('js/worker.js');
+//				worker.addEventListener('message', function(e) {
+//					// ここではconsoleでJSONデータを表示する
+//				  console.log('DB data: ', e.data);
+//				}, false);
+//
+//				// スレッドに何か送りたいときはpostの引数に設定
+//				worker.postMessage({'cmd': 'IDEAllArticles', 'guid' : guid});
+				test('aaa');
 
 			});
 
@@ -109,16 +119,30 @@ JavaScriptが無効になっています。
 
 			$('#promisetest').click(function() {
 
-				if (window.Promise) {
-					console.log('true');
-				} else {
-					console.log('false');
-				}
+				initPromise();
+				// 実行例
+				getArticleAsync(null).then(function (value) {
+				    console.log(value);
+				})['catch'](function(error){
+				    console.error(error);
+				});
+
 			});
 
 			$('#workertest').click(function() {
 				if (window.Worker){
-					getArticleAsync();
+					initPromise();
+					// これが疑似的なPromiseオブジェクト→Deferredオブジェクト
+					var worker = new Worker('js/worker.js');
+					worker.addEventListener('message', function(e) {
+						// ここではconsoleでJSONデータを表示する
+					  console.log('JSON data: ', e.data);
+					}, true);
+
+					console.log('ENABLE');
+					// スレッドに何か送りたいときはpostの引数に設定
+					worker.postMessage({'cmd': 'article'});
+
 				} else {
 					console.log('WORKER:DISABLE');
 				}
