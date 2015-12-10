@@ -27,7 +27,7 @@ public class ArticleDAO {
 		int id = 0;
 		String hantei_sql = "SELECT * FROM articles WHERE url = ? AND articles.id = ?";
 		String id_sql = "SELECT id FROM mylists,users WHERE mylists.user_id = users.user_id AND users.user_id = ?";
-		String sql = "INSERT INTO articles(title,body,url,created,share_url,share_expior,id) VALUES(?,?,?,now(),null,null,?)";
+		String sql = "INSERT INTO articles(title,body,url,created,share_url,share_expior,id,modified) VALUES(?,?,?,now(),null,null,?,now())";
 		String sql2 = "SELECT LAST_INSERT_ID() AS LAST;";
 		String sql3 = "INSERT INTO article_image(article_id,uri,blob_image) VALUES(?,?,?)";
 		try {
@@ -110,7 +110,7 @@ public class ArticleDAO {
 	 */
 	public boolean update(ArticleDTO article) throws Exception {
 		PreparedStatement pstmt = null;
-		String sql = "UPDATE articles SET title = ?,body = ?,url = ?,created = now() ,share_url = null,share_expior = null WHERE article_id = ?";
+		String sql = "UPDATE articles SET title = ?,body = ?,url = ?,modified = now() ,share_url = null,share_expior = null WHERE article_id = ?";
 		boolean flag=false;
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -237,7 +237,8 @@ public class ArticleDAO {
 				article.setArticle_id(rs.getInt("article_id"));
 				article.setTitle(rs.getString("title"));
 				article.setUrl(rs.getString("url"));
-				article.setCreated(rs.getDate("created"));
+				article.setCreated(DateEncode.toDate(rs.getString("created")));
+				article.setModified(DateEncode.toDate(rs.getString("modified")));
 				article.setShare_url(rs.getString("share_url"));
 				article.setShare_expior(rs.getDate("share_expior"));
 				article.setThum(rs.getBytes("thum"));
@@ -410,7 +411,8 @@ public class ArticleDAO {
 				article.setArticle_id(rs.getInt("article_id"));
 				article.setTitle(rs.getString("title"));
 				article.setUrl(rs.getString("url"));
-				article.setCreated(rs.getDate("created"));
+				article.setCreated(DateEncode.toDate(rs.getString("created")));
+				article.setModified(DateEncode.toDate(rs.getString("modified")));
 				article.setShare_url(rs.getString("share_url"));
 				article.setShare_expior(rs.getDate("share_expior"));
 				article.setThum(rs.getBytes("thum"));
@@ -446,7 +448,8 @@ public class ArticleDAO {
 				articleDTO.setTitle(rs.getString("title"));
 				articleDTO.setBody(rs.getString("body"));
 				articleDTO.setUrl(rs.getString("url"));
-				articleDTO.setCreated(rs.getDate("created"));
+				articleDTO.setCreated(DateEncode.toDate(rs.getString("created")));
+				articleDTO.setModified(DateEncode.toDate(rs.getString("modified")));
 				articleDTO.setShare_url(rs.getString("share_url"));
 				articleDTO.setShare_expior(rs.getDate("share_expior"));
 				articleDTO.setMylist_id(rs.getInt("id"));
@@ -500,7 +503,8 @@ public class ArticleDAO {
 				article.setArticle_id(rs.getInt("article_id"));
 				article.setTitle(rs.getString("title"));
 				article.setUrl(rs.getString("url"));
-				article.setCreated(rs.getDate("created"));
+				article.setCreated(DateEncode.toDate(rs.getString("created")));
+				article.setModified(DateEncode.toDate(rs.getString("created")));
 				article.setShare_url(rs.getString("share_url"));
 				article.setShare_expior(rs.getDate("share_expior"));
 				article.setThum(rs.getBytes("thum"));

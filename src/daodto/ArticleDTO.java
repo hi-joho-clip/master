@@ -9,6 +9,7 @@ public class ArticleDTO {
 	private String body;
 	private String url;
 	private Date created;
+	private Date modified;
 	private String share_url;
 	private Date share_expior;
 	private int mylist_id;
@@ -23,6 +24,7 @@ public class ArticleDTO {
 		this.url=null;
 		this.created=null;
 		this.share_url=null;
+		this.modified=null;
 		this.share_expior=null;
 		this.thum=null;
 	}
@@ -105,6 +107,14 @@ public class ArticleDTO {
 
 	public void setThum(byte[] thum) {
 		this.thum = thum;
+	}
+
+	public Date getModified() {
+		return modified;
+	}
+
+	public void setModified(Date modified) {
+		this.modified = modified;
 	}
 
 }

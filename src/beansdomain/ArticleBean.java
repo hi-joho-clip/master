@@ -14,6 +14,7 @@ public class ArticleBean {
 	private String body;
 	private String url;
 	private Date created;
+	private Date modified;
 	private String share_url;
 	private Date share_expior;
 	private int mylist_id;
@@ -60,6 +61,7 @@ public class ArticleBean {
 			articleBean.setTitle(article.get(i).getTitle());
 			articleBean.setUrl(article.get(i).getUrl());
 			articleBean.setCreated(article.get(i).getCreated());
+			articleBean.setModified(article.get(i).getModified());
 			articleBean.setShare_url(article.get(i).getShare_url());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
 			articleBean.setMylist_id(article.get(i).getMylist_id());
@@ -83,6 +85,7 @@ public class ArticleBean {
 			articleBean.setTitle(article.get(i).getTitle());
 			articleBean.setUrl(article.get(i).getUrl());
 			articleBean.setCreated(article.get(i).getCreated());
+			articleBean.setModified(article.get(i).getModified());
 			articleBean.setShare_url(article.get(i).getShare_url());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
 			articleBean.setMylist_id(article.get(i).getMylist_id());
@@ -106,6 +109,7 @@ public class ArticleBean {
 			articleBean.setTitle(article.get(i).getTitle());
 			articleBean.setUrl(article.get(i).getUrl());
 			articleBean.setCreated(article.get(i).getCreated());
+			articleBean.setModified(article.get(i).getModified());
 			articleBean.setShare_url(article.get(i).getShare_url());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
 			articleBean.setMylist_id(article.get(i).getMylist_id());
@@ -178,6 +182,7 @@ public class ArticleBean {
 			articleBean.setTitle(articleDTO.getTitle());
 			articleBean.setUrl(articleDTO.getUrl());
 			articleBean.setCreated(articleDTO.getCreated());
+			articleBean.setModified(articleDTO.getModified());
 			articleBean.setShare_url(articleDTO.getShare_url());
 			articleBean.setShare_expior(articleDTO.getShare_expior());
 			articleBean.setMylist_id(articleDTO.getMylist_id());
@@ -204,6 +209,7 @@ public class ArticleBean {
 			articleBean.setTitle(article.get(i).getTitle());
 			articleBean.setUrl(article.get(i).getUrl());
 			articleBean.setCreated(article.get(i).getCreated());
+			articleBean.setModified(article.get(i).getModified());
 			articleBean.setShare_url(article.get(i).getShare_url());
 			articleBean.setMylist_id(article.get(i).getMylist_id());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
@@ -236,6 +242,7 @@ public class ArticleBean {
 			articleBean.setTitle(article.get(i).getTitle());
 			articleBean.setUrl(article.get(i).getUrl());
 			articleBean.setCreated(article.get(i).getCreated());
+			articleBean.setModified(article.get(i).getModified());
 			articleBean.setShare_url(article.get(i).getShare_url());
 			articleBean.setMylist_id(article.get(i).getMylist_id());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
@@ -252,6 +259,7 @@ public class ArticleBean {
 		this.articleDTO.setBody(this.body);
 		this.articleDTO.setUrl(this.url);
 		this.articleDTO.setCreated(this.created);
+		this.articleDTO.setModified(this.modified);
 		this.articleDTO.setShare_url(this.share_url);
 		this.articleDTO.setMylist_id(this.mylist_id);
 		this.articleDTO.setShare_expior(this.share_expior);
@@ -336,6 +344,12 @@ public class ArticleBean {
 	}
 	public void setMylist_id(int mylist_id) {
 		this.mylist_id = mylist_id;
+	}
+	public Date getModified() {
+		return modified;
+	}
+	public void setModified(Date modified) {
+		this.modified = modified;
 	}
 
 }
