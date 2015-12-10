@@ -48,32 +48,29 @@ function getArticle(article_id, guid) {
 /**
  * 記事の件数分ループさせて更新する
  *
+ *
+ * 記事の更新考察：PromiseALLで配列にして渡すので
+ * 取得と更新が1セットになるべき。
+ * あと重たいデータは画像の部分なので注意されたし
  * @param article
- *            記事本体のデータ
+ *            記事本体のデータ(JSON:1件分)
  * @param guid
  *            一時的なトークンID
  */
 function updateArticle(article, guid, page) {
 
-	if (KageDB.isAvailable) {
+	return new Promise(function(resolve, reject) {
 
 		// スキーマのインスタンス取得
 		var tutorial = getArticleInstance();
+		tutorial.onerror = function(event) {
+			// エラーの詳細をコンソールに出力する
+			reject(event.kage_message);
+		};
 
 		var modified = article.modified;
 
 		var share_id = 2;
-
-		// article = {
-		// "acceptdate" : null,
-		// "created" : 1448330151000,
-		// "friendList" : [],
-		// "friend_id" : 11,
-		// "friend_user_id" : 2000,
-		// "friendlists" : [],
-		// "modified" : null,
-		// "nickname" : "dummy7485"
-		// };
 
 		// 更新処理
 		tutorial.tx([ "article" ], "readwrite", function(tx, todo) {
@@ -89,10 +86,7 @@ function updateArticle(article, guid, page) {
 				console.log("done. key = " + key);
 			});
 		});
-
-	} else {
-		document.getElementById("friendList").innerHTML = "利用できません。";
-	}
+	});
 
 };
 
@@ -117,6 +111,10 @@ function getIDEArticleList(guid, page) {
 
 		console.log(offset_filter);
 		var tutorial = getArticleInstance();
+		tutorial.onerror = function(event) {
+			// エラーの詳細をコンソールに出力する
+			reject(event.kage_message);
+		};
 
 		tutorial.tx([ "article" ], function(tx, todo) {
 			todo.fetch(offset_filter, function(values) {
@@ -148,12 +146,11 @@ function getIDBAllArticleList(guid) {
 		var filter = {
 			filter : guid_filter,
 		};
-
 		// DBのインスタンス取得
 		var article_db = getArticleInstance();
 		article_db.onerror = function(event) {
-				// エラーの詳細をコンソールに出力する
-				reject(event.kage_message);
+			// エラーの詳細をコンソールに出力する
+			reject(event.kage_message);
 		};
 
 		article_db.tx([ "article" ], function(tx, todo) {
@@ -177,7 +174,8 @@ function getIDBAllArticleList(guid) {
 
 		function guid_filter(record) {
 			return record.guid === guid;
-		};
+		}
+		;
 	});
 
 };
@@ -215,7 +213,8 @@ function getArticleInstance() {
  * @returns {KageDB}
  */
 function getImageInstance() {
-	var tutorial = new KageDB({
+
+	var image = new KageDB({
 		name : "clip",
 		migration : {
 			1 : function(ctx, next) {
@@ -224,14 +223,11 @@ function getImageInstance() {
 					keyPath : "id",
 					autoIncrement : true
 				});
-				todo.createIndex("article_id", "article_id", {
-					unique : true
-				});
 				next();
 			}
 		}
 	});
-	return tutorial;
+	return image;
 };
 
 /**
@@ -266,7 +262,6 @@ function deleteDatabase(database) {
 function updateGuid(guid) {
 
 }
-
 
 function test(guid) {
 
