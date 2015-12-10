@@ -48,10 +48,10 @@ function getArticle(article_id, guid) {
 /**
  * 記事の件数分ループさせて更新する
  *
+ * 記事の更新考察：PromiseALLで配列にして渡すので 取得と更新が1セットになるべき。
  *
- * 記事の更新考察：PromiseALLで配列にして渡すので
- * 取得と更新が1セットになるべき。
  * あと重たいデータは画像の部分なので注意されたし
+ *
  * @param article
  *            記事本体のデータ(JSON:1件分)
  * @param guid
@@ -68,27 +68,30 @@ function updateArticle(article, guid, page) {
 			reject(event.kage_message);
 		};
 
-		var modified = article.modified;
-
-		var share_id = 2;
-
 		// 更新処理
 		tutorial.tx([ "article" ], "readwrite", function(tx, todo) {
 			todo.put({
 				article_id : article.article_id,
-				body : article,
+				article : article,
 				share_id : share_id,
 				guid : guid,
 				// 登録日時はサーバで管理するべき（ブラウザ依存は排除）
 				modified : article.modified
-			// ローカルストレージのGUIDを参照
 			}, function(key) {
 				console.log("done. key = " + key);
+				// 成功時はキーを渡す
+				resolve(key);
 			});
 		});
 	});
 
 };
+
+/**
+ * 取得したArticleリスト
+ * @param articles
+ */
+function updateIDBArticleList(articles) {}
 
 /**
  * データベース内の記事一覧のJSONを取得 なお画像は関係ない模様 (Promise)

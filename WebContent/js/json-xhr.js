@@ -29,6 +29,7 @@ function getURL(URL, param) {
 
 		// サーバからアーティクルリストを取得する
 
+		console.log(param);
 		if (URL === "") {
 			reject(new Error("url is null"));
 		}
@@ -36,6 +37,7 @@ function getURL(URL, param) {
 
 		req.open("POST", URL, true);
 		req.responseText = "json";
+		// 送る方もJSONにしちゃった
 		req.setRequestHeader("Content-Type",
 				"application/x-www-form-urlencoded");
 		// イベントリスナー
@@ -55,7 +57,7 @@ function getURL(URL, param) {
 			reject(new Error(req.statusText));
 		};
 		// タイムアウトは2000ms
-		req.timeout = 2000;
+		req.timeout = 7000;
 		req.ontimeout = function() {
 			reject(new Error("time out"));
 		};
@@ -64,6 +66,8 @@ function getURL(URL, param) {
 	});
 
 }
+
+
 
 /**
  * リクエストの準備のため
@@ -105,7 +109,7 @@ function getArticleAsync(param) {
 	var request = getRequest();
 	console.log(request);
 	// Promiseで実行順序を決定したまとめたメソッド(今回は取得のみ）
-	return request.articlelist(param).then(JSON.stringify);
+	return request.articlelist(param);
 };
 
 /**

@@ -54,7 +54,8 @@ JavaScriptが無効になっています。
 
 	<p>JSON取得のスタブのテスト</p>
 	<input id="geturltest" type="button" name="check" value="確認">
-	<input id="url" type="text" name="url">
+	<input id="url" type="text" name="url"><br />
+	<input id="param" type="text" name="param">
 	<br />
 
 
@@ -77,22 +78,22 @@ JavaScriptが無効になっています。
 				/**
 				 * operativeを使うのはサーバと通信するときのみ
 				 */
+				if (windows.Worker) {
+					initPromise();
+					// これが疑似的なPromiseオブジェクト→Deferredオブジェクト
+					var worker = new Worker('js/worker.js');
+					worker.addEventListener('message', function(e) {
+						// ここではconsoleでJSONデータを表示する
+					  console.log('JSON data: ', e.data);
+					}, true);
 
-				for (var i = 0; i < 30 ; i++) {
-					var article = {
-								"article_id" : i,
-								"acceptdate" : null,
-								"created" : 1448330151000,
-								"friendList" : [],
-								"friend_id" : 11,
-								"friend_user_id" : 2000,
-								"friendlists" : [],
-								"modified" : 1448330151000,
-								"nickname" : "dummy7485"
-					};
-					var guid = 'aaa';
-					updateArticle(article, guid);
+					console.log('ENABLE');
+					// スレッドに何か送りたいときはpostの引数に設定
+					worker.postMessage({'cmd': 'IDBupdate', 'guid': 'aaa'});
+
 				}
+
+
 			});
 
 			$('#gettest').click(function() {
@@ -157,11 +158,15 @@ JavaScriptが無効になっています。
 				var log = function(json){
 					console.log(json);
 				}
+
+
+				var param = 'json={"article_id" :"1", "modified": 1449729990000}, ';
+
 				// var param = {'user_name' = 'aaa'}
-				getJSON(url, null, log);
+				getJSON(url, param, log);
 			});
 
-		})
+		});
 	</script>
 
 </body>
