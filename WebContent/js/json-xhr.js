@@ -5,8 +5,6 @@
  * ・更新の必要があるリストを更新する
  */
 
-
-
 /**
  * プロミスの初期化処理（これはメインスレッドで呼ぶ必要がある）
  */
@@ -16,7 +14,6 @@ function initPromise() {
 		operative.Promise = ES6Promise.Promise;
 	}
 }
-
 
 /**
  * URLからJSONオブジェクトを取得する
@@ -31,6 +28,10 @@ function getURL(URL, param) {
 	return new Promise(function(resolve, reject) {
 
 		// サーバからアーティクルリストを取得する
+
+		if (URL === "") {
+			reject(new Error("url is null"));
+		}
 		var req = new XMLHttpRequest();
 
 		req.open("POST", URL, true);
@@ -64,13 +65,13 @@ function getURL(URL, param) {
 
 }
 
-
 /**
  * リクエストの準備のため
+ *
  * @returns {___anonymous1233_1573}
  */
 function getRequest() {
-	 /**
+	/**
 	 * 使用するリクエストはここに書いておくと便利なはず
 	 */
 	var request = {
@@ -84,14 +85,9 @@ function getRequest() {
 					.then(JSON.parse);
 		}
 
-
 	};
 	return request;
 }
-
-
-
-
 
 /**
  * 処理の最小単位として、機能ごとは必須 これらはすべてPromiseで書いて、ワーカーを利用する入口部分だけは
@@ -99,8 +95,7 @@ function getRequest() {
  *
  *
  *
- * 使い方：DB読み込み→読み込み完了→解析完了→本体ダウンロード完了→DB書き込み完了
- * 大まかにこれらの処理がプロミスチェーンされておく必要がある
+ * 使い方：DB読み込み→読み込み完了→解析完了→本体ダウンロード完了→DB書き込み完了 大まかにこれらの処理がプロミスチェーンされておく必要がある
  *
  * @param param:記事IDとか
  */
@@ -113,5 +108,18 @@ function getArticleAsync(param) {
 	return request.articlelist(param).then(JSON.stringify);
 };
 
+/**
+ * getURLをラップして使いやすくしてみました テスト用のスタブとして利用くださいまし
+ * コールバックとして関数を渡すと返り値もテキストとしてもらえるなり。
+ */
+function getJSON(URL, param, callback) {
 
+	getURL(URL, param).then(JSON.parse).then(function(value) {
+		return JSON.stringify(value, null, '  ');
+	}).then(function(json) {
+		callback(json);
+	})['catch'](function(error) {
 
+		console.log(error);
+	});
+}
