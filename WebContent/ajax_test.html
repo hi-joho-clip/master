@@ -154,13 +154,9 @@ JavaScriptが無効になっています。
 
 			$('#geturltest').click(function() {
 				var url = $(':text[name = "url"]').val();
-
-
-
 				var log = function(json){
 					console.log(json);
 				}
-
 				// var param = {'user_name' = 'aaa'}
 				getJSON(url, null, log);
 			});

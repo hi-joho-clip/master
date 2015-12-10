@@ -114,12 +114,15 @@ function getArticleAsync(param) {
  */
 function getJSON(URL, param, callback) {
 
-	getURL(URL, param).then(JSON.parse).then(function(value) {
-		return JSON.stringify(value, null, '  ');
-	}).then(function(json) {
+	getURL(URL, param).then(JSON.parse).then(function(json) {
 		callback(json);
 	})['catch'](function(error) {
 
 		console.log(error);
 	});
+
+	/*.then(function(value) {
+	*return JSON.stringify(value, null, '  ');
+	*})
+	*/
 }
