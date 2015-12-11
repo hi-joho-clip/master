@@ -19,11 +19,11 @@ function initPromise() {
  * URLからJSONオブジェクトを取得する
  *
  * @param URL
- * @param param
- *            必要なパラメータ なしの場合もOK
+ * @param param 必要なパラメータ article_idとかね
+ * @param guid 必須項目
  * @returns {Promise}
  */
-function getURL(URL, param) {
+function getURL(URL, guid ,param) {
 
 	return new Promise(function(resolve, reject) {
 
@@ -46,7 +46,11 @@ function getURL(URL, param) {
 			if (req.readyState == 4) {
 				if (req.status == 200) {
 					// var jsonResult = JSON.parse(xmlResult.responseText);
-					resolve(req.responseText);
+					// guid も渡す
+					// プロパティで返す
+					ret = {guid:guid, json:req.responseText};
+					console.log(ret);
+					resolve(ret);
 				} else {
 					// 正常に取得できない
 					reject(req.statusText);
@@ -56,13 +60,13 @@ function getURL(URL, param) {
 		req.onerror = function() {
 			reject(new Error(req.statusText));
 		};
-		// タイムアウトは2000ms
+		// タイムアウトは7000ms
 		req.timeout = 7000;
 		req.ontimeout = function() {
 			reject(new Error("time out"));
 		};
-		// paramないときはnullなんで大丈夫やろ
-		req.send(param);
+		// guidは通信するときは必ず送るのですよ
+		req.send(param + '&guid=' + guid);
 	});
 
 }
@@ -79,13 +83,13 @@ function getRequest() {
 	 * 使用するリクエストはここに書いておくと便利なはず
 	 */
 	var request = {
-		articlelist : function getArticleLists(param) {
-			return getURL("http://localhost:8080/clipMaster/mylist", param)
+		articlelist : function getArticleLists(guid) {
+			return getURL("http://localhost:8080/clipMaster/mylist", guid, null)
 					.then(JSON.parse);
 		},
-		article : function getArticle(param) {
+		article : function getArticle(guid,param) {
 			// JSONをテキストからオブジェクトへパースする必要がある。
-			return getURL("http://localhost:8080/clipMaster/viewarticle", param)
+			return getURL("http://localhost:8080/clipMaster/viewarticle", guid, param)
 					.then(JSON.parse);
 		}
 
@@ -103,13 +107,13 @@ function getRequest() {
  *
  * @param param:記事IDとか
  */
-function getArticleAsync(param) {
+function getArticleListAsync(guid) {
 
 	// URLなどのリクエスト取得
 	var request = getRequest();
 	console.log(request);
 	// Promiseで実行順序を決定したまとめたメソッド(今回は取得のみ）
-	return request.articlelist(param);
+	return request.articlelist(guid);
 };
 
 /**
@@ -118,7 +122,9 @@ function getArticleAsync(param) {
  */
 function getJSON(URL, param, callback) {
 
-	getURL(URL, param).then(JSON.parse).then(function(json) {
+	var guid = null;
+
+	getURL(URL,guid, param).then(JSON.parse).then(function(json) {
 		callback(json);
 	})['catch'](function(error) {
 

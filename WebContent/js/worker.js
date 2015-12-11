@@ -28,6 +28,8 @@ self.addEventListener('message', function(e) {
 		var param = data.param;
 		// タスクを開始
 		getArticleAsync(param).then(function(value) {
+
+		}).then(function(value) {
 			// 成功したときは値を返す
 			self.postMessage(value);
 		})['catch'](function(error) {
@@ -46,9 +48,21 @@ self.addEventListener('message', function(e) {
 		});
 		break;
 	case 'IDBupdate':
+
+		/**
+		 * 引数をプロパティにすればええ感じ。
+		 */
 		var guid = data.guid;
 
-		getArticleAsync(guid).then().then(function(values) {
+		getArticleListAsync(guid).then(function(values) {
+			// 仕方ないのでプロパティで返しています。
+			var value = {
+				guid : values.guid,
+				json : JSON.stringify(values.json)
+			};
+			console.log(value.json);
+			return value;
+		}).then(updateIDBArticleList()).then(function(values) {
 			self.postMessage(values);
 		})['catch'](function(error) {
 			self.postMessage(error);
