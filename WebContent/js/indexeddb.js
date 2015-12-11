@@ -16,7 +16,7 @@
  * @param article_id
  * @param guid
  */
-function getArticle(article_id, guid) {
+function getArticle( guid ,article_id) {
 
 	return new Promise(function(resolve, reject) {
 		if (KageDB.isAvailable()) {
@@ -57,10 +57,11 @@ function getArticle(article_id, guid) {
  * @param guid
  *            一時的なトークンID
  */
-function updateArticle(article, guid, page) {
+function updateArticle(guid, article) {
 
 	return new Promise(function(resolve, reject) {
 
+		console.log(guid);
 		// スキーマのインスタンス取得
 		var tutorial = getArticleInstance();
 		tutorial.onerror = function(event) {
@@ -88,10 +89,108 @@ function updateArticle(article, guid, page) {
 };
 
 /**
+ * ログイン後、クッキーにセットされたユーザIDとguidをIDBへ書き込む
+ *
+ * @param prop use_id, guid, startedを持つ
+ */
+function updateIDBUser(prop) {
+
+	return new Promise(function(resolve, reject) {
+
+		console.log(prop);
+		// スキーマのインスタンス取得
+		var tutorial = getUserInstance();
+		tutorial.onerror = function(event) {
+			// エラーの詳細をコンソールに出力する
+			reject(event.kage_message);
+		};
+		// 更新処理
+		tutorial.tx([ "user" ], "readwrite", function(tx, todo) {
+			todo.put({
+				user_id : prop.user_id,
+				guid : prop.guid,
+				started : prop.started
+			}, function(key) {
+				console.log("done. key = " + key);
+				// 成功時はキーを渡す
+				resolve(key);
+			});
+		});
+	});
+
+};
+
+
+/**
+ * 結局guidがわからなければならいものが、GUIDになっただけ。よってまったく意味なし。（廃止予定）
+ *
+ * @param guid
+ */
+function getIDBUser(user_id,guid) {
+
+	return new Promise(function(resolve, reject) {
+		var filter = {
+			filter : guid_filter,
+		};
+		// DBのインスタンス取得
+		var article_db = getArticleInstance();
+		article_db.onerror = function(event) {
+			// エラーの詳細をコンソールに出力する
+			reject(event.kage_message);
+		};
+
+		article_db.tx([ "article" ], function(tx, todo) {
+			todo.fetch(filter, function(values) {
+				if (values) {
+					// ボディやサムネの画像は削除しておく
+					// やっぱりループで一つ一つ削除するしかなさそう
+					for ( var i in values) {
+						delete values[i]["body"];
+					}
+					console
+							.log("values = "
+									+ JSON.stringify(values, null, ' '));
+					console.log("done.");
+					resolve(values);
+				} else {
+					reject(new Error("not found"));
+				}
+			});
+		});
+
+		function guid_filter(record) {
+			return record.guid === guid;
+		}
+		;
+	});
+
+};
+
+/**
  * 取得したArticleリスト
  * @param articles
  */
-function updateIDBArticleList(articles) {}
+function updateIDBArticleList(values) {
+
+	// json文字列にしてるので安心してループできるね。
+	console.log(values.json);
+	var articles = values.json;
+	var guid = values.guid;
+	var pro_list = null;
+	/*
+	 * PromiseAll（promiseサーバ通信→promise書き込み）これをリスト分回す（全部完了したら成功にする）
+	 * param : "article_id="?
+	 */
+	for (var art_json in articles) {
+		 param = "article_id=" + art_json.article_id;
+		 pro_list.push(request.articlelist(guid,param).then(updateArticleList(guid, art_json)));
+	}
+	if (pro_list) {
+		return Promise.all(pro_list);
+	} else {
+		return Promise.reject("no update");
+	}
+}
 
 /**
  * データベース内の記事一覧のJSONを取得 なお画像は関係ない模様 (Promise)
@@ -210,6 +309,33 @@ function getArticleInstance() {
 	return tutorial;
 };
 
+
+/**
+ * ユーザ情報のデータベーススキーマ
+ *
+ * @returns {KageDB}
+ */
+function getUserInstance() {
+	/*
+	 * id, user_id, guid, started
+	 */
+	var tutorial = new KageDB({
+		name : "clip",
+		version : 2,
+		migration : {
+			1 : function(ctx, next) {
+				var db = ctx.db;
+				var todo = db.createObjectStore("user", {
+					keyPath : "user_id",
+
+				});
+				next();
+			}
+		}
+	});
+	return tutorial;
+};
+
 /**
  * 画像のデータベーススキーマ
  *
@@ -260,12 +386,53 @@ function deleteDatabase(database) {
 /**
  * GUIDの更新を行う。 GUIDの期限が切れていた場合に、再度ログインした際更新する必要がある
  *
+ * メインスレッド利用可能
+ *
  * @param guid
  */
 function updateGuid(guid) {
 
+	return new Promise(function(resolve, reject) {
+
+		// スキーマのインスタンス取得
+		var tutorial = getArticleInstance();
+		tutorial.onerror = function(event) {
+			// エラーの詳細をコンソールに出力する
+			reject(event.kage_message);
+		};
+
+		// 更新処理
+		tutorial.tx([ "article" ], "readwrite", function(tx, todo) {
+			todo.put({
+				// 確かこれで全件更新できるはず
+				guid : guid,
+				// 登録日時はサーバで管理するべき（ブラウザ依存は排除）
+			}, function(key) {
+				console.log("done. key = " + key);
+				// 成功時はキーを渡す
+				resolve(key);
+			});
+		});
+	});
 }
 
+/**
+ * ユーザ追加のテストメソッド
+ */
+function UserAdd() {
+
+	var user_data = {
+			user_id : "aiueo",
+			guid : 12345,
+			started : 9999999
+	};
+
+	updateIDBUser(user_data).then(function(value) {
+		console.log("success:" + values);
+	})['catch'](function(error) {
+		console.error(error);
+	});
+}
 function test(guid) {
 
 	// GUIDがなかった場合はエラー

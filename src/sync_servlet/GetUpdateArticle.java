@@ -57,8 +57,10 @@ public class GetUpdateArticle extends HttpServlet {
 			//ログイン画面に戻る
 		}*/
 
-		int user_id = (int)session.getAttribute("user_id");
+		int user_id = 1;
+				//(int)session.getAttribute("user_id");
 		System.out.println("use_id: " + user_id);
+		System.out.println((String)request.getParameter("guid"));
 
 		// ブラウザからのリスト
 		String strJson = (String) request.getParameter("json");
@@ -73,6 +75,7 @@ public class GetUpdateArticle extends HttpServlet {
 		JsonArticle[] json_list;
 		try {
 
+			// これは手続き過ぎて修正必要か？処理がパラメータによって深刻なエラーを投げるのはよくない
 			if (strJson.equals(null)) {
 				json_list = JSON.decode(strJson, JsonArticle[].class);
 			} else {

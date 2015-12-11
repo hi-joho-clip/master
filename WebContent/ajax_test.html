@@ -27,7 +27,7 @@ JavaScriptが無効になっています。
 	<p>
 		ローカル参照のテスト <input id="localtest" type="button" name="DBFriend"
 			value="ローカル検索"><br /> <br />
-	<p>Indexed書き込み</p>
+	<p>Indexed書き込み（サーバから取得</p>
 	<input id="dbtest" type="button" name="check" value="確認">
 	<br />
 
@@ -52,6 +52,10 @@ JavaScriptが無効になっています。
 	<input id="browsertest" type="button" name="check" value="確認">
 	<br />
 
+	<p>IDBユーザ保存（廃止予定）</p>
+	<input id="idbuser" type="button" name="check" value="確認">
+	<br />
+
 	<p>JSON取得のスタブのテスト</p>
 	<input id="geturltest" type="button" name="check" value="確認">
 	<input id="url" type="text" name="url"><br />
@@ -74,6 +78,7 @@ JavaScriptが無効になっています。
 
 			});
 
+			// 書き込みテスト
 			$('#dbtest').click(function() {
 				/**
 				 * operativeを使うのはサーバと通信するときのみ
@@ -84,12 +89,14 @@ JavaScriptが無効になっています。
 					var worker = new Worker('js/worker.js');
 					worker.addEventListener('message', function(e) {
 						// ここではconsoleでJSONデータを表示する
+
+						// testDataなら書き込める
 					  console.log('JSON data: ', e.data);
 					}, true);
 
 					console.log('ENABLE');
 					// スレッドに何か送りたいときはpostの引数に設定
-					worker.postMessage({'cmd': 'IDBupdate', 'guid': 'aaa'});
+					worker.postMessage({'cmd': 'IDBupdate', 'guid': '123'});
 
 				}
 
@@ -151,6 +158,11 @@ JavaScriptが無効になっています。
 				} else {
 					console.log('WORKER:DISABLE');
 				}
+			});
+
+			$('#idbuser').click(function() {
+				initPromise();
+				UserAdd();
 			});
 
 			$('#geturltest').click(function() {
