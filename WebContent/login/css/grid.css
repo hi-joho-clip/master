@@ -11,13 +11,16 @@ html {
 
 body {
   font-family: sans-serif;
+
 }
 
 
 /* ---- grid ---- */
 
 .grid {
-  background: #DDD;
+  background: #fff;
+    max-width: 1000px;
+
 }
 
 /* clear fix */
@@ -32,7 +35,7 @@ body {
 /* 5 columns, percentage width */
 .grid-item,
 .grid-sizer {
-  width: 20%;
+  width: 200px;
 }
 
 .grid-item {
@@ -43,6 +46,6 @@ body {
   border-color: hsla(0, 0%, 0%, 0.7);
 }
 
-.grid-item--width2 { width: 40%; }
-.grid-item--3 { width: 40%;  height: 400px; }
+.grid-item--width2 { width: 400px; }
+.grid-item--3 { width: 400px;  height: 400px; }
 .grid-item--height2 { height: 200px; }

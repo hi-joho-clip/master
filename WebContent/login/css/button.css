@@ -1,0 +1,48 @@
+#menu{
+	float:left;
+    width: 59%;
+    margin: 0;
+}
+#menu ol{
+	font:14px 'Lucida Grande', Tahoma, Verdana, sans-serif; color:#aaa; text-shadow:1px 1px 0 rgb(0,0,0);
+	text-decoration: none;
+	text-align: left;
+	font-size: 14px;
+}
+
+#menu li a {
+			display: inline-block;
+			width: 100%;
+			height: 20px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+}
+#menu a:link { color: #ffffff; }
+#menu a:visited { color: #ffffff; }
+#menu a:hover { color: #ff0000; }
+#menu a:active { color: #ff0000; }
+
+#menu2{
+	float:left;
+	width: 41%;
+}
+#menu2 a:hover img {
+					opacity: 0.7;
+				   filter: alpha(opacity=70);
+				   -ms-filter: "alpha(opacity=70)";}
+.relative {
+    position: relative;
+}
+.absolute {
+    position: absolute;
+    top: 1px;
+    color: #fff;
+     font-size: 25px;
+    background: rgba(0,0,0,.5);
+    width: 100%;
+    max-width: 100%;
+     overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
