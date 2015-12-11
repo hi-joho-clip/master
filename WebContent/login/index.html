@@ -12,60 +12,17 @@
 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="css/articlemenu.css" rel="stylesheet">
 <link href="css/grid.css" rel="stylesheet">
-
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link href="css/button.css" rel="stylesheet"/>
+<link rel="stylesheet" href="css/mosaic.css" type="text/css"  />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="js/articlemenu.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="../js/jquery/isotope.pkgd.min.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery.cookie.js"></script>
 <script type="text/javascript" src="../js/article_script.js"></script>
 <script type="text/javascript" src="../js/json-xhr.js"></script>
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('.isotope').isotope({
-			itemSelector : '.item',
-			masonry : {
-				columnWidth : 100
-			}
-		});
-	});
-</script>
-
-<script>
-	var $grid;
-	$(document).ready(function() {
-
-		$grid = $('.grid').isotope({
-			itemSelector : '.grid-item',
-			percentPosition : true,
-			masonry : {
-				columnWidth : '.grid-sizer'
-			},
-		});
-		$('.grid').on('click', '.grid-item', function() {
-			getViewArticle(this.id);
-		});
-
-		switch ($.cookie("viewMode")) {
-		case "0"://マイリスト画面を表示しているとき
-			$('.grid').empty();
-			//getMyList();
-			getMyListTest();
-			break;
-		case "1"://お気に入り画面を表示しているとき
-			$('.grid').empty();
-			getFavList();
-			break;
-		case "2"://タグ画面を表示しているとき
-			$('.grid').empty();
-			getTagList();
-			break;
-
-		}
-	});
-</script>
+<script type="text/javascript" src="js/article.js"></script>
+<script type="text/javascript" src="js/mosaic.1.0.1.js"></script>
 </head>
 <body>
 
@@ -74,7 +31,6 @@
 		<div class="wh DSmenu">
 			<ul>
 				<a href="#" onclick="javascript:getMyList();return false;"><li>マイリスト</li></a>
-				<a href="#" onclick="javascript:getMyListTest();return false;"><li>マイリストテスト</li></a>
 				<a href="#" onclick="javascript:getFavList();return false;"><li>お気に入り</li></a>
 				<a href="#" onclick="javascript:getTagList();return false;"><li>タグ</li></a>
 				<a href="#"><li>フレンド</li></a>
@@ -87,16 +43,14 @@
 			</div>
 		</div>
 
-
-
-
-		<div class="container">
+		<div class="container" >
 			<div style="margin: 100px auto;">
 				<h1>記事 テスト</h1>
 
 				<h1>Isotope - masonry fluid sizing</h1>
-
-				<div class="grid" ></div>
+<div align="center">
+				<div class="grid" align="left"></div>
+</div>
 				<div class="viewArticle"></div>
 				<section class="section">
 					<div class="head-bar">
@@ -104,6 +58,7 @@
 							<h1 class="text-center">CLIP</h1>
 						</div>
 					</div>
+
 				</section>
 
 

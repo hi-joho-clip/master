@@ -5,15 +5,17 @@
 <title>CLIP</title>
 
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
-
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
 <link href="css/normalize.css" rel="stylesheet">
 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="css/articlemenu.css" rel="stylesheet">
 <link href="css/grid.css" rel="stylesheet">
+<link href="css/button.css" rel="stylesheet"/>
+<link rel="stylesheet" href="css/mosaic.css" type="text/css" media="screen" />
+<script type="text/javascript" src="js/mosaic.1.0.1.js"></script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="js/articlemenu.js"></script>
-<script type="text/javascript" src="../js/jquery/jquery-2.1.4.min.js"></script>
+
 <script type="text/javascript" src="../js/jquery/isotope.pkgd.min.js"></script>
 
 <script type="text/javascript">
@@ -40,6 +42,13 @@ $(document).ready( function() {
 
 });
 </script>
+<script type="text/javascript">
+			jQuery(function($){
+				$('.bar').mosaic({
+					animation	:	'slide'		//fade or slide
+				});
+		    });
+		</script>
 </head>
 <body>
 
@@ -71,7 +80,22 @@ $(document).ready( function() {
 
 <div class="grid">
   <div class="grid-sizer"></div>
-  <div class="grid-item grid-item--width2">2</div>
+  <div class="grid-item grid-item--width2 mosaic-block bar">
+			<div class="mosaic-overlay">
+						<div id="menu">
+								<ul>
+								<li><a href="https://www.google.co.jp/">http://localhost:8080/test/over/examples.html</a></li>
+								</ul>
+						</div>
+						<div id="menu2">
+								<a href="#"><img src="img/trash1.png" align="right"width="22"height="22"></img></a>
+								<a href="#"><img src="img/share1.png" align="right"width="22"height="22"></img></a>
+								<a href="#"><img src="img/tag1.png"align="right" width="22"height="22"></img></a>
+								<a href="#"><img src="img/star1.png" align="right"width="22"height="22"></img></a>
+						</div>
+			</div>
+			<div class="mosaic-backdrop"><img src="#"/></div>
+		</div>
   <div class="grid-item grid-item--height2">3</div>
   <div class="grid-item">4</div>
   <div class="grid-item grid-item--3">5</div>
