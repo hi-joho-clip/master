@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -25,7 +26,7 @@ public class testServlet {
 		/*
 		 *
 		 */
-		String param = "{\"article_id\" :\"1\",\"modified\":1449729990000}" +
+		String param = "{\"article_id\" :\"1\",\"modified\":149810990000}" +
 				",{\"article_id\" :\"2\",\"modified\":1449729990000}" +
 				",{\"article_id\" :\"3\",\"modified\":1449729990000}" +
 				",{\"article_id\" :\"4\",\"modified\":1449729990000}" +
@@ -34,7 +35,11 @@ public class testServlet {
 
 
 		req.setParameter("json", "[" + param + "]");
+		//req.setParameter("json", "[" + param + "]");
 		//req.setParameter( "args2", "2" );
+
+		HttpSession session = req.getSession();
+		session.setAttribute("user_id",1);
 
 		try {
 			//testUpdate.service(req, resp);

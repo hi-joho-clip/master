@@ -400,7 +400,7 @@ public class ArticleDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
-		String sql = "SELECT * FROM articles WHERE id = (SELECT id FROM mylists WHERE user_id = ?)";
+		String sql = "SELECT * FROM articles WHERE id = ANY (SELECT id FROM mylists WHERE user_id = ?)";
 
 		try {
 			pstmt = con.prepareStatement(sql);
