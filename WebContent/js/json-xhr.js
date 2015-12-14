@@ -19,11 +19,13 @@ function initPromise() {
  * URLからJSONオブジェクトを取得する
  *
  * @param URL
- * @param param 必要なパラメータ article_idとかね
- * @param guid 必須項目
+ * @param param
+ *            必要なパラメータ article_idとかね
+ * @param guid
+ *            必須項目
  * @returns {Promise}
  */
-function getURL(URL, guid ,param) {
+function getURL(URL, guid, param) {
 
 	return new Promise(function(resolve, reject) {
 
@@ -48,7 +50,10 @@ function getURL(URL, guid ,param) {
 					// var jsonResult = JSON.parse(xmlResult.responseText);
 					// guid も渡す
 					// プロパティで返す
-					ret = {guid:guid, json:req.responseText};
+					ret = {
+						guid : guid,
+						json : req.responseText
+					};
 					console.log(ret);
 					resolve(ret);
 				} else {
@@ -71,8 +76,6 @@ function getURL(URL, guid ,param) {
 
 }
 
-
-
 /**
  * リクエストの準備のため
  *
@@ -87,10 +90,10 @@ function getRequest() {
 			return getURL("http://localhost:8080/clipMaster/mylist", guid, null)
 					.then(JSON.parse);
 		},
-		article : function getArticle(guid,param) {
+		article : function getArticle(guid, param) {
 			// JSONをテキストからオブジェクトへパースする必要がある。
-			return getURL("http://localhost:8080/clipMaster/viewarticle", guid, param)
-					.then(JSON.parse);
+			return getURL("http://localhost:8080/clipMaster/viewarticle", guid,
+					param).then(JSON.parse);
 		}
 
 	};
@@ -117,22 +120,22 @@ function getArticleListAsync(guid) {
 };
 
 /**
- * getURLをラップして使いやすくしてみました テスト用のスタブとして利用くださいまし
- * コールバックとして関数を渡すと返り値もテキストとしてもらえるなり。
+ * getURLをラップして使いやすくしてみました テスト用のスタブとして利用くださいまし コールバックとして関数を渡すと返り値もテキストとしてもらえるなり。
  */
 function getJSON(URL, param, callback) {
 
 	var guid = null;
 
-	getURL(URL,guid, param).then(JSON.parse).then(function(json) {
-		callback(json);
+	getURL(URL, guid, param).then(function(ret) {
+		ret.json = JSON.parse(ret.json);
+		return ret;
+	}).then(function(json) {
+		callback(json.json);
 	})['catch'](function(error) {
-
 		console.log(error);
 	});
 
-	/*.then(function(value) {
-	*return JSON.stringify(value, null, '  ');
-	*})
-	*/
+	/*
+	 * .then(function(value) { return JSON.stringify(value, null, ' '); })
+	 */
 }
