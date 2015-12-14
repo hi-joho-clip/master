@@ -14,7 +14,7 @@ import net.arnx.jsonic.JSON;
 
 import beansdomain.Friend;
 
-@WebServlet("/SearchFriendListServlet")
+@WebServlet("/friendrequestServlet")
 public class FriendRequestServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
