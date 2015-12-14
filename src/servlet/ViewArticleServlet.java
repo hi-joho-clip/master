@@ -55,7 +55,9 @@ public class ViewArticleServlet extends HttpServlet {
 			//ログイン画面に戻る
 		}*/
 
+
 		//System.out.println("article_id"+Integer.parseInt(request.getParameter("article_id"))+"の記事");
+
 
 		/***************************************
 		******ある記事を選択して表示した際******

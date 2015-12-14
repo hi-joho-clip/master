@@ -19,21 +19,15 @@ function initPromise() {
  * URLからJSONオブジェクトを取得する
  *
  * @param URL
-<<<<<<< HEAD
- * @param param
- *            必要なパラメータ article_idとかね
- * @param guid
- *            必須項目
-=======
+
  * @param param 必要なパラメータ article_idとかね
  * @param guid 必須項目
->>>>>>> branch 'master' of https://github.com/hi-joho-clip/master.git
  * @returns {Promise}
  */
 
 
-function getURL(URL, guid ,param) {
 
+function getURL(URL, guid ,param) {
 
 	return new Promise(function(resolve, reject) {
 
@@ -58,7 +52,6 @@ function getURL(URL, guid ,param) {
 					// var jsonResult = JSON.parse(xmlResult.responseText);
 					// guid も渡す
 					// プロパティで返す
-
 
 					ret = {guid:guid, json:req.responseText};
 					console.log(ret);
@@ -98,7 +91,7 @@ function getRequest() {
 					.then(JSON.parse);
 		},
 
-		article : function getArticle(guid, param) {
+		article : function getArticle(guid,param) {
 
 			// JSONをテキストからオブジェクトへパースする必要がある。
 
@@ -134,8 +127,8 @@ function getArticleListAsync(guid) {
  */
 function getJSON(URL, param, callback) {
 
-	var guid = null;
 
+	var guid = null;
 	getURL(URL, guid, param).then(function(ret) {
 		ret.json = JSON.parse(ret.json);
 		return ret;
