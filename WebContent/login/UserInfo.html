@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja"
+	dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>CLIP</title>
+
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+
+<link href="css/normalize.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="css/articlemenu.css" rel="stylesheet">
+<link href="css/userinfo.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="js/articlemenu.js"></script>
+<script src="../js/usertest_script.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="../js/jquery/isotope.pkgd.min.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery.cookie.js"></script>
+<script type="text/javascript" src="../js/json-xhr.js"></script>
+</head>
+<body>
+
+	<section>
+
+		<div class="wh DSmenu">
+			<ul>
+				<a href="#" onclick="javascript:getMyList();return false;"><li>マイリスト</li></a>
+				<a href="#" onclick="javascript:getFavList();return false;"><li>お気に入り</li></a>
+				<a href="#" onclick="javascript:getTagList();return false;"><li>タグ</li></a>
+				<a href="#"><li>フレンド</li></a>
+
+			</ul>
+			<div class="DSbtn">
+				<div class="hambarg"></div>
+				<div class="hambarg"></div>
+				<div class="hambarg"></div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div style="margin: 200px auto;">
+					<div class="form-wrapper">
+						<h1>ユーザー情報</h1>
+						<br>
+						<p>
+						<div id="info">
+                        </div>
+						<div class="form-footer">
+
+							<!--　ユーザネーム変更画面  -->
+
+								<a href="UsernameChange.html">ユーザーネーム変更</a><br>
+
+							<!--　ニックネーム変更画面  -->
+
+								<a href="NicknameChange.html">ニックネーム変更</a><br>
+
+
+							<!--　メールアドレス変更画面  -->
+
+								<a href="MailChange.html">メールアドレス変更</a><br>
+
+							<!--　パスワード変更画面  -->
+
+								<a href="PassChange.html">パスワード変更</a><br><br>
+
+
+							<!--　記事画面  -->
+							<p>
+								<a href="Articletest.html">BACK</a>
+							</p>
+						</div>
+					</div>
+
+	<section class="section">
+						<div class="head-bar">
+							<div class="container-fluid">
+								<h1 class="text-center">CLIP</h1>
+							</div>
+						</div>
+					</section>
+                     </div>
+				</div>
+
+	</section>
+
+	<script>
+
+	$(document).ready(function() {
+		getUserList();
+	});
+
+	</script>
+
+
+</body>
+</html>
