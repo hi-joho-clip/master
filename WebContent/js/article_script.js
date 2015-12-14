@@ -1,10 +1,81 @@
-var item_class = [ "grid-item grid-item--width2",
+/*var item_class = [ "grid-item grid-item--width2",
 		"grid-item grid-item--height2", "grid-item", "grid-item grid-item--3",
 		"grid-item grid-item--width2 grid-item--height2",
 		"grid-item grid-item--width2", "grid-item grid-item--width2",
 		"grid-item grid-item--height2", "grid-item",
 		"grid-item grid-item--width2", "grid-item grid-item--height2",
-		"grid-item grid-item--3", "grid-item" ];
+		"grid-item grid-item--3", "grid-item" ];*/
+
+var item1 =[ "grid-item grid-item--width2",
+			           		"grid-item grid-item--height2",
+			                   "grid-item",
+			           		"grid-item",
+			           		"grid-item",
+			           		"grid-item grid-item--3",
+			                    "grid-item grid-item--width2",
+			           		"grid-item grid-item--height2",
+			                    "grid-item",
+			           		"grid-item grid-item--width2",
+			                    "grid-item grid-item--height2",
+			                   "grid-item grid-item--3",
+			                   "grid-item",
+			                   "grid-item grid-item--height2",
+			                    "grid-item",
+			                    "grid-item grid-item--height2",
+
+			                   "grid-item",
+			           		"grid-item",
+			           		"grid-item grid-item--width2",
+			                   "grid-item"
+		];
+
+var item2 = [ "grid-item",
+           		"grid-item",
+           		"grid-item grid-item--3",
+           		"grid-item grid-item--3",
+                    "grid-item",
+                   "grid-item",
+                   "grid-item 2",
+                    "grid-item",
+           		"grid-item grid-item--width2",
+                    "grid-item",
+                   "grid-item",
+           		"grid-item",
+                   "grid-item",
+                   "grid-item",
+                   "grid-item grid-item--3",
+           		"grid-item",
+           		"grid-item",
+                    "grid-item",
+           		"grid-item",
+                    "grid-item"
+
+		];
+
+var item3 =	[ 	 "grid-item grid-item--3",
+                    "grid-item grid-item--width2",
+           		"grid-item",
+           	 "grid-item",
+           		"grid-item grid-item--width2",
+           		"grid-item grid-item--width2",
+                   "grid-item",
+                   "grid-item grid-item--3",
+                    "grid-item",
+                    "grid-item",
+                   "grid-item",
+           		"grid-item",
+                 "grid-item grid-item--width2",
+           		"grid-item",
+                   "grid-item",
+                   "grid-item",
+           		"grid-item2",
+           		"grid-item ",
+                    "grid-item grid-item--width2",
+           		"grid-item"
+		];
+
+var item = [item1, item2, item3];
+
 //マイリスト
 function getMyList() {
 	$('.grid').empty();
@@ -12,13 +83,17 @@ function getMyList() {
 
 	var jsonParam = null;// 送りたいデータ
 	var URL = "http://localhost:8080/clipMaster/mylist";
+	document.getElementById('title').innerHTML='<h1>マイリスト</h1>';
 	var setappend = function(json) {
-
+		var random =Math.floor(Math.random()*3);
+		console.log(random);
 		// i=8, 876543210
+
 		$myList = $("<div class='grid-sizer'></div>");
 		$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
 		for ( var i = json.length - 1; i >= 0; i--) {
-			$myList = $("<div id='" + json[i].article_id + "'class='"+ item_class[i] + " mosaic-block bar'>" +
+
+			$myList = $("<div class='"+item[random][i] + " mosaic-block bar'>" +
 							"<div class='mosaic-overlay'>"+
 								"<div id='menu'>"+
 									"<ol>"+
@@ -26,16 +101,16 @@ function getMyList() {
 									"</ol>"+
 								"</div>"+
 								"<div id='menu2'>"+
-									"<a href='#'><img src='img/trash1.png' align='right'width='20'height='20'></img></a>"+
-									"<a href='#'><img src='img/share1.png' align='right'width='20'height='20'></img></a>"+
-									"<a href='#'><img src='img/tag1.png'align='right' width='20'height='20'></img></a>"+
-									"<a href='#'><img src='img/star1.png' align='right'width='20'height='20'></img></a>"+
+									"<a href='a'><img src='img/trash1.png' align='right'width='20'height='20'></img></a>"+
+									"<a href='i'><img src='img/share1.png' align='right'width='20'height='20'></img></a>"+
+									"<a href='u'><img src='img/tag1.png'align='right' width='20'height='20'></img></a>"+
+									"<a href='e'><img src='img/star1.png' align='right'width='20'height='20'></img></a>"+
 								"</div>"+
 							"</div>"+
-							"<div class='mosaic-backdrop relative'>" +
+							"<a href='../login/article.html?"+json[i].article_id+"'target='_blank'><div class='mosaic-backdrop relative'>" +
 								"<img src='http://www.kk1up.jp/wp-content/uploads/2015/07/201507290001-17.jpg'width='100%'height='100%'/>" +
 								"<p class='absolute'>"+json[i].title+"</p>" +
-							"</div>"+
+							"</div></a>"+
 						"</div>");
 			$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
 		}
@@ -47,47 +122,52 @@ function getMyList() {
 	};
 	getJSON(URL, jsonParam, setappend);
 }
-
-// お気に入り一覧
+//お気に入り
 function getFavList() {
 	$('.grid').empty();
 	$.cookie("viewMode", "1");// ブラウザを閉じたらクッキー削除
-	var xmlResult = new XMLHttpRequest();
+
 	var jsonParam = null;// 送りたいデータ
-	var xmlURL = "http://localhost:8080/clipMaster/favlist";
+	var URL = "http://localhost:8080/clipMaster/favlist";
+	document.getElementById('title').innerHTML='<h1>お気に入り</h1>';
+	var setappend = function(json) {
+		var random =Math.floor(Math.random()*3);
+		console.log(random);
+		// i=8, 876543210
+		$myList = $("<div class='grid-sizer'></div>");
+		$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
+		for ( var i = json.length - 1; i >= 0; i--) {
 
-	xmlResult.open("POST", xmlURL, true);
-	xmlResult.responseText = "json";
-	xmlResult.setRequestHeader("Content-Type",
-			"application/x-www-form-urlencoded");
-	// イベントリスナー
-	// readyState プロパティが変わるごとに自動的に呼ばれる関数(あるいは関数名)を格納する
-	xmlResult.onreadystatechange = checkStatus;
-
-	function checkStatus() {
-		// 4: リクエストは終了してレスポンスの準備が完了
-		if (xmlResult.readyState == 4) {
-			var $favList = "";
-			var jsonResult = JSON.parse(xmlResult.responseText);
-			$favList = $("<div class='grid-sizer'></div>");
-			$grid.prepend($favList).isotope('prepended', $favList).trigger(
-					'create');
-			for ( var i = jsonResult.length - 1; i >= 0; i--) {
-				$favList = $("<div id='" + jsonResult[i].article_id
-						+ "'class='" + item_class[i] + "'>" + "タイトル:"
-						+ jsonResult[i].title + "<br>" + "URL:"
-						+ jsonResult[i].url + "<br>" + "サムネイル："
-						+ jsonResult[i].thum + "<br>" + "</div>");
-				$grid.prepend($favList).isotope('prepended', $favList).trigger(
-						'create');
-			}
-			xmlResult = null;
-			jsonResult = null;
+			$favList = $("<div class='"+item[random][i] + " mosaic-block bar'>" +
+							"<div class='mosaic-overlay'>"+
+								"<div id='menu'>"+
+									"<ol>"+
+										"<li><a href='"+json[i].url+"'>"+json[i].url+"</a></li>"+
+									"</ol>"+
+								"</div>"+
+								"<div id='menu2'>"+
+									"<a href='a'><img src='img/trash1.png' align='right'width='20'height='20'></img></a>"+
+									"<a href='i'><img src='img/share1.png' align='right'width='20'height='20'></img></a>"+
+									"<a href='u'><img src='img/tag1.png'align='right' width='20'height='20'></img></a>"+
+									"<a href='e'><img src='img/star1.png' align='right'width='20'height='20'></img></a>"+
+								"</div>"+
+							"</div>"+
+							"<a href='../login/article.html?"+json[i].article_id+"'target='_blank'><div class='mosaic-backdrop relative'>" +
+								"<img src='http://www.kk1up.jp/wp-content/uploads/2015/07/201507290001-17.jpg'width='100%'height='100%'/>" +
+								"<p class='absolute'>"+json[i].title+"</p>" +
+							"</div></a>"+
+						"</div>");
+			$grid.prepend($favList).isotope('prepended', $favList).trigger('create');
 		}
-	}
-	xmlResult.send(jsonParam);
-	return true;
+		jQuery(function($){
+			$('.bar').mosaic({
+				animation	:	'slide'		//fade or slide
+			});
+	    });
+	};
+	getJSON(URL, jsonParam, setappend);
 }
+
 // シェア記事一覧
 function getShareList() {
 
@@ -234,36 +314,24 @@ function getTag() {
 }
 // 記事の表示（内容と画像の表示がよくわからん）
 function getViewArticle(article_id) {
-	// $('.grid').empty();
-	var xmlResult = new XMLHttpRequest();
+
 	var jsonParam = "article_id=" + article_id;// 送りたいデータ
-	var xmlURL = "http://localhost:8080/clipMaster/viewarticle";
+	var URL = "http://localhost:8080/clipMaster/viewarticle";
+	var viewArticle = "";
+	var setappend = function(json) {
+		alert("AA");
 
-	xmlResult.open("POST", xmlURL, true);
-	xmlResult.responseText = "json";
-	xmlResult.setRequestHeader("Content-Type",
-			"application/x-www-form-urlencoded");
-	// イベントリスナー
-	// readyState プロパティが変わるごとに自動的に呼ばれる関数(あるいは関数名)を格納する
-	xmlResult.onreadystatechange = checkStatus;
 
-	function checkStatus() {
-		// 4: リクエストは終了してレスポンスの準備が完了
-		if (xmlResult.readyState == 4) {
-			var viewArticle = "";
-			var jsonResult = JSON.parse(xmlResult.responseText);
+			viewArticle = "ID" + json[0].article_id + "<br>"
+					+ "タイトル:" + json[0].title + "<br>" + "内容:"
+					+ json[0].body + "<br>" + "画像："
+					+ json[0].blob_image + "<br><br>";
 
-			for ( var i = 0; i < jsonResult.length; i++) {
-				viewArticle += "ID" + jsonResult[i].article_id + "<br>"
-						+ "タイトル:" + jsonResult[i].title + "<br>" + "内容:"
-						+ jsonResult[i].body + "<br>" + "画像："
-						+ jsonResult[i].blob_image + "<br><br>";
-			}
-			// document.getElementById('viewArticle').innerHTML = viewArticle;
-			xmlResult = null;
-			jsonResult = null;
-		}
-	}
-	xmlResult.send(jsonParam);
-	return true;
+		document.getElementById('viewArticle').innerHTML = viewArticle;
+
+	};
+
+	getJSON(URL, jsonParam, setappend);
+	alert(viewArticle);
 }
+
