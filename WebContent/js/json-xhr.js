@@ -19,13 +19,21 @@ function initPromise() {
  * URLからJSONオブジェクトを取得する
  *
  * @param URL
+<<<<<<< HEAD
  * @param param
  *            必要なパラメータ article_idとかね
  * @param guid
  *            必須項目
+=======
+ * @param param 必要なパラメータ article_idとかね
+ * @param guid 必須項目
+>>>>>>> branch 'master' of https://github.com/hi-joho-clip/master.git
  * @returns {Promise}
  */
-function getURL(URL, guid, param) {
+
+
+function getURL(URL, guid ,param) {
+
 
 	return new Promise(function(resolve, reject) {
 
@@ -50,10 +58,9 @@ function getURL(URL, guid, param) {
 					// var jsonResult = JSON.parse(xmlResult.responseText);
 					// guid も渡す
 					// プロパティで返す
-					ret = {
-						guid : guid,
-						json : req.responseText
-					};
+
+
+					ret = {guid:guid, json:req.responseText};
 					console.log(ret);
 					resolve(ret);
 				} else {
@@ -90,10 +97,13 @@ function getRequest() {
 			return getURL("http://localhost:8080/clipMaster/mylist", guid, null)
 					.then(JSON.parse);
 		},
+
 		article : function getArticle(guid, param) {
+
 			// JSONをテキストからオブジェクトへパースする必要がある。
-			return getURL("http://localhost:8080/clipMaster/viewarticle", guid,
-					param).then(JSON.parse);
+
+			return getURL("http://localhost:8080/clipMaster/viewarticle", guid, param)
+					.then(JSON.parse);
 		}
 
 	};
