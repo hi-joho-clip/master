@@ -278,36 +278,15 @@ function getViewArticle(article_id){
 
 //ユーザ情報の表示
 function getUserList(){
-	$('.grid').empty();
-	$.cookie("viewMode" , "3");//ブラウザを閉じたらクッキー削除
-	var xmlResult = new XMLHttpRequest();
-	var jsonParam = null;//送りたいデータ
-	var xmlURL = "http://localhost:8080/clipMaster/viewuser";
 
-	xmlResult.open("POST", xmlURL, true);
-	xmlResult.responseText = "json";
-	xmlResult.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	// イベントリスナー
-	//readyState プロパティが変わるごとに自動的に呼ばれる関数(あるいは関数名)を格納する
-	xmlResult.onreadystatechange = checkStatus;
-
-	function checkStatus() {
-		//4: リクエストは終了してレスポンスの準備が完了
-		if (xmlResult.readyState == 4) {
-			var userList = "";
-			var jsonResult = JSON.parse(xmlResult.responseText);
-
-
-			userList = "ニックネーム:" + jsonResult.nickname + "<br>" +"メールアドレス:"+jsonResult.mailaddress+"<br>";
-			/*alert(jsonResult.nickname);*/
-			alert(userList);
-			document.getElementById('namae').innerHTML=userList;
-			xmlResult = null;
-			jsonResult = null;
-		}
-	}
-	xmlResult.send(jsonParam);
-	return true;
+	var jsonParam = null;// 送りたいデータ
+	var URL = "http://localhost:8080/clipMaster/viewuser";
+	var userList="";
+	var setappend = function(json) {
+		userList = "ニックネーム:" + json.nickname + "<br>" +"メールアドレス:"+json.mailaddress+"<br>";
+		document.getElementById('info').innerHTML=userList;
+	};
+	getJSON(URL, jsonParam, setappend);
 }
 
 
@@ -347,3 +326,74 @@ function getFriendList(){
 	return true;
 }
 
+//フレンド承認・否認表示
+function getFriendRequest(){
+	$('.grid').empty();
+	$.cookie("viewMode" , "5");//ブラウザを閉じたらクッキー削除
+	var xmlResult = new XMLHttpRequest();
+	var jsonParam = null;//送りたいデータ
+	var xmlURL = "http://localhost:8080/clipMaster/friendrequest";
+
+	xmlResult.open("POST", xmlURL, true);
+	xmlResult.responseText = "json";
+	xmlResult.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	// イベントリスナー
+	//readyState プロパティが変わるごとに自動的に呼ばれる関数(あるいは関数名)を格納する
+	xmlResult.onreadystatechange = checkStatus;
+
+	function checkStatus() {
+		//4: リクエストは終了してレスポンスの準備が完了
+		if (xmlResult.readyState == 4) {
+			var friendList = "";
+			var jsonResult = JSON.parse(xmlResult.responseText);
+
+
+			for ( var i = 0; i < jsonResult.length ; i++) {
+				friendList += "ID:" + jsonResult[i].friend_user_id + "<br>";
+			}
+
+			alert(friendList);
+			document.getElementById('namae').innerHTML=friendList;
+			xmlResult = null;
+			jsonResult = null;
+		}
+	}
+	xmlResult.send(jsonParam);
+	return true;
+}
+
+//フレンド検索
+function getFriendSearch(){
+	$('.grid').empty();
+	$.cookie("viewMode" , "6");//ブラウザを閉じたらクッキー削除
+	var xmlResult = new XMLHttpRequest();
+	var jsonParam = null;//送りたいデータ
+	var xmlURL = "http://localhost:8080/clipMaster/searchfriend";
+
+	xmlResult.open("POST", xmlURL, true);
+	xmlResult.responseText = "json";
+	xmlResult.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	// イベントリスナー
+	//readyState プロパティが変わるごとに自動的に呼ばれる関数(あるいは関数名)を格納する
+	xmlResult.onreadystatechange = checkStatus;
+
+	function checkStatus() {
+		//4: リクエストは終了してレスポンスの準備が完了
+		if (xmlResult.readyState == 4) {
+			var friendList = "";
+			var jsonResult = JSON.parse(xmlResult.responseText);
+
+
+			for ( var i = 0; i < jsonResult.length ; i++) {
+				friendList += "ID:" + jsonResult[i].friend_user_id + "<br>";
+			}
+
+			alert(friendList);
+			document.getElementById('namae').innerHTML=friendList;
+			xmlResult = null;
+			jsonResult = null;
+		}
+	}
+	xmlResult.send(jsonParam);
+	return true;
+}
