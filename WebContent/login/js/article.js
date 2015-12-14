@@ -1,4 +1,9 @@
-	$(document).ready(function() {
+/*
+ * Index.htmlの最初に行う処理
+ * */
+
+
+$(document).ready(function() {
 		$('.isotope').isotope({
 			itemSelector : '.item',
 			masonry : {
@@ -18,9 +23,8 @@
 				columnWidth : '.grid-sizer'
 			},
 		});
-		$('.grid').on('click', '.grid-item', function() {
-			getViewArticle(this.id);
-		});
+
+
 
 		switch ($.cookie("viewMode")) {
 		case "0"://マイリスト画面を表示しているとき
@@ -36,7 +40,6 @@
 			$('.grid').empty();
 			getTagList();
 			break;
-
 		}
 	});
 
