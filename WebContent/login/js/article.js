@@ -10,7 +10,10 @@ $(document).ready(function() {
 				columnWidth : 100
 			}
 		});
-	});
+});
+$(document).ready(function() {
+	$('#tag-it').tagit({fieldName:"tags[]"});
+});
 
 	var $grid;
 	$(document).ready(function() {
@@ -29,7 +32,6 @@ $(document).ready(function() {
 		switch ($.cookie("viewMode")) {
 		case "0"://マイリスト画面を表示しているとき
 			$('.grid').empty();
-			//getMyList();
 			getMyList();
 			break;
 		case "1"://お気に入り画面を表示しているとき

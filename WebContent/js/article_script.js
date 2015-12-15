@@ -1,8 +1,6 @@
 
 //マイリスト
 function getMyList() {
-	$('.grid').empty();
-	$.cookie("viewMode", "0");// ブラウザを閉じたらクッキー削除
 	var jsonParam = null;// 送りたいデータ
 	var URL = "http://localhost:8080/clipMaster/mylist";
 	document.getElementById('title').innerHTML='<h1>マイリスト</h1>';
@@ -10,8 +8,6 @@ function getMyList() {
 }
 //お気に入り
 function getFavList() {
-	$('.grid').empty();
-	$.cookie("viewMode", "1");// ブラウザを閉じたらクッキー削除
 	var jsonParam = null;// 送りたいデータ
 	var URL = "http://localhost:8080/clipMaster/favlist";
 	document.getElementById('title').innerHTML='<h1>お気に入り</h1>';
@@ -92,8 +88,6 @@ function getTagFavList() {
 }
 // タグ一覧
 function getTagList() {
-	$('.grid').empty();
-	$.cookie("viewMode", "2");// ブラウザを閉じたらクッキー削除
 	var xmlResult = new XMLHttpRequest();
 	var jsonParam = null;// 送りたいデータ
 	var xmlURL = "http://localhost:8080/clipMaster/taglist";

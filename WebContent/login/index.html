@@ -8,6 +8,7 @@
 <meta name="viewport"
 	content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
 
+
 <link href="css/normalize.css" rel="stylesheet">
 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="css/articlemenu.css" rel="stylesheet">
@@ -24,11 +25,45 @@
 <script type="text/javascript" src="js/article.js"></script>
 <script type="text/javascript" src="js/mosaic.1.0.1.js"></script>
 <script type="text/javascript" src="../js/create_list.js"></script>
+<script type="text/javascript" src="../js/tag_script.js"></script>
+
+<!-- jQueryUI -->
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+<!-- Tag-it CSS本体 -->
+<link href="../tag-it/tag-it-master/css/jquery.tagit.css" rel="stylesheet" type="text/css">
+<!-- jquery　本体-->
+
+<!-- jquery-UI　本体-->
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<!-- Tag-it JS本体 -->
+<script src="../tag-it/tag-it-master/js/tag-it.js" type="text/javascript" charset="utf-8"></script>
+    <!-- Load local lib and tests -->
+    <link rel="stylesheet" href="../tag-it/src/remodal.css">
+    <link rel="stylesheet" href="../tag-it/src/remodal-default-theme.css">
+    <script src="../tag-it/src/remodal.js"></script>
+<script src="../tag-it/src/remodal.js"></script>
+
+<style>
+      .remodal-overlay.without-animation.remodal-is-opening,
+      .remodal-overlay.without-animation.remodal-is-closing,
+      .remodal.without-animation.remodal-is-opening,
+      .remodal.without-animation.remodal-is-closing,
+      .remodal-bg.without-animation.remodal-is-opening,
+      .remodal-bg.without-animation.remodal-is-closing {
+        animation: none;
+      }
+    </style>
 </head>
 <body>
 
 	<section>
-
+<div class="remodal" data-remodal-id="modal">
+  <a data-remodal-action="close" class="remodal-close"></a>
+  <h2>タグの編集</h2>
+	<ol id="tag-it">
+	</ol>
+	<a class="remodal-confirm" href="#"onclick="javascript:addTagArticle(document.getElementsByName('tags[]'));">保存</a>
+</div>
 		<div class="wh DSmenu">
 			<ul>
 				<a href="UserInfo.html" ><li>ユーザ情報</li></a>
@@ -36,7 +71,6 @@
 				<a href="index.html" onclick="javascript:$.cookie('viewMode','1');"><li>お気に入り</li></a>
 				<a href="index.html" onclick="javascript:$.cookie('viewMode','2');"><li>タグ</li></a>
 				<a href="#"><li>フレンド</li></a>
-
 			</ul>
 			<div class="DSbtn">
 				<div class="hambarg"></div>
