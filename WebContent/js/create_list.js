@@ -86,7 +86,9 @@ var item = [item1, item2, item3];
 								"<div id='menu2'>"+
 									"<a href='a'><img src='img/trash1.png' align='right'width='20'height='20'></img></a>"+
 									"<a href='i'><img src='img/share1.png' align='right'width='20'height='20'></img></a>"+
-									"<a href='u'><img src='img/tag1.png'align='right' width='20'height='20'></img></a>"+
+									"<div class='remodal-bg'>"+
+									  "<a href='#'data-remodal-target='modal'onclick='return false;'><img src='img/tag1.png'align='right' width='20'height='20'></img></a>"+
+									"</div>"+
 									"<a href='e'><img src='img/star1.png' align='right'width='20'height='20'></img></a>"+
 								"</div>"+
 							"</div>"+
