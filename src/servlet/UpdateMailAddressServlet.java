@@ -81,7 +81,7 @@ public class UpdateMailAddressServlet extends HttpServlet {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-		out.println(JSON.encode(ErrorMessage , true).toString());
+		out.println(JSON.encode(userbean , true).toString());
 	}
 
 }
