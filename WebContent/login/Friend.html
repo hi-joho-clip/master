@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja"
+	dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>CLIP</title>
+
+
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+
+<link rel="stylesheet" type="text/css" href="css/friend.css">
+<link href="css/normalize.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="css/articlemenu.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="js/articlemenu.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="../js/jquery/isotope.pkgd.min.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery.cookie.js"></script>
+<script type="text/javascript" src="../js/json-xhr.js"></script>
+
+
+</head>
+
+<body>
+
+	<section>
+
+		<div class="wh DSmenu">
+			<ul>
+				<a href="UserInfo.html" ><li>ユーザ情報</li></a>
+				<a href="index.html" onclick="javascript:$.cookie('viewMode','0');"><li>マイリスト</li></a>
+				<a href="index.html" onclick="javascript:$.cookie('viewMode','1');"><li>お気に入り</li></a>
+				<a href="index.html" onclick="javascript:$.cookie('viewMode','2');"><li>タグ</li></a>
+				<a href="#"><li>フレンド</li></a>
+
+			</ul>
+			<div class="DSbtn">
+				<div class="hambarg"></div>
+				<div class="hambarg"></div>
+				<div class="hambarg"></div>
+			</div>
+		</div>
+
+	<div class="container" >
+			<div style="margin: 200px auto;">
+
+<div class="form-wrapper">
+
+
+
+  <!--　フレンド検索  -->
+ <form action="" method="post">
+	<label for="search" class="ui-hidden-accessible">検索</label>
+	<input type="search" name="search" id="search" placeholder="キーワードを入力してください" data-mini="true" data-clear-btn-text="入力クリア">
+	<input type="submit" value="検索" data-inline="true" data-mini="true">
+
+  </form>
+
+<br>
+   ここからフレンドリスト表示↓
+
+
+  <div class="form-footer">
+
+
+    <!--　マイリストに戻る  -->
+    <p><a href="index.html">BACK</a></p>
+  </div>
+
+  <section class="section">
+					<div class="head-bar">
+						<div class="container-fluid">
+							<h1 class="text-center">CLIP</h1>
+						</div>
+					</div>
+				</section>
+
+  </div>
+  </div>
+</div>
+</section>
+</body>
+</html>
