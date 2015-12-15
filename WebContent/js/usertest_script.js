@@ -292,8 +292,7 @@ function getUserList(){
 
 //フレンド登録者一覧
 function getFriendList(){
-	$('.grid').empty();
-	$.cookie("viewMode" , "4");//ブラウザを閉じたらクッキー削除
+
 	var xmlResult = new XMLHttpRequest();
 	var jsonParam = null;//送りたいデータ
 	var xmlURL = "http://localhost:8080/clipMaster/friendlist";
@@ -328,8 +327,6 @@ function getFriendList(){
 
 //フレンド承認・否認表示
 function getFriendRequest(){
-	$('.grid').empty();
-	$.cookie("viewMode" , "5");//ブラウザを閉じたらクッキー削除
 	var xmlResult = new XMLHttpRequest();
 	var jsonParam = null;//送りたいデータ
 	var xmlURL = "http://localhost:8080/clipMaster/friendrequest";
@@ -364,8 +361,6 @@ function getFriendRequest(){
 
 //フレンド検索
 function getFriendSearch(){
-	$('.grid').empty();
-	$.cookie("viewMode" , "6");//ブラウザを閉じたらクッキー削除
 	var xmlResult = new XMLHttpRequest();
 	var jsonParam = null;//送りたいデータ
 	var xmlURL = "http://localhost:8080/clipMaster/searchfriend";

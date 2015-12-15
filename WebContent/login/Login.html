@@ -1,12 +1,15 @@
 
+<script type="text/javascript" src="../js/jquery/jquery.cookie.js"></script>
+
 <link rel="stylesheet" type="text/css" href="css/Login.css">
+
 
 <div class="form-wrapper">
 
   <h1>Sign In</h1>
 
   <!--　ログイン  -->
-  <form  method="post" action="../login">
+  <form  method="post" action="../login/index.html">
     <div class="form-item">
       <!--　メールアドレスまたはユーザネーム  -->
       <label for="email"></label>
@@ -21,6 +24,8 @@
     <div class="button-panel">
       <input type="submit" class="button" title="Sign In" value="Sign In"></input>
     </div>
+
+
   </form>
   <div class="form-footer">
 
@@ -31,3 +36,9 @@
     <p><a href="ForgotPassword.html">Forgot password?</a></p>
   </div>
 </div>
+
+<script>
+$(document).ready(function() {
+	$.cookie('viewMode', '0');
+});
+</script>

@@ -1,33 +1,44 @@
 
+<script src="../js/user_script.js"></script>
+<script type="text/javascript" src="../js/json-xhr.js"></script>
 <link rel="stylesheet" type="text/css" href="css/Login.css">
 
 <div class="form-wrapper">
 
-  <h1>ニックネーム変更</h1><br>
+	<h1>ニックネーム変更</h1>
+	<br>
 
-  現在のニックネーム:*********<br>
+	<div id="info"></div>
 
-  <!--　変更  -->
-  <form  method="post" action="../updatenickname">
-    <div class="form-item">
-      <!--　ニックネーム  -->
-      <label for="newnickname"></label>
-      <input type="text" name="newnickname" required="required" placeholder="New Nick Name"></input>
-    </div>
-    <div class="form-item">
-      <!--　パスワード  -->
-      <label for="password"></label>
-      <input type="password" name="password" required="required" placeholder="Password"></input>
-    </div>
-      <!--　変更ボタン  -->
-    <div class="button-panel">
-      <input type="submit" class="button" title="Change" value="Change"></input>
-    </div>
-  </form>
-  <div class="form-footer">
+	<!--　変更  -->
+	<form method="post" action="../updatenickname">
+		<div class="form-item">
+			<!--　ニックネーム  -->
+			<label for="newnickname"></label> <input type="text"
+				name="newnickname" required="required" placeholder="New Nick Name"></input>
+		</div>
+		<div class="form-item">
+			<!--　パスワード  -->
+			<label for="password"></label> <input type="password" name="password"
+				required="required" placeholder="Password"></input>
+		</div>
+		<!--　変更ボタン  -->
+		<div class="button-panel">
+			<input type="submit" class="button" title="Change" value="Change"></input>
+		</div>
+	</form>
+	<div class="form-footer">
 
-   <!--　戻る  -->
-    <p><a href="UserData.html">BACK</a></p>
+		<!--　戻る  -->
+		<p>
+			<a href="UserData.html">BACK</a>
+		</p>
 
-  </div>
+	</div>
 </div>
+
+<script>
+	$(document).ready(function() {
+		NickName();
+	});
+</script>
