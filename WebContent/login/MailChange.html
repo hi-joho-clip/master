@@ -1,11 +1,16 @@
 
 <link rel="stylesheet" type="text/css" href="css/Login.css">
 
+<script src="../js/user_script.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery.cookie.js"></script>
+<script type="text/javascript" src="../js/json-xhr.js"></script>
+
 <div class="form-wrapper">
 
   <h1>メールアドレス変更</h1><br>
 
-  現在のメールアドレス:*********<br>
+  <div id="info"></div>
 
   <!--　変更  -->
   <form  method="post" action="../updatemailaddress">
@@ -32,7 +37,13 @@
   <div class="form-footer">
 
    <!--　戻る  -->
-    <p><a href="UserData.html">BACK</a></p>
+    <p><a href="UserInfo.html">BACK</a></p>
 
   </div>
 </div>
+
+<script>
+	$(document).ready(function() {
+		MailAddress();
+	});
+</script>

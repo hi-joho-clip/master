@@ -41,7 +41,7 @@ public class UpdatePasswordServlet extends HttpServlet {
 		boolean hantei = false;
 
 		//本来では、セッション情報のユーザIDを取得
-		int user_id = 2;
+		int user_id = 5;
 
 		String inputpass = request.getParameter("password");
 		String newpass = request.getParameter("newpassword");
@@ -62,6 +62,7 @@ public class UpdatePasswordServlet extends HttpServlet {
 				userbean.updatePassword();
 			}else{
 				//パスワードが一致しなかった処理
+				response.sendRedirect("http://localhost:8080/clipMaster/login/PassChange.html");
 			}
 
 		} catch (Exception e) {
@@ -69,6 +70,8 @@ public class UpdatePasswordServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		out.println(JSON.encode(userbean , true).toString());
+		response.sendRedirect("http://localhost:8080/clipMaster/login/UserInfo.html");
+
 	}
 
 }
