@@ -69,7 +69,7 @@ public class UpdateNicknameServlet extends HttpServlet {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-		out.println(JSON.encode(hantei , true).toString());
+		out.println(JSON.encode(userbean , true).toString());
 	}
 
 }

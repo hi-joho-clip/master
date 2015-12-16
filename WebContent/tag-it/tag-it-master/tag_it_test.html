@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<!-- jQueryUI -->
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+<!-- Tag-it CSS本体 -->
+<link href="css/jquery.tagit.css" rel="stylesheet" type="text/css">
+<!-- jquery　本体-->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<!-- jquery-UI　本体-->
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<!-- Tag-it JS本体 -->
+<script src="js/tag-it.js" type="text/javascript" charset="utf-8"></script>
+    <!-- Load local lib and tests -->
+    <link rel="stylesheet" href="../Remodal-master/src/remodal.css">
+    <link rel="stylesheet" href="../Remodal-master/src/remodal-default-theme.css">
+    <script src="../Remodal-master/src/remodal.js"></script>
+<script src="../Remodal-master/src/remodal.js"></script>
+    <style>
+      .remodal-overlay.without-animation.remodal-is-opening,
+      .remodal-overlay.without-animation.remodal-is-closing,
+      .remodal.without-animation.remodal-is-opening,
+      .remodal.without-animation.remodal-is-closing,
+      .remodal-bg.without-animation.remodal-is-opening,
+      .remodal-bg.without-animation.remodal-is-closing {
+        animation: none;
+      }
+    </style>
+
+
+</head>
+<body>
+
+<script>
+$(document).ready(function() {
+	$('#tag-it').tagit({fieldName:"tags[]",singleField: true});
+});
+</script>
+
+
+<div class="remodal-bg">
+  <div id="qunit"></div>
+  <a href="#" data-remodal-target="modal">Call</a>
+</div>
+
+<div class="remodal" data-remodal-id="modal">
+  <a data-remodal-action="close" class="remodal-close"></a>
+  <h1>タグの編集</h1>
+	<ul id="tag-it"></ul>
+	<a class="remodal-confirm" href="#"onclick="javascript:">保存</a>
+</div>
+
+</body>
+</html>
