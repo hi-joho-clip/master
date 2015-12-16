@@ -1,18 +1,15 @@
 
 //タグを追加
-function addTagArticle(tag_list) {
+function addTagArticle(tag_list,article_id) {
 
 	var xmlResult = new XMLHttpRequest();
-	/*for文による繰り返し処理で要素の内容を格納する*/
-	alert(tag_list.item(0).value);
-	var list="";
+	var arr = [];
+	arr[0]=article_id.item(0).value;//0番目にArticle_idを入れる。
 	for(var i=0;i<tag_list.length;i++){
-		list+=tag_list.item(i).value+"/";
+		arr[i+1]=tag_list.item(i).value;//1番目からタグが入る
 	}
-	var jsonParam="tag_list="+list;
+	var tag_list = "tag_list="+JSON.parse(JSON.stringify(arr));
 
-
-	console.log(jsonParam);
 	var xmlURL = "http://localhost:8080/clipMaster/addtagarticle";
 
 	xmlResult.open("POST", xmlURL, true);
@@ -29,8 +26,17 @@ function addTagArticle(tag_list) {
 
 		}
 	}
-	xmlResult.send(jsonParam);
+	xmlResult.send(tag_list);
 	return true;
 }
-
+//タグを取得
+function getTagArticle(article_id) {
+	getArticle_id(article_id);
+	var jsonParam = "article_id="+article_id;
+	var URL = "http://localhost:8080/clipMaster/gettag";
+	getJSON(URL, jsonParam, get_tag_article_lists);
+}
+function deleteTag(){
+	$('#tag-it').tagit('removeAll');
+}
 
