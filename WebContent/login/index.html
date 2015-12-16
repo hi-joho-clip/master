@@ -57,12 +57,14 @@
 <body>
 
 	<section>
-<div class="remodal" data-remodal-id="modal">
-  <a data-remodal-action="close" class="remodal-close"></a>
+<div class="remodal" data-remodal-id="modal" >
+	<div id="article_id"></div>
+  <a data-remodal-action="close" class="remodal-close" onclick="javascript:deleteTag();"></a>
   <h2>タグの編集</h2>
-	<ol id="tag-it">
-	</ol>
-	<a class="remodal-confirm" href="#"onclick="javascript:addTagArticle(document.getElementsByName('tags[]'));">保存</a>
+  <ol id="tag-it">
+  </ol>
+
+	<a class="remodal-confirm" href="#"onclick="javascript:addTagArticle(document.getElementsByName('tags[]'),document.getElementsByName('article_id'));deleteTag();">保存</a>
 </div>
 		<div class="wh DSmenu">
 			<ul>
