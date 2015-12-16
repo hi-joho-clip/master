@@ -66,9 +66,6 @@ public class AddUserServlet extends HttpServlet {
 				ErrorMessage = "登録完了しました。";
 			}
 
-
-
-
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();

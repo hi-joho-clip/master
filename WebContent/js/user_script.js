@@ -12,19 +12,6 @@ function addUser(){
 	getJSON(URL, jsonParam, setappend);
 }
 
-//パスワード再発行
-function forgotPassword(){
-
-	var jsonParam = null;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/adduser";
-	var userList="";
-	var setappend = function(json) {
-		userList = "ニックネーム:" + json.nickname + "<br>" +"メールアドレス:"+json.mailaddress+"<br>";
-		document.getElementById('info').innerHTML=userList;
-	};
-	getJSON(URL, jsonParam, setappend);
-}
-
 //ユーザ削除
 function deleteUser(){
 
