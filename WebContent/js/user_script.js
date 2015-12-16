@@ -1,5 +1,4 @@
 
-
 //新規登録後
 function addUser(){
 
@@ -7,20 +6,7 @@ function addUser(){
 	var URL = "http://localhost:8080/clipMaster/adduser";
 	var userList="";
 	var setappend = function(json) {
-		userList = "ニックネーム:" + json.nickname + "<br>" +"メールアドレス:"+json.mailaddress+"<br>";
-		document.getElementById('info').innerHTML=userList;
-	};
-	getJSON(URL, jsonParam, setappend);
-}
-
-//パスワード再発行
-function forgotPassword(){
-
-	var jsonParam = null;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/adduser";
-	var userList="";
-	var setappend = function(json) {
-		userList = "ニックネーム:" + json.nickname + "<br>" +"メールアドレス:"+json.mailaddress+"<br>";
+		userList = json.ErrorMessage +"<br>";
 		document.getElementById('info').innerHTML=userList;
 	};
 	getJSON(URL, jsonParam, setappend);
@@ -60,21 +46,7 @@ function NickName(){
 	var URL = "http://localhost:8080/clipMaster/viewuser";
 	var userList="";
 	var setappend = function(json) {
-		userList = "ニックネーム" + json.nickname;
-		document.getElementById('info').innerHTML=userList;
-	};
-	getJSON(URL, jsonParam, setappend);
-}
-
-
-//ニックネーム変更した後の画面
-function ChangeNickName(){
-
-	var jsonParam = null;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/updatenickname";
-	var userList="";
-	var setappend = function(json) {
-		userList = "ニックネーム:" + json.nickname + "<br>" +"メールアドレス:"+json.mailaddress+"<br>";
+		userList = "ニックネーム:" + json.nickname + "<br>";
 		document.getElementById('info').innerHTML=userList;
 	};
 	getJSON(URL, jsonParam, setappend);
@@ -87,35 +59,10 @@ function MailAddress(){
 	var URL = "http://localhost:8080/clipMaster/viewuser";
 	var userList="";
 	var setappend = function(json) {
-		userList = "メールアドレス"+ json.mailaddress;
+		userList = "メールアドレス:"+ json.mailaddress + "<br>";
 		document.getElementById('info').innerHTML=userList;
 	};
 	getJSON(URL, jsonParam, setappend);
 }
 
-//メールアドレス変更した後の画面
-function ChangeMailAddress(){
-
-	var jsonParam = null;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/updatemailaddress";
-	var userList="";
-	var setappend = function(json) {
-		userList = "ニックネーム:" + json.nickname + "<br>" +"メールアドレス:"+json.mailaddress+"<br>";
-		document.getElementById('info').innerHTML=userList;
-	};
-	getJSON(URL, jsonParam, setappend);
-}
-
-//パスワード変更した後の画面
-function ChangePassword(){
-
-	var jsonParam = null;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/updatepassword";
-	var userList="";
-	var setappend = function(json) {
-		userList = "ニックネーム:" + json.nickname + "<br>" +"メールアドレス:"+json.mailaddress+"<br>";
-		document.getElementById('info').innerHTML=userList;
-	};
-	getJSON(URL, jsonParam, setappend);
-}
 

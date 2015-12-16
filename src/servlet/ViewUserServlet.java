@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.arnx.jsonic.JSON;
 
@@ -26,9 +27,6 @@ public class ViewUserServlet extends HttpServlet {
 		perform(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		perform(request, response);
@@ -38,7 +36,7 @@ public class ViewUserServlet extends HttpServlet {
 
 		User userbeans = null;
 
-		int user_id = 2;
+		int user_id = 5;
 
 		response.setContentType("application/json; charset=utf-8");
 		response.setHeader("Cache-Control", "private");

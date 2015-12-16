@@ -38,13 +38,12 @@ public class UpdateMailAddressServlet extends HttpServlet {
 
 		User userbean = null;
 		UserAuth userauth = new UserAuth();
-		String ErrorMessage = null;
 		boolean hantei = false;
 
 		//本来では、セッション情報のユーザIDを取得
-		int user_id = 2;
+		int user_id = 5;
 
-		String inputmail = request.getParameter("newmail");
+		String inputmail = request.getParameter("newemail");
 		String inputpass = request.getParameter("password");
 
 
@@ -59,6 +58,8 @@ public class UpdateMailAddressServlet extends HttpServlet {
 			hantei = userauth.loginUserName(userbean.getUser_name(), inputpass);
 
 			if(hantei){
+				System.out.println("判定成功");
+				System.out.println(inputmail);
 				userbean.setMailaddress(inputmail);
 				userbean.setPassword(inputpass);
 				userbean.updateMailaddress();
@@ -67,21 +68,19 @@ public class UpdateMailAddressServlet extends HttpServlet {
 			}
 
 
-			//メッセージ処理
+			/*//メッセージ処理
 			if (userbean.getErrorMessages().containsKey("mailaddress")) {
 				//メールアドレスが既に存在していたのでメッセージを出す
 				System.out.println(userbean.getErrorMessages().get("mailaddress"));
-				ErrorMessage = userbean.getErrorMessages().get("mailaddress");
 			}else {
-
-				ErrorMessage = "更新できました。";
-			}
+			}*/
 
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
 		out.println(JSON.encode(userbean , true).toString());
+		response.sendRedirect("http://localhost:8080/clipMaster/login/UserInfo.html");
 	}
 
 }
