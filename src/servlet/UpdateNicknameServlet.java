@@ -41,7 +41,7 @@ public class UpdateNicknameServlet extends HttpServlet {
 		boolean hantei = false;
 
 		//本来では、セッション情報のユーザIDを取得
-		int user_id = 3;
+		int user_id = 5;
 
 		String inputname = request.getParameter("newnickname");
 		String inputpass = request.getParameter("password");
@@ -58,6 +58,7 @@ public class UpdateNicknameServlet extends HttpServlet {
 			hantei = userauth.loginUserName(userbean.getUser_name(), inputpass);
 
 			if(hantei){
+				System.out.println("判定成功");
 				userbean.setNickname(inputname);
 				userbean.setPassword(inputpass);
 				userbean.updateNickname();
@@ -70,6 +71,7 @@ public class UpdateNicknameServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		out.println(JSON.encode(userbean , true).toString());
+		response.sendRedirect("http://localhost:8080/clipMaster/login/UserInfo.html");
 	}
 
 }
