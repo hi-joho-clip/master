@@ -115,10 +115,9 @@ var get_mylists = function(json) {
 //"<a href='#'data-remodal-target='modal'onclick='javascript:getArticle_id("+json[i].article_id+");return false;'>" ;
 var get_favlists = function(json) {
 	var random =Math.floor(Math.random()*3);
-	console.log(random);
-	// i=8, 876543210
-	$myList = $("<div class='grid-sizer'></div>");
-	$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
+
+	$favList = $("<div class='grid-sizer'></div>");
+	$grid.prepend($favList).isotope('prepended', $favList).trigger('create');
 	for ( var i = json.length - 1; i >= 0; i--) {
 
 		$favList = $("<div class='"+item[random][i] + " mosaic-block bar'>" +
@@ -132,7 +131,7 @@ var get_favlists = function(json) {
 								"<a href='a'><img src='img/trash1.png' align='right'width='20'height='20'></img></a>"+
 								"<a href='i'><img src='img/share1.png' align='right'width='20'height='20'></img></a>"+
 								"<div class='remodal-bg'>"+
-								  "<a href='#'data-remodal-target='modal'onclick='javascript:getArticle_id("+json[i].article_id+");return false;'>" +
+								"<a href='#' data-remodal-target='modal' onclick='javascript:getTagArticle("+json[i].article_id+");return false;'>"+
 								  "<img src='img/tag1.png'align='right' width='20'height='20'></img>" +
 								  "</a>"+
 								"</div>"+
@@ -151,19 +150,4 @@ var get_favlists = function(json) {
 			animation	:	'slide'		//fade or slide
 		});
     });
-};
-var get_tag_article_lists = function(json){
-	for(var i=0;i<json.length;i++){
-		$('#tag-it').append('<li>' + json[i].tag_body +'</li>');
-	}
-	$(document).ready(function(){
-		$('#tag-it').tagit({fieldName:"tags[]"});
-	});
-
-
-	/*for(var i=0;i<json.length;i++){
-		$('#tag-it').tagit({ itemName:json[i].tag_body,fieldName: "tags[]"});
-	}	*/
-
-
 };

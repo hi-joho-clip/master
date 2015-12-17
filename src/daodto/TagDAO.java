@@ -108,7 +108,7 @@ public class TagDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<TagDTO> tagList = new ArrayList<TagDTO>();
-		String sql = "SELECT * FROM tags WHERE user_id = ?";
+		String sql = "SELECT * FROM tags WHERE tag_body <> 'お気に入り' AND user_id = ?";
 
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -139,7 +139,7 @@ public class TagDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<TagDTO> tagList = new ArrayList<TagDTO>();
-		String sql = "SELECT tag_id,tag_body FROM tags WHERE tags.user_id = ? AND tag_id IN "
+		String sql = "SELECT tag_id,tag_body FROM tags WHERE tags.tag_body <> 'お気に入り' AND tags.user_id = ? AND tag_id IN "
 				+ "(SELECT tag_id FROM articles A,article_tag T WHERE A.article_id = ? AND T.article_id = ?)";
 
 		try {

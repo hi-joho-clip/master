@@ -63,7 +63,7 @@ public class AddTagArticleServlet extends HttpServlet {
 		   System.out.println("tagbody:"+tag_body_list.get(i));
 		}
 
-	/*	try {
+	try {
 			ArticleBean articlebean = new ArticleBean();
 			articlebean.setArticle_id(article_id);
 			if(articlebean.addArticleTag(user_id,tag_body_list)){
@@ -74,8 +74,7 @@ public class AddTagArticleServlet extends HttpServlet {
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
-		}*/
+		}
 
 	}
-
 }

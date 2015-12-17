@@ -87,12 +87,12 @@ function getRequest() {
 	 */
 	var request = {
 		articlelist : function getArticleLists(guid) {
-			return getURL("http://localhost:8080/clipMaster/mylist", guid, null)
+			return getURL("http://10.16.153.2:8080/clipMaster/mylist", guid, null)
 					.then(JSON.parse);
 		},
 		article : function getArticle(guid, param) {
 			// JSONをテキストからオブジェクトへパースする必要がある。
-			return getURL("http://localhost:8080/clipMaster/viewarticle", guid,
+			return getURL("http://10.16.153.2:8080/clipMaster/viewarticle", guid,
 					param).then(JSON.parse);
 		}
 

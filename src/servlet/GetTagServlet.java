@@ -57,8 +57,7 @@ public class GetTagServlet extends HttpServlet {
 		****************************************/
 		//記事に付与されたタグを取得
 		int user_id =1;//sessionからuser_idを取得
-		//int article_id = Integer.parseInt(request.getParameter("article_id"));
-		int article_id =1;
+		int article_id = Integer.parseInt(request.getParameter("article_id"));
 		TagBean tagbean = new TagBean();
 		ArrayList<TagBean> tag_list = new ArrayList<TagBean>();
 		try {
