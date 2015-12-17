@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import beansdomain.TagBean;
-
 public class ArticleDAO {
 	private Connection con;
 
@@ -539,18 +537,18 @@ public class ArticleDAO {
 			con.setAutoCommit(false);
 			//tag_bodyがある限り
 			for(String tag_body : tag_body_list){
-				pstmt = con.prepareStatement(hantei_sql1);//送られてきたタグリストがあるならとってくる。
+				pstmt = con.prepareStatement(hantei_sql1);
 				pstmt.setString(1, tag_body);
 				pstmt.setInt(2, user_id);
 				rs = pstmt.executeQuery();
-				//検索結果がない場合、新規タグを登録する(tags)
+				//検索結果がない場合、新規タグを登録する
 				if (!rs.next()) {
 					pstmt=con.prepareStatement(sql1);
 					pstmt.setString(1, tag_body);
 					pstmt.setInt(2, user_id);
 					pstmt.executeUpdate();
 				}
-				pstmt = con.prepareStatement(get_tag_sql);//送られてきたタグリストのタグIDを取得する
+				pstmt = con.prepareStatement(get_tag_sql);
 				pstmt.setString(1, tag_body);
 				pstmt.setInt(2, user_id);
 				rs = pstmt.executeQuery();
@@ -560,11 +558,11 @@ public class ArticleDAO {
 			}
 			//tag_idがある限り
 			for(int tag_id : tag_id_list){
-				pstmt = con.prepareStatement(hantei_sql2);//その記事についてるタグがあればとってくる
+				pstmt = con.prepareStatement(hantei_sql2);
 				pstmt.setInt(1, article_id);
 				pstmt.setInt(2, tag_id);
 				rs = pstmt.executeQuery();
-				//検索結果がない場合、記事にタグを付与する(article_tag)
+				//検索結果がない場合、記事にタグを付与する
 				if(!rs.next()){
 					pstmt=con.prepareStatement(sql2);
 					pstmt.setInt(1, article_id);
@@ -572,45 +570,6 @@ public class ArticleDAO {
 					pstmt.executeUpdate();
 				}
 			}
-
-			String deletesql = "delete FROM article_tag WHERE id = ?";
-			String getid = "SELECT id FROM article_tag WHERE tag_id = ? AND article_id = ?;";
-			TagBean tagbean = new TagBean();
-			ArrayList<TagBean> tag_list = new ArrayList<TagBean>();
-			tag_list = tagbean.viewExistingTag(user_id, article_id);
-			//送られてきたタグのIDがある限り
-			System.out.println("taglistsize:"+tag_list.size());
-			//データベースに存在するタグリストがある限り
-			for(int i=0;i<tag_list.size();i++){
-				boolean deleteflag=true;
-				//送られてきたタグのIDがある限り
-				for(int tag_id : tag_id_list){
-					//同じであれば該当するのでフラグがfalseになる
-					if(tag_id==tag_list.get(i).getTag_id()){
-						deleteflag=false;
-						System.out.println("該当してるなう");
-						break;
-					}else{
-
-					}
-				}
-				//trueのままであればクライアントから送られたデータの中に該当しないので削除する
-				if(deleteflag){
-					System.out.println("GORI");
-					pstmt = con.prepareStatement(getid);//送られてきたタグリストのタグIDを取得する
-					pstmt.setInt(1, tag_list.get(i).getTag_id());
-					pstmt.setInt(2, article_id);
-					rs = pstmt.executeQuery();
-					if(rs.next()){
-						pstmt=con.prepareStatement(deletesql);//該当しないIDを削除
-						pstmt.setInt(1, rs.getInt("id"));
-						pstmt.executeUpdate();
-					}
-				}
-			}
-
-
-
 			con.commit();
 			flag = true;
 		} catch (Exception e) {
@@ -623,5 +582,4 @@ public class ArticleDAO {
 		}
 		return flag;
 	}
-
 }

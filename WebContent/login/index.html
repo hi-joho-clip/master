@@ -27,8 +27,6 @@
 <script type="text/javascript" src="../js/create_list.js"></script>
 <script type="text/javascript" src="../js/tag_script.js"></script>
 
-
-
 <!-- jQueryUI -->
 <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
 <!-- Tag-it CSS本体 -->
@@ -61,11 +59,12 @@
 	<section>
 <div class="remodal" data-remodal-id="modal" >
 	<div id="article_id"></div>
-  <a data-remodal-action="close" class="remodal-close" ></a>
+  <a data-remodal-action="close" class="remodal-close" onclick="javascript:deleteTag();"></a>
   <h2>タグの編集</h2>
-  <ol id="tag-it"></ol>
+  <ol id="tag-it">
+  </ol>
 
-	<a class="remodal-confirm" href="#"onclick="javascript:addTagArticle(document.getElementsByName('tags[]'),document.getElementsByName('article_id'));">保存</a>
+	<a class="remodal-confirm" href="#"onclick="javascript:addTagArticle(document.getElementsByName('tags[]'),document.getElementsByName('article_id'));deleteTag();">保存</a>
 </div>
 		<div class="wh DSmenu">
 			<ul>

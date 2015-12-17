@@ -14,7 +14,7 @@ import net.arnx.jsonic.JSON;
 
 import beansdomain.Friend;
 
-@WebServlet("/friendrequest")
+@WebServlet("/SearchFriendListServlet")
 public class FriendRequestServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -43,7 +43,7 @@ public class FriendRequestServlet extends HttpServlet {
 		ArrayList<Friend> request_friend_list = new ArrayList<Friend>();
 
 		// セッション情報の名前は変更する必要あり
-		int own_user_id = 15;
+		int own_user_id = 2;
 		// Integer.parseInt(request.getParameter("user_id"));
 
 		response.setContentType("application/json; charset=utf-8");
@@ -53,12 +53,10 @@ public class FriendRequestServlet extends HttpServlet {
 		try {
 			friend_list = friendbeans.getFriendList(own_user_id);
 
-
 			for (int i = 0; i < friend_list.size(); i++) {
 				if (friend_list.get(i).getStatus() == 1) {
 
 					request_friend_list.add(friend_list.get(i));
-
 
 					// setFriend_id(friend_list.get(i).getFriend_id());
 					// request_friend_list.get(i).setOwn_user_id(friend_list.get(i).getOwn_user_id());

@@ -31,16 +31,12 @@ function addTagArticle(tag_list,article_id) {
 }
 //タグを取得
 function getTagArticle(article_id) {
-	getArticle_id(article_id);//html内の<div id='article_id'>にhiddenでarticle_idを持たせる
+	getArticle_id(article_id);
 	var jsonParam = "article_id="+article_id;
 	var URL = "http://localhost:8080/clipMaster/gettag";
-	//記事に付与されているタグをテキストフィールドに表示
-	var get_tag_article_lists = function(json){
-		$('#tag-it').tagit('removeAll');
-		for(var i=0;i<json.length;i++){
-			$('#tag-it').tagit('createTag',json[i].tag_body);
-		}
-	};
 	getJSON(URL, jsonParam, get_tag_article_lists);
+}
+function deleteTag(){
+	$('#tag-it').tagit('removeAll');
 }
 

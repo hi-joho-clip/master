@@ -39,7 +39,7 @@ public class DenyRequestServlet extends HttpServlet {
 		/*int own_user_id = Integer.parseInt(request.getParameter("own_user_id"));
 		int friend_user_id = Integer.parseInt(request.getParameter("friend_user_id"));*/
 
-		int own_user_id = 5;
+		int own_user_id = 17;
 		int friend_user_id = 4;
 
 
@@ -49,18 +49,11 @@ public class DenyRequestServlet extends HttpServlet {
 
 		try {
 			flag = friendbeans.denyRequest(own_user_id, friend_user_id);
-
-			if(flag){
-				out.println(JSON.encode(flag, true).toString());
-				response.sendRedirect("http://localhost:8080/clipMaster/login/FriendBox.html");
-			}else{
-
-			}
-
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
+		out.println(JSON.encode(flag, true).toString());
 	}
 
 }

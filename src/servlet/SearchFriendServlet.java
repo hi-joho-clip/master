@@ -38,8 +38,10 @@ public class SearchFriendServlet extends HttpServlet {
 		Friend friendbeans = new Friend();
 		ArrayList<User> friend_list = new ArrayList<User>();
 
-		int own_user_id = 5;
-		String str = request.getParameter("mail_or_name");
+		int own_user_id = 1;
+		String str = "99" ;
+		//Integer.parseInt(request.getParameter("user_id"));
+		/*String str = request.getParameter("str");*/
 
 
 		response.setContentType("application/json; charset=utf-8");
