@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import sync_servlet.GetUpdateArticle.JsonArticle;
+
 import net.arnx.jsonic.JSON;
 
 import beansdomain.ArticleBean;
@@ -49,19 +51,19 @@ public class AddTagArticleServlet extends HttpServlet {
 		}*/
 
 
-		String[] List = request.getParameterValues("tag_list");
-		System.out.println(List.length);
+		String tag_list = request.getParameter("tag_list");
+		String[] tag_body = tag_list.split(",", 0);
 		ArrayList<String> tag_body_list = new ArrayList<String>();
 
-
 		int user_id =1;//sessionからuser_idを取得
-		int article_id =1;
-		/*for(int i=0; i<list.length; i++){
-		    tag_body_list.add(i,list[i]);
-		}*/
-		//System.out.println(tag_body_list.get(0));
-		/*
-		try {
+		int article_id =Integer.parseInt(tag_body[0]);
+		System.out.println("article_id:"+article_id);
+		for(int i=0; i<tag_body.length-1; i++){
+		    tag_body_list.add(i,tag_body[i+1]);
+		   System.out.println("tagbody:"+tag_body_list.get(i));
+		}
+
+	/*	try {
 			ArticleBean articlebean = new ArticleBean();
 			articlebean.setArticle_id(article_id);
 			if(articlebean.addArticleTag(user_id,tag_body_list)){
@@ -73,6 +75,7 @@ public class AddTagArticleServlet extends HttpServlet {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}*/
+
 	}
 
 }

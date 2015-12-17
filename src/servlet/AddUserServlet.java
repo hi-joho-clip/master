@@ -38,8 +38,8 @@ public class AddUserServlet extends HttpServlet {
 
 		String user_name = request.getParameter("username");
 		String nickname = request.getParameter("nickname");
-		String inputpass = request.getParameter("password"); //パスワードを取得
 		String inputmail = request.getParameter("email"); //メールアドレス取得
+		String inputpass = request.getParameter("password"); //パスワードを取得
 
 
 		response.setContentType("application/json; charset=utf-8");
@@ -48,9 +48,8 @@ public class AddUserServlet extends HttpServlet {
 
 		userbean.setUser_name(user_name);
 		userbean.setNickname(nickname);
-		userbean.setPassword(inputpass);
 		userbean.setMailaddress(inputmail);
-
+		userbean.setPassword(inputpass);
 
 		try {
 
@@ -64,9 +63,8 @@ public class AddUserServlet extends HttpServlet {
 			}
 			if(ErrorMessage == null){
 				userbean.addUser();
-				ErrorMessage = "無事新規作成できました。";
+				ErrorMessage = "登録完了しました。";
 			}
-
 
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック

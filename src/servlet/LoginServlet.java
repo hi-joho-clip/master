@@ -81,15 +81,16 @@ public class LoginServlet extends HttpServlet {
 				Cookie c_start_time = new Cookie("start_time",date.toString());
 				response.addCookie(c_start_time);
 
-				request.getRequestDispatcher("login/index.html").forward(request, response);
+
+				//マイリスト画面に移動
+				response.sendRedirect("http://localhost:8080/clipMaster/login/index.html");
 			} else {
 				// パスワードが一致しなかったので再入力させる。
-				request.getRequestDispatcher("login/Login.html").forward(request, response);
+				response.sendRedirect("http://localhost:8080/clipMaster/login/Login.html");
 			}
 		} else {
 			// IDが入力されなかったので再入力させる。
-			request.getRequestDispatcher("login/Login.html").forward(request,
-					response);
+			response.sendRedirect("http://localhost:8080/clipMaster/login/Login.html");
 		}
 	}
 }
