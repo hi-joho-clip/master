@@ -2,7 +2,7 @@
 //マイリスト
 function getMyList() {
 	var jsonParam = null;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/mylist";
+	var URL = "http://10.16.153.2:8080/clipMaster/mylist";
 	document.getElementById('title').innerHTML='<h1>マイリスト</h1>';
 	getJSON(URL, jsonParam, get_mylists);
 }
@@ -160,7 +160,7 @@ function getTag() {
 function getViewArticle(article_id) {
 
 	var jsonParam = "article_id=" + article_id;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/viewarticle";
+	var URL = "http://10.16.153.2:8080/clipMaster/viewarticle";
 	var viewArticle = "";
 	var setappend = function(json) {
 		alert(json.length);

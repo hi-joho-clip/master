@@ -1,3 +1,5 @@
+@import url(//fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,700,700italic);
+
 * {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
@@ -10,7 +12,7 @@ html {
 }
 
 body {
-  font-family: sans-serif;
+  font-family:Avenir , "Open Sans" , "Helvetica Neue" , Helvetica , Arial , Verdana , Roboto ,"ü‡ÉSÉVÉbÉN" ,  "ÉqÉâÉMÉmäpÉS Pro W3"  , "ÉÅÉCÉäÉI"  , "ÇlÇr ÇoÉSÉVÉbÉN"  ,  sans-serif;
 
 }
 
@@ -19,7 +21,7 @@ body {
 
 .grid {
   background: #fff;
-    max-width: 1000px;
+    max-width: 1500px;
 
 }
 
@@ -36,6 +38,7 @@ body {
 .grid-item,
 .grid-sizer {
   width: 200px;
+  margin: 4px 4px 4px 4px;
 }
 
 .grid-item {
@@ -44,8 +47,9 @@ body {
   background: #0D8;
   border: 2px solid #333;
   border-color: hsla(0, 0%, 0%, 0.7);
+
 }
 
-.grid-item--width2 { width: 400px; }
-.grid-item--3 { width: 400px;  height: 400px; }
-.grid-item--height2 { height: 200px; }
+.grid-item--width2 { width: 408px; }
+.grid-item--3 { width: 408px;  height: 408px; }
+

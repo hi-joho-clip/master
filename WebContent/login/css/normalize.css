@@ -1,5 +1,7 @@
 /*! normalize.css v3.0.0 | MIT License | git.io/normalize */
 
+@import url(//fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,700,700italic);
+
 /**
  * 1. Set default font family to sans-serif.
  * 2. Prevent iOS text size adjust after orientation change, without disabling
@@ -7,7 +9,7 @@
  */
 
 html {
-  font-family: sans-serif; /* 1 */
+  font-family:Avenir , "Open Sans" , "Helvetica Neue" , Helvetica , Arial , Verdana , Roboto ,"ŸàƒSƒVƒbƒN" ,  "ƒqƒ‰ƒMƒmŠpƒS Pro W3"  , "ƒƒCƒŠƒI"  , "‚l‚r ‚oƒSƒVƒbƒN"  ,  sans-serif;
   -ms-text-size-adjust: 100%; /* 2 */
   -webkit-text-size-adjust: 100%; /* 2 */
 }
