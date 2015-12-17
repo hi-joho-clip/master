@@ -2,7 +2,7 @@
 //マイリスト
 function getMyList() {
 	var jsonParam = null;// 送りたいデータ
-	var URL = "http://10.16.153.2:8080/clipMaster/mylist";
+	var URL = "http://localhost:8080/clipMaster/mylist";
 	document.getElementById('title').innerHTML='<h1>マイリスト</h1>';
 	getJSON(URL, jsonParam, get_mylists);
 }
