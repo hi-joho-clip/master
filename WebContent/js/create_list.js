@@ -76,7 +76,6 @@ function getArticle_id(article_id){
 
 var get_mylists = function(json) {
 	var random =Math.floor(Math.random()*3);
-
 	$myList = $("<div class='grid-sizer'></div>");
 	$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
 	for ( var i = json.length - 1; i >= 0; i--) {
@@ -89,14 +88,20 @@ var get_mylists = function(json) {
 								"</ol>"+
 							"</div>"+
 							"<div id='menu2'>"+
-								"<a href='a'><img src='img/trash1.png' align='right'width='20'height='20'></img></a>"+
-								"<a href='i'><img src='img/share1.png' align='right'width='20'height='20'></img></a>"+
 								"<div class='remodal-bg'>"+
-								 "<a href='#' data-remodal-target='modal' onclick='javascript:getTagArticle("+json[i].article_id+");return false;'>"+
+
+								"<a href='#' data-remodal-target='deletemodal'onclick='javascript:getArticle_id("+json[i].article_id+");return false;'>" +
+								"<img src='img/trash1.png' align='right'width='20'height='20'></img>" +
+								"</a>"+
+
+								"<a href='i'><img src='img/share1.png' align='right'width='20'height='20'></img></a>"+
+
+								 "<a href='#' data-remodal-target='tagmodal' onclick='javascript:getTagArticle("+json[i].article_id+");return false;'>"+
 								  "<img src='img/tag1.png'align='right' width='20'height='20'></img>" +
 								  "</a>"+
+
+								"<a href='#'><img src='img/star1.png' align='right'width='20'height='20'></img></a>"+
 								"</div>"+
-								"<a href='e'><img src='img/star1.png' align='right'width='20'height='20'></img></a>"+
 							"</div>"+
 						"</div>"+
 						"<a href='../login/article.html?"+json[i].article_id+"'target='_blank'><div class='mosaic-backdrop relative'>" +
@@ -131,11 +136,11 @@ var get_favlists = function(json) {
 								"<a href='a'><img src='img/trash1.png' align='right'width='20'height='20'></img></a>"+
 								"<a href='i'><img src='img/share1.png' align='right'width='20'height='20'></img></a>"+
 								"<div class='remodal-bg'>"+
-								"<a href='#' data-remodal-target='modal' onclick='javascript:getTagArticle("+json[i].article_id+");return false;'>"+
+								"<a href='#' data-remodal-target='tagmodal' onclick='javascript:getTagArticle("+json[i].article_id+");return false;'>"+
 								  "<img src='img/tag1.png'align='right' width='20'height='20'></img>" +
 								  "</a>"+
 								"</div>"+
-								"<a href='e'><img src='img/star1.png' align='right'width='20'height='20'></img></a>"+
+								"<a href='#' data-remodal-target='deletemodal'onclick='javascript:getTagArticle("+json[i].article_id+");return false;'><img src='img/star1.png' align='right'width='20'height='20'></img></a>"+
 							"</div>"+
 						"</div>"+
 						"<a href='../login/article.html?"+json[i].article_id+"'target='_blank'><div class='mosaic-backdrop relative'>" +
