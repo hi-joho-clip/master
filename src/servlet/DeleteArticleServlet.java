@@ -13,7 +13,7 @@ import beansdomain.ArticleBean;
 /**
  * Servlet implementation class ArticleDeleteServlet
  */
-@WebServlet("/DeleteArticleServlet")
+@WebServlet("/deletearticle")
 public class DeleteArticleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -50,6 +50,7 @@ public class DeleteArticleServlet extends HttpServlet {
 		int article_id = Integer.parseInt(request.getParameter("article_id"));
 		ArticleBean articlebean = new ArticleBean();
 		articlebean.setArticle_id(article_id);
+		System.out.println("delete");
 		try {
 			if(articlebean.deleteArticle()){
 				//成功したポップアップを表示

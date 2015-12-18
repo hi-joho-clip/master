@@ -172,4 +172,14 @@ function getViewArticle(article_id) {
 	};
 	getJSON(URL, jsonParam, setappend);
 }
+//記事の削除
+function deleteArticle(article_id) {
+	getArticle_id(article_id);//html内の<div id='article_id'>にhiddenでarticle_idを持たせる
+	var jsonParam = "article_id=" + article_id;// 送りたいデータ
+	var URL = "http://localhost:8080/clipMaster/deletearticle";
+	var delete_article = function() {
+
+	};
+	getJSON(URL, jsonParam, delete_article);
+}
 
