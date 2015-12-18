@@ -578,8 +578,7 @@ public class ArticleDAO {
 			TagBean tagbean = new TagBean();
 			ArrayList<TagBean> tag_list = new ArrayList<TagBean>();
 			tag_list = tagbean.viewExistingTag(user_id, article_id);
-			//送られてきたタグのIDがある限り
-			System.out.println("taglistsize:"+tag_list.size());
+
 			//データベースに存在するタグリストがある限り
 			for(int i=0;i<tag_list.size();i++){
 				boolean deleteflag=true;
@@ -588,7 +587,6 @@ public class ArticleDAO {
 					//同じであれば該当するのでフラグがfalseになる
 					if(tag_id==tag_list.get(i).getTag_id()){
 						deleteflag=false;
-						System.out.println("該当してるなう");
 						break;
 					}else{
 
@@ -596,7 +594,6 @@ public class ArticleDAO {
 				}
 				//trueのままであればクライアントから送られたデータの中に該当しないので削除する
 				if(deleteflag){
-					System.out.println("GORI");
 					pstmt = con.prepareStatement(getid);//送られてきたタグリストのタグIDを取得する
 					pstmt.setInt(1, tag_list.get(i).getTag_id());
 					pstmt.setInt(2, article_id);

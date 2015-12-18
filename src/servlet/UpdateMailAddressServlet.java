@@ -40,8 +40,7 @@ public class UpdateMailAddressServlet extends HttpServlet {
 		UserAuth userauth = new UserAuth();
 		boolean hantei = false;
 
-		//本来では、セッション情報のユーザIDを取得
-		int user_id = 5;
+		int user_id = Integer.parseInt(request.getParameter("user_id"));
 
 		String inputmail = request.getParameter("newemail");
 		String inputpass = request.getParameter("password");
@@ -58,8 +57,6 @@ public class UpdateMailAddressServlet extends HttpServlet {
 			hantei = userauth.loginUserName(userbean.getUser_name(), inputpass);
 
 			if(hantei){
-				System.out.println("判定成功");
-				System.out.println(inputmail);
 				userbean.setMailaddress(inputmail);
 				userbean.setPassword(inputpass);
 				userbean.updateMailaddress();

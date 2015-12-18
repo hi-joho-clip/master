@@ -40,8 +40,7 @@ public class UpdateNicknameServlet extends HttpServlet {
 		UserAuth userauth = new UserAuth();
 		boolean hantei = false;
 
-		//本来では、セッション情報のユーザIDを取得
-		int user_id = 5;
+		int user_id = Integer.parseInt(request.getParameter("user_id"));
 
 		String inputname = request.getParameter("newnickname");
 		String inputpass = request.getParameter("password");
@@ -58,7 +57,6 @@ public class UpdateNicknameServlet extends HttpServlet {
 			hantei = userauth.loginUserName(userbean.getUser_name(), inputpass);
 
 			if(hantei){
-				System.out.println("判定成功");
 				userbean.setNickname(inputname);
 				userbean.setPassword(inputpass);
 				userbean.updateNickname();
