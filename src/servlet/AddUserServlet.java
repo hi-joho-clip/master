@@ -64,6 +64,10 @@ public class AddUserServlet extends HttpServlet {
 			if(ErrorMessage == null){
 				userbean.addUser();
 				ErrorMessage = "登録完了しました。";
+				out.println(JSON.encode(ErrorMessage , true).toString());
+
+				//新規登録完了画面
+				response.sendRedirect("http://localhost:8080/clipMaster/login/.html");
 			}
 
 		} catch (Exception e) {

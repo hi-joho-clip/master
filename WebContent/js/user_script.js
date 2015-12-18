@@ -27,9 +27,10 @@ function deleteUser(){
 
 
 //ユーザ情報の表示
-function getUserList(){
+function getUserList(user_id){
 
-	var jsonParam = null;// 送りたいデータ
+	var jsonParam = "user_id="+user_id;// 送りたいデータ
+	console.log(jsonParam);
 	var URL = "http://localhost:8080/clipMaster/viewuser";
 	var userList="";
 	var setappend = function(json) {
@@ -40,9 +41,9 @@ function getUserList(){
 }
 
 //ニックネーム変更画面
-function NickName(){
+function NickName(user_id){
 
-	var jsonParam = null;// 送りたいデータ
+	var jsonParam = "user_id="+user_id;// 送りたいデータ
 	var URL = "http://localhost:8080/clipMaster/viewuser";
 	var userList="";
 	var setappend = function(json) {
@@ -53,9 +54,9 @@ function NickName(){
 }
 
 //メールアドレス変更画面
-function MailAddress(){
+function MailAddress(user_id){
 
-	var jsonParam = null;// 送りたいデータ
+	var jsonParam = "user_id="+user_id;// 送りたいデータ
 	var URL = "http://localhost:8080/clipMaster/viewuser";
 	var userList="";
 	var setappend = function(json) {
