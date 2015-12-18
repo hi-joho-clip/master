@@ -21,16 +21,37 @@
 <script type="text/javascript" src="../js/jquery/jquery.cookie.js"></script>
 <script type="text/javascript" src="../js/json-xhr.js"></script>
 <script type="text/javascript" src="../js/friend_script.js"></script>
+<link rel="stylesheet" href="../tag-it/src/remodal.css">
+    <link rel="stylesheet" href="../tag-it/src/remodal-default-theme.css">
+    <script src="../tag-it/src/remodal.js"></script>
+<script src="../tag-it/src/remodal.js"></script>
 
+<style>
+      .remodal-overlay.without-animation.remodal-is-opening,
+      .remodal-overlay.without-animation.remodal-is-closing,
+      .remodal.without-animation.remodal-is-opening,
+      .remodal.without-animation.remodal-is-closing,
+      .remodal-bg.without-animation.remodal-is-opening,
+      .remodal-bg.without-animation.remodal-is-closing {
+        animation: none;
+      }
+    </style>
 </head>
 
 <body>
-<div class="remodal" data-remodal-id="modal" >
-  <a data-remodal-action="close" class="remodal-close" onclick="javascript:acceptRequest();"></a>
-  <h2>フレンドボックス承認ボックス</h2>
-  <div id="friendregister">
-  </div>
-	<a class="remodal-confirm" href="#"onclick="javascript:;">登録</a> <a class="remodal-cancel" href="#">拒否</a>
+<div class="remodal" data-remodal-id="kyoka" >
+  <a data-remodal-action="close" class="remodal-close"></a>
+  <h2>フレンド承認</h2>
+  <!-- <div id="friendregister"> </div> -->
+
+	<a class="remodal-confirm" href="#"onclick="javascript:acceptRequest();">OK</a> <a class="remodal-cancel" href="#">キャンセル</a>
+</div>
+
+<div class="remodal" data-remodal-id="kyohi" >
+  <a data-remodal-action="close" class="remodal-close" ></a>
+  <h2>フレンド拒否</h2>
+
+	<a class="remodal-confirm" href="#"onclick="javascript:denyRequest();">OK</a> <a class="remodal-cancel" href="#">キャンセル</a>
 </div>
 	<section>
 <!-- <div class='remodal-bg'><anchor></div> -->

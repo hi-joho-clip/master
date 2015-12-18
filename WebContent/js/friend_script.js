@@ -18,14 +18,15 @@ function getFriendList(){
 function getFriendRequest(){
 	var jsonParam = null;//送りたいデータ
 	var URL = "http://localhost:8080/clipMaster/friendrequest";
-	var friendList = "";
+	var friendList = " <div class='remodal-bg'> ";
 	var setappend = function(json) {
 		for ( var i = 0; i < json.length ; i++) {
-			friendList +="ID" + json[i].nickname +
-			"<a onclick='http://localhost:8080/clipMaster/acceptrequest'>承認</a>" +
-			"<a onclick='http://localhost:8080/clipMaster/denyrequest'>拒否</a>" + "<br>";
+			friendList += json[i].nickname + "&emsp;" +
+			"<a href='#' data-remodal-target='kyoka'>承認</a>"  + "&emsp;" +
+			"<a href='#' data-remodal-target='kyohi'>拒否</a>" + "<br>";
 		}
-		document.getElementById('info').innerHTML=friendList;
+
+		document.getElementById('info').innerHTML=friendList + "</div>";
 	};
 	getJSON(URL, jsonParam, setappend);
 }
@@ -46,20 +47,6 @@ function getFriendSearch(){
 	getJSON(URL, jsonParam, setappend);
 }
 
-//フレンド確認画面
-function friendview(){
-	var jsonParam = null;//送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/viewfriend";
-	var friendList = "";
-	var setappend = function(json) {
-		friendList = json[i].nickname + "&emsp;";
-
-		document.getElementById('friendregister').innerHTML=friendList;
-	};
-	getJSON(URL, jsonParam, setappend);
-}
-
-
 
 //リクエストを申請後の画面
 function addRequest(){
@@ -68,7 +55,7 @@ function addRequest(){
 	var URL = "http://localhost:8080/clipMaster/addrequest";
 	var friendList = "";
 	var setappend = function(json) {
-		for ( var i = 0; i < jsonResult.length ; i++) {
+		for ( var i = 0; i < json.length ; i++) {
 			friendList += "ID:" + jsonResult[i].friend_user_id + "<br>";
 		}
 		document.getElementById('info').innerHTML=friendList;
@@ -83,7 +70,7 @@ function acceptRequest(){
 	var URL = "http://localhost:8080/clipMaster/acceptrequest";
 	var friendList = "";
 	var setappend = function(json) {
-		for ( var i = 0; i < jsonResult.length ; i++) {
+		for ( var i = 0; i < json.length ; i++) {
 			friendList += "ID:" + jsonResult[i].friend_user_id + "<br>";
 		}
 		document.getElementById('info').innerHTML=friendList;
@@ -113,7 +100,7 @@ function deleteRequest(){
 	var URL = "http://localhost:8080/clipMaster/deleterequest";
 	var friendList = "";
 	var setappend = function(json) {
-		for ( var i = 0; i < jsonResult.length ; i++) {
+		for ( var i = 0; i < json.length ; i++) {
 			friendList += "ID:" + jsonResult[i].friend_user_id + "<br>";
 		}
 		document.getElementById('info').innerHTML=friendList;
@@ -128,7 +115,7 @@ function deleteFriend(){
 	var URL = "http://localhost:8080/clipMaster/deletefriend";
 	var friendList = "";
 	var setappend = function(json) {
-		for ( var i = 0; i < jsonResult.length ; i++) {
+		for ( var i = 0; i < json.length ; i++) {
 			friendList += "ID:" + jsonResult[i].friend_user_id + "<br>";
 		}
 		document.getElementById('info').innerHTML=friendList;
