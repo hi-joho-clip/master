@@ -23,14 +23,11 @@ body {
 .form-wrapper {
   background: #fafafa;
   margin: 3em auto;
-  padding: 0 1em;
+  padding: 0 0;
   max-width: 400px;
 }
 
-h1 {
-  text-align: center;
-  padding: 1em 0;
-}
+
 
 form {
   padding: 0 1.5em;

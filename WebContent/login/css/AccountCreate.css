@@ -29,7 +29,7 @@ body {
 
 h1 {
   text-align: center;
-  padding: 1em 0;
+  padding: 0 0;
 }
 
 form {
@@ -37,7 +37,7 @@ form {
 }
 
 .form-item {
-  margin-bottom: 0;
+  margin-bottom: 0.75em;
   width: 100%;
 }
 
