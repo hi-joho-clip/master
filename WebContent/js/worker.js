@@ -48,21 +48,23 @@ self.addEventListener('message', function(e) {
 		});
 		break;
 	case 'IDBupdate':
+		// IDBの記事を最新に更新
 
 		/**
 		 * 引数をプロパティにすればええ感じ。
+		 */
+
+		/*
+		 * 処理流れ→自身のDBないのマイリスト一覧を送る →更新すべきリストが返ってくる →更新する分だけ記事取得（記事内に画像取得のXHR）
 		 */
 		var guid = data.guid;
 
 		getArticleListAsync(guid).then(function(values) {
 			// 仕方ないのでプロパティで返しています。
-			var value = {
-				guid : values.guid,
-				json : JSON.stringify(values.json)
-			};
-			console.log(value.json);
-			return value;
-		}).then(updateIDBArticleList()).then(function(values) {
+			values.json = JSON.stringify(values.json);
+			//resolve(values);
+			 return values;
+		}).then(updateIDBArticleList).then(function(values) {
 			self.postMessage(values);
 		})['catch'](function(error) {
 			self.postMessage(error);

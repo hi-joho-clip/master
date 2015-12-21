@@ -11,12 +11,13 @@
 <body>
 	<script type="text/javascript" src="js/jquery/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="js/test_ajax.js"></script>
-	<script type="text/javascript" src="js/indexeddb.js"></script>
 	<script type="text/javascript" src="js/lib/kagedb.js"></script>
 	<script type="text/javascript" src="js/browsersupport.js"></script>
 	<script type="text/javascript" src="js/lib/operative.js"></script>
 	<script type="text/javascript" src="js/lib/es6-promise.min.js"></script>
 	<script type="text/javascript" src="js/json-xhr.js"></script>
+	<script type="text/javascript" src="js/indexeddb.js"></script>
+
 
 	<noscript>
 JavaScriptが無効になっています。
@@ -27,7 +28,7 @@ JavaScriptが無効になっています。
 	<p>
 		ローカル参照のテスト <input id="localtest" type="button" name="DBFriend"
 			value="ローカル検索"><br /> <br />
-	<p>Indexed書き込み（サーバから取得</p>
+	<p>Indexed書き込み（DBテスト　Update</p>
 	<input id="dbtest" type="button" name="check" value="確認">
 	<br />
 
@@ -56,6 +57,10 @@ JavaScriptが無効になっています。
 	<input id="idbuser" type="button" name="check" value="確認">
 	<br />
 
+	<p>NETSTATE</p>
+	<input id="netstate" type="button" name="check" value="確認">
+	<br />
+
 	<p>JSON取得のスタブのテスト</p>
 	<input id="geturltest" type="button" name="check" value="確認">
 	<input id="url" type="text" name="url"><br />
@@ -71,6 +76,19 @@ JavaScriptが無効になっています。
 
 	<script>
 		$(window).load(function() {
+
+			$('#netstate').click(function() {
+
+				var isOnline = navigator.onLine;
+				if (navigator.onLine === true) {
+					  alert("current network status is online");
+					} else if (navigator.onLine === false) {
+					  alert("current network status is offline");
+					} else {
+					  alert("current network status is unknown");
+					}
+			});
+
 			// なんやかんやと処理
 			$('#dbdelete').click(function() {
 
@@ -80,25 +98,37 @@ JavaScriptが無効になっています。
 
 			// 書き込みテスト
 			$('#dbtest').click(function() {
-				/**
-				 * operativeを使うのはサーバと通信するときのみ
-				 */
-				if (window.Worker) {
-					initPromise();
-					// これが疑似的なPromiseオブジェクト→Deferredオブジェクト
-					var worker = new Worker('js/worker.js');
-					worker.addEventListener('message', function(e) {
-						// ここではconsoleでJSONデータを表示する
 
-						// testDataなら書き込める
-					  console.log('JSON data: ', e.data);
-					}, true);
+// if (window.Worker) {
+// initPromise();
+// // これが疑似的なPromiseオブジェクト→Deferredオブジェクト
+// var worker = new Worker('js/worker.js');
+// worker.addEventListener('message', function(e) {
+// // ここではconsoleでJSONデータを表示する
+//
+// // testDataなら書き込める
+// console.log('JSON data: ', e.data);
+// }, true);
+//
+// console.log('ENABLE');
+// // スレッドに何か送りたいときはpostの引数に設定
+// worker.postMessage({'cmd': 'IDBupdate', 'guid': '123'});
+//
+// }
 
-					console.log('ENABLE');
-					// スレッドに何か送りたいときはpostの引数に設定
-					worker.postMessage({'cmd': 'IDBupdate', 'guid': '123'});
+				initPromise();
+				var guid = '123';
 
-				}
+				var test_data = 'json=[{"article_id" :"2","modified":1449729990000}]';
+
+				// GUIDで検索、リクエスト送信、来たリクエストから記事を取得、保存。
+				//getIDBAllArticleList(guid).then
+				getArticleListAsync(test_data)
+				.then(updateIDBArticleList).then(function(values) {
+					console.log(values);
+				})['catch'](function(error) {
+					console.log(error);
+				});
 
 
 			});
