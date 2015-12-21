@@ -63,8 +63,10 @@ public class ViewArticleServlet extends HttpServlet {
 		//int article_id = Integer.parseInt(request.getParameter("article_id"));
 		int article_id = 1;
 		try {
-			if (request.getParameter("article_id").equals(null)) {
+			// これ逆じゃね？(1221ナガオ）
+			if (!request.getParameter("article_id").equals(null)) {
 				article_id = Integer.parseInt(request.getParameter("article_id"));
+				System.out.println("art_id:" + article_id);
 			}
 			System.out.println("guid:" + request.getParameter("guid"));
 		} catch (Exception e) {
@@ -72,12 +74,12 @@ public class ViewArticleServlet extends HttpServlet {
 		}
 
 		ArticleBean articlebean = new ArticleBean();
-		ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
+		ArticleBean article = new ArticleBean();
 		TagBean tagbean = new TagBean();
 		ArrayList<TagBean> tag_list = new ArrayList<TagBean>();
 		try {
 			articlebean.setArticle_id(article_id);
-			article_list = articlebean.viewArticle();
+			article = articlebean.viewArticle();
 			tag_list = tagbean.viewExistingTag(user_id, article_id);
 		} catch (Exception e) {
 			e.getStackTrace();
@@ -85,6 +87,6 @@ public class ViewArticleServlet extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");
 		response.setHeader("Cache-Control", "private");
 		PrintWriter out = response.getWriter();
-		out.println(JSON.encode(article_list, true).toString() + JSON.encode(tag_list, true).toString());
+		out.println(JSON.encode(article, true).toString() + JSON.encode(tag_list, true).toString());
 	}
 }

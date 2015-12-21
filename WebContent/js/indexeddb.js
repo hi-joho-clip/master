@@ -16,7 +16,7 @@
  * @param article_id
  * @param guid
  */
-function getArticle( guid ,article_id) {
+function getArticle(guid, article_id) {
 
 	return new Promise(function(resolve, reject) {
 		if (KageDB.isAvailable()) {
@@ -57,11 +57,14 @@ function getArticle( guid ,article_id) {
  * @param guid
  *            一時的なトークンID
  */
-function updateArticle(guid, article) {
+function updateArticle(article) {
 
 	return new Promise(function(resolve, reject) {
 
-		console.log(guid);
+		// GUIDをレスポンス内に含む
+		var guid = '123';// article.guid;
+
+		console.log('jsonarticle:' + JSON.stringify(article));
 		// スキーマのインスタンス取得
 		var tutorial = getArticleInstance();
 		tutorial.onerror = function(event) {
@@ -72,9 +75,9 @@ function updateArticle(guid, article) {
 		// 更新処理
 		tutorial.tx([ "article" ], "readwrite", function(tx, todo) {
 			todo.put({
-				article_id : article.article_id,
+				article_id : article,
 				article : article,
-				share_id : share_id,
+				share_id : article.share_id,
 				guid : guid,
 				// 登録日時はサーバで管理するべき（ブラウザ依存は排除）
 				modified : article.modified
@@ -91,7 +94,8 @@ function updateArticle(guid, article) {
 /**
  * ログイン後、クッキーにセットされたユーザIDとguidをIDBへ書き込む
  *
- * @param prop use_id, guid, startedを持つ
+ * @param prop
+ *            use_id, guid, startedを持つ
  */
 function updateIDBUser(prop) {
 
@@ -120,13 +124,12 @@ function updateIDBUser(prop) {
 
 };
 
-
 /**
  * 結局guidがわからなければならいものが、GUIDになっただけ。よってまったく意味なし。（廃止予定）
  *
  * @param guid
  */
-function getIDBUser(user_id,guid) {
+function getIDBUser(user_id, guid) {
 
 	return new Promise(function(resolve, reject) {
 		var filter = {
@@ -168,25 +171,30 @@ function getIDBUser(user_id,guid) {
 
 /**
  * 取得したArticleリスト
+ *
  * @param articles
  */
 function updateIDBArticleList(values) {
 
-	// json文字列にしてるので安心してループできるね。
-	console.log(values.json);
-	var articles = values.json;
-	var guid = values.guid;
-	var pro_list = null;
+	// GUIDはセッションから持ってくると値を渡すことがないので良い。
+	var jsons = JSON.parse(values);
+
+	var pro_list = [];
+
 	/*
-	 * PromiseAll（promiseサーバ通信→promise書き込み）これをリスト分回す（全部完了したら成功にする）
-	 * param : "article_id="?
+	 * PromiseAll（promiseサーバ通信→promise書き込み）これをリスト分回す（全部完了したら成功にする） param :
+	 * "article_id="?
 	 */
-	for (var art_json in articles) {
-		 param = "article_id=" + art_json.article_id;
-		 pro_list.push(request.articlelist(guid,param).then(updateArticleList(guid, art_json)));
+	for ( var art_json in jsons) {
+		param = "article_id=" + jsons[art_json].article_id;
+		console.log(param);
+		pro_list.push(getRequest().article(param).then(
+				updateArticle(art_json)));
 	}
 	if (pro_list) {
-		return Promise.all(pro_list);
+		return Promise.all(pro_list).then('success')['catch'](function(error) {
+			return (error);
+		});
 	} else {
 		return Promise.reject("no update");
 	}
@@ -252,6 +260,7 @@ function getIDBAllArticleList(guid) {
 		var article_db = getArticleInstance();
 		article_db.onerror = function(event) {
 			// エラーの詳細をコンソールに出力する
+			console.log(event);
 			reject(event.kage_message);
 		};
 
@@ -267,6 +276,7 @@ function getIDBAllArticleList(guid) {
 							.log("values = "
 									+ JSON.stringify(values, null, ' '));
 					console.log("done.");
+					// 変える値は純粋に持っている記事一覧のJSON
 					resolve(values);
 				} else {
 					reject(new Error("not found"));
@@ -290,17 +300,16 @@ function getIDBAllArticleList(guid) {
 function getArticleInstance() {
 	var tutorial = new KageDB({
 		name : "clip",
-		version : 2,
+		version : 3,
 		migration : {
 			1 : function(ctx, next) {
 				var db = ctx.db;
 				var todo = db.createObjectStore("article", {
 					keyPath : "article_id",
-					autoIncrement : true
+					unique : true
 				});
-				// todo.createIndex("article_id", "article_id", {
-				// unique : true
-				// });
+//				 todo.createIndex("article", "article_id", {
+//				 });
 				next();
 			}
 		}
@@ -308,7 +317,6 @@ function getArticleInstance() {
 
 	return tutorial;
 };
-
 
 /**
  * ユーザ情報のデータベーススキーマ
@@ -406,7 +414,7 @@ function updateGuid(guid) {
 			todo.put({
 				// 確かこれで全件更新できるはず
 				guid : guid,
-				// 登録日時はサーバで管理するべき（ブラウザ依存は排除）
+			// 登録日時はサーバで管理するべき（ブラウザ依存は排除）
 			}, function(key) {
 				console.log("done. key = " + key);
 				// 成功時はキーを渡す
@@ -422,9 +430,9 @@ function updateGuid(guid) {
 function UserAdd() {
 
 	var user_data = {
-			user_id : "aiueo",
-			guid : 12345,
-			started : 9999999
+		user_id : "aiueo",
+		guid : 12345,
+		started : 9999999
 	};
 
 	updateIDBUser(user_data).then(function(value) {
