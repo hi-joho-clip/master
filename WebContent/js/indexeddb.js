@@ -147,16 +147,17 @@ function getIDBUser(user_id, guid) {
 		article_db.tx([ "article" ], function(tx, todo) {
 			todo.fetch(filter, function(values) {
 				if (values) {
+					values = JSON.parse(values);
 					// ボディやサムネの画像は削除しておく
 					// やっぱりループで一つ一つ削除するしかなさそう
-					for ( var i in values) {
-						delete values[i]["body"];
+					for ( var val in values) {
+						delete val["article"];
+						console.log(val);
 					}
-					console
-							.log("values = "
-									+ JSON.stringify(values, null, ' '));
-					console.log("done.");
-					resolve(values);
+
+					ret = JSON.stringify(values, null, ' ');
+					console.log("getIDBusedone.");
+					resolve(ret);
 				} else {
 					reject(new Error("not found"));
 				}

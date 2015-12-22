@@ -64,7 +64,7 @@ public class GetUpdateArticle extends HttpServlet {
 
 		// ブラウザからのリスト
 		String strJson = (String) request.getParameter("json");
-		System.out.println(strJson);
+		System.out.println("JSONSTRING" + strJson);
 
 		//記事IDと日付を格納
 		HashMap<Integer, JsonArticle> article_map = new HashMap<Integer, JsonArticle>();
