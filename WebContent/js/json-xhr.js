@@ -46,7 +46,7 @@ function getURL(URL, param) {
 			if (req.readyState == 4) {
 				if (req.status == 200) {
 
-					console.log(req.responseText);
+					//console.log(req.responseText);
 					resolve(req.responseText);
 				} else {
 					// 正常に取得できない
@@ -111,8 +111,10 @@ function getArticleListAsync(param) {
 
 	// URLなどのリクエスト取得
 	// 問い合わせはGUIDいらないんじゃね？セッションやし。
+	// Null、空の場合は全件取得用の
+
 	var request = getRequest();
-	console.log('getArticleAsync:' + request);
+	console.log('param' + JSON.stringify(param));
 	// Promiseで実行順序を決定したまとめたメソッド(今回は取得のみ）
 	return request.updatelist(param);
 };

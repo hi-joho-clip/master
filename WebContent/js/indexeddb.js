@@ -57,14 +57,16 @@ function getArticle(guid, article_id) {
  * @param guid
  *            一時的なトークンID
  */
-function updateArticle(article) {
+function updateArticle(json_article) {
 
 	return new Promise(function(resolve, reject) {
 
 		// GUIDをレスポンス内に含む
 		var guid = '123';// article.guid;
 
-		console.log('jsonarticle:' + JSON.stringify(article));
+		var article = json_article;
+
+		console.log('jsonarticle:' + article['article_id']);
 		// スキーマのインスタンス取得
 		var tutorial = getArticleInstance();
 		tutorial.onerror = function(event) {
@@ -75,7 +77,7 @@ function updateArticle(article) {
 		// 更新処理
 		tutorial.tx([ "article" ], "readwrite", function(tx, todo) {
 			todo.put({
-				article_id : article,
+				article_id : article['article_id'],
 				article : article,
 				share_id : article.share_id,
 				guid : guid,
@@ -188,8 +190,7 @@ function updateIDBArticleList(values) {
 	for ( var art_json in jsons) {
 		param = "article_id=" + jsons[art_json].article_id;
 		console.log(param);
-		pro_list.push(getRequest().article(param).then(
-				updateArticle(art_json)));
+		pro_list.push(getRequest().article(param).then(updateArticle));
 	}
 	if (pro_list) {
 		return Promise.all(pro_list).then('success')['catch'](function(error) {
@@ -305,11 +306,12 @@ function getArticleInstance() {
 			1 : function(ctx, next) {
 				var db = ctx.db;
 				var todo = db.createObjectStore("article", {
-					keyPath : "article_id",
+					keyPath : "id",
+					autoIncrement : true
+				});
+				todo.createIndex("article", "article_id", {
 					unique : true
 				});
-//				 todo.createIndex("article", "article_id", {
-//				 });
 				next();
 			}
 		}

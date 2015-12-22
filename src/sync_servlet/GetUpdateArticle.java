@@ -72,12 +72,14 @@ public class GetUpdateArticle extends HttpServlet {
 		// 更新の必要がある記事IDとタイトルだけを持ったクラスを返す。
 		ArrayList<JsonArticle> update_list = new ArrayList<JsonArticle>();
 
-		JsonArticle[] json_list;
+		JsonArticle[] json_list = null;
+
 		try {
 
 			// これは手続き過ぎて修正必要か？処理がパラメータによって深刻なエラーを投げるのはよくない
-			if (strJson.equals(null)) {
-				json_list = JSON.decode(strJson, JsonArticle[].class);
+			if (strJson == null) {
+				// ゼロで初期化させればオーケー
+				json_list = new JsonArticle[0];
 			} else {
 				// JSONを配列へ変換(ブラウザのリスト）
 				json_list = JSON.decode(strJson, JsonArticle[].class);

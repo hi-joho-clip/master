@@ -119,11 +119,12 @@ JavaScriptが無効になっています。
 				initPromise();
 				var guid = '123';
 
-				var test_data = 'json=[{"article_id" :"2","modified":1449729990000}]';
+				// var test_data = 'json=[{"article_id"
+				// :"2","modified":1449729990000}]';
 
 				// GUIDで検索、リクエスト送信、来たリクエストから記事を取得、保存。
-				//getIDBAllArticleList(guid).then
-				getArticleListAsync(test_data)
+				getIDBAllArticleList(guid).then
+				(getArticleListAsync)
 				.then(updateIDBArticleList).then(function(values) {
 					console.log(values);
 				})['catch'](function(error) {
