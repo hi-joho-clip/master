@@ -24,8 +24,9 @@ public class ArticleBean {
 	private String uri;
 	private byte[] thum;
 	private byte[] blob_image;
-//	private ImageDTO imageDTO;
+	private ImageDTO imageDTO;
 	private ArrayList<ImageDTO> imageListDTO;
+	private ArrayList<TagBean> tagBeans;
 
 	/**
 	 * 記事の追加
@@ -281,20 +282,20 @@ public class ArticleBean {
 
 	// なんかあったら戻してください
 
-//	public void setImageDTO() {
-//		this.imageDTO = new ImageDTO();
-//		this.imageDTO.setImage_id(this.image_id);
-//		this.imageDTO.setUri(this.uri);
-//		this.imageDTO.setBlob_image(this.blob_image);
-//	}
-//
-//	public ImageDTO getImageDTO() {
-//		this.imageDTO = new ImageDTO();
-//		this.imageDTO.setImage_id(this.image_id);
-//		this.imageDTO.setUri(this.uri);
-//		this.imageDTO.setBlob_image(this.blob_image);
-//		return imageDTO;
-//	}
+	public void setImageDTO() {
+		this.imageDTO = new ImageDTO();
+		this.imageDTO.setImage_id(this.image_id);
+		this.imageDTO.setUri(this.uri);
+		this.imageDTO.setBlob_image(this.blob_image);
+	}
+
+	public ImageDTO getImageDTO() {
+		this.imageDTO = new ImageDTO();
+		this.imageDTO.setImage_id(this.image_id);
+		this.imageDTO.setUri(this.uri);
+		this.imageDTO.setBlob_image(this.blob_image);
+		return imageDTO;
+	}
 
 	public int getArticle_id() {
 		return article_id;
@@ -399,5 +400,15 @@ public class ArticleBean {
 	public void setImageListDTO(ArrayList<ImageDTO> imageListDTO) {
 		this.imageListDTO = imageListDTO;
 	}
+
+	public ArrayList<TagBean> getTagBeans() {
+		return tagBeans;
+	}
+
+	public void setTagBeans(ArrayList<TagBean> tagBeans) {
+		this.tagBeans = tagBeans;
+	}
+
+
 
 }

@@ -2,7 +2,6 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -76,17 +75,19 @@ public class ViewArticleServlet extends HttpServlet {
 		ArticleBean articlebean = new ArticleBean();
 		ArticleBean article = new ArticleBean();
 		TagBean tagbean = new TagBean();
-		ArrayList<TagBean> tag_list = new ArrayList<TagBean>();
 		try {
 			articlebean.setArticle_id(article_id);
 			article = articlebean.viewArticle();
-			tag_list = tagbean.viewExistingTag(user_id, article_id);
+			articlebean.setTagBeans(tagbean.viewExistingTag(user_id, article_id));
 		} catch (Exception e) {
 			e.getStackTrace();
 		}
 		response.setContentType("application/json;charset=UTF-8");
 		response.setHeader("Cache-Control", "private");
+		/*
+		 * ここはタグのArrayListをArticleで持つべき。
+		 */
 		PrintWriter out = response.getWriter();
-		out.println(JSON.encode(article, true).toString() + JSON.encode(tag_list, true).toString());
+		out.println(JSON.encode(article, true).toString());
 	}
 }
