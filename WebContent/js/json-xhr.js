@@ -114,7 +114,10 @@ function getArticleListAsync(param) {
 	// Null、空の場合は全件取得用の
 
 	var request = getRequest();
-	console.log('param' + JSON.stringify(param));
+	// 文字列で送ります。
+	param = 'json=' + JSON.stringify(param);
+	//console.log('param' + JSON.stringify(param));
+
 	// Promiseで実行順序を決定したまとめたメソッド(今回は取得のみ）
 	return request.updatelist(param);
 };
@@ -125,7 +128,7 @@ function getArticleListAsync(param) {
 function getJSON(URL, param, callback) {
 
 	getURL(URL, param).then(JSON.parse).then(function(json) {
-		callback(json.json);
+		callback(json);
 	})['catch'](function(error) {
 		console.log(error);
 	});

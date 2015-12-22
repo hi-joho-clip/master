@@ -57,14 +57,11 @@ self.addEventListener('message', function(e) {
 		/*
 		 * 処理流れ→自身のDBないのマイリスト一覧を送る →更新すべきリストが返ってくる →更新する分だけ記事取得（記事内に画像取得のXHR）
 		 */
-		var guid = data.guid;
+		var username = data.username;
 
-		getArticleListAsync(guid).then(function(values) {
-			// 仕方ないのでプロパティで返しています。
-			values.json = JSON.stringify(values.json);
-			//resolve(values);
-			 return values;
-		}).then(updateIDBArticleList).then(function(values) {
+		getIDBAllArticleList(username).then
+		(getArticleListAsync)
+		.then(updateIDBArticleList).then(function(values) {
 			self.postMessage(values);
 		})['catch'](function(error) {
 			self.postMessage(error);

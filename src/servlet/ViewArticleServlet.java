@@ -63,7 +63,7 @@ public class ViewArticleServlet extends HttpServlet {
 		int article_id = 1;
 		try {
 			// これ逆じゃね？(1221ナガオ）
-			if (!request.getParameter("article_id").equals(null)) {
+			if (request.getParameter("article_id") != null) {
 				article_id = Integer.parseInt(request.getParameter("article_id"));
 				System.out.println("art_id:" + article_id);
 			}

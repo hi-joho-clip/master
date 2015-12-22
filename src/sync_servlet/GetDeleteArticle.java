@@ -18,16 +18,16 @@ import beansdomain.ArticleBean;
 
 /**
  * Servlet implementation class MylistServlet
- * サーバーに有って、ローカルに無い一覧を返すよ（更新する必要のあるリスト）
+ * サーバーに無くて、ローカルに有るファイル一覧を返すよ
  */
-@WebServlet("/getupdatearticle")
-public class GetUpdateArticle extends HttpServlet {
+@WebServlet("/getdeletearticle")
+public class GetDeleteArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public GetUpdateArticle() {
+	public GetDeleteArticle() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
