@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -17,7 +16,7 @@ import daodto.ImageDTO;
 /**
  * Servlet implementation class AddArticleServlet
  */
-@WebServlet("/AddArticleServlet")
+@WebServlet("/addarticle")
 public class AddArticleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

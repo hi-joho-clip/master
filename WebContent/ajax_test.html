@@ -17,6 +17,9 @@
 	<script type="text/javascript" src="js/lib/es6-promise.min.js"></script>
 	<script type="text/javascript" src="js/json-xhr.js"></script>
 	<script type="text/javascript" src="js/indexeddb.js"></script>
+	<script type="text/javascript" src="js/lib/cookie.js"></script>
+	<script type="text/javascript" src="js/lib/store.js"></script>
+	<script type="text/javascript" src="js/toppage.js"></script>
 
 
 	<noscript>
@@ -117,13 +120,13 @@ JavaScriptが無効になっています。
 // }
 
 				initPromise();
-				var guid = '123';
+				var username = '123';
 
 				// var test_data = 'json=[{"article_id"
 				// :"2","modified":1449729990000}]';
 
 				// GUIDで検索、リクエスト送信、来たリクエストから記事を取得、保存。
-				getIDBAllArticleList(guid).then
+				getIDBAllArticleList(username).then
 				(getArticleListAsync)
 				.then(updateIDBArticleList).then(function(values) {
 					console.log(values);
@@ -152,6 +155,7 @@ JavaScriptが無効になっています。
 			});
 
 			$('#browsertest').click(function() {
+				initTopPage();
 				alert(isSupported(['chrome','opera','firefox','ie11', 'ie10']));
 			});
 

@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +14,7 @@ import beansdomain.ArticleBean;
 /**
  * Servlet implementation class AddFavoriteServlet
  */
-@WebServlet("/AddFavServlet")
+@WebServlet("/addfav")
 public class AddFavServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

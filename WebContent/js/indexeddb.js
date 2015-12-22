@@ -80,7 +80,7 @@ function updateArticle(json_article) {
 				article_id : article['article_id'],
 				article : article,
 				share_id : article.share_id,
-				guid : guid,
+				username : guid,
 				// 登録日時はサーバで管理するべき（ブラウザ依存は排除）
 				modified : article.modified
 			}, function(key) {
@@ -126,51 +126,6 @@ function updateIDBUser(prop) {
 
 };
 
-/**
- * 結局guidがわからなければならいものが、GUIDになっただけ。よってまったく意味なし。（廃止予定）
- *
- * @param guid
- */
-function getIDBUser(user_id, guid) {
-
-	return new Promise(function(resolve, reject) {
-		var filter = {
-			filter : guid_filter,
-		};
-		// DBのインスタンス取得
-		var article_db = getArticleInstance();
-		article_db.onerror = function(event) {
-			// エラーの詳細をコンソールに出力する
-			reject(event.kage_message);
-		};
-
-		article_db.tx([ "article" ], function(tx, todo) {
-			todo.fetch(filter, function(values) {
-				if (values) {
-					values = JSON.parse(values);
-					// ボディやサムネの画像は削除しておく
-					// やっぱりループで一つ一つ削除するしかなさそう
-					for ( var val in values) {
-						delete val["article"];
-						console.log(val);
-					}
-
-					ret = JSON.stringify(values, null, ' ');
-					console.log("getIDBusedone.");
-					resolve(ret);
-				} else {
-					reject(new Error("not found"));
-				}
-			});
-		});
-
-		function guid_filter(record) {
-			return record.guid === guid;
-		}
-		;
-	});
-
-};
 
 /**
  * 取得したArticleリスト
@@ -252,11 +207,11 @@ function getIDEArticleList(guid, page) {
  *
  * @param guid
  */
-function getIDBAllArticleList(guid) {
+function getIDBAllArticleList(username) {
 
 	return new Promise(function(resolve, reject) {
 		var filter = {
-			filter : guid_filter,
+			filter : username_filter,
 		};
 		// DBのインスタンス取得
 		var article_db = getArticleInstance();
@@ -272,13 +227,11 @@ function getIDBAllArticleList(guid) {
 					// ボディやサムネの画像は削除しておく
 					// やっぱりループで一つ一つ削除するしかなさそう
 					for ( var i in values) {
-						delete values[i]["body"];
+						delete values[i]["article"];
+						//console.log("art:" + val);
 					}
-					console
-							.log("values = "
-									+ JSON.stringify(values, null, ' '));
-					console.log("done.");
-					// 変える値は純粋に持っている記事一覧のJSON
+					//values = JSON.stringify(values);
+
 					resolve(values);
 				} else {
 					reject(new Error("not found"));
@@ -286,8 +239,8 @@ function getIDBAllArticleList(guid) {
 			});
 		});
 
-		function guid_filter(record) {
-			return record.guid === guid;
+		function username_filter(record) {
+			return record.username === username;
 		}
 		;
 	});
