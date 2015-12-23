@@ -10,7 +10,7 @@ function initTopPage() {
 	 */
 	var username = docCookies.getItem('username');
 	store.set('username', username);
-	store.set('auto', false);
+	store.set('auto', true);
 
 	/*
 	 * 対応ブラウザならオフライン処理を開始 （ここでダイアログ
@@ -19,7 +19,7 @@ function initTopPage() {
 	if (isSupported([ 'chrome', 'opera', 'firefox', 'ie11', 'ie10' ])) {
 
 		// IDBに自身のキャッシュデータがない場合にアラート
-		getIDBAllArticleList('123').then(
+		getIDBAllArticleList(username).then(
 				function(values) {
 
 					// 返り値はオブジェクトでないとダメ
@@ -32,30 +32,27 @@ function initTopPage() {
 
 							// usernameがある場合
 							if (username) {
-
 								startUpdate(username);
-
 							}
-
 						} else {
 							// 「いいえ」選択時の処理
 							console.log('alert no');
 						}
-
 					} else {
 						// 自動更新の設定ならそのまま
 						if (store.get('auto')) {
 							startUpdate(username);
+						} else {
+							console.log('is null');
 						}
 					}
 				});
-
 	}
-
 }
 function startUpdate(username) {
 
 	if (window.Worker) {
+		console.log('worker start:' + username);
 		// これが疑似的なPromiseオブジェクト→Deferredオブジェクト
 		var worker = new Worker('js/worker.js');
 		worker.addEventListener('message', function(e) {

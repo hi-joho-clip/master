@@ -1,4 +1,5 @@
-importScripts('json-xhr.js', 'indexeddb.js', 'lib/es6-promise.min.js');
+importScripts('json-xhr.js', 'indexeddb.js', 'lib/es6-promise.min.js',
+		'lib/kagedb.js');
 /**
  * 使用するリクエストはここに書いておくと便利なはず
  *
@@ -53,19 +54,49 @@ self.addEventListener('message', function(e) {
 		/**
 		 * 引数をプロパティにすればええ感じ。
 		 */
-
+		// throw data.username;
 		/*
 		 * 処理流れ→自身のDBないのマイリスト一覧を送る →更新すべきリストが返ってくる →更新する分だけ記事取得（記事内に画像取得のXHR）
 		 */
 		var username = data.username;
 
-		getIDBAllArticleList(username).then
-		(getArticleListAsync)
-		.then(updateIDBArticleList).then(function(values) {
+
+		getIDBAllArticleList(username).then(getArticleListAsync).then(
+				updateIDBArticleList).then(function(values) {
 			self.postMessage(values);
 		})['catch'](function(error) {
 			self.postMessage(error);
 		});
 		break;
 	}
-}, true);
+}, false);
+
+
+
+
+// self.addEventListener('message', function(e) {
+//
+// /*
+// * ここの処理は別スレッドとなるためメインスレッドは参照できない
+// */
+//
+// var data = e.data;
+//
+// /**
+// * 引数をプロパティにすればええ感じ。
+// */
+// //throw data.username + data.cmd;
+//
+// /*
+// * 処理流れ→自身のDBないのマイリスト一覧を送る →更新すべきリストが返ってくる →更新する分だけ記事取得（記事内に画像取得のXHR）
+// */
+// var username = data.username;
+//
+// getIDBAllArticleList(username).then(getArticleListAsync).then(
+// updateIDBArticleList).then(function(values) {
+// self.postMessage(values);
+// })['catch'](function(error) {
+// self.postMessage(error);
+// });
+//
+// }, false);
