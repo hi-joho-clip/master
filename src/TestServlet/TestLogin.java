@@ -54,6 +54,7 @@ public class TestLogin extends HttpServlet {
 
 		HttpSession loginsession = request.getSession(true);
 		loginsession.setAttribute("username", userbeans.getUser_name());
+		loginsession.setAttribute("user_id", userbeans.getUser_id());
 
 		/**
 		 * CSRF対策

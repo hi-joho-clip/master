@@ -35,7 +35,7 @@ JavaScriptが無効になっています。
 	<input id="dbtest" type="button" name="check" value="確認">
 	<br />
 
-	<p>IndexedDB検索テスト</p>
+	<p>トップページ処理（1223）</p>
 	<input id="gettest" type="button" name="check" value="確認">
 	<br />
 
@@ -138,19 +138,8 @@ JavaScriptが無効になっています。
 			});
 
 			$('#gettest').click(function() {
+				initTopPage();
 
-// var guid = "aaa";
-//
-//
-// var worker = new Worker('js/worker.js');
-// worker.addEventListener('message', function(e) {
-// // ここではconsoleでJSONデータを表示する
-// console.log('DB data: ', e.data);
-// }, false);
-//
-// // スレッドに何か送りたいときはpostの引数に設定
-// worker.postMessage({'cmd': 'IDEAllArticles', 'guid' : guid});
-				test('aaa');
 
 			});
 

@@ -48,26 +48,21 @@ public class ViewArticleServlet extends HttpServlet {
 
 	private void perform(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(true);
-		/*if(セッション情報があるなら){
-			//何もしない
-		}else if(セッション情報がないなら){
-			//ログイン画面に戻る
-		}*/
-		//System.out.println("article_id" + Integer.parseInt(request.getParameter("article_id")) + "の記事");
+
 		/***************************************
 		******ある記事を選択して表示した際******
 		****************************************/
-		//記事を表示
-		int user_id = 1;//sessionからuser_idを取得
-		//int article_id = Integer.parseInt(request.getParameter("article_id"));
+
+		int user_id = 1;
+		if (session.getAttribute("user_id") != null) {
+			user_id = (int) session.getAttribute("user_id");
+		}
+
 		int article_id = 1;
 		try {
-			// これ逆じゃね？(1221ナガオ）
 			if (request.getParameter("article_id") != null) {
 				article_id = Integer.parseInt(request.getParameter("article_id"));
-				System.out.println("art_id:" + article_id);
 			}
-			System.out.println("guid:" + request.getParameter("guid"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -75,18 +70,22 @@ public class ViewArticleServlet extends HttpServlet {
 		ArticleBean articlebean = new ArticleBean();
 		ArticleBean article = new ArticleBean();
 		TagBean tagbean = new TagBean();
+
 		try {
 			articlebean.setArticle_id(article_id);
 			article = articlebean.viewArticle();
-			articlebean.setTagBeans(tagbean.viewExistingTag(user_id, article_id));
+			article.setTagBeans(tagbean.viewExistingTag(user_id, article_id));
+			// ユーザ名も欲しい
+			article.setUsername((String) session.getAttribute("username"));
+			System.out.println("username:" + articlebean.getUsername());
+
 		} catch (Exception e) {
 			e.getStackTrace();
 		}
+
 		response.setContentType("application/json;charset=UTF-8");
 		response.setHeader("Cache-Control", "private");
-		/*
-		 * ここはタグのArrayListをArticleで持つべき。
-		 */
+
 		PrintWriter out = response.getWriter();
 		out.println(JSON.encode(article, true).toString());
 	}

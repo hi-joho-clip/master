@@ -9,6 +9,7 @@ import daodto.ImageDTO;
 
 public class ArticleBean {
 	private int article_id;
+	private String username;
 	private String title;
 	private String body;
 	private String url;
@@ -407,6 +408,14 @@ public class ArticleBean {
 
 	public void setTagBeans(ArrayList<TagBean> tagBeans) {
 		this.tagBeans = tagBeans;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 

@@ -61,8 +61,8 @@ function updateArticle(json_article) {
 
 	return new Promise(function(resolve, reject) {
 
-		// GUIDをレスポンス内に含む
-		var guid = '123';// article.guid;
+		// ユーザ名でDB識別
+
 
 		var article = json_article;
 
@@ -80,7 +80,7 @@ function updateArticle(json_article) {
 				article_id : article['article_id'],
 				article : article,
 				share_id : article.share_id,
-				username : guid,
+				username : article.username,
 				// 登録日時はサーバで管理するべき（ブラウザ依存は排除）
 				modified : article.modified
 			}, function(key) {
@@ -128,7 +128,7 @@ function updateIDBUser(prop) {
 
 
 /**
- * 取得したArticleリスト
+ * 取得したArticleリストから取得する記事毎にプロミス作成
  *
  * @param articles
  */
