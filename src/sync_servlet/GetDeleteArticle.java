@@ -3,7 +3,6 @@ package sync_servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 
 import javax.servlet.ServletException;
@@ -20,14 +19,14 @@ import beansdomain.ArticleBean;
  * Servlet implementation class MylistServlet
  * サーバーに有って、ローカルに無い一覧を返すよ（更新する必要のあるリスト）
  */
-@WebServlet("/getupdatearticle")
-public class GetUpdateArticle extends HttpServlet {
+@WebServlet("/getdeletearticle")
+public class GetDeleteArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public GetUpdateArticle() {
+	public GetDeleteArticle() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -68,7 +67,7 @@ public class GetUpdateArticle extends HttpServlet {
 		String strJson = (String) request.getParameter("json");
 
 		//記事IDと日付を格納
-		HashMap<Integer, JsonArticle> article_map = new HashMap<Integer, JsonArticle>();
+		HashMap<Integer, JsonArticle> server_article_map = new HashMap<Integer, JsonArticle>();
 
 		// 更新の必要がある記事IDとタイトルだけを持ったクラスを返す。
 		ArrayList<JsonArticle> update_list = new ArrayList<JsonArticle>();
@@ -76,8 +75,6 @@ public class GetUpdateArticle extends HttpServlet {
 		JsonArticle[] json_list = null;
 
 		try {
-
-			// これは手続き過ぎて修正必要か？処理がパラメータによって深刻なエラーを投げるのはよくない
 			if (strJson == null) {
 				// ゼロで初期化させればオーケー
 				json_list = new JsonArticle[0];
@@ -89,65 +86,62 @@ public class GetUpdateArticle extends HttpServlet {
 
 			ArticleBean articlebean = new ArticleBean();
 			// サーバのリスト
-			ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
-			article_list = articlebean.viewArticleList(user_id);
+			ArrayList<ArticleBean> server_list = new ArrayList<ArticleBean>();
+			server_list = articlebean.viewArticleList(user_id);
 
 			/*
 			 * ハッシュマップ作成（Articleは画像がついてるので高速化を含めて実装
 			 */
-			Calendar art_modified = Calendar.getInstance();
+
 			// article リスト分ハッシュマップを作成
-			for (ArticleBean art : article_list) {
-				// Dateの日付をミリ秒へ変換
-				art_modified.setTime(art.getModified());
+			for (ArticleBean art : server_list) {
+
 				// JsonArticleオブジェクトをハッシュマップへ登録
 				JsonArticle ja = new JsonArticle();
 				ja.setArticle_id(art.getArticle_id());
-				ja.setModified(art_modified.getTimeInMillis());
 				ja.setTitle(art.getTitle());
-				article_map.put(art.getArticle_id(), ja);
+				server_article_map.put(art.getArticle_id(), ja);
 			}
 
 			if (json_list.length != 0) {
 
-				HashMap<Integer, JsonArticle> old_json_map = new HashMap<Integer, JsonArticle>();
+				// ブラウザのデータのハッシュマップ
+				HashMap<Integer, JsonArticle> b_json_map = new HashMap<Integer, JsonArticle>();
 				for (JsonArticle jmap : json_list) {
-					old_json_map.put(jmap.getArticle_id(), jmap);
+					b_json_map.put(jmap.getArticle_id(), jmap);
 				}
 
 				// マイリストと更新データを比較
-				for (ArticleBean art : article_list) {
+				for (ArticleBean art : server_list) {
 					// ブラウザのリストにサーバの項目が存在する場合（日付比較）
-					if (old_json_map.containsKey(art.getArticle_id())) {
+					if (b_json_map.containsKey(art.getArticle_id())) {
 						// 日付を比較する
 						// サーバ＞ブラウザ
-						if (article_map.get(art.getArticle_id()).getModified() > old_json_map.get(art.getArticle_id())
-								.getModified()) {
-							// 存在しなければ新規追加（更新必要）
-							JsonArticle new_json = new JsonArticle();
-							new_json.setArticle_id(art.getArticle_id());
-							new_json.setModified(article_map.get(art.getArticle_id()).getModified());
-							new_json.setTitle(article_map.get(art.getArticle_id()).getTitle());
-							update_list.add(new_json);
-						}
+
+						// 存在しなければ新規追加（更新必要）
+						JsonArticle new_json = new JsonArticle();
+						new_json.setArticle_id(art.getArticle_id());
+						new_json.setModified(server_article_map.get(art.getArticle_id()).getModified());
+						new_json.setTitle(server_article_map.get(art.getArticle_id()).getTitle());
+						update_list.add(new_json);
 
 					} else {
 						// 存在しなければ新規追加（更新必要）
 						JsonArticle new_json = new JsonArticle();
 						new_json.setArticle_id(art.getArticle_id());
-						new_json.setModified(article_map.get(art.getArticle_id()).getModified());
-						new_json.setTitle(article_map.get(art.getArticle_id()).getTitle());
+						new_json.setModified(server_article_map.get(art.getArticle_id()).getModified());
+						new_json.setTitle(server_article_map.get(art.getArticle_id()).getTitle());
 						update_list.add(new_json);
 					}
 
 				}
 			} else {
 				// 全件更新の場合はマイリストへ登録されている記事数だけ作成
-				for (ArticleBean art : article_list) {
+				for (ArticleBean art : server_list) {
 					JsonArticle new_json = new JsonArticle();
 					new_json.setArticle_id(art.getArticle_id());
-					new_json.setModified(article_map.get(art.getArticle_id()).getModified());
-					new_json.setTitle(article_map.get(art.getArticle_id()).getTitle());
+					new_json.setModified(server_article_map.get(art.getArticle_id()).getModified());
+					new_json.setTitle(server_article_map.get(art.getArticle_id()).getTitle());
 					update_list.add(new_json);
 				}
 			}

@@ -21,11 +21,9 @@ function initPromise() {
  * @param URL
  * @param param
  *            必要なパラメータ article_idとかね
- * @param guid
- *            必須項目
  * @returns {Promise}
  */
-function getURL(URL, guid, param) {
+function getURL(URL, param) {
 
 	return new Promise(function(resolve, reject) {
 
@@ -47,15 +45,9 @@ function getURL(URL, guid, param) {
 			// 正常に取得できていた場合
 			if (req.readyState == 4) {
 				if (req.status == 200) {
-					// var jsonResult = JSON.parse(xmlResult.responseText);
-					// guid も渡す
-					// プロパティで返す
-					ret = {
-						guid : guid,
-						json : req.responseText
-					};
-					console.log(ret);
-					resolve(ret);
+
+					//console.log(req.responseText);
+					resolve(req.responseText);
 				} else {
 					// 正常に取得できない
 					reject(req.statusText);
@@ -70,8 +62,7 @@ function getURL(URL, guid, param) {
 		req.ontimeout = function() {
 			reject(new Error("time out"));
 		};
-		// guidは通信するときは必ず送るのですよ
-		req.send(param + '&guid=' + guid);
+		req.send(param);
 	});
 
 }
@@ -86,14 +77,20 @@ function getRequest() {
 	 * 使用するリクエストはここに書いておくと便利なはず
 	 */
 	var request = {
-		articlelist : function getArticleLists(guid) {
-			return getURL("http://10.16.153.2:8080/clipMaster/mylist", guid, null)
+		articlelist : function getArticleLists() {
+
+			return getURL("http://localhost:8080/clipMaster/mylist", null)
 					.then(JSON.parse);
 		},
-		article : function getArticle(guid, param) {
+		article : function getArticle(param) {
+
 			// JSONをテキストからオブジェクトへパースする必要がある。
-			return getURL("http://10.16.153.2:8080/clipMaster/viewarticle", guid,
-					param).then(JSON.parse);
+			return getURL("http://localhost:8080/clipMaster/viewarticle", param)
+					.then(JSON.parse);
+		},
+		updatelist : function getArticleLists(param) {
+			return getURL("http://localhost:8080/clipMaster/getupdatearticle",
+					param);
 		}
 
 	};
@@ -110,13 +107,19 @@ function getRequest() {
  *
  * @param param:記事IDとか
  */
-function getArticleListAsync(guid) {
+function getArticleListAsync(param) {
 
 	// URLなどのリクエスト取得
+	// 問い合わせはGUIDいらないんじゃね？セッションやし。
+	// Null、空の場合は全件取得用の
+
 	var request = getRequest();
-	console.log(request);
+	// 文字列で送ります。
+	param = 'json=' + JSON.stringify(param);
+	//console.log('param' + JSON.stringify(param));
+
 	// Promiseで実行順序を決定したまとめたメソッド(今回は取得のみ）
-	return request.articlelist(guid);
+	return request.updatelist(param);
 };
 
 /**
@@ -124,13 +127,8 @@ function getArticleListAsync(guid) {
  */
 function getJSON(URL, param, callback) {
 
-	var guid = null;
-
-	getURL(URL, guid, param).then(function(ret) {
-		ret.json = JSON.parse(ret.json);
-		return ret;
-	}).then(function(json) {
-		callback(json.json);
+	getURL(URL, param).then(JSON.parse).then(function(json) {
+		callback(json);
 	})['catch'](function(error) {
 		console.log(error);
 	});

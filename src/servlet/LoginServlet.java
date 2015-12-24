@@ -1,7 +1,7 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
@@ -40,6 +40,10 @@ public class LoginServlet extends HttpServlet {
 		String inputid = request.getParameter("mail_or_name");
 		String inputpass = request.getParameter("password");
 
+		String URL = "/clipMaster";
+
+		System.out.println("login");
+
 		UserAuth userauth = new UserAuth();
 		User userbeans = null;
 		int user_id = -1;
@@ -69,28 +73,29 @@ public class LoginServlet extends HttpServlet {
 
 				UUID guid = UUID.randomUUID();
 				UUID nonce = UUID.randomUUID();
-				Date date = new Date();
+				Calendar cal = Calendar.getInstance();
 
 				/**
 				 * CSRF対策
 				 */
-				Cookie c_guid = new Cookie("guid",guid.toString());
-				response.addCookie(c_guid);
+				Cookie c_guid = new Cookie("guid", guid.toString());
 				Cookie c_nonce = new Cookie("nonce", nonce.toString());
+				Cookie c_start_time = new Cookie("start_time", Long.toString(cal.getTimeInMillis()));
+				response.addCookie(c_guid);
 				response.addCookie(c_nonce);
-				Cookie c_start_time = new Cookie("start_time",date.toString());
 				response.addCookie(c_start_time);
 
-
+				//URLは絶対パスで書かない。
+				// 本番環境でURL=nullにすれば簡単に動く
 				//マイリスト画面に移動
-				response.sendRedirect("http://localhost:8080/clipMaster/login/index.html");
+				response.sendRedirect(URL + "/login.jsp");
 			} else {
 				// パスワードが一致しなかったので再入力させる。
-				response.sendRedirect("http://localhost:8080/clipMaster/login/Login.html");
+				response.sendRedirect(URL + "/login.jsp");
 			}
 		} else {
 			// IDが入力されなかったので再入力させる。
-			response.sendRedirect("http://localhost:8080/clipMaster/login/Login.html");
+			response.sendRedirect(URL + "/login.jsp");
 		}
 	}
 }
