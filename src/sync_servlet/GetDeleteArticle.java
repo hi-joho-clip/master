@@ -51,11 +51,7 @@ public class GetDeleteArticle extends HttpServlet {
 	protected void perform(HttpServletRequest request, HttpServletResponse response) throws ServletException,
 			IOException {
 		HttpSession session = request.getSession(true);
-		/*if(セッション情報があるなら){
-			//何もしない
-		}else if(セッション情報がないなら){
-			//ログイン画面に戻る
-		}*/
+
 
 		int user_id = -1;
 		if (session.getAttribute("user_id") != null) {
@@ -72,16 +68,16 @@ public class GetDeleteArticle extends HttpServlet {
 		// 更新の必要がある記事IDとタイトルだけを持ったクラスを返す。
 		ArrayList<JsonArticle> update_list = new ArrayList<JsonArticle>();
 
-		JsonArticle[] json_list = null;
+		JsonArticle[] b_list = null;
 
 		try {
 			if (strJson == null) {
 				// ゼロで初期化させればオーケー
-				json_list = new JsonArticle[0];
+				b_list = new JsonArticle[0];
 			} else {
 				// JSONを配列へ変換(ブラウザのリスト）
-				json_list = JSON.decode(strJson, JsonArticle[].class);
-				System.out.println("reseived: " + json_list.length);
+				b_list = JSON.decode(strJson, JsonArticle[].class);
+				System.out.println("reseived: " + b_list.length);
 			}
 
 			ArticleBean articlebean = new ArticleBean();
@@ -89,13 +85,8 @@ public class GetDeleteArticle extends HttpServlet {
 			ArrayList<ArticleBean> server_list = new ArrayList<ArticleBean>();
 			server_list = articlebean.viewArticleList(user_id);
 
-			/*
-			 * ハッシュマップ作成（Articleは画像がついてるので高速化を含めて実装
-			 */
-
 			// article リスト分ハッシュマップを作成
 			for (ArticleBean art : server_list) {
-
 				// JsonArticleオブジェクトをハッシュマップへ登録
 				JsonArticle ja = new JsonArticle();
 				ja.setArticle_id(art.getArticle_id());
@@ -103,46 +94,17 @@ public class GetDeleteArticle extends HttpServlet {
 				server_article_map.put(art.getArticle_id(), ja);
 			}
 
-			if (json_list.length != 0) {
+			if (b_list.length != 0) {
 
-				// ブラウザのデータのハッシュマップ
-				HashMap<Integer, JsonArticle> b_json_map = new HashMap<Integer, JsonArticle>();
-				for (JsonArticle jmap : json_list) {
-					b_json_map.put(jmap.getArticle_id(), jmap);
-				}
-
-				// マイリストと更新データを比較
-				for (ArticleBean art : server_list) {
+				// サーバ内のリストをブラウザのリストが検索：存在しなければリストへ
+				for (JsonArticle art : b_list) {
 					// ブラウザのリストにサーバの項目が存在する場合（日付比較）
-					if (b_json_map.containsKey(art.getArticle_id())) {
-						// 日付を比較する
-						// サーバ＞ブラウザ
-
+					if (!server_article_map.containsKey(art.getArticle_id())) {
 						// 存在しなければ新規追加（更新必要）
 						JsonArticle new_json = new JsonArticle();
 						new_json.setArticle_id(art.getArticle_id());
-						new_json.setModified(server_article_map.get(art.getArticle_id()).getModified());
-						new_json.setTitle(server_article_map.get(art.getArticle_id()).getTitle());
-						update_list.add(new_json);
-
-					} else {
-						// 存在しなければ新規追加（更新必要）
-						JsonArticle new_json = new JsonArticle();
-						new_json.setArticle_id(art.getArticle_id());
-						new_json.setModified(server_article_map.get(art.getArticle_id()).getModified());
-						new_json.setTitle(server_article_map.get(art.getArticle_id()).getTitle());
 						update_list.add(new_json);
 					}
-
-				}
-			} else {
-				// 全件更新の場合はマイリストへ登録されている記事数だけ作成
-				for (ArticleBean art : server_list) {
-					JsonArticle new_json = new JsonArticle();
-					new_json.setArticle_id(art.getArticle_id());
-					new_json.setModified(server_article_map.get(art.getArticle_id()).getModified());
-					new_json.setTitle(server_article_map.get(art.getArticle_id()).getTitle());
-					update_list.add(new_json);
 				}
 			}
 
