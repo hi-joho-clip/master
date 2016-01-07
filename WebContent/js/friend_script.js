@@ -4,10 +4,23 @@ function getFriendList(){
 
 	var jsonParam = null;//送りたいデータ
 	var URL = "http://localhost:8080/clipMaster/friendlist";
-	var friendList = "";
+	var friendList = " <div class='remodal-bg'> ";
 	var setappend = function(json) {
+
 		for ( var i = 0; i < json.length ; i++) {
-			friendList += json[i].nickname + "&emsp;";
+			console.log(json[i].status);
+			//リクエスト申請したユーザ一覧
+			if(json[i].status== 2){
+				friendList += json[i].nickname + "&emsp;" +
+				"<a href='#' data-remodal-target='delete_request'>取消</a><br>";
+			}
+		}
+		for ( var i = 0; i < json.length ; i++) {
+			//フレンド一覧
+			if(json[i].status == 3){
+				friendList += json[i].nickname + "&emsp;" +
+				"<a href='#' data-remodal-target='delete_friend'>削除</a><br>" ;
+			}
 		}
 		document.getElementById('info').innerHTML=friendList;
 	};

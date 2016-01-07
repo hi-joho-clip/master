@@ -40,6 +40,11 @@ public class UpdatePasswordServlet extends HttpServlet {
 		UserAuth userauth = new UserAuth();
 		boolean hantei = false;
 
+
+		String URL = "/clipMaster/login";
+
+		System.out.println("updatepassword");
+
 		//本来では、セッション情報のユーザIDを取得
 		int user_id = 5;
 
@@ -62,7 +67,8 @@ public class UpdatePasswordServlet extends HttpServlet {
 				userbean.updatePassword();
 			}else{
 				//パスワードが一致しなかった処理
-				response.sendRedirect("http://localhost:8080/clipMaster/login/PassChange.html");
+				response.sendRedirect(URL + "/PassChange.html");
+				return;
 			}
 
 		} catch (Exception e) {
@@ -70,7 +76,7 @@ public class UpdatePasswordServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		out.println(JSON.encode(userbean , true).toString());
-		response.sendRedirect("http://localhost:8080/clipMaster/login/UserInfo.html");
+		response.sendRedirect(URL + "/UserInfo.html");
 
 	}
 

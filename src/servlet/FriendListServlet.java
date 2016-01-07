@@ -64,7 +64,7 @@ public class FriendListServlet extends HttpServlet {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-		out.println(JSON.encode(friend_list, true).toString());
+		out.println(JSON.encode(request_friend_list, true).toString());
 
 	}
 }
