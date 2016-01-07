@@ -38,8 +38,6 @@ public class ViewUserServlet extends HttpServlet {
 
 		int user_id = 5;
 
-		/*int user_id = Integer.parseInt(request.getParameter("user_id"));*/
-
 
 		response.setContentType("application/json; charset=utf-8");
 		response.setHeader("Cache-Control", "private");

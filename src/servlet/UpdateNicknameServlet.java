@@ -40,7 +40,14 @@ public class UpdateNicknameServlet extends HttpServlet {
 		UserAuth userauth = new UserAuth();
 		boolean hantei = false;
 
-		int user_id = Integer.parseInt(request.getParameter("user_id"));
+		String URL = "/clipMaster/login";
+
+		System.out.println("updatenickname");
+
+
+		int user_id = 5;
+
+		/*int user_id = Integer.parseInt(request.getParameter("user_id"));*/
 
 		String inputname = request.getParameter("newnickname");
 		String inputpass = request.getParameter("password");
@@ -62,6 +69,8 @@ public class UpdateNicknameServlet extends HttpServlet {
 				userbean.updateNickname();
 			}else{
 				//パスワードが一致しなかった処理
+				response.sendRedirect(URL + "/NicknameChange.html");
+				return;
 			}
 
 		} catch (Exception e) {
@@ -69,7 +78,7 @@ public class UpdateNicknameServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		out.println(JSON.encode(userbean , true).toString());
-		response.sendRedirect("http://localhost:8080/clipMaster/login/UserInfo.html");
+		response.sendRedirect(URL + "/UserInfo.html");
 	}
 
 }

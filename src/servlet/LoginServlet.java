@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
 		String inputid = request.getParameter("mail_or_name");
 		String inputpass = request.getParameter("password");
 
-		String URL = "/clipMaster";
+		String URL = "/clipMaster/login";
 
 		System.out.println("login");
 
@@ -88,14 +88,14 @@ public class LoginServlet extends HttpServlet {
 				//URLは絶対パスで書かない。
 				// 本番環境でURL=nullにすれば簡単に動く
 				//マイリスト画面に移動
-				response.sendRedirect(URL + "/login.jsp");
+				response.sendRedirect(URL + "/index.html");
 			} else {
 				// パスワードが一致しなかったので再入力させる。
-				response.sendRedirect(URL + "/login.jsp");
+				response.sendRedirect(URL + "/Login.html");
 			}
 		} else {
 			// IDが入力されなかったので再入力させる。
-			response.sendRedirect(URL + "/login.jsp");
+			response.sendRedirect(URL + "/Login.html");
 		}
 	}
 }

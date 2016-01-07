@@ -35,6 +35,10 @@ public class AddUserServlet extends HttpServlet {
 	private void perform(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User userbean = new User();
 		String ErrorMessage = null;
+		String URL = "/clipMaster/login";
+
+		System.out.println("アカウント新規作成");
+
 
 		String user_name = request.getParameter("username");
 		String nickname = request.getParameter("nickname");
@@ -67,7 +71,7 @@ public class AddUserServlet extends HttpServlet {
 				out.println(JSON.encode(ErrorMessage , true).toString());
 
 				//新規登録完了画面
-				response.sendRedirect("http://localhost:8080/clipMaster/login/.html");
+				response.sendRedirect(URL + "/Login.html");
 			}
 
 		} catch (Exception e) {
