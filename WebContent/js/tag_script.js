@@ -10,7 +10,7 @@ function addTagArticle(tag_list,article_id) {
 	}
 	var tag_list = "tag_list="+JSON.parse(JSON.stringify(arr));
 
-	var xmlURL = "http://10.16.153.2:8080/clipMaster/addtagarticle";
+	var xmlURL = "http://localhost:8080/clipMaster/addtagarticle";
 
 	xmlResult.open("POST", xmlURL, true);
 	xmlResult.responseText = "json";
