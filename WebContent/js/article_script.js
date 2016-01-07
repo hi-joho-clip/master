@@ -165,8 +165,7 @@ function getViewArticle(article_id) {
 	var setappend = function(json) {
 		alert(json.length);
 
-
-			viewArticle ="タイトル:" + json[0].title + "<br>" + "内容:"+ json[0].body + "<br>";
+		viewArticle ="タイトル:" + json[0].title + "<br>" + "内容:"+ json[0].body + "<br>";
 
 		document.getElementById('viewArticle').innerHTML = viewArticle;
 	};
@@ -174,12 +173,54 @@ function getViewArticle(article_id) {
 }
 //記事の削除
 function deleteArticle(article_id) {
-	getArticle_id(article_id);//html内の<div id='article_id'>にhiddenでarticle_idを持たせる
-	var jsonParam = "article_id=" + article_id;// 送りたいデータ
+	console.log(article_id.item(0).value);
+	//getArticle_id(article_id);//html内の<div id='article_id'>にhiddenでarticle_idを持たせる
+	var jsonParam = "article_id=" + article_id.item(0).value;// 送りたいデータ
 	var URL = "http://localhost:8080/clipMaster/deletearticle";
 	var delete_article = function() {
 
 	};
 	getJSON(URL, jsonParam, delete_article);
+	location.reload();
+	toastr.success('削除しました');
+}
+//お気に入りの追加削除
+function addFavArticle(article_id){
+	//グローバルFlagを用意する。記事リストを作成時にグローバルFlagはtrue
+	//true=追加可、false=削除可
+
+	var jsonParam = "article_id=" + article_id;// 送りたいデータ
+	var grobalflag = "grobalflag"+article_id;//グローバルflagの名前付け
+	var favtitle = "favtitle"+article_id;//タイトルの★マークの名前
+	var title = "title"+article_id;
+	console.log("入る前"+document.getElementById(grobalflag).value);
+
+	if(document.getElementById(grobalflag).value==0){
+		//追加の処理
+		var URL = "http://localhost:8080/clipMaster/addfav";
+
+		var setappend = function() {
+			//タイトルの横に★マークをつける
+		};
+		getJSON(URL, jsonParam, setappend);
+		//document.getElementsByClassName('absolute').style.color='#FF0000';
+		document.getElementById(favtitle).innerHTML = "★"+document.getElementById(title).value;
+		//グローバルflagをfalseにする
+		document.getElementById(grobalflag).value=1;
+		console.log("現ふらぐ"+document.getElementById(grobalflag).value);
+	}else if(document.getElementById(grobalflag).value==1){
+		//削除の処理
+		var URL = "http://localhost:8080/clipMaster/deletefav";
+
+		var setappend = function() {
+			//タイトルの横の★マークを削除
+		};
+		getJSON(URL, jsonParam, setappend);
+		document.getElementById(favtitle).innerHTML = document.getElementById(title).value;
+		//グローバルflagをtrueにする
+		document.getElementById(grobalflag).value=0;
+		//document.getElementsByClassName(absolute).style.color='#FFFFFF';
+		console.log("現ふらぐ"+document.getElementById(grobalflag).value);
+	}
 }
 

@@ -48,7 +48,7 @@ public class DeleteFavServlet extends HttpServlet {
 		****ある記事のお気に入り解除ボタンを押したとき****
 		*************************************************/
 		//お気に入りの解除
-		int user_id =0;//sessionからuser_idを取得
+		int user_id =1;//sessionからuser_idを取得
 		int article_id = Integer.parseInt(request.getParameter("article_id"));
 		ArticleBean articlebean = new ArticleBean();
 		articlebean.setArticle_id(article_id);
