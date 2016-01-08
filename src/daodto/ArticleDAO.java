@@ -21,15 +21,18 @@ public class ArticleDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean add(ArticleDTO article, ArrayList<ImageDTO> image ,int user_id) throws Exception {
+	public boolean add(ArticleDTO article, ArrayList<ImageDTO> image, int user_id) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		boolean flag=false;
+		boolean flag = false;
 		int article_id = 0;
 		int id = 0;
+
+
+		// サムネイルは
 		String hantei_sql = "SELECT * FROM articles WHERE url = ? AND articles.id = ?";
 		String id_sql = "SELECT id FROM mylists,users WHERE mylists.user_id = users.user_id AND users.user_id = ?";
-		String sql = "INSERT INTO articles(title,body,url,created,share_url,share_expior,id,modified) VALUES(?,?,?,now(),null,null,?,now())";
+		String sql = "INSERT INTO articles(title,body,url,created,share_url,share_expior,id,thum,favflag,modified) VALUES(?,?,?,now(),null,null,?,?,FALSE,now())";
 		String sql2 = "SELECT LAST_INSERT_ID() AS LAST;";
 		String sql3 = "INSERT INTO article_image(article_id,uri,blob_image) VALUES(?,?,?)";
 		try {
@@ -37,7 +40,7 @@ public class ArticleDAO {
 			pstmt = con.prepareStatement(id_sql);
 			pstmt.setInt(1, user_id);
 			rs = pstmt.executeQuery();
-			if(rs.next()){
+			if (rs.next()) {
 				id = rs.getInt("id");
 			}
 			pstmt = con.prepareStatement(hantei_sql);
@@ -50,6 +53,7 @@ public class ArticleDAO {
 				pstmt.setString(2, article.getBody());
 				pstmt.setString(3, article.getUrl());
 				pstmt.setInt(4, id);
+				pstmt.setBytes(5, article.getThum());
 				pstmt.executeUpdate();
 				pstmt = con.prepareStatement(sql2);
 				rs = pstmt.executeQuery();
@@ -57,9 +61,9 @@ public class ArticleDAO {
 				if (rs != null && rs.next()) {
 					article_id = rs.getInt("LAST");
 				}
-				for(ImageDTO imgDTO : image){
+				for (ImageDTO imgDTO : image) {
 					pstmt = con.prepareStatement(sql3);
-					pstmt.setInt(1,article_id);
+					pstmt.setInt(1, article_id);
 					pstmt.setString(2, imgDTO.getUri());
 					pstmt.setBytes(3, imgDTO.getBlob_image());
 					pstmt.executeUpdate();
@@ -94,7 +98,7 @@ public class ArticleDAO {
 			pstmt.setInt(1, article_id);
 			pstmt.executeUpdate();
 			con.commit();
-			flag=true;
+			flag = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
@@ -113,7 +117,7 @@ public class ArticleDAO {
 	public boolean update(ArticleDTO article) throws Exception {
 		PreparedStatement pstmt = null;
 		String sql = "UPDATE articles SET title = ?,body = ?,url = ?,modified = now() ,share_url = null,share_expior = null WHERE article_id = ?";
-		boolean flag=false;
+		boolean flag = false;
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, article.getTitle());
@@ -166,9 +170,11 @@ public class ArticleDAO {
 		String sql = "INSERT INTO article_tag(article_id,tag_id) VALUES(?,"
 				+ " (SELECT tag_id FROM tags " + " WHERE user_id = ? "
 				+ " AND tag_body = 'お気に入り'))";
+		String article_fav = "update articles set favflag = TRUE where article_id = ?";
+
 		try {
 			con.setAutoCommit(false);
-			pstmt=con.prepareStatement(hantei_sql);
+			pstmt = con.prepareStatement(hantei_sql);
 			pstmt.setInt(1, article_id);
 			pstmt.setInt(2, user_id);
 			rs = pstmt.executeQuery();
@@ -177,11 +183,15 @@ public class ArticleDAO {
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, article_id);
 				pstmt.setInt(2, user_id);
+				System.out.println("pstmt:" + pstmt);
+				pstmt.executeUpdate();
+				pstmt = con.prepareStatement(article_fav);
+				pstmt.setInt(1, article_id);
 				pstmt.executeUpdate();
 				con.commit();
 				flag = true;
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			con.rollback();
 			con.setAutoCommit(true);
@@ -203,15 +213,26 @@ public class ArticleDAO {
 		boolean flag = false;
 		String sql = "DELETE FROM article_tag WHERE article_id = ? AND tag_id = "
 				+ " (SELECT tag_id FROM tags WHERE user_id = ? AND tag_body = 'お気に入り')";
+		String article_fav = "update articles set favflag = FALSE where article_id = ?";
+
 		try {
+			con.setAutoCommit(false);
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, article_id);
 			pstmt.setInt(2, user_id);
 			pstmt.executeUpdate();
-			flag=true;
+			pstmt = con.prepareStatement(article_fav);
+			pstmt.setInt(1, article_id);
+			pstmt.executeUpdate();
+			flag = true;
 		} catch (Exception e) {
 			e.printStackTrace();
+			con.rollback();
+			con.setAutoCommit(true);
 			throw new Exception();
+		} finally {
+			con.setAutoCommit(true);
+
 		}
 		return flag;
 	}
@@ -417,6 +438,7 @@ public class ArticleDAO {
 				article.setModified(DateEncode.toDate(rs.getString("modified")));
 				article.setShare_url(rs.getString("share_url"));
 				article.setShare_expior(rs.getDate("share_expior"));
+				article.setFavflag(rs.getBoolean("favflag"));
 				article.setThum(rs.getBytes("thum"));
 				articleList.add(article);
 			}
@@ -453,6 +475,7 @@ public class ArticleDAO {
 				articleDTO.setCreated(DateEncode.toDate(rs.getString("created")));
 				articleDTO.setModified(DateEncode.toDate(rs.getString("modified")));
 				articleDTO.setShare_url(rs.getString("share_url"));
+				articleDTO.setFavflag(rs.getBoolean("favflag"));
 				articleDTO.setShare_expior(rs.getDate("share_expior"));
 				articleDTO.setMylist_id(rs.getInt("id"));
 			}
@@ -525,7 +548,7 @@ public class ArticleDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean addTag(int article_id,int user_id,ArrayList<String> tag_body_list) throws Exception {
+	public boolean addTag(int article_id, int user_id, ArrayList<String> tag_body_list) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		boolean flag = false;
@@ -538,14 +561,14 @@ public class ArticleDAO {
 		try {
 			con.setAutoCommit(false);
 			//tag_bodyがある限り
-			for(String tag_body : tag_body_list){
+			for (String tag_body : tag_body_list) {
 				pstmt = con.prepareStatement(hantei_sql1);//送られてきたタグリストがあるならとってくる。
 				pstmt.setString(1, tag_body);
 				pstmt.setInt(2, user_id);
 				rs = pstmt.executeQuery();
 				//検索結果がない場合、新規タグを登録する(tags)
 				if (!rs.next()) {
-					pstmt=con.prepareStatement(sql1);
+					pstmt = con.prepareStatement(sql1);
 					pstmt.setString(1, tag_body);
 					pstmt.setInt(2, user_id);
 					pstmt.executeUpdate();
@@ -554,19 +577,19 @@ public class ArticleDAO {
 				pstmt.setString(1, tag_body);
 				pstmt.setInt(2, user_id);
 				rs = pstmt.executeQuery();
-				if(rs.next()){
+				if (rs.next()) {
 					tag_id_list.add(rs.getInt("tag_id"));
 				}
 			}
 			//tag_idがある限り
-			for(int tag_id : tag_id_list){
+			for (int tag_id : tag_id_list) {
 				pstmt = con.prepareStatement(hantei_sql2);//その記事についてるタグがあればとってくる
 				pstmt.setInt(1, article_id);
 				pstmt.setInt(2, tag_id);
 				rs = pstmt.executeQuery();
 				//検索結果がない場合、記事にタグを付与する(article_tag)
-				if(!rs.next()){
-					pstmt=con.prepareStatement(sql2);
+				if (!rs.next()) {
+					pstmt = con.prepareStatement(sql2);
 					pstmt.setInt(1, article_id);
 					pstmt.setInt(2, tag_id);
 					pstmt.executeUpdate();
@@ -580,33 +603,31 @@ public class ArticleDAO {
 			tag_list = tagbean.viewExistingTag(user_id, article_id);
 
 			//データベースに存在するタグリストがある限り
-			for(int i=0;i<tag_list.size();i++){
-				boolean deleteflag=true;
+			for (int i = 0; i < tag_list.size(); i++) {
+				boolean deleteflag = true;
 				//送られてきたタグのIDがある限り
-				for(int tag_id : tag_id_list){
+				for (int tag_id : tag_id_list) {
 					//同じであれば該当するのでフラグがfalseになる
-					if(tag_id==tag_list.get(i).getTag_id()){
-						deleteflag=false;
+					if (tag_id == tag_list.get(i).getTag_id()) {
+						deleteflag = false;
 						break;
-					}else{
+					} else {
 
 					}
 				}
 				//trueのままであればクライアントから送られたデータの中に該当しないので削除する
-				if(deleteflag){
+				if (deleteflag) {
 					pstmt = con.prepareStatement(getid);//送られてきたタグリストのタグIDを取得する
 					pstmt.setInt(1, tag_list.get(i).getTag_id());
 					pstmt.setInt(2, article_id);
 					rs = pstmt.executeQuery();
-					if(rs.next()){
-						pstmt=con.prepareStatement(deletesql);//該当しないIDを削除
+					if (rs.next()) {
+						pstmt = con.prepareStatement(deletesql);//該当しないIDを削除
 						pstmt.setInt(1, rs.getInt("id"));
 						pstmt.executeUpdate();
 					}
 				}
 			}
-
-
 
 			con.commit();
 			flag = true;
@@ -615,7 +636,7 @@ public class ArticleDAO {
 			con.rollback();
 			con.setAutoCommit(true);
 			throw new Exception();
-		}finally {
+		} finally {
 			con.setAutoCommit(true);
 		}
 		return flag;

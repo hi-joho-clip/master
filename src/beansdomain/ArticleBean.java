@@ -26,6 +26,7 @@ public class ArticleBean {
 	private byte[] thum;
 	private byte[] blob_image;
 	private ImageDTO imageDTO;
+	private boolean favflag;
 	private ArrayList<ImageDTO> imageListDTO;
 	private ArrayList<TagBean> tagBeans;
 
@@ -69,6 +70,7 @@ public class ArticleBean {
 			articleBean.setModified(article.get(i).getModified());
 			articleBean.setShare_url(article.get(i).getShare_url());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
+			articleBean.setFavflag(article.get(i).isFavflag());
 			articleBean.setMylist_id(article.get(i).getMylist_id());
 			articleBean.setThum(article.get(i).getThum());
 			articleList.add(articleBean);
@@ -416,6 +418,14 @@ public class ArticleBean {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public boolean isFavflag() {
+		return favflag;
+	}
+
+	public void setFavflag(boolean favflag) {
+		this.favflag = favflag;
 	}
 
 
