@@ -39,9 +39,10 @@ $(document).ready(function() {
 			$('.grid').empty();
 			getFavList();
 			break;
-		case "2"://タグ画面を表示しているとき
+		case "2"://特定のタグ画面を表示しているとき
 			$('.grid').empty();
-			getTagList();
+			console.log($.cookie("tagLists"));
+			getTagArticleList(0,$.cookie("tagLists"));
 			break;
 		}
 	});
