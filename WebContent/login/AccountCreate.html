@@ -1,18 +1,23 @@
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
-  <meta charset="UTF-8" />
-  <title>CLIP</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style2.css" />
-  <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-  <!-- remember, jQuery is completely optional -->
-  <!-- <script type='text/javascript' src='js/jquery-1.11.1.min.js'></script> -->
-  <script type='text/javascript' src='../js/jquery/jquery.particleground.js'></script>
-  <script type='text/javascript' src='js/demo.js'></script>
-
+<meta charset="UTF-8" />
+<title>CLIP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/style2.css" />
+<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700'
+	rel='stylesheet' type='text/css'>
+<!-- remember, jQuery is completely optional -->
+<script type='text/javascript' src='../js/jquery/jquery-2.1.4.min.js'></script>
+<script type='text/javascript'
+	src='../js/jquery/jquery.particleground.js'></script>
+<script type='text/javascript' src='js/demo.js'></script>
+<script src="../js/lib/jquery.validationEngine.js"></script>
+<script src="../js/lib/jquery.validationEngine-ja.js"></script>
 
 <link rel="stylesheet" type="text/css" href="css/AccountCreate.css">
+<link href="../css/validationEngine.jquery.css" rel="stylesheet"
+	type="text/css" />
 
 
 
@@ -23,69 +28,79 @@
 	$(function() {
 		$('body *').removeAttr('style');
 	});
--->
+
+	jQuery(document).ready(function() {
+		jQuery("#form").validationEngine();
+	});
+	-->
 </script>
 
 <body>
 
 
-<div id="particles">
-  <div id="intro">
-    <h1>C L I P</h1>
-    <p>AccountCreate</p>
-<div class="form-wrapper">
+	<div id="particles">
+		<div id="intro">
+			<h1>C L I P</h1>
+			<p>AccountCreate</p>
+			<div class="form-wrapper">
 
 
 
-  <!--　アカウント新規作成  -->
-  <form  method="post" action="../adduser">
+				<!--　アカウント新規作成  -->
+				<form id="form" method="post" action="../adduser">
 
-    <div class="form-item">
-      <!--　ユーザネーム  -->
-      <label for="username"></label>
-      <input type="text" name="username" required="required" placeholder="User Name"></input>
-    </div>
-      <div class="form-item">
-       <!--　ニックネーム  -->
-      <label for="nickname"></label>
-      <input type="text" name="nickname" required="required" placeholder="Nick Name"></input>
-    </div>
-      <div class="form-item">
-      <!--　メールアドレス  -->
-      <label for="email"></label>
-      <input type="email" name="email" required="required" placeholder="Email Address"></input>
-    </div>
-      <div class="form-item">
-      <!--　メールアドレス確認  -->
-      <label for="email2"></label>
-      <input type="email" name="email2" required="required" placeholder="Email Address(確認)"></input>
-    </div>
-      <div class="form-item">
-      <!--　パスワード  -->
-      <label for="password"></label>
-      <input type="password" name="password" required="required" placeholder="Password"></input>
-    </div>
-      <div class="form-item">
-      <!--　パスワード確認  -->
-      <label for="password2"></label>
-      <input type="password" name="password2" required="required" placeholder="Password(確認)"></input>
-    </div>
-      <!--　新規登録ボタン  -->
-    <div class="button-panel">
-      <input type="submit" class="button" title="Create" value="Create"></input>
-    </div>
-  </form>
-     <div class="form-footer">
+					<div class="form-item">
+						<!--　ユーザネーム  -->
+						<label for="username"></label> <input type="text" name="username"
+							required="required" placeholder="User Name"></input>
+					</div>
+					<div class="form-item">
+						<!--　ニックネーム  -->
+						<label for="nickname"></label> <input type="text" name="nickname"
+							required="required" placeholder="Nick Name"></input>
+					</div>
+					<div class="form-item">
+						<!--　メールアドレス  -->
+						<label for="email"></label> <input type="email" name="email" class="validate[required,custom[email]] text-input"
+							required="required" placeholder="Email Address" id="email"></input>
+					</div>
+					<div class="form-item">
+						<!--　メールアドレス確認  -->
+						<label for="email2"></label> <input type="email" name="email2" class="validate[required,equals[email]] text-input"
+							required="required" placeholder="Email Address(確認)"  id="re_email"></input>
+					</div>
+					<div class="form-item">
+						<!--　パスワード  -->
+						<label for="password"></label> <input type="password"
+							name="password" class="validate[required] text-input"
+							required="required" placeholder="Password" id="passwd"></input>
+					</div>
+					<div class="form-item">
+						<!--　パスワード確認  -->
+						<label for="password2"></label> <input type="password"
+							name="password2"
+							class="validate[required,equals[passwd]] text-input"
+							required="required" placeholder="Password(確認)" id="re_passwd"></input>
+					</div>
+					<!--　新規登録ボタン  -->
+					<div class="button-panel">
+						<input type="submit" class="button" title="Create" value="Create"></input>
+					</div>
 
-   <!--　戻る  -->
-    <p><a href="Login.html">BACK</a></p>
+				</form>
+				<div class="form-footer">
 
-</div>
-</div>
+					<!--　戻る  -->
+					<p>
+						<a href="Login.html">BACK</a>
+					</p>
+
+				</div>
+			</div>
 
 
-</div>
-</div>
+		</div>
+	</div>
 
 </body>
 </html>
