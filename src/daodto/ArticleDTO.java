@@ -14,6 +14,7 @@ public class ArticleDTO {
 	private Date share_expior;
 	private int mylist_id;
 	private byte[] thum;
+	private boolean favflag;
 	private ArrayList<ImageDTO> imageDTO;
 
 
@@ -25,6 +26,7 @@ public class ArticleDTO {
 		this.created=null;
 		this.share_url=null;
 		this.modified=null;
+		this.favflag=false;
 		this.share_expior=null;
 		this.thum=null;
 	}
@@ -115,6 +117,14 @@ public class ArticleDTO {
 
 	public void setModified(Date modified) {
 		this.modified = modified;
+	}
+
+	public boolean isFavflag() {
+		return favflag;
+	}
+
+	public void setFavflag(boolean favflag) {
+		this.favflag = favflag;
 	}
 
 }

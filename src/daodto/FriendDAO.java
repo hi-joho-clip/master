@@ -24,7 +24,7 @@ public class FriendDAO {
 	 * @param user_name
 	 * @return
 	 */
-	public ArrayList<UserDTO> search(int user_id, String user_name) throws Exception {
+	public ArrayList<UserDTO> search(int user_id, String nickname) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<UserDTO> userList = new ArrayList<UserDTO>();
@@ -35,7 +35,7 @@ public class FriendDAO {
 				") friend_temp " +
 				"on f_user_id = users.user_id " +
 				"where users.friend_flag = 0 " +
-				"and users.user_name like ? " +
+				"and users.nickname like ? " +
 				"and f_user_id is null " +
 				"and users.user_id != ? " +
 				"limit 50";
@@ -43,7 +43,7 @@ public class FriendDAO {
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, user_id);
-			pstmt.setString(2, "%" + user_name + "%");
+			pstmt.setString(2, "%" + nickname + "%");
 			pstmt.setInt(3, user_id);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
