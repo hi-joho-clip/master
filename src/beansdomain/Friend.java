@@ -100,7 +100,7 @@ public class Friend {
 
 	/**
 	 *
-	 * 取得するのはユーザID、ユーザネーム、ニックネームのみ
+	 * 取得するのはユーザID、ニックネームのみ
 	 * @param own_user_id
 	 */
 	public ArrayList<User> searchFriend(int own_user_id, String str) throws Exception{
@@ -109,7 +109,6 @@ public class Friend {
 		for (UserDTO userDTO : userListDTO) {
 			User userbean = new User();
 			userbean.setUser_id(userDTO.getUser_id());
-			userbean.setUser_name(userDTO.getUser_name());
 			userbean.setNickname(userDTO.getNickname());
 			this.userList.add(userbean);
 		}
