@@ -45,3 +45,38 @@ function getTagArticle(article_id) {
 	getJSON(URL, jsonParam, get_tag_article_lists);
 }
 
+//タグ一覧表示
+function getTagList() {
+	var jsonParam = null;// 送りたいデータ
+	var URL = "http://localhost:8080/clipMaster/taglist";
+	getJSON(URL, jsonParam, get_taglists);
+}
+//タグを削除
+function deleteTag(tag_id){
+
+	var jsonParam = "tag_id="+tag_id.item(0).value;// 送りたいデータ
+	var URL = "http://localhost:8080/clipMaster/deletetag";
+	var setappend=function(){
+
+	};
+	getJSON(URL, jsonParam, setappend);
+	location.reload();
+	toastr.success('タグを削除しました');
+
+}
+//特定のタグの記事一覧
+function getTagArticleList(tag_list,tag_id) {
+	if(tag_id==0 && tag_list!=0){//tag_idが0なら、タグが複数あるリストをもとに検索をして一覧表示させる処理
+		for(var i=0;i<tag_list.length;i++){
+			arr[i]=tag_list.item(i).value;//1番目からタグが入る
+		}
+		taglists = "tag_list="+JSON.parse(JSON.stringify(arr));
+		document.getElementById('title').innerHTML='<h1>'+JSON.parse(JSON.stringify(arr))+'</h1>';
+	}else if(tag_list==0 && tag_id!=0){//tag_listが0なら、特定のタグをクリックして一覧表示させる処理
+		taglists = "tag_list="+tag_id;
+		document.getElementById('title').innerHTML='<h1>'+tag_id+'</h1>';
+	}
+	var URL = "http://localhost:8080/clipMaster/tagarticlelist";
+	getJSON(URL, taglists, get_mylists);
+}
+
