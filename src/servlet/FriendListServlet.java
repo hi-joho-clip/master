@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.arnx.jsonic.JSON;
 
@@ -41,30 +42,31 @@ public class FriendListServlet extends HttpServlet {
 		Friend friendbeans = new Friend();
 		ArrayList<Friend> friend_list = new ArrayList<Friend>();
 		ArrayList<Friend> request_friend_list = new ArrayList<Friend>();
+		HttpSession session = request.getSession(false);
 
-		// セッション情報の名前は変更する必要あり
-		int own_user_id = 2;
-		// Integer.parseInt(request.getParameter("user_id"));
+		if (session != null) {
 
-		response.setContentType("application/json; charset=utf-8");
-		response.setHeader("Cache-Control", "private");
-		PrintWriter out = response.getWriter();
+			int own_user_id = (int) session.getAttribute("user_id");
 
-		try {
-			friend_list = friendbeans.getFriendList(own_user_id);
+			response.setContentType("application/json; charset=utf-8");
+			response.setHeader("Cache-Control", "private");
+			PrintWriter out = response.getWriter();
 
-			for (int i = 0; i < friend_list.size(); i++) {
-				if (friend_list.get(i).getStatus() != 1) {
+			try {
+				friend_list = friendbeans.getFriendList(own_user_id);
 
-					request_friend_list.add(friend_list.get(i));
+				for (int i = 0; i < friend_list.size(); i++) {
+					if (friend_list.get(i).getStatus() != 1) {
 
+						request_friend_list.add(friend_list.get(i));
+
+					}
 				}
+			} catch (Exception e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
+			out.println(JSON.encode(request_friend_list, true).toString());
 		}
-		out.println(JSON.encode(request_friend_list, true).toString());
-
 	}
 }

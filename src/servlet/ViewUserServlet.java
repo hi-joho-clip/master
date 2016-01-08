@@ -36,8 +36,11 @@ public class ViewUserServlet extends HttpServlet {
 
 		User userbeans = null;
 
-		int user_id = 5;
+		HttpSession session = request.getSession(false);
 
+		if (session != null) {
+
+			int user_id = (int) session.getAttribute("user_id");
 
 		response.setContentType("application/json; charset=utf-8");
 		response.setHeader("Cache-Control", "private");
@@ -48,7 +51,9 @@ public class ViewUserServlet extends HttpServlet {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+
 		out.println(JSON.encode(userbeans, true).toString());
+		}
 	}
 
 }
