@@ -8,28 +8,30 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.arnx.jsonic.JSON;
 
 import beansdomain.User;
 import beansdomain.UserAuth;
 
-
 @WebServlet("/updatemailaddress")
 public class UpdateMailAddressServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public UpdateMailAddressServlet() {
-        super();
-    }
+	public UpdateMailAddressServlet() {
+		super();
+	}
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		perform(request, response);
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		perform(request, response);
 	}
 
@@ -39,53 +41,52 @@ public class UpdateMailAddressServlet extends HttpServlet {
 		User userbean = null;
 		UserAuth userauth = new UserAuth();
 		boolean hantei = false;
+		HttpSession session = request.getSession(false);
 
 		String URL = "/clipMaster/login";
 
 		System.out.println("updatemailaddress");
 
-		int user_id = 5;
+		if (session != null) {
+			int user_id = (int) session.getAttribute("user_id");
 
-		/*int user_id = Integer.parseInt(request.getParameter("user_id"));*/
+			String inputmail = request.getParameter("newemail");
+			String inputpass = request.getParameter("password");
 
-		String inputmail = request.getParameter("newemail");
-		String inputpass = request.getParameter("password");
+			response.setContentType("application/json; charset=utf-8");
+			response.setHeader("Cache-Control", "private");
+			PrintWriter out = response.getWriter();
 
+			try {
+				userbean = new User(user_id);
+				hantei = userauth.loginUserName(userbean.getUser_name(),
+						inputpass);
 
-		response.setContentType("application/json; charset=utf-8");
-		response.setHeader("Cache-Control", "private");
-		PrintWriter out = response.getWriter();
+				if (hantei) {
+					userbean.setMailaddress(inputmail);
+					userbean.setPassword(inputpass);
+					userbean.updateMailaddress();
+				} else {
+					// パスワードが一致しなかった処理
+					response.sendRedirect(URL + "/MailChange.html");
+					return;
+				}
 
+				/*
+				 * //メッセージ処理 if
+				 * (userbean.getErrorMessages().containsKey("mailaddress")) {
+				 * //メールアドレスが既に存在していたのでメッセージを出す
+				 * System.out.println(userbean.getErrorMessages
+				 * ().get("mailaddress")); }else { }
+				 */
 
-
-		try {
-			userbean = new User(user_id);
-			hantei = userauth.loginUserName(userbean.getUser_name(), inputpass);
-
-			if(hantei){
-				userbean.setMailaddress(inputmail);
-				userbean.setPassword(inputpass);
-				userbean.updateMailaddress();
-			}else{
-				//パスワードが一致しなかった処理
-				response.sendRedirect(URL + "/MailChange.html");
-				return;
+			} catch (Exception e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
 			}
-
-
-			/*//メッセージ処理
-			if (userbean.getErrorMessages().containsKey("mailaddress")) {
-				//メールアドレスが既に存在していたのでメッセージを出す
-				System.out.println(userbean.getErrorMessages().get("mailaddress"));
-			}else {
-			}*/
-
-		} catch (Exception e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
+			out.println(JSON.encode(userbean, true).toString());
+			response.sendRedirect(URL + "/UserInfo.html");
 		}
-		out.println(JSON.encode(userbean , true).toString());
-		response.sendRedirect(URL + "/UserInfo.html");
 	}
 
 }
