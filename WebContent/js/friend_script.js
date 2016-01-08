@@ -24,7 +24,7 @@ function getFriendList(){
 		}
 		friendList += "</ul>";
 		/*console.log(friendList);*/
-		document.getElementById('info').innerHTML=friendList;
+		document.getElementById('info').innerHTML=friendList + "</div>";
 		$('input#id_search').quicksearch('section div div ul li');
 	};
 	getJSON(URL, jsonParam, setappend);
@@ -48,26 +48,29 @@ function getFriendRequest(){
 }
 
 //フレンド検索画面
-function getFriendSearch(){
-	var jsonParam = null;//送りたいデータ
+function getFriendSearch(nickname){
+
+	console.log(nickname.item(0).value);
+	var jsonParam = "nickname="+nickname.item(0).value;//送りたいデータ
 	var URL = "http://localhost:8080/clipMaster/searchfriend";
-	var friendList = "";
+	var friendList = "<div class='remodal-bg'>";
 	var setappend = function(json) {
 
-		for ( var i = 0; i < jsonResult.length ; i++) {
-			friendList += jsonResult[i].nickname + "&emsp;" +
-			"<a onclick='http://localhost:8080/clipMaster/addrequest'>追加</a>" + "<br>";
+		for ( var i = 0; i < json.length ; i++) {
+			console.log(json[i].user_id);
+			friendList +=
+			json[i].nickname + "&emsp;" +
+			"<a href='#' data-remodal-target='add' onclick='document.getElementById(\"user_id\").innerHTML=\""+json[i].user_id+"\";'>追加</a>" + "<br>";
 		}
-		document.getElementById('info').innerHTML=friendList;
+		document.getElementById('info').innerHTML=friendList + "</div>";
 	};
 	getJSON(URL, jsonParam, setappend);
 }
 
 
 //リクエストを申請後の画面
-function addRequest(){
-
-	var jsonParam = null;//送りたいデータ
+function addRequest(user_id){
+	var jsonParam = "friend_user_id="+user_id;//送りたいデータ
 	var URL = "http://localhost:8080/clipMaster/addrequest";
 	var friendList = "";
 	var setappend = function(json) {
