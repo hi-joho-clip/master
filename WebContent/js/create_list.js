@@ -90,6 +90,12 @@ var get_mylists = function(json) {
 	$myList = $("<div class='grid-sizer'></div>");
 	$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
 	for ( var i = json.length - 1; i >= 0; i--) {
+		var flag="";
+		if(json[i].favflag==true){
+			flag="★"+json[i].title;
+		}else if(json[i].favflag==false){
+			flag=json[i].title;
+		}
 		$myList = $("<div class='"+item[random][i] + " mosaic-block bar'>" +
 						"<div class='mosaic-overlay'>"+
 
@@ -125,7 +131,7 @@ var get_mylists = function(json) {
 						"</div>"+
 						"<div class='mosaic-backdrop relative'>" +
 							"<img src='http://www.kk1up.jp/wp-content/uploads/2015/07/201507290001-17.jpg'width='100%'height='100%'alt='"+json[i].title+"'/>" +
-							"<p class='absolute'id='favtitle"+json[i].article_id+"'>"+json[i].title+"</p>" +
+							"<p class='absolute'id='favtitle"+json[i].article_id+"'>"+flag+"</p>" +
 							"<input type='hidden' value='"+json[i].title+"' id='title"+json[i].article_id+"'>"+
 						"</div>"+
 					"</div>");
