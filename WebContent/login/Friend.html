@@ -13,7 +13,8 @@
 <link href="css/normalize.css" rel="stylesheet">
 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="css/articlemenu.css" rel="stylesheet">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="js/articlemenu.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="../js/jquery/isotope.pkgd.min.js"></script>
@@ -21,43 +22,43 @@
 <script type="text/javascript" src="../js/json-xhr.js"></script>
 <script type="text/javascript" src="../js/friend_script.js"></script>
 <link rel="stylesheet" href="../tag-it/src/remodal.css">
-    <link rel="stylesheet" href="../tag-it/src/remodal-default-theme.css">
-    <script src="../tag-it/src/remodal.js"></script>
+<link rel="stylesheet" href="../tag-it/src/remodal-default-theme.css">
 <script src="../tag-it/src/remodal.js"></script>
+<script src="../js/lib/jquery.quicksearch.js"></script>
 
 
 <style>
-      .remodal-overlay.without-animation.remodal-is-opening,
-      .remodal-overlay.without-animation.remodal-is-closing,
-      .remodal.without-animation.remodal-is-opening,
-      .remodal.without-animation.remodal-is-closing,
-      .remodal-bg.without-animation.remodal-is-opening,
-      .remodal-bg.without-animation.remodal-is-closing {
-        animation: none;
-      }
-    </style>
+.remodal-overlay.without-animation.remodal-is-opening,.remodal-overlay.without-animation.remodal-is-closing,.remodal.without-animation.remodal-is-opening,.remodal.without-animation.remodal-is-closing,.remodal-bg.without-animation.remodal-is-opening,.remodal-bg.without-animation.remodal-is-closing
+	{
+	animation: none;
+}
+</style>
 </head>
 
 <body>
-<div class="remodal" data-remodal-id="delete_request" >
-  <a data-remodal-action="close" class="remodal-close"></a>
-  <h2>リクエスト削除</h2>
-  <!-- <div id="friendregister"> </div> -->
+	<div class="remodal" data-remodal-id="delete_request">
+		<a data-remodal-action="close" class="remodal-close"></a>
+		<h2>リクエスト削除</h2>
+		<!-- <div id="friendregister"> </div> -->
 
-	<a class="remodal-confirm" href="#"onclick="javascript:deleteRequest();">OK</a> <a class="remodal-cancel" href="#">キャンセル</a>
-</div>
+		<a class="remodal-confirm" href="#"
+			onclick="javascript:deleteRequest();">OK</a> <a
+			class="remodal-cancel" href="#">キャンセル</a>
+	</div>
 
-<div class="remodal" data-remodal-id="delete_friend" >
-  <a data-remodal-action="close" class="remodal-close" ></a>
-  <h2>フレンド削除</h2>
+	<div class="remodal" data-remodal-id="delete_friend">
+		<a data-remodal-action="close" class="remodal-close"></a>
+		<h2>フレンド削除</h2>
 
-	<a class="remodal-confirm" href="#"onclick="javascript:deleteFriend();">OK</a> <a class="remodal-cancel" href="#">キャンセル</a>
-</div>
+		<a class="remodal-confirm" href="#"
+			onclick="javascript:deleteFriend();">OK</a> <a class="remodal-cancel"
+			href="#">キャンセル</a>
+	</div>
 	<section>
 
 		<div class="wh DSmenu">
 			<ul>
-				<a href="UserInfo.html" ><li>ユーザ情報</li></a>
+				<a href="UserInfo.html"><li>ユーザ情報</li></a>
 				<a href="index.html" onclick="javascript:$.cookie('viewMode','0');"><li>マイリスト</li></a>
 				<a href="index.html" onclick="javascript:$.cookie('viewMode','1');"><li>お気に入り</li></a>
 				<a href="index.html" onclick="javascript:$.cookie('viewMode','2');"><li>タグ</li></a>
@@ -73,50 +74,53 @@
 			</div>
 		</div>
 
-	<div class="container" >
+		<div class="container">
 			<div style="margin: 200px auto;">
 
-<div class="form-wrapper">
+				<div class="form-wrapper">
 
 
 
-  <!--　フレンド検索  -->
- <form action="" method="post">
-	<label for="search" class="ui-hidden-accessible">検索</label>
-	<input type="search" name="search" id="search" placeholder="キーワードを入力してください" data-mini="true" data-clear-btn-text="入力クリア">
-	<input type="submit" value="検索" data-inline="true" data-mini="true">
+					<!--　フレンド検索  -->
+					<form action="#">
+						<label for="search" class="ui-hidden-accessible">検索</label> <input
+							type="text" name="search" id="id_search"
+							placeholder="キーワードを入力してください" data-mini="true"
+							data-clear-btn-text="入力クリア">
 
-  </form>
+					</form>
 
-<br>
-   <div id="info"></div>
-
-
-  <div class="form-footer">
+					<br>
+					<div id="info"></div>
 
 
-    <!--　マイリストに戻る  -->
-    <p><a href="index.html">BACK</a></p>
-  </div>
+					<div class="form-footer">
 
-  <section class="section">
-					<div class="head-bar">
-						<div class="container-fluid">
-							<h1 class="text-center">CLIP</h1>
-						</div>
+
+						<!--　マイリストに戻る  -->
+						<p>
+							<a href="index.html">BACK</a>
+						</p>
 					</div>
-				</section>
 
-  </div>
-  </div>
-</div>
-</section>
+					<section class="section">
+						<div class="head-bar">
+							<div class="container-fluid">
+								<h1 class="text-center">CLIP</h1>
+							</div>
+						</div>
+					</section>
 
-<script>
-	$(document).ready(function() {
-		getFriendList();
-	});
-</script>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script>
+		$(document).ready(function() {
+			getFriendList();
+		});
+	</script>
 
 </body>
 </html>

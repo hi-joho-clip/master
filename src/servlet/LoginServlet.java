@@ -10,6 +10,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import beansdomain.User;
 import beansdomain.UserAuth;
@@ -53,8 +54,10 @@ public class LoginServlet extends HttpServlet {
 			if (inputid.matches(".*@.*")) { // メールアドレスの場合
 				try {
 					hantei = userauth.loginMailaddress(inputid, inputpass);
-					user_id = userauth.getUser_id();
-					userbeans = new User(user_id);
+					if (hantei) {
+						user_id = userauth.getUser_id();
+						userbeans = new User(user_id);
+					}
 				} catch (Exception e) {
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
@@ -62,8 +65,11 @@ public class LoginServlet extends HttpServlet {
 			} else { // ユーザ名の場合
 				try {
 					hantei = userauth.loginUserName(inputid, inputpass);
-					user_id = userauth.getUser_id();
-					userbeans = new User(user_id);
+					if (hantei) {
+						user_id = userauth.getUser_id();
+						userbeans = new User(user_id);
+					}
+
 				} catch (Exception e) {
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
@@ -75,19 +81,30 @@ public class LoginServlet extends HttpServlet {
 				UUID nonce = UUID.randomUUID();
 				Calendar cal = Calendar.getInstance();
 
+				System.out.println("login");
+
+				HttpSession loginsession = request.getSession(true);
+				loginsession.setAttribute("username", userbeans.getUser_name());
+				loginsession.setAttribute("user_id", userbeans.getUser_id());
+
 				/**
 				 * CSRF対策
 				 */
 				Cookie c_guid = new Cookie("guid", guid.toString());
+				Cookie username = new Cookie("username",
+						userbeans.getUser_name());
 				Cookie c_nonce = new Cookie("nonce", nonce.toString());
-				Cookie c_start_time = new Cookie("start_time", Long.toString(cal.getTimeInMillis()));
+				Cookie c_start_time = new Cookie("start_time",
+						Long.toString(cal.getTimeInMillis()));
 				response.addCookie(c_guid);
 				response.addCookie(c_nonce);
 				response.addCookie(c_start_time);
+				response.addCookie(username);
+				loginsession.setAttribute("guid", guid.toString());
 
-				//URLは絶対パスで書かない。
+				// URLは絶対パスで書かない。
 				// 本番環境でURL=nullにすれば簡単に動く
-				//マイリスト画面に移動
+				// マイリスト画面に移動
 				response.sendRedirect(URL + "/index.html");
 			} else {
 				// パスワードが一致しなかったので再入力させる。

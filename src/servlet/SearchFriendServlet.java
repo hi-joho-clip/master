@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.arnx.jsonic.JSON;
 
@@ -19,40 +20,45 @@ import beansdomain.User;
 public class SearchFriendServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public SearchFriendServlet() {
-        super();
-    }
-
-    @Override
-   	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-   		perform(request, response);
-   	}
+	public SearchFriendServlet() {
+		super();
+	}
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		perform(request, response);
 	}
 
-	private void perform(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	@Override
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		perform(request, response);
+	}
+
+	private void perform(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 
 		Friend friendbeans = new Friend();
 		ArrayList<User> friend_list = new ArrayList<User>();
+		HttpSession session = request.getSession(false);
 
-		int own_user_id = 5;
-		String str = request.getParameter("mail_or_name");
+		if (session != null) {
 
+			int own_user_id = (int) session.getAttribute("user_id");
+			String str = request.getParameter("nickname");
 
-		response.setContentType("application/json; charset=utf-8");
-		response.setHeader("Cache-Control", "private");
-		PrintWriter out = response.getWriter();
+			response.setContentType("application/json; charset=utf-8");
+			response.setHeader("Cache-Control", "private");
+			PrintWriter out = response.getWriter();
 
-
-		try {
-			friend_list = friendbeans.searchFriend(own_user_id, str);
-		} catch (Exception e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
+			try {
+				friend_list = friendbeans.searchFriend(own_user_id, str);
+			} catch (Exception e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
+			out.println(JSON.encode(friend_list, true).toString());
 		}
-		out.println(JSON.encode(friend_list, true).toString());
 	}
 }

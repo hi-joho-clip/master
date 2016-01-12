@@ -73,8 +73,17 @@ function getArticle_id(article_id){
 	var articleid = "<input type='hidden' value='"+article_id+"' name='article_id'>";
 	document.getElementById('article_id').innerHTML = articleid;
 }
+//タグを削除するときにtag_idも送りたいので実装
+function getTag_id(tag_id){
+	var tagid = "<input type='hidden' value='"+tag_id+"' name='tag_id'>";
+	document.getElementById('tag_id').innerHTML = tagid;
+}
+
 
 //"<a href='../login/article.html?"+json[i].article_id+"'target='_blank'>
+
+
+//記事一覧を作成
 
 var get_mylists = function(json) {
 	var random =Math.floor(Math.random()*3);
@@ -83,6 +92,7 @@ var get_mylists = function(json) {
 	for ( var i = json.length - 1; i >= 0; i--) {
 		$myList = $("<div class='"+item[random][i] + " mosaic-block bar'>" +
 						"<div class='mosaic-overlay'>"+
+
 						 "<div id='link-body'><a href='../login/article.html?"+json[i].article_id+"'target='_blank'></a></div>" +
 							"<div id='menu-block'>" +
 								"<div id='menu'>"+
@@ -97,14 +107,19 @@ var get_mylists = function(json) {
 									"<img src='img/trash1.png' align='right'width='20'height='20'></img>" +
 									"</a>"+
 
+
 									"<a href='i'><img src='img/share1.png' align='right'width='20'height='20'></img></a>"+
+
 
 									 "<a href='#' data-remodal-target='tagmodal' onclick='javascript:getTagArticle("+json[i].article_id+");return false;'>"+
 									  "<img src='img/tag1.png'align='right' width='20'height='20'></img>" +
 									  "</a>"+
 
+
+
 									"<a href='#'onclick='javascript:addFavArticle("+json[i].article_id+");return false;'><img src='img/star1.png' align='right'width='20'height='20'></img></a>"+
 									"</div>"+
+
 								"</div>"+
 							"</div>"+
 						"</div>"+
@@ -122,42 +137,21 @@ var get_mylists = function(json) {
 		});
     });
 };
-//"<a href='#'data-remodal-target='modal'onclick='javascript:getArticle_id("+json[i].article_id+");return false;'>" ;
-var get_favlists = function(json) {
-	var random =Math.floor(Math.random()*3);
 
-	$favList = $("<div class='grid-sizer'></div>");
-	$grid.prepend($favList).isotope('prepended', $favList).trigger('create');
-	for ( var i = json.length - 1; i >= 0; i--) {
+//タグ一覧を作成
+var get_taglists = function(json) {
+	//$.cookie('viewMode','2');$.cookie('tagLists',json[i].tag_body);
 
-		$favList = $("<div class='"+item[random][i] + " mosaic-block bar'>" +
-						"<div class='mosaic-overlay'>"+
-							"<div id='menu'>"+
-								"<ol>"+
-									"<li><a href='"+json[i].url+"'>"+json[i].url+"</a></li>"+
-								"</ol>"+
-							"</div>"+
-							"<div id='menu2'>"+
-								"<a href='a'><img src='img/trash1.png' align='right'width='20'height='20'></img></a>"+
-								"<a href='i'><img src='img/share1.png' align='right'width='20'height='20'></img></a>"+
-								"<div class='remodal-bg'>"+
-								"<a href='#' data-remodal-target='tagmodal' onclick='javascript:getTagArticle("+json[i].article_id+");return false;'>"+
-								  "<img src='img/tag1.png'align='right' width='20'height='20'></img>" +
-								  "</a>"+
-								"</div>"+
-								"<a href='#' data-remodal-target='deletemodal'onclick='javascript:getTagArticle("+json[i].article_id+");return false;'><img src='img/star1.png' align='right'width='20'height='20'></img></a>"+
-							"</div>"+
-						"</div>"+
-						"<a href='../login/article.html?"+json[i].article_id+"'target='_blank'><div class='mosaic-backdrop relative'>" +
-							"<img src='http://www.kk1up.jp/wp-content/uploads/2015/07/201507290001-17.jpg'width='100%'height='100%'alt='"+json[i].title+"'/>" +
-							"<p class='absolute'>"+json[i].title+"</p>" +
-						"</div></a>"+
-					"</div>");
-		$grid.prepend($favList).isotope('prepended', $favList).trigger('create');
+	var tagList = "";
+	tagList = "<table><tr><th>タグ名</th></tr>";
+	for ( var i = 0; i < json.length; i++) {
+		tagList +=
+				"<tr><td align='left'>"+
+				"<a href='index.html'onclick='javascript:$.cookie(\"viewMode\",\"2\");$.cookie(\"tagLists\",\""+json[i].tag_body+"\");'>"+json[i].tag_body + "</a><br>" +
+				"<input type='hidden' value='"+json[i].lastest+"' name='lastest"+i+"'>"+
+				"</td><td><a href='/' data-remodal-target='tagdeletemodal' onclick='javascript:getTag_id("+json[i].tag_id+");return false;'>削除</a></td></tr>";
+		console.log(json[i].tag_body);
 	}
-	jQuery(function($){
-		$('.bar').mosaic({
-			animation	:	'slide'		//fade or slide
-		});
-    });
+	tagList += "</table>";
+	document.getElementById('taglist').innerHTML = tagList;
 };

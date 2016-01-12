@@ -57,6 +57,7 @@ public class UserAuth {
 				.getNickname() == null) {
 
 		} else {
+			this.user_id = userDAO.login(user_name, hash_pass).getUser_id();
 			login_flag = true;
 		}
 
@@ -94,6 +95,7 @@ public class UserAuth {
 		if (userDAO.loginMail(mailaddress, hash_pass).getNickname() == null) {
 
 		} else {
+			this.user_id = userDAO.login(user_name, hash_pass).getUser_id();
 			login_flag = true;
 		}
 

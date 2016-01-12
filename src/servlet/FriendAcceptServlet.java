@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.arnx.jsonic.JSON;
 
@@ -37,9 +38,11 @@ public class FriendAcceptServlet extends HttpServlet {
 
 		User userbean = new User();
 
+		HttpSession session = request.getSession(false);
 
-		//本来では、セッション情報のユーザIDを取得
-		int user_id = 2;
+		if (session != null) {
+
+			int user_id = (int) session.getAttribute("user_id");
 
 
 		response.setContentType("application/json; charset=utf-8");
@@ -56,4 +59,5 @@ public class FriendAcceptServlet extends HttpServlet {
 		}
 		out.println(JSON.encode("" , true).toString());
 	}
+}
 }
