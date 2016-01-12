@@ -31,6 +31,7 @@ function getFriendList() {
 		$('input#id_search').quicksearch('section div div ul li');
 	};
 	getJSON(URL, jsonParam, setappend);
+
 }
 
 // フレンドボックス画面
@@ -135,6 +136,7 @@ function deleteRequest(user_id) {
 		document.getElementById('info').innerHTML = friendList;
 	};
 	getJSON(URL, jsonParam, setappend);
+	location.reload();
 }
 
 // フレンドを削除後の画面
@@ -150,4 +152,5 @@ function deleteFriend(user_id) {
 		document.getElementById('info').innerHTML = friendList;
 	};
 	getJSON(URL, jsonParam, setappend);
+	location.reload();
 }
