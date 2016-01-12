@@ -1,0 +1,21 @@
+@CHARSET "UTF-8";
+
+<style type="text/css">
+.ui-flipswitch .ui-btn.ui-flipswitch-on {
+	text-indent: -5.6em;
+}
+.ui-flipswitch .ui-flipswitch-off {
+	text-indent: 1.3em;
+}
+.ui-flipswitch {
+	width: 8.875em!important;
+}
+.ui-flipswitch.ui-flipswitch-active {
+	padding-left: 7em!important;
+	width: 1.875em!important;
+}
+html .ui-field-contain > label + .ui-flipswitch,
+html .ui-popup .ui-field-contain > label + .ui-flipswitch {
+	width: 8.875em;
+}
+</style>
