@@ -1,3 +1,17 @@
+#link-body {
+	position:relative;
+	height:90%;
+	width:100%;
+}
+
+#link-body a {
+	position: absolute;
+	top:0;
+	left:0;
+	width: 100%;
+	height: 100%;
+}
+
 #menu{
 	float:left;
     width: 59%;
@@ -8,7 +22,9 @@
 	text-decoration: none;
 	text-align: left;
 	font-size: 14px;
+	margin :0;
 }
+
 
 #menu li a {
 			display: inline-block;
@@ -27,10 +43,18 @@
 	float:left;
 	width: 41%;
 }
+
+#menu-block {
+	width: 100%;
+	height: 20px;
+	position: absolute;
+	bottom: 0;
+}
+
 #menu2 a:hover img {
-					opacity: 0.7;
-				   filter: alpha(opacity=70);
-				   -ms-filter: "alpha(opacity=70)";}
+					opacity: 0.5;
+				   filter: alpha(opacity=50);
+				   -ms-filter: "alpha(opacity=50)";}
 .relative {
     position: relative;
 }
