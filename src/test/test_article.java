@@ -10,9 +10,9 @@ import daodto.Unique;
 public class test_article {
 	public static void main(String[] args) {
 
-		//test_add(1);//記事の追加○
-		//test_delete(21);//記事の削除○
-		test_view_article_list(1);//記事一覧表示○
+		test_add(1);//記事の追加○
+		//test_delete(54);//記事の削除○
+		//test_view_article_list(1);//記事一覧表示○
 		//test_view_fav_list(1);//お気に入りの記事一覧表示○
 		//test_tag_fav_list(1);//タグ内でお気に入りした記事一覧○
 		//test_update_article(1);//記事の更新○
@@ -24,42 +24,70 @@ public class test_article {
 		//test_add_tag(21,1);//記事にタグを追加○
 		//test_tag_search(1)//特定のタグの記事一覧表示○
 		//test_article_view(10);//記事を表示○
+
+		//test_addImage();
 	}
+
+	static void test_addImage() {
+
+		try {
+			ArrayList<ImageDTO> imgs = new ArrayList<ImageDTO>();
+			ImageDTO img = new ImageDTO();
+			ImageDTO img2 = new ImageDTO();
+			img.setUri("http://aaaa.jpg");
+			img.setBlob_image("aaabbbbbbaaaaaaaaadfasdfasd".getBytes("UTF-8"));
+			imgs.add(img);
+			img2.setUri("http://aaaa2.jpg");
+			img2.setBlob_image("aaaa2".getBytes("UTF-8"));
+			imgs.add(img2);
+
+			ArticleBean ab = new ArticleBean();
+
+			ab.addImage(21, imgs);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	//記事の追加(テスト済）
-	static void test_add(int user_id){
+	static void test_add(int user_id) {
 		ArticleBean ab = new ArticleBean();
 		ArrayList<String> uri_list = new ArrayList<String>();
 		ArrayList<byte[]> image_list = new ArrayList<byte[]>();
 		uri_list.add("http1");
 		uri_list.add("http2");
 		uri_list.add("http3");
+		uri_list.add("http4");
 		try {
 			image_list.add("test".getBytes("UTF-8"));
 			image_list.add("test2".getBytes("UTF-8"));
 			image_list.add("test3".getBytes("UTF-8"));
+			image_list.add("test4".getBytes("UTF-8"));
 		} catch (UnsupportedEncodingException e1) {
 			// TODO 自動生成された catch ブロック
 			e1.printStackTrace();
 		}
 		ab.setTitle("testadd");
 		ab.setBody("aaadd");
-		ab.setUrl("httpddd");
+		ab.setUrl("httpdddddd");
 		ArrayList<ImageDTO> image = new ArrayList<ImageDTO>();
-		for(int i=0;i<uri_list.size();i++){
+		for (int i = 0; i < uri_list.size(); i++) {
 			ab.setUri(uri_list.get(i));
 			ab.setBlob_image(image_list.get(i));
 			image.add(ab.getImageDTO());
 		}
 
 		try {
-			ab.addArticle(user_id,image);
+			ab.addArticle(user_id);
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
 	}
+
 	//記事の削除（テスト済）
-	static void test_delete(int article_id){
+	static void test_delete(int article_id) {
 		ArticleBean ab = new ArticleBean();
 		ab.setArticle_id(article_id);
 		try {
@@ -69,37 +97,40 @@ public class test_article {
 			e.printStackTrace();
 		}
 	}
+
 	//記事一覧表示(テスト済)
-	static void test_view_article_list(int user_id){
+	static void test_view_article_list(int user_id) {
 		ArticleBean ab = new ArticleBean();
 		ArrayList<ArticleBean> a = new ArrayList<ArticleBean>();
 		try {
-			a=ab.viewArticleList(user_id);//修正する
+			a = ab.viewArticleList(user_id);//修正する
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-		for(int i = 0; i < a.size(); i++) {
+		for (int i = 0; i < a.size(); i++) {
 			System.out.println(a.get(i).getTitle());
 			System.out.println(a.get(i).isFavflag());
 		}
 	}
+
 	//お気に入りの記事一覧表示（テスト済）
-	static void test_view_fav_list(int user_id){
+	static void test_view_fav_list(int user_id) {
 		ArticleBean ab = new ArticleBean();
 		ArrayList<ArticleBean> a = new ArrayList<ArticleBean>();
 		try {
-			a=ab.viewFavArticleList(user_id);
+			a = ab.viewFavArticleList(user_id);
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-		for(int i = 0; i < a.size(); i++) {
+		for (int i = 0; i < a.size(); i++) {
 			System.out.println(a.get(i).getTitle());
 		}
 	}
+
 	//タグ内でお気に入りした記事一覧(テスト済）
-	static void test_tag_fav_list(int user_id){
+	static void test_tag_fav_list(int user_id) {
 		try {
 			ArrayList<String> tag_body_list = new ArrayList<String>();
 			tag_body_list.add("aiueo");
@@ -108,7 +139,7 @@ public class test_article {
 			ArticleBean ab = new ArticleBean();
 			ArrayList<ArticleBean> a = new ArrayList<ArticleBean>();
 			a = ab.viewTagFavArticleList(user_id, tag_body_list);
-			for(int i = 0; i < a.size(); i++) {
+			for (int i = 0; i < a.size(); i++) {
 				System.out.println(a.get(i).getArticle_id());
 				System.out.println(a.get(i).getTitle());
 			}
@@ -118,7 +149,7 @@ public class test_article {
 	}
 
 	//記事の更新(テスト済)
-	static void test_update_article(int article_id){
+	static void test_update_article(int article_id) {
 		ArticleBean ab = new ArticleBean();
 		ab.setArticle_id(article_id);
 		ab.setTitle("testgdfg");
@@ -132,8 +163,9 @@ public class test_article {
 		}
 		ab.setArticle_id(7);
 	}
+
 	//記事にお気に入りとして追加(テスト済）
-	static void test_add_fav_article(int article_id,int user_id){
+	static void test_add_fav_article(int article_id, int user_id) {
 		ArticleBean ab = new ArticleBean();
 		System.out.println(article_id);
 		ab.setArticle_id(article_id);
@@ -144,8 +176,9 @@ public class test_article {
 			e.printStackTrace();
 		}
 	}
+
 	//お気に入りの解除(テスト済)
-	static void test_fav_delete(int article_id,int user_id){
+	static void test_fav_delete(int article_id, int user_id) {
 		ArticleBean ab = new ArticleBean();
 		ab.setArticle_id(article_id);
 		try {
@@ -155,8 +188,9 @@ public class test_article {
 			e.printStackTrace();
 		}
 	}
+
 	//シェア記事の削除(テスト済)
-	static void test_share_delete(int article_id){
+	static void test_share_delete(int article_id) {
 		ArticleBean ab = new ArticleBean();
 		ab.setArticle_id(article_id);
 		try {
@@ -166,35 +200,37 @@ public class test_article {
 			e.printStackTrace();
 		}
 	}
-	//記事にシェアURLを追加(テスト済)
-		static void test_share_add(String share_url,int article_id){
-			ArticleBean ab = new ArticleBean();
-			ab.setArticle_id(article_id);
-			ab.setShare_url(share_url);
-			try {
-				ab.addShareArticle();
-			} catch (Exception e) {
-				// TODO 自動生成された catch ブロック
-				e.printStackTrace();
-			}
-		}
 
-	//シェアしている記事一覧表示（テスト済）
-	static void test_share_article_list(int user_id,int friend_user_id){
+	//記事にシェアURLを追加(テスト済)
+	static void test_share_add(String share_url, int article_id) {
 		ArticleBean ab = new ArticleBean();
-		ArrayList<ArticleBean> a = new ArrayList<ArticleBean>();
+		ab.setArticle_id(article_id);
+		ab.setShare_url(share_url);
 		try {
-			a=ab.viewShareArticleList(user_id, friend_user_id);
+			ab.addShareArticle();
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-		for(int i = 0; i < a.size(); i++) {
-		System.out.println(a.get(i).getTitle());
+	}
+
+	//シェアしている記事一覧表示（テスト済）
+	static void test_share_article_list(int user_id, int friend_user_id) {
+		ArticleBean ab = new ArticleBean();
+		ArrayList<ArticleBean> a = new ArrayList<ArticleBean>();
+		try {
+			a = ab.viewShareArticleList(user_id, friend_user_id);
+		} catch (Exception e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		for (int i = 0; i < a.size(); i++) {
+			System.out.println(a.get(i).getTitle());
 		}
 	}
+
 	//記事にタグを追加（テスト済）
-	static void test_add_tag(int article_id,int user_id){
+	static void test_add_tag(int article_id, int user_id) {
 		ArticleBean ab = new ArticleBean();
 		ab.setArticle_id(article_id);
 		try {
@@ -203,7 +239,7 @@ public class test_article {
 			tag_body_list.add("gorigorigori");
 			tag_body_list.add("わっしょい");
 			tag_body_list.add("GORIMA");
-			ab.addArticleTag(user_id,tag_body_list);
+			ab.addArticleTag(user_id, tag_body_list);
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
@@ -211,28 +247,28 @@ public class test_article {
 	}
 
 	//特定のタグの記事一覧表示（テスト済）
-		static void test_tag_search(int user_id) {
+	static void test_tag_search(int user_id) {
 
-			try {
-				ArrayList<String> tag_body_list = new ArrayList<String>();
-				//tag_body_list.add("aiueo");
-				tag_body_list.add("gorigorigori");
+		try {
+			ArrayList<String> tag_body_list = new ArrayList<String>();
+			//tag_body_list.add("aiueo");
+			tag_body_list.add("gorigorigori");
 
-				ArticleBean ab = new ArticleBean();
-				ArrayList<ArticleBean> a = new ArrayList<ArticleBean>();
-				a=ab.viewTag(tag_body_list,user_id);
+			ArticleBean ab = new ArticleBean();
+			ArrayList<ArticleBean> a = new ArrayList<ArticleBean>();
+			a = ab.viewTag(tag_body_list, user_id);
 
-				for(int i = 0; i < a.size(); i++) {
-					System.out.println(a.get(i).getArticle_id());
-					System.out.println(a.get(i).getTitle());
-					System.out.println(a.get(i).getBody());
-				}
-
-
-			} catch (Exception e) {
-				e.getStackTrace();
+			for (int i = 0; i < a.size(); i++) {
+				System.out.println(a.get(i).getArticle_id());
+				System.out.println(a.get(i).getTitle());
+				System.out.println(a.get(i).getBody());
 			}
+
+		} catch (Exception e) {
+			e.getStackTrace();
 		}
+	}
+
 	//記事を表示（テスト済）
 	static void test_article_view(int article_id) {
 
@@ -245,7 +281,7 @@ public class test_article {
 			System.out.println(ab.getArticle_id());
 			System.out.println(ab.getTitle());
 			System.out.println(ab.getBody());
-			for(int i = 0; i < a.size(); i++) {
+			for (int i = 0; i < a.size(); i++) {
 				System.out.println(a.get(i).getUri());
 				System.out.println(a.get(i).getBlob_image());
 			}
@@ -254,6 +290,7 @@ public class test_article {
 			e.getStackTrace();
 		}
 	}
+
 	/*//タグ内でお気に入り検索
 	static void test_favorite(int user_id) {
 
@@ -295,6 +332,3 @@ public class test_article {
 		}
 	}
 }
-
-
-

@@ -35,10 +35,21 @@ public class ArticleBean {
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean addArticle(int user_id, ArrayList<ImageDTO> img) throws Exception {
+	public int addArticle(int user_id) throws Exception {
 		this.articleDAO = new ArticleDAO();
 		setArticleDTO();
-		return this.articleDAO.add(this.articleDTO, img, user_id);
+		return this.articleDAO.add(this.articleDTO, user_id);
+	}
+
+	/**
+	 * 画像の追加
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean addImage(int article_id, ArrayList<ImageDTO> img) throws Exception {
+		this.articleDAO = new ArticleDAO();
+		setArticleDTO();
+		return this.articleDAO.updateImage(  article_id, img);
 	}
 
 	/**
