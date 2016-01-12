@@ -21,20 +21,21 @@ public class ArticleDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean add(ArticleDTO article, ArrayList<ImageDTO> image, int user_id) throws Exception {
+	public int add(ArticleDTO article, int user_id) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		boolean flag = false;
 		int article_id = 0;
 		int id = 0;
 
-
 		// サムネイルは
 		String hantei_sql = "SELECT * FROM articles WHERE url = ? AND articles.id = ?";
 		String id_sql = "SELECT id FROM mylists,users WHERE mylists.user_id = users.user_id AND users.user_id = ?";
-		String sql = "INSERT INTO articles(title,body,url,created,share_url,share_expior,id,thum,favflag,modified) VALUES(?,?,?,now(),null,null,?,?,FALSE,now())";
+		String sql = "INSERT INTO articles(article_id, title,body,url,created,share_url,share_expior,id,thum,favflag,modified) VALUES(?,?,?,?,now(),null,null,?,?,FALSE,now()) "
+				+
+				"ON DUPLICATE KEY UPDATE title=VALUES(`title`), body=VALUES(`body`),modified = now()";
 		String sql2 = "SELECT LAST_INSERT_ID() AS LAST;";
-		String sql3 = "INSERT INTO article_image(article_id,uri,blob_image) VALUES(?,?,?)";
+		//String sql3 = "INSERT INTO article_image(article_id,uri,blob_image) VALUES(?,?,?)";
 		try {
 			con.setAutoCommit(false);
 			pstmt = con.prepareStatement(id_sql);
@@ -47,30 +48,31 @@ public class ArticleDAO {
 			pstmt.setString(1, article.getUrl());
 			pstmt.setInt(2, id);
 			rs = pstmt.executeQuery();
-			if (!rs.next()) {
-				pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, article.getTitle());
-				pstmt.setString(2, article.getBody());
-				pstmt.setString(3, article.getUrl());
-				pstmt.setInt(4, id);
-				pstmt.setBytes(5, article.getThum());
-				pstmt.executeUpdate();
+			while (rs.next()) {
+				article_id = rs.getInt("article_id");
+			}
+			pstmt = con.prepareStatement(sql);
+
+			pstmt.setInt(1, article_id);
+			pstmt.setString(2, article.getTitle());
+			pstmt.setString(3, article.getBody());
+			pstmt.setString(4, article.getUrl());
+			pstmt.setInt(5, id);
+			pstmt.setBytes(6, article.getThum());
+			System.out.println(pstmt);
+			pstmt.executeUpdate();
+			pstmt = con.prepareStatement(sql2);
+			rs = pstmt.executeQuery();
+			//追加した記事のIDを入れる
+			if (article_id == 0) {
 				pstmt = con.prepareStatement(sql2);
 				rs = pstmt.executeQuery();
-				//追加した記事のIDを入れる
-				if (rs != null && rs.next()) {
-					article_id = rs.getInt("LAST");
-				}
-				for (ImageDTO imgDTO : image) {
-					pstmt = con.prepareStatement(sql3);
-					pstmt.setInt(1, article_id);
-					pstmt.setString(2, imgDTO.getUri());
-					pstmt.setBytes(3, imgDTO.getBlob_image());
-					pstmt.executeUpdate();
-				}
-				con.commit();
-				flag = true;
+				article_id = rs.getInt("LAST");
 			}
+
+			con.commit();
+			flag = true;
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			con.rollback();
@@ -79,7 +81,7 @@ public class ArticleDAO {
 		} finally {
 			con.setAutoCommit(true);
 		}
-		return flag;
+		return article_id;
 	}
 
 	/**
@@ -100,7 +102,8 @@ public class ArticleDAO {
 			con.commit();
 			flag = true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			con.rollback();
+			con.setAutoCommit(true);
 			throw new Exception();
 		} finally {
 			con.setAutoCommit(true);
@@ -128,6 +131,55 @@ public class ArticleDAO {
 			flag = true;
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new Exception();
+		}
+		return flag;
+	}
+
+	/**
+	 * 画像の更新
+	 *
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean updateImage(int article_id, ArrayList<ImageDTO> image) throws Exception {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "insert into article_image values(?, ?, ?, ?) "
+				+ "ON DUPLICATE KEY UPDATE blob_image=VALUES(`blob_image`)";
+		String select = "select id from article_image where article_id = ? and uri = ?";
+		boolean flag = false;
+		try {
+			int img_id = 0;
+
+			con.setAutoCommit(false);
+			for (ImageDTO imgDTO : image) {
+
+				// 該当するImageIDを取得しておく
+				pstmt = con.prepareStatement(select);
+				pstmt.setInt(1, article_id);
+				pstmt.setString(2, imgDTO.getUri());
+				System.out.println(pstmt);
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					img_id = rs.getInt("id");
+				}
+
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, img_id);
+				pstmt.setInt(2, article_id);
+				pstmt.setString(3, imgDTO.getUri());
+				pstmt.setBytes(4, imgDTO.getBlob_image());
+				System.out.println(pstmt);
+				pstmt.executeUpdate();
+			}
+			con.commit();
+			con.setAutoCommit(true);
+			flag = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			con.rollback();
+			con.setAutoCommit(true);
 			throw new Exception();
 		}
 		return flag;
@@ -239,6 +291,7 @@ public class ArticleDAO {
 
 	/**
 	 * お気に入りの記事一覧表示
+	 * (paginator)
 	 *
 	 * @return
 	 * @throws Exception
@@ -276,6 +329,7 @@ public class ArticleDAO {
 
 	/**
 	 * タグ内でお気に入り検索
+	 * paginator
 	 *
 	 * @return
 	 * @throws Exception
@@ -366,6 +420,7 @@ public class ArticleDAO {
 
 	/**
 	 * 特定のタグの記事一覧表示
+	 * paginator
 	 *
 	 * @return
 	 * @throws Exception
@@ -415,6 +470,7 @@ public class ArticleDAO {
 
 	/**
 	 * 記事一覧表示
+	 * paginator
 	 *
 	 * @return
 	 * @throws Exception
@@ -451,6 +507,7 @@ public class ArticleDAO {
 
 	/**
 	 * 記事を表示
+	 * paginator
 	 *
 	 * @return
 	 * @throws Exception
@@ -506,6 +563,7 @@ public class ArticleDAO {
 
 	/**
 	 * シェアしている記事一覧表示
+	 * paginator
 	 *
 	 * @return
 	 * @throws Exception
