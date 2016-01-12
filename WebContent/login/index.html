@@ -27,6 +27,8 @@
 <script type="text/javascript" src="../js/create_list.js"></script>
 <script type="text/javascript" src="../js/tag_script.js"></script>
 
+<link rel="stylesheet" href="css/pure-drawer.min.css">
+
 <!-- toastr -->
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css' />
 <script src='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.js'></script>
@@ -49,6 +51,7 @@
     <script src="../tag-it/src/remodal.js"></script>
 <script src="../tag-it/src/remodal.js"></script>
 
+
 <style>
       .remodal-overlay.without-animation.remodal-is-opening,
       .remodal-overlay.without-animation.remodal-is-closing,
@@ -60,6 +63,7 @@
       }
 </style>
 </head>
+
 <body>
 <div id="article_id"></div>
 	<section>
@@ -79,7 +83,7 @@
 	<a class="remodal-confirm" href="#"onclick="javascript:deleteArticle(document.getElementsByName('article_id'));">削除</a>
 </div>
 
-		<div class="wh DSmenu">
+		<!-- <div class="wh DSmenu">
 			<ul>
 				<a href="UserInfo.html" ><li>ユーザ情報</li></a>
 				<a href="index.html" onclick="javascript:$.cookie('viewMode','0');"><li>マイリスト</li></a>
@@ -105,11 +109,61 @@
 					<div class="head-bar">
 						<div class="container-fluid">
 							<h1 class="text-center">CLIP</h1>
+
+						</div>
+					</div>
+				</section>
+			</div>
+		</div> -->
+
+		  <div class="pure-container" data-effect="pure-effect-slide">
+            <input type="checkbox" id="pure-toggle-left" class="pure-toggle" data-toggle="left"/>
+            <input type="checkbox" id="pure-toggle-right" class="pure-toggle" data-toggle="right"/>
+
+
+            <label class="pure-toggle-label" for="pure-toggle-left" data-toggle-label="left"><span class="pure-toggle-icon"></span></label>
+            <label class="pure-toggle-label" for="pure-toggle-right" data-toggle-label="right"><span class="pure-toggle-icon"></span></label>
+
+
+            <nav class="pure-drawer" data-position="left">
+                 <p style="padding: 100px 20px; margin: 0;"><a href="UserInfo.html" >ユーザ情報</a><br>
+                <a href="index.html" onclick="javascript:$.cookie('viewMode','0');">マイリスト</a><br>
+                 <a href="index.html" onclick="javascript:$.cookie('viewMode','1');">お気に入り</a></p>
+<!-- 				<p style="padding: 100px 20px; margin: 0;"><a href="index.html" onclick="javascript:$.cookie('viewMode','2');">タグ</a></p>
+				<p style="padding: 100px 20px; margin: 0;"><a href="#">フレンド</a></p> -->
+            </nav>
+
+            <nav class="pure-drawer" data-position="right">
+                <p style="padding: 100px 20px; margin: 0;">Insert your off-canvas content for the right drawer here</p>
+            </nav>
+
+
+
+
+            <label class="pure-overlay" for="pure-toggle-left" data-overlay="left"></label>
+            <label class="pure-overlay" for="pure-toggle-right" data-overlay="right"></label>
+
+        </div>
+
+        <div class="container" >
+			<div style="margin: 100px auto;">
+				<div id="title" >
+				</div>
+				<div align="center">
+					<div class="grid" align="left"></div>
+				</div>
+				<section class="section">
+					<div class="head-bar">
+						<div class="container-fluid">
+							<h1 class="text-center">CLIP</h1>
+
 						</div>
 					</div>
 				</section>
 			</div>
 		</div>
+
 	</section>
+
 </body>
 </html>
