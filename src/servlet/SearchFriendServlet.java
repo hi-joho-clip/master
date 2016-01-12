@@ -43,6 +43,7 @@ public class SearchFriendServlet extends HttpServlet {
 		ArrayList<User> friend_list = new ArrayList<User>();
 		HttpSession session = request.getSession(false);
 
+
 		if (session != null) {
 
 			int own_user_id = (int) session.getAttribute("user_id");
@@ -53,12 +54,17 @@ public class SearchFriendServlet extends HttpServlet {
 			PrintWriter out = response.getWriter();
 
 			try {
-				friend_list = friendbeans.searchFriend(own_user_id, str);
+				if(str.length() > 0){
+					friend_list = friendbeans.searchFriend(own_user_id, str);
+					out.println(JSON.encode(friend_list, true).toString());
+				}else{
+					out.println(JSON.encode(friend_list, true).toString());
+				}
 			} catch (Exception e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			}
-			out.println(JSON.encode(friend_list, true).toString());
+
 		}
 	}
 }
