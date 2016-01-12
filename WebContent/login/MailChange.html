@@ -5,6 +5,11 @@
 <script type="text/javascript" src="../js/jquery/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery.cookie.js"></script>
 <script type="text/javascript" src="../js/json-xhr.js"></script>
+<script src="../js/lib/jquery.validationEngine.js"></script>
+<script src="../js/lib/jquery.validationEngine-ja.js"></script>
+
+<link href="../css/validationEngine.jquery.css" rel="stylesheet"
+	type="text/css" />
 
 <div class="form-wrapper">
 
@@ -13,16 +18,16 @@
   <div id="info"></div>
 
   <!--　変更  -->
-  <form  method="post" action="../updatemailaddress">
+  <form id="form" method="post" action="../updatemailaddress">
     <div class="form-item">
       <!--　メールアドレス  -->
       <label for="newemail"></label>
-      <input type="email" name="newemail" required="required" placeholder="New Mail Address"></input>
+      <input type="email" name="newemail" class="validate[required,custom[email]] text-input" required="required" placeholder="New Mail Address" id="email"></input>
     </div>
       <div class="form-item">
       <!--　メールアドレス（確認）  -->
       <label for="newemail2"></label>
-      <input type="email" name="newemail2" required="required" placeholder="New Mail Address(確認)"></input>
+      <input type="email" name="newemail2" class="validate[required,equals[email]] text-input" required="required" placeholder="New Mail Address(確認)" id="re_email"></input>
     </div>
     <div class="form-item">
       <!--　パスワード  -->
@@ -45,6 +50,9 @@
 <script>
 	$(document).ready(function() {
 		MailAddress();
+	});
 
+	jQuery(document).ready(function() {
+		jQuery("#form").validationEngine();
 	});
 </script>

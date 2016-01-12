@@ -36,13 +36,14 @@
 </head>
 
 <body>
+	<div id="user_id"></div>
 	<div class="remodal" data-remodal-id="delete_request">
 		<a data-remodal-action="close" class="remodal-close"></a>
 		<h2>リクエスト削除</h2>
 		<!-- <div id="friendregister"> </div> -->
 
 		<a class="remodal-confirm" href="#"
-			onclick="javascript:deleteRequest();">OK</a> <a
+			onclick="javascript:deleteRequest(document.getElementById('user_id').innerHTML);">OK</a> <a
 			class="remodal-cancel" href="#">キャンセル</a>
 	</div>
 
@@ -51,7 +52,7 @@
 		<h2>フレンド削除</h2>
 
 		<a class="remodal-confirm" href="#"
-			onclick="javascript:deleteFriend();">OK</a> <a class="remodal-cancel"
+			onclick="javascript:deleteFriend(document.getElementById('user_id').innerHTML);">OK</a> <a class="remodal-cancel"
 			href="#">キャンセル</a>
 	</div>
 	<section>

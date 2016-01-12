@@ -1,38 +1,54 @@
-
+<script type='text/javascript' src='../js/jquery/jquery-2.1.4.min.js'></script>
+<script src="../js/lib/jquery.validationEngine.js"></script>
+<script src="../js/lib/jquery.validationEngine-ja.js"></script>
 <link rel="stylesheet" type="text/css" href="css/Login.css">
+<link href="../css/validationEngine.jquery.css" rel="stylesheet"
+	type="text/css" />
+
 
 <div class="form-wrapper">
 
-  <h1>パスワード変更</h1><br>
+	<h1>パスワード変更</h1>
+	<br>
 
 
 
-  <!--　変更  -->
-  <form  method="post" action="../updatepassword">
-    <div class="form-item">
-      <!--　新しいパスワード  -->
-      <label for="newpassword"></label>
-      <input type="password" name="newpassword" required="required" placeholder="New Password"></input>
-    </div>
-       <div class="form-item">
-      <!--　新しいパスワード（確認）  -->
-      <label for="newpassword2"></label>
-      <input type="password" name="newpassword2" required="required" placeholder="New Password(確認)"></input>
-    </div>
-       <div class="form-item">
-      <!--　現在のパスワード  -->
-      <label for="password"></label>
-      <input type="password" name="password" required="required" placeholder="Password(現在)"></input>
-    </div>
-      <!--　変更ボタン  -->
-    <div class="button-panel">
-      <input type="submit" class="button" title="Change" value="Change"></input>
-    </div>
-  </form>
-  <div class="form-footer">
+	<!--　変更  -->
+	<form id="form" method="post" action="../updatepassword">
+		<div class="form-item">
+			<!--　新しいパスワード  -->
+			<label for="newpassword"></label> <input type="password"
+				name="newpassword" class="validate[required] text-input"
+				required="required" placeholder="New Password" id="passwd"></input>
+		</div>
+		<div class="form-item">
+			<!--　新しいパスワード（確認）  -->
+			<label for="newpassword2"></label> <input type="password"
+				name="newpassword2" class="validate[required,equals[passwd]] text-input"
+				required="required" placeholder="New Password(確認)" id="re_passwd"></input>
+		</div>
+		<div class="form-item">
+			<!--　現在のパスワード  -->
+			<label for="password"></label> <input type="password" name="password"
+				required="required" placeholder="Password(現在)" ></input>
+		</div>
+		<!--　変更ボタン  -->
+		<div class="button-panel">
+			<input type="submit" class="button" title="Change" value="Change"></input>
+		</div>
+	</form>
+	<div class="form-footer">
 
-   <!--　戻る  -->
-    <p><a href="UserInfo.html">BACK</a></p>
+		<!--　戻る  -->
+		<p>
+			<a href="UserInfo.html">BACK</a>
+		</p>
 
-  </div>
+	</div>
 </div>
+
+<script>
+	jQuery(document).ready(function() {
+		jQuery("#form").validationEngine();
+	});
+</script>
