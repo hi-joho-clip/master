@@ -27,7 +27,7 @@
 <script type="text/javascript" src="../js/create_list.js"></script>
 <script type="text/javascript" src="../js/tag_script.js"></script>
 
-<link rel="stylesheet" href="css/pure-drawer.min.css">
+<link rel="stylesheet" href="css/pure-drawer.css">
 
 <!-- toastr -->
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css' />
@@ -128,13 +128,27 @@
             <nav class="pure-drawer" data-position="left">
                  <p style="padding: 100px 20px; margin: 0;"><a href="UserInfo.html" >ユーザ情報</a><br>
                 <a href="index.html" onclick="javascript:$.cookie('viewMode','0');">マイリスト</a><br>
-                 <a href="index.html" onclick="javascript:$.cookie('viewMode','1');">お気に入り</a></p>
-<!-- 				<p style="padding: 100px 20px; margin: 0;"><a href="index.html" onclick="javascript:$.cookie('viewMode','2');">タグ</a></p>
-				<p style="padding: 100px 20px; margin: 0;"><a href="#">フレンド</a></p> -->
+                 <a href="index.html" onclick="javascript:$.cookie('viewMode','1');">お気に入り</a><br>
+				<a href="index.html" onclick="javascript:$.cookie('viewMode','2');">タグ</a><br>
+				<a href="#">フレンド</a></p>
             </nav>
 
             <nav class="pure-drawer" data-position="right">
-                <p style="padding: 100px 20px; margin: 0;">Insert your off-canvas content for the right drawer here</p>
+                <div class="ui-field-contain">
+                <p style="padding: 100px 10px; margin: 0;">
+  				  <label for="search-1">Search Input:</label>
+		</p>
+   					 <input type="search" name="search-1" id="search-1" value="">
+
+					</div>
+
+					 <div class="ui-field-contain">
+                <p style="padding: 100px 10px; margin: 0;">
+  				  <label for="search-1">URL:</label>
+</p>
+   					 <input type="search" name="search-1" id="search-1" value="">
+
+					</div>
             </nav>
 
 
