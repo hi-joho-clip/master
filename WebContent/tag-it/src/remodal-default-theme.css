@@ -45,8 +45,10 @@
 
   transform: translate3d(0, 0, 0);
 
-  color: #2b2e38;
+  color: #949495;
   background: #fff;
+
+  font-size: 15px;
 }
 
 .remodal.remodal-is-opening,
@@ -141,6 +143,7 @@
 }
 
 .remodal-confirm {
+	font-size : 20px;
   color: #fff;
   background: #81c784;
 }
