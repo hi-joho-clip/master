@@ -1,21 +1,50 @@
-@CHARSET "UTF-8";
+@charset "UTF-8";
+#onoffswitch {
+    position: relative; width: 83px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+    left:38%;
+    bottom: -4px;
 
-<style type="text/css">
-.ui-flipswitch .ui-btn.ui-flipswitch-on {
-	text-indent: -5.6em;
 }
-.ui-flipswitch .ui-flipswitch-off {
-	text-indent: 1.3em;
+.onoffswitch-checkbox {
+    display: none;
 }
-.ui-flipswitch {
-	width: 8.875em!important;
+.onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #999999; border-radius: 25px;
 }
-.ui-flipswitch.ui-flipswitch-active {
-	padding-left: 7em!important;
-	width: 1.875em!important;
+.onoffswitch-inner {
+    display: block; width: 200%; margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
 }
-html .ui-field-contain > label + .ui-flipswitch,
-html .ui-popup .ui-field-contain > label + .ui-flipswitch {
-	width: 8.875em;
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+    display: block; float: left; width: 50%; height: 28px; padding: 0; line-height: 28px;
+    font-size: 17px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    box-sizing: border-box;
 }
-</style>
+.onoffswitch-inner:before {
+    content: "許可";
+    padding-left: 6px;
+    background-color: #7D7D7D; color: #D9D9D9;
+}
+.onoffswitch-inner:after {
+    content: "拒否";
+    padding-right: 6px;
+    background-color: #7D7D7D; color: #DEDEDE;
+    text-align: right;
+}
+.onoffswitch-switch {
+    display: block; width: 30px; margin: -1px;
+    background: #A1A1A1;
+    position: absolute; top: 0; bottom: 0;
+    right: 51px;
+    border: 2px solid #999999; border-radius: 25px;
+    transition: all 0.3s ease-in 0s;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: -10px;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px;
+    background-color: #27A1CA;
+}
