@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.arnx.jsonic.JSON;
-
 import beansdomain.ArticleBean;
 
 /**
@@ -61,6 +60,18 @@ public class TagArticleListServlet extends HttpServlet {
 		String[] tag_body = tag_list.split(",", 0);
 		ArrayList<String> tag_body_list = new ArrayList<String>();
 		int user_id =1;//sessionからuser_idを取得
+		int page = 1; // パラメータからページ番号取得初期値1
+
+		if (request.getParameter("page") != null) {
+			try {
+				page = Integer.parseInt(request.getParameter("page"));
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
 		for(int i=0; i<tag_body.length; i++){
 		    tag_body_list.add(i,tag_body[i]);
 		   System.out.println("tagbody:"+tag_body_list.get(i));
@@ -69,7 +80,7 @@ public class TagArticleListServlet extends HttpServlet {
 		ArticleBean articlebean = new ArticleBean();
 		ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
 		try {
-			article_list=articlebean.viewTag(tag_body_list,user_id);
+			article_list=articlebean.viewTag(tag_body_list,user_id, page);
 		} catch (Exception e) {
 			e.getStackTrace();
 		}

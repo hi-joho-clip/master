@@ -24,6 +24,11 @@ public class test_article {
 		//test_add_tag(21,1);//記事にタグを追加○
 		//test_tag_search(1)//特定のタグの記事一覧表示○
 		//test_article_view(10);//記事を表示○
+		String aaa = "aaa";
+
+		if(aaa != null) {
+			System.out.println("yes");
+		}
 
 		//test_addImage();
 	}
@@ -115,11 +120,11 @@ public class test_article {
 	}
 
 	//お気に入りの記事一覧表示（テスト済）
-	static void test_view_fav_list(int user_id) {
+	static void test_view_fav_list(int user_id, int page) {
 		ArticleBean ab = new ArticleBean();
 		ArrayList<ArticleBean> a = new ArrayList<ArticleBean>();
 		try {
-			a = ab.viewFavArticleList(user_id);
+			a = ab.viewFavArticleList(user_id ,page);
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
@@ -130,7 +135,7 @@ public class test_article {
 	}
 
 	//タグ内でお気に入りした記事一覧(テスト済）
-	static void test_tag_fav_list(int user_id) {
+	static void test_tag_fav_list(int user_id, int page) {
 		try {
 			ArrayList<String> tag_body_list = new ArrayList<String>();
 			tag_body_list.add("aiueo");
@@ -138,7 +143,7 @@ public class test_article {
 
 			ArticleBean ab = new ArticleBean();
 			ArrayList<ArticleBean> a = new ArrayList<ArticleBean>();
-			a = ab.viewTagFavArticleList(user_id, tag_body_list);
+			a = ab.viewTagFavArticleList(user_id, tag_body_list, page);
 			for (int i = 0; i < a.size(); i++) {
 				System.out.println(a.get(i).getArticle_id());
 				System.out.println(a.get(i).getTitle());
@@ -215,11 +220,11 @@ public class test_article {
 	}
 
 	//シェアしている記事一覧表示（テスト済）
-	static void test_share_article_list(int user_id, int friend_user_id) {
+	static void test_share_article_list(int user_id, int friend_user_id, int page) {
 		ArticleBean ab = new ArticleBean();
 		ArrayList<ArticleBean> a = new ArrayList<ArticleBean>();
 		try {
-			a = ab.viewShareArticleList(user_id, friend_user_id);
+			a = ab.viewShareArticleList(user_id, friend_user_id, page);
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
@@ -247,7 +252,7 @@ public class test_article {
 	}
 
 	//特定のタグの記事一覧表示（テスト済）
-	static void test_tag_search(int user_id) {
+	static void test_tag_search(int user_id, int page) {
 
 		try {
 			ArrayList<String> tag_body_list = new ArrayList<String>();
@@ -256,7 +261,7 @@ public class test_article {
 
 			ArticleBean ab = new ArticleBean();
 			ArrayList<ArticleBean> a = new ArrayList<ArticleBean>();
-			a = ab.viewTag(tag_body_list, user_id);
+			a = ab.viewTag(tag_body_list, user_id, page);
 
 			for (int i = 0; i < a.size(); i++) {
 				System.out.println(a.get(i).getArticle_id());
