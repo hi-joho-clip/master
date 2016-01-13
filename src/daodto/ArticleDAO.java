@@ -315,6 +315,7 @@ public class ArticleDAO {
 				article.setUrl(rs.getString("url"));
 				article.setCreated(DateEncode.toDate(rs.getString("created")));
 				article.setModified(DateEncode.toDate(rs.getString("modified")));
+				article.setFavflag(rs.getBoolean("favflag"));
 				article.setShare_url(rs.getString("share_url"));
 				article.setShare_expior(rs.getDate("share_expior"));
 				article.setThum(rs.getBytes("thum"));
@@ -589,6 +590,7 @@ public class ArticleDAO {
 				article.setCreated(DateEncode.toDate(rs.getString("created")));
 				article.setModified(DateEncode.toDate(rs.getString("created")));
 				article.setShare_url(rs.getString("share_url"));
+				article.setFavflag(rs.getBoolean("favflag"));
 				article.setShare_expior(rs.getDate("share_expior"));
 				article.setThum(rs.getBytes("thum"));
 				articleList.add(article);
@@ -656,10 +658,13 @@ public class ArticleDAO {
 
 			String deletesql = "delete FROM article_tag WHERE id = ?";
 			String getid = "SELECT id FROM article_tag WHERE tag_id = ? AND article_id = ?;";
+			String deletetagsql = "delete FROM tags WHERE tag_id = ?";
+			String get_id = "SELECT id FROM article_tag WHERE tag_id = ? ";
+
 			TagBean tagbean = new TagBean();
 			ArrayList<TagBean> tag_list = new ArrayList<TagBean>();
 			tag_list = tagbean.viewExistingTag(user_id, article_id);
-
+			System.out.println(tag_list.size());
 			//データベースに存在するタグリストがある限り
 			for (int i = 0; i < tag_list.size(); i++) {
 				boolean deleteflag = true;
@@ -675,7 +680,7 @@ public class ArticleDAO {
 				}
 				//trueのままであればクライアントから送られたデータの中に該当しないので削除する
 				if (deleteflag) {
-					pstmt = con.prepareStatement(getid);//送られてきたタグリストのタグIDを取得する
+					pstmt = con.prepareStatement(getid);
 					pstmt.setInt(1, tag_list.get(i).getTag_id());
 					pstmt.setInt(2, article_id);
 					rs = pstmt.executeQuery();
@@ -684,9 +689,19 @@ public class ArticleDAO {
 						pstmt.setInt(1, rs.getInt("id"));
 						pstmt.executeUpdate();
 					}
+					//更にこのユーザがそのタグを一つも使っていなければtagsの中のタグを削除する
+					pstmt = con.prepareStatement(get_id);
+					pstmt.setInt(1, tag_list.get(i).getTag_id());
+					System.out.println("消したいタグID"+tag_list.get(i).getTag_id());
+					rs = pstmt.executeQuery();
+					//検索結果がなければ削除
+					if (!rs.next()) {
+						pstmt = con.prepareStatement(deletetagsql);//該当しないIDを削除
+						pstmt.setInt(1, tag_list.get(i).getTag_id());
+						pstmt.executeUpdate();
+					}
 				}
 			}
-
 			con.commit();
 			flag = true;
 		} catch (Exception e) {

@@ -107,6 +107,7 @@ public class ArticleBean {
 			articleBean.setModified(article.get(i).getModified());
 			articleBean.setShare_url(article.get(i).getShare_url());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
+			articleBean.setFavflag(article.get(i).isFavflag());
 			articleBean.setMylist_id(article.get(i).getMylist_id());
 			articleBean.setThum(article.get(i).getThum());
 			articleList.add(articleBean);
@@ -132,6 +133,7 @@ public class ArticleBean {
 			articleBean.setModified(article.get(i).getModified());
 			articleBean.setShare_url(article.get(i).getShare_url());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
+			articleBean.setFavflag(article.get(i).isFavflag());
 			articleBean.setMylist_id(article.get(i).getMylist_id());
 			articleBean.setThum(article.get(i).getThum());
 			articleList.add(articleBean);
@@ -238,6 +240,7 @@ public class ArticleBean {
 			articleBean.setCreated(article.get(i).getCreated());
 			articleBean.setModified(article.get(i).getModified());
 			articleBean.setShare_url(article.get(i).getShare_url());
+			articleBean.setFavflag(article.get(i).isFavflag());
 			articleBean.setMylist_id(article.get(i).getMylist_id());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
 			articleBean.setThum(article.get(i).getThum());
@@ -274,6 +277,7 @@ public class ArticleBean {
 			articleBean.setModified(article.get(i).getModified());
 			articleBean.setShare_url(article.get(i).getShare_url());
 			articleBean.setMylist_id(article.get(i).getMylist_id());
+			articleBean.setFavflag(article.get(i).isFavflag());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
 			articleBean.setThum(article.get(i).getThum());
 			articleList.add(articleBean);
