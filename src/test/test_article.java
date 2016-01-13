@@ -10,9 +10,9 @@ import daodto.Unique;
 public class test_article {
 	public static void main(String[] args) {
 
-		test_add(1);//記事の追加○
+		//test_add(1);//記事の追加○
 		//test_delete(54);//記事の削除○
-		//test_view_article_list(1);//記事一覧表示○
+		test_view_article_list(1,2);//記事一覧表示○
 		//test_view_fav_list(1);//お気に入りの記事一覧表示○
 		//test_tag_fav_list(1);//タグ内でお気に入りした記事一覧○
 		//test_update_article(1);//記事の更新○
@@ -99,11 +99,11 @@ public class test_article {
 	}
 
 	//記事一覧表示(テスト済)
-	static void test_view_article_list(int user_id) {
+	static void test_view_article_list(int user_id, int page) {
 		ArticleBean ab = new ArticleBean();
 		ArrayList<ArticleBean> a = new ArrayList<ArticleBean>();
 		try {
-			a = ab.viewArticleList(user_id);//修正する
+			a = ab.viewArticleList(user_id, page);//修正する
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();

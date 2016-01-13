@@ -83,7 +83,8 @@ public class AddArticleServlet extends HttpServlet {
 			image.add(articlebean.getImageDTO());
 		}
 		try {
-			if(articlebean.addArticle(user_id,image)){
+			// 成功の場合は1以上が返る
+			if(articlebean.addArticle(user_id) >= 1){
 				//成功したポップアップを表示
 			}else{
 				//失敗したポップアップを表示

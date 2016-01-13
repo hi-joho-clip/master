@@ -90,7 +90,7 @@ public class GetUpdateArticle extends HttpServlet {
 			ArticleBean articlebean = new ArticleBean();
 			// サーバのリスト
 			ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
-			article_list = articlebean.viewArticleList(user_id);
+			article_list = articlebean.viewALLArticleList(user_id);
 
 			/*
 			 * ハッシュマップ作成（Articleは画像がついてるので高速化を含めて実装
