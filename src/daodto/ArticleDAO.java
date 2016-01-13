@@ -291,22 +291,24 @@ public class ArticleDAO {
 
 	/**
 	 * お気に入りの記事一覧表示
-	 * (paginator)
+	 * paginator
 	 *
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleDTO> FavoriteLists(int user_id) throws Exception {
+	public ArrayList<ArticleDTO> FavoriteLists(int user_id, int page) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		int def_page = 20 * (page -1);
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
 		String sql = "SELECT * FROM articles WHERE article_id IN"
 				+ " (SELECT article_id FROM article_tag WHERE tag_id ="
-				+ " (SELECT tag_id FROM tags WHERE tag_body = 'お気に入り' AND user_id = ?))";
+				+ " (SELECT tag_id FROM tags WHERE tag_body = 'お気に入り' AND user_id = ?)) limit 20 offset ?";
 
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, user_id);
+			pstmt.setInt(2, def_page);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				ArticleDTO article = new ArticleDTO();
@@ -330,13 +332,13 @@ public class ArticleDAO {
 
 	/**
 	 * タグ内でお気に入り検索
-	 * paginator
+	 * paginator(OK)
 	 *
 	 * @return
 	 * @throws Exception
 	 */
 	public ArrayList<ArticleDTO> searchFavoriteTagLists(int user_id,
-			ArrayList<String> tag_body_list) throws Exception {
+			ArrayList<String> tag_body_list, int page) throws Exception {
 
 		ArrayList<Integer> fav_id_list = new ArrayList<Integer>();
 		ArrayList<Integer> search_id_list = new ArrayList<Integer>();
@@ -346,8 +348,8 @@ public class ArticleDAO {
 		try {
 			ArrayList<String> favorite = new ArrayList<String>();
 			favorite.add("お気に入り");
-			fav_id_list = getArticleId(favorite, user_id);
-			search_id_list = getArticleId(tag_body_list, user_id);
+			fav_id_list = getArticleId(favorite, user_id, page);
+			search_id_list = getArticleId(tag_body_list, user_id, page);
 
 			for (int fav_id : fav_id_list) {
 				// System.out.println("fav:" + fav_id);
@@ -372,11 +374,12 @@ public class ArticleDAO {
 	 * @throws Exception
 	 */
 	private ArrayList<Integer> getArticleId(ArrayList<String> tag_body_list,
-			int user_id) throws Exception {
+			int user_id, int page) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		int def_page = 20 * (page -1);
 		String tag_sql = "select tag_id from tags where tag_body like ? and user_id = ?";
-		String article_id_sql = "select article_id from article_tag where tag_id = ?";
+		String article_id_sql = "select article_id from article_tag where tag_id = ? limit 20 offset ?";
 
 		ArrayList<Integer> tag_id_list = new ArrayList<Integer>();
 		ArrayList<Integer> article_id_list = new ArrayList<Integer>();
@@ -399,6 +402,7 @@ public class ArticleDAO {
 				// タグのついたArticle_id取得
 				pstmt = con.prepareStatement(article_id_sql);
 				pstmt.setInt(1, tag_id);
+				pstmt.setInt(2, def_page);
 				rs = pstmt.executeQuery();
 				while (rs.next()) {
 					article_id_list.add(rs.getInt("article_id"));
@@ -426,13 +430,13 @@ public class ArticleDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleDTO> viewTagArticle(ArrayList<String> tag_body_list, int user_id) throws Exception {
+	public ArrayList<ArticleDTO> viewTagArticle(ArrayList<String> tag_body_list, int user_id, int page) throws Exception {
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
 
 		ArrayList<Integer> article_id_list = new ArrayList<Integer>();
 
 		try {
-			article_id_list = getArticleId(tag_body_list, user_id);
+			article_id_list = getArticleId(tag_body_list, user_id, page);
 
 			// 記事リストがあるだけ記事のデータを取得
 			for (int article_id : article_id_list) {
@@ -471,7 +475,7 @@ public class ArticleDAO {
 
 	/**
 	 * 記事一覧表示
-	 * paginator
+	 * paginator(OK)
 	 *
 	 * @return
 	 * @throws Exception
@@ -479,10 +483,10 @@ public class ArticleDAO {
 	public ArrayList<ArticleDTO> lists(int user_id, int page) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		int def_page = 30 * (page - 1);
+		int def_page = 20 * (page - 1);
 		System.out.println(def_page);
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
-		String sql = "SELECT * FROM articles WHERE id = ANY (SELECT id FROM mylists WHERE user_id = ?) limit 30 offset ?";
+		String sql = "SELECT * FROM articles WHERE id = ANY (SELECT id FROM mylists WHERE user_id = ?) limit 20 offset ?";
 
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -548,7 +552,6 @@ public class ArticleDAO {
 
 	/**
 	 * 記事を表示
-	 * paginator
 	 *
 	 * @return
 	 * @throws Exception
@@ -604,23 +607,25 @@ public class ArticleDAO {
 
 	/**
 	 * シェアしている記事一覧表示
-	 * paginator
+	 * paginator(OK)
 	 *
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleDTO> viewShareArticle(int user_id, int friend_user_id)
+	public ArrayList<ArticleDTO> viewShareArticle(int user_id, int friend_user_id, int page)
 			throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		int def_page = 20 * (page -1);
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
 		String sql = "SELECT * FROM articles WHERE articles.share_url IS NOT NULL AND articles.id = " +
 				"(SELECT M.id FROM friends F,mylists M WHERE F.own_user_id = ? AND F.friend_user_id = ? " +
-				"AND M.id = F.id AND M.share_flag=1)";
+				"AND M.id = F.id AND M.share_flag=1) limit 20 offset ?";
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, user_id);
 			pstmt.setInt(2, friend_user_id);
+			pstmt.setInt(3, def_page);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				ArticleDTO article = new ArticleDTO();
