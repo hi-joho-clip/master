@@ -68,10 +68,36 @@ public class ArticleBean {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleBean> viewArticleList(int user_id) throws Exception {
+	public ArrayList<ArticleBean> viewArticleList(int user_id, int page) throws Exception {
 		ArrayList<ArticleBean> articleList = new ArrayList<ArticleBean>();
 		this.articleDAO = new ArticleDAO();
-		article = articleDAO.lists(user_id);
+		article = articleDAO.lists(user_id, page);
+		for (int i = 0; i < article.size(); i++) {
+			ArticleBean articleBean = new ArticleBean();
+			articleBean.setArticle_id(article.get(i).getArticle_id());
+			articleBean.setTitle(article.get(i).getTitle());
+			articleBean.setUrl(article.get(i).getUrl());
+			articleBean.setCreated(article.get(i).getCreated());
+			articleBean.setModified(article.get(i).getModified());
+			articleBean.setShare_url(article.get(i).getShare_url());
+			articleBean.setShare_expior(article.get(i).getShare_expior());
+			articleBean.setFavflag(article.get(i).isFavflag());
+			articleBean.setMylist_id(article.get(i).getMylist_id());
+			articleBean.setThum(article.get(i).getThum());
+			articleList.add(articleBean);
+		}
+		return articleList;
+	}
+
+	/**
+	 * 記事全件一覧表示
+	 * @return
+	 * @throws Exception
+	 */
+	public ArrayList<ArticleBean> viewALLArticleList(int user_id) throws Exception {
+		ArrayList<ArticleBean> articleList = new ArrayList<ArticleBean>();
+		this.articleDAO = new ArticleDAO();
+		article = articleDAO.all_lists(user_id);
 		for (int i = 0; i < article.size(); i++) {
 			ArticleBean articleBean = new ArticleBean();
 			articleBean.setArticle_id(article.get(i).getArticle_id());
@@ -94,10 +120,10 @@ public class ArticleBean {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleBean> viewFavArticleList(int user_id) throws Exception {
+	public ArrayList<ArticleBean> viewFavArticleList(int user_id, int page) throws Exception {
 		ArrayList<ArticleBean> articleList = new ArrayList<ArticleBean>();
 		this.articleDAO = new ArticleDAO();
-		article = articleDAO.FavoriteLists(user_id);
+		article = articleDAO.FavoriteLists(user_id, page);
 		for (int i = 0; i < article.size(); i++) {
 			ArticleBean articleBean = new ArticleBean();
 			articleBean.setArticle_id(article.get(i).getArticle_id());
@@ -107,6 +133,7 @@ public class ArticleBean {
 			articleBean.setModified(article.get(i).getModified());
 			articleBean.setShare_url(article.get(i).getShare_url());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
+			articleBean.setFavflag(article.get(i).isFavflag());
 			articleBean.setMylist_id(article.get(i).getMylist_id());
 			articleBean.setThum(article.get(i).getThum());
 			articleList.add(articleBean);
@@ -119,10 +146,10 @@ public class ArticleBean {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleBean> viewTagFavArticleList(int user_id, ArrayList<String> tag_body_list) throws Exception {
+	public ArrayList<ArticleBean> viewTagFavArticleList(int user_id, ArrayList<String> tag_body_list, int page) throws Exception {
 		ArrayList<ArticleBean> articleList = new ArrayList<ArticleBean>();
 		this.articleDAO = new ArticleDAO();
-		article = articleDAO.searchFavoriteTagLists(user_id, tag_body_list);
+		article = articleDAO.searchFavoriteTagLists(user_id, tag_body_list, page);
 		for (int i = 0; i < article.size(); i++) {
 			ArticleBean articleBean = new ArticleBean();
 			articleBean.setArticle_id(article.get(i).getArticle_id());
@@ -132,6 +159,7 @@ public class ArticleBean {
 			articleBean.setModified(article.get(i).getModified());
 			articleBean.setShare_url(article.get(i).getShare_url());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
+			articleBean.setFavflag(article.get(i).isFavflag());
 			articleBean.setMylist_id(article.get(i).getMylist_id());
 			articleBean.setThum(article.get(i).getThum());
 			articleList.add(articleBean);
@@ -226,10 +254,10 @@ public class ArticleBean {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleBean> viewShareArticleList(int user_id, int friend_user_id) throws Exception {
+	public ArrayList<ArticleBean> viewShareArticleList(int user_id, int friend_user_id, int page) throws Exception {
 		ArrayList<ArticleBean> articleList = new ArrayList<ArticleBean>();
 		this.articleDAO = new ArticleDAO();
-		article = articleDAO.viewShareArticle(user_id, friend_user_id);
+		article = articleDAO.viewShareArticle(user_id, friend_user_id, page);
 		for (int i = 0; i < article.size(); i++) {
 			ArticleBean articleBean = new ArticleBean();
 			articleBean.setArticle_id(article.get(i).getArticle_id());
@@ -238,6 +266,7 @@ public class ArticleBean {
 			articleBean.setCreated(article.get(i).getCreated());
 			articleBean.setModified(article.get(i).getModified());
 			articleBean.setShare_url(article.get(i).getShare_url());
+			articleBean.setFavflag(article.get(i).isFavflag());
 			articleBean.setMylist_id(article.get(i).getMylist_id());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
 			articleBean.setThum(article.get(i).getThum());
@@ -261,10 +290,10 @@ public class ArticleBean {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleBean> viewTag(ArrayList<String> tag_body_list, int user_id) throws Exception {
+	public ArrayList<ArticleBean> viewTag(ArrayList<String> tag_body_list, int user_id, int page) throws Exception {
 		ArrayList<ArticleBean> articleList = new ArrayList<ArticleBean>();
 		this.articleDAO = new ArticleDAO();
-		article = articleDAO.viewTagArticle(tag_body_list, user_id);
+		article = articleDAO.viewTagArticle(tag_body_list, user_id, page);
 		for (int i = 0; i < article.size(); i++) {
 			ArticleBean articleBean = new ArticleBean();
 			articleBean.setArticle_id(article.get(i).getArticle_id());
@@ -274,6 +303,7 @@ public class ArticleBean {
 			articleBean.setModified(article.get(i).getModified());
 			articleBean.setShare_url(article.get(i).getShare_url());
 			articleBean.setMylist_id(article.get(i).getMylist_id());
+			articleBean.setFavflag(article.get(i).isFavflag());
 			articleBean.setShare_expior(article.get(i).getShare_expior());
 			articleBean.setThum(article.get(i).getThum());
 			articleList.add(articleBean);

@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.arnx.jsonic.JSON;
-
 import beansdomain.ArticleBean;
 
 /**
@@ -57,10 +56,23 @@ public class FavListServlet extends HttpServlet {
 		****************************************/
 		//お気に入りの記事一覧表示
 		int user_id =1;//sessionからuser_idを取得
+		int page = 1; // パラメータからページ番号取得初期値1
+
+		if (request.getParameter("page") != null) {
+			try {
+				page = Integer.parseInt(request.getParameter("page"));
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+
 		ArticleBean articlebean = new ArticleBean();
 		ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
 		try {
-			article_list=articlebean.viewFavArticleList(user_id);
+			article_list=articlebean.viewFavArticleList(user_id, page);
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();

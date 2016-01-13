@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.arnx.jsonic.JSON;
-
 import beansdomain.ArticleBean;
 
 /**
@@ -58,11 +57,22 @@ public class TagFavListServlet extends HttpServlet {
 		//タグ内でお気に入りした記事一覧
 		ArrayList<String> tag_body_list = new ArrayList<String>();
 		int user_id =1;//sessionからuser_idを取得
+		int page = 1; // パラメータからページ番号取得初期値1
+
+		if (request.getParameter("page") != null) {
+			try {
+				page = Integer.parseInt(request.getParameter("page"));
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		tag_body_list = null; //クライアントからタグリストをもらう
 		ArticleBean articlebean = new ArticleBean();
 		ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
 		try {
-			article_list = articlebean.viewTagFavArticleList(user_id, tag_body_list);
+			article_list = articlebean.viewTagFavArticleList(user_id, tag_body_list, page);
 		} catch (Exception e) {
 			e.getStackTrace();
 		}

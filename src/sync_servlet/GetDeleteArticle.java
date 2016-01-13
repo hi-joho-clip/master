@@ -83,7 +83,7 @@ public class GetDeleteArticle extends HttpServlet {
 			ArticleBean articlebean = new ArticleBean();
 			// サーバのリスト
 			ArrayList<ArticleBean> server_list = new ArrayList<ArticleBean>();
-			server_list = articlebean.viewArticleList(user_id);
+			server_list = articlebean.viewALLArticleList(user_id);
 
 			// article リスト分ハッシュマップを作成
 			for (ArticleBean art : server_list) {
