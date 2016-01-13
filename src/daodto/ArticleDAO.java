@@ -315,6 +315,7 @@ public class ArticleDAO {
 				article.setUrl(rs.getString("url"));
 				article.setCreated(DateEncode.toDate(rs.getString("created")));
 				article.setModified(DateEncode.toDate(rs.getString("modified")));
+				article.setFavflag(rs.getBoolean("favflag"));
 				article.setShare_url(rs.getString("share_url"));
 				article.setShare_expior(rs.getDate("share_expior"));
 				article.setThum(rs.getBytes("thum"));
@@ -589,6 +590,7 @@ public class ArticleDAO {
 				article.setCreated(DateEncode.toDate(rs.getString("created")));
 				article.setModified(DateEncode.toDate(rs.getString("created")));
 				article.setShare_url(rs.getString("share_url"));
+				article.setFavflag(rs.getBoolean("favflag"));
 				article.setShare_expior(rs.getDate("share_expior"));
 				article.setThum(rs.getBytes("thum"));
 				articleList.add(article);
