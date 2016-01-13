@@ -54,7 +54,6 @@ public class imageTrans extends Thread{
 			}
 			imDTO.setArticle_id(this.article_id);
 			imDTO.setBlob_image(getImage(image_url));
-			System.out.println(imDTO.getBlob_image());
 			imDTO.setUri(image_url);
 			this.imageDTO.add(imDTO);
 		}

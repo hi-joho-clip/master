@@ -59,7 +59,6 @@ public class ArticleDAO {
 			pstmt.setString(4, article.getUrl());
 			pstmt.setInt(5, id);
 			pstmt.setBytes(6, article.getThum());
-			System.out.println(pstmt);
 			pstmt.executeUpdate();
 			pstmt = con.prepareStatement(sql2);
 			rs = pstmt.executeQuery();
@@ -67,6 +66,7 @@ public class ArticleDAO {
 			if (article_id == 0) {
 				pstmt = con.prepareStatement(sql2);
 				rs = pstmt.executeQuery();
+				rs.next();
 				article_id = rs.getInt("LAST");
 			}
 
@@ -476,7 +476,47 @@ public class ArticleDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleDTO> lists(int user_id) throws Exception {
+	public ArrayList<ArticleDTO> lists(int user_id, int page) throws Exception {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int def_page = 30 * (page - 1);
+		System.out.println(def_page);
+		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
+		String sql = "SELECT * FROM articles WHERE id = ANY (SELECT id FROM mylists WHERE user_id = ?) limit 30 offset ?";
+
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, user_id);
+			pstmt.setInt(2, def_page);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				ArticleDTO article = new ArticleDTO();
+				article.setArticle_id(rs.getInt("article_id"));
+				article.setTitle(rs.getString("title"));
+				article.setUrl(rs.getString("url"));
+				article.setCreated(DateEncode.toDate(rs.getString("created")));
+				article.setModified(DateEncode.toDate(rs.getString("modified")));
+				article.setShare_url(rs.getString("share_url"));
+				article.setShare_expior(rs.getDate("share_expior"));
+				article.setFavflag(rs.getBoolean("favflag"));
+				article.setThum(rs.getBytes("thum"));
+				articleList.add(article);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception();
+		}
+		return articleList;
+	}
+
+
+	/**
+	 * 記事全件一覧表示
+	 *
+	 * @return
+	 * @throws Exception
+	 */
+	public ArrayList<ArticleDTO> all_lists(int user_id) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
