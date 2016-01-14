@@ -16,7 +16,7 @@
  * @param article_id
  * @param guid
  */
-function getArticle(guid, article_id) {
+function getArticle(username, article_id) {
 
 	return new Promise(function(resolve, reject) {
 		if (KageDB.isAvailable()) {
@@ -27,9 +27,10 @@ function getArticle(guid, article_id) {
 				todo.fetch({
 					filter : article_filter
 				}, function(values) {
-					console.log("values = " + JSON.stringify(values));
-					console.log("done.");
-					console.log(values.body.created);
+//					console.log("values = " + JSON.stringify(values));
+//					console.log("done.");
+					resolve(values);
+					//console.log(values.body.created);
 				});
 			});
 		} else {
@@ -39,7 +40,7 @@ function getArticle(guid, article_id) {
 		}
 		function article_filter(record) {
 			// GUIDが自身であり、アーティクルIDが同一
-			return record.guid == guid && revord.article_id == article_id;
+			return record.username == username && record.article_id == article_id;
 		}
 		;
 	});

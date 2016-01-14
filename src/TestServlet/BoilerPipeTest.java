@@ -82,18 +82,18 @@ public class BoilerPipeTest {
 
 	static public void keep_everything_extractor() throws Exception {
 		URL url = new URL(
-				"https://getpocket.com/a/read/1159948009");
+				"http://blog.livedoor.jp/itsoku/archives/47511094.html");
 		final BoilerpipeExtractor extractor = CommonExtractors.KEEP_EVERYTHING_EXTRACTOR;
 
 		final CommonExtractors htmlExtr ;
 		ImageExtractor imageExtr = ImageExtractor.INSTANCE;
 
-		String text = CommonExtractors.ARTICLE_EXTRACTOR.getText(url);
+		String text = CommonExtractors.KEEP_EVERYTHING_EXTRACTOR.getText(url);
 		List<Image> image = imageExtr.process(url, extractor);
 
 		for (Image img : image) {
 			System.out.println("IMG:" + img.getSrc());
 		}
-		System.out.println(text);
+		System.out.println("atttaaa" + text);
 	}
 }

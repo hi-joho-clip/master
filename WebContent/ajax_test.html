@@ -70,6 +70,13 @@ JavaScriptが無効になっています。
 	<input id="param" type="text" name="param">
 	<br />
 
+	<p>IMAGE</p>
+	<input id="image" type="button" name="check" value="確認">
+	<div class="images">
+	</div>
+
+	<br />
+
 
 
 	<div id="friendList" style="width: 500px"></div>
@@ -201,6 +208,24 @@ JavaScriptが無効になっています。
 
 				// var param = {'user_name' = 'aaa'}
 				getJSON(url, param, log);
+			});
+
+
+			$('#image').click(function() {
+
+				var con_type = "jpeg";
+				var data;
+				var icon_elem = document.getElementById("icon_here");
+
+				getArticle('gori', 74).then(function(value) {
+					console.log(value[0].article.imageListDTO);
+					for (var image in value[0].article.imageListDTO) {
+						data = 'data:image/' + con_type + ';base64,' + image.blob_image;
+						$("div.images").append('<img id="icon_here" width ="100px" src = ' + data +'>');
+					}
+				})['catch'](function(value) {
+					console.log(value);
+				});
 			});
 
 		});
