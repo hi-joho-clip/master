@@ -154,3 +154,36 @@ function deleteFriend(user_id) {
 	getJSON(URL, jsonParam, setappend);
 	location.reload();
 }
+
+function limit(){
+
+	var jsonParam = "";// 送りたいデータ
+	var URL = "http://localhost:8080/clipMaster/friendlist";
+	var $remodal = "";
+	var setappend = function(json) {
+		var CON = 0; //申請人数
+		var friend = 0; //フレンドの人数
+		for(var i=0; i < json.length; i++ ){
+			if(json[i].status == 2){
+				CON += 1;
+			}else {
+				friend += 1;
+			}
+		}
+		console.log(CON);
+
+		if(json.length > 49){
+			$remodal += "<h2>フレンド人数オーバー</h2>"
+				+ "<a class='remodal-confirm' href='#'>OK</a>";
+		}else if(CON > 9){
+			$remodal += "<h2>フレンド申請オーバー</h2>"
+				+ "<a class='remodal-confirm' href='#'>OK</a>";
+		}else if(json.length < 50 && CON < 10){
+			$remodal += "<h2>リクエスト送信</h2>"
+				+ "<a class='remodal-confirm' href='#' onclick='addRequest(document.getElementById(\"user_id\").innerHTML);location.reload()\'>追加</a>"
+				+ "<a class='remodal-cancel' href='#'>キャンセル</a>";
+		}
+		$("#limit").append($remodal).trigger("create");
+	};
+	getJSON(URL, jsonParam, setappend);
+}
