@@ -1,3 +1,9 @@
+//ログイン判定
+function login() {
+
+
+}
+
 //新規登録後
 function addUser() {
 
