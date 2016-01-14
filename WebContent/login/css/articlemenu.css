@@ -17,6 +17,10 @@ background:#FFF;
 a, a:hover {
 text-decoration:none;
 }
+
+b, b:hover {
+text-decoration:none;
+}
 h1 {
 font-size:60px;
 -webkit-margin-before: 0.1em;
@@ -92,6 +96,10 @@ font-size:24px;
 ul a li {
 color:#999;
 }
+ul b li {
+color:#999;
+}
+
 ul li:hover {
 list-style-type:none;
 padding:10px 20px;

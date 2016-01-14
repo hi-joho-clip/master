@@ -15,6 +15,14 @@
 	height: 100%;
 }
 
+#link-body b {
+	position: absolute;
+	top:0;
+	left:0;
+	width: 100%;
+	height: 100%;
+}
+
 #menu{
 	float:left;
     width: 59%;
@@ -41,6 +49,19 @@
 #menu a:visited { color: #ffffff; }
 #menu a:hover { color: #ff0000; }
 #menu a:active { color: #ff0000; }
+
+#menu li b {
+			display: inline-block;
+			width: 100%;
+			height: 32px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+}
+#menu b:link { color: #ffffff; }
+#menu b:visited { color: #ffffff; }
+#menu b:hover { color: #ff0000; }
+#menu b:active { color: #ff0000; }
 
 #menu2{
 	float:left;
@@ -75,4 +96,5 @@
      overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    z-index:2;
 }

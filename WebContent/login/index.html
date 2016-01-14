@@ -51,6 +51,9 @@
     <script src="../tag-it/src/remodal.js"></script>
 <script src="../tag-it/src/remodal.js"></script>
 
+<!-- 読み込み中 -->
+<link href="css/Yomikomi.css" rel="stylesheet">
+<script type="text/javascript" src="js/Yomikomi.js"></script>
 
 <style>
       .remodal-overlay.without-animation.remodal-is-opening,
@@ -65,6 +68,16 @@
 </head>
 
 <body>
+
+<div id="loader-bg">
+  <div id="loader">
+
+    <p>Now Loading...</p>
+  </div>
+</div>
+<div id="wrap">
+
+
 <div id="article_id"></div>
 	<section>
 <div class="remodal" data-remodal-id="tagmodal" >
@@ -142,10 +155,10 @@
             </nav>
 
             <nav class="pure-drawer" data-position="right">
-					 <p style="padding: 100px 5px; margin: 0;"><a>Search Input</a>
-   					 <input type="search" name="search-1" id="search-1" value="">
+					 <p style="padding: 100px 5px; margin: 0;"><a>Search Input</a><br>
+   					 <input type="search" name="search-1" id="search-1" value=""><br>
 
-					 	      <a> URL</a>
+					 	      <a> URL</a><br>
    					   <input type="search" name="search-1" id="search-1" value="">
 					</p>
             </nav>
@@ -171,6 +184,7 @@
 		</div>
 
 	</section>
+	</div>
 
 </body>
 </html>
