@@ -187,3 +187,10 @@ function limit(){
 	};
 	getJSON(URL, jsonParam, setappend);
 }
+
+//フレンド登録者のリストをもらう処理
+function getFriends(){
+	var jsonParam = null;// 送りたいデータ
+	var URL = "http://localhost:8080/clipMaster/friendlist";
+	getJSON(URL, jsonParam, get_friends);
+}

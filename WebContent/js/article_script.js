@@ -154,4 +154,13 @@ function addFavArticle(article_id){
 		console.log("現ふらぐ"+document.getElementById(grobalflag).value);
 	}
 }
+//シェア記事の追加
+function shareArticle(friend_user_id,article_id){
+	var arr=[];
+	arr[0]=article_id.item(0).value;
+	arr[1]=friend_user_id.item(0).value;
+	var jsonParam = "id="+JSON.parse(JSON.stringify(arr));
+	var URL = "http://localhost:8080/clipMaster/addshare";
 
+	getJSON(URL, jsonParam, null);
+}

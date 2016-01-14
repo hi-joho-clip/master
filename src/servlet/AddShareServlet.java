@@ -48,7 +48,8 @@ public class AddShareServlet extends HttpServlet {
 		****ある記事をフレンドと共有するボタンを押したとき****
 		*****************************************************/
 		//記事にシェアURLを追加
-		int article_id = Integer.parseInt(request.getParameter("article_id"));
+		System.out.println(request.getParameter("id"));
+		/*int article_id = Integer.parseInt(request.getParameter("article_id"));
 		String share_url = request.getParameter("share_url");
 		ArticleBean articlebean = new ArticleBean();
 		articlebean.setArticle_id(article_id);
@@ -62,7 +63,7 @@ public class AddShareServlet extends HttpServlet {
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 }
