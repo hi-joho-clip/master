@@ -15,6 +15,7 @@
 <link href="css/grid.css" rel="stylesheet">
 <link href="css/button.css" rel="stylesheet"/>
 <link rel="stylesheet" href="css/mosaic.css" type="text/css"  />
+<link rel="stylesheet" href="css/select2.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="js/articlemenu.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery-2.1.4.min.js"></script>
@@ -26,7 +27,9 @@
 <script type="text/javascript" src="js/mosaic.1.0.1.js"></script>
 <script type="text/javascript" src="../js/create_list.js"></script>
 <script type="text/javascript" src="../js/tag_script.js"></script>
-
+<script type="text/javascript" src="../js/friend_script.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/select2.min.js"></script>
 <link rel="stylesheet" href="css/pure-drawer.css">
 
 <!-- toastr -->
@@ -98,8 +101,11 @@
 <div class="remodal" data-remodal-id="sharemodal" >
   <a data-remodal-action="close" class="remodal-close" ></a>
   <h2>この記事を共有する</h2><BR>
-
-	<a class="remodal-confirm" href="#"onclick="javascript:;">共有</a>
+	<select class="selectbox">
+	</select>
+<BR>
+<BR>
+	<a class="remodal-confirm" href="#"onclick="javascript:shareArticle(document.selectbox.value,document.getElementsByName('article_id'));">共有</a>
 </div>
 		<!-- <div class="wh DSmenu">
 			<ul>
@@ -188,3 +194,7 @@
 
 </body>
 </html>
+
+
+
+

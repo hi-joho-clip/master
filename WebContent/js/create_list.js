@@ -109,23 +109,20 @@ var get_mylists = function(json) {
 								"<div id='menu2'>"+
 									"<div class='remodal-bg'>"+
 									"<input type='hidden' value='"+json[i].favflag+"' id='grobalflag"+json[i].article_id+"'>"+
+
 									"<a href='#' data-remodal-target='deletemodal'onclick='javascript:getArticle_id("+json[i].article_id+");return false;'>" +
 									"<img src='img/trash1.png' align='right'width='32'height='32'></img>" +
 									"</a>"+
 
-
-									"<a href='#' data-remodal-target='sharemodal'><img src='img/share1.png' align='right'width='32'height='32'></img></a>"+
-
+									"<a href='#' data-remodal-target='sharemodal'onclick='javascript:getFriends();getArticle_id("+json[i].article_id+");return false;'><img src='img/share1.png' align='right'width='32'height='32'></img></a>"+
 
 									 "<a href='#' data-remodal-target='tagmodal' onclick='javascript:getTagArticle("+json[i].article_id+");return false;'>"+
 									  "<img src='img/tag1.png'align='right' width='32'height='32'></img>" +
 									  "</a>"+
 
-
-
 									"<a href='#'onclick='javascript:addFavArticle("+json[i].article_id+");return false;'><img src='img/star1.png' align='right'width='32'height='32'></img></a>"+
-									"</div>"+
 
+									"</div>"+
 								"</div>"+
 							"</div>"+
 						"</div>"+
@@ -160,4 +157,19 @@ var get_taglists = function(json) {
 	}
 	tagList += "</table>";
 	document.getElementById('taglist').innerHTML = tagList;
+};
+
+//登録しているフレンドが入ったセレクトボックスを作成
+var get_friends = function(json){
+	var option = "";
+	for(var i=0; i<json.length; i++){
+		option=document.createElement('option');
+		option.value = json[i].friend_user_id;
+		//画面に表示されるテキスト部分は createTextNode で作って、optionの子要素として追加
+		option.appendChild(document.createTextNode(''+json[i].nickname+''));
+		//プルダウンに追加
+		$('.selectbox').append(option).trigger('create');
+		option="";
+	}
+
 };
