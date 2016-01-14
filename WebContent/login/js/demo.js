@@ -5,10 +5,10 @@
 
 document.addEventListener('DOMContentLoaded', function () {
   particleground(document.getElementById('particles'), {
-    dotColor: '#b0c4de',
-    lineColor: '#b0c4de',
+    dotColor: '#FFF',
+    lineColor: '#FFF',
     density: '10000',
-    parallaxMultiplier: '4'
+    parallaxMultiplier: '2'
   });
   var intro = document.getElementById('intro');
   intro.style.marginTop = - intro.offsetHeight / 2 + 'px';

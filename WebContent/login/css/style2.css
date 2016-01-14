@@ -57,7 +57,7 @@ table {
 html, body {
   width: 100%;
   height: 100%;
-  overflow: hiddon;
+  overflow: hidden;
 }
 
 body {
@@ -69,7 +69,7 @@ body {
 #particles {
   width: 100%;
   height: 100%;
-  overflow: hiddon;
+  overflow: hidden;
 }
 
 #intro {
@@ -98,7 +98,6 @@ h1::after {
   line-height: 1.1;
 }
 p {
-  margin: 0 0 30px 0;
   font-size: 24px;
 }
 .btn {
