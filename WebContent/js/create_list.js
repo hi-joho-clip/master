@@ -101,29 +101,29 @@ var get_mylists = function(json) {
 
 						 "<div id='link-body'><a href='../login/article.html?"+json[i].article_id+"'target='_blank'></a></div>" +
 							"<div id='menu-block'>" +
-								"<div id='menu'>"+
+								/*"<div id='menu'>"+
 									"<ol>"+
 										"<li><a href='"+json[i].url+"'>"+json[i].url+"</a></li>"+
 									"</ol>"+
-								"</div>"+
+								"</div>"+*/
 								"<div id='menu2'>"+
 									"<div class='remodal-bg'>"+
 									"<input type='hidden' value='"+json[i].favflag+"' id='grobalflag"+json[i].article_id+"'>"+
 									"<a href='#' data-remodal-target='deletemodal'onclick='javascript:getArticle_id("+json[i].article_id+");return false;'>" +
-									"<img src='img/trash1.png' align='right'width='20'height='20'></img>" +
+									"<img src='img/trash1.png' align='right'width='32'height='32'></img>" +
 									"</a>"+
 
 
-									"<a href='i'><img src='img/share1.png' align='right'width='20'height='20'></img></a>"+
+									"<a href='#' data-remodal-target='sharemodal'><img src='img/share1.png' align='right'width='32'height='32'></img></a>"+
 
 
 									 "<a href='#' data-remodal-target='tagmodal' onclick='javascript:getTagArticle("+json[i].article_id+");return false;'>"+
-									  "<img src='img/tag1.png'align='right' width='20'height='20'></img>" +
+									  "<img src='img/tag1.png'align='right' width='32'height='32'></img>" +
 									  "</a>"+
 
 
 
-									"<a href='#'onclick='javascript:addFavArticle("+json[i].article_id+");return false;'><img src='img/star1.png' align='right'width='20'height='20'></img></a>"+
+									"<a href='#'onclick='javascript:addFavArticle("+json[i].article_id+");return false;'><img src='img/star1.png' align='right'width='32'height='32'></img></a>"+
 									"</div>"+
 
 								"</div>"+
@@ -131,7 +131,7 @@ var get_mylists = function(json) {
 						"</div>"+
 						"<div class='mosaic-backdrop relative'>" +
 							"<img src='http://www.kk1up.jp/wp-content/uploads/2015/07/201507290001-17.jpg'width='100%'height='100%'alt='"+json[i].title+"'/>" +
-							"<p class='absolute'id='favtitle"+json[i].article_id+"'>"+flag+"</p>" +
+							"<p class='absolute'id='favtitle"+json[i].article_id+"'>"+flag+"<BR><a href='"+json[i].url+"'>"+json[i].url+"</a></p>" +
 							"<input type='hidden' value='"+json[i].title+"' id='title"+json[i].article_id+"'>"+
 						"</div>"+
 					"</div>");
@@ -152,7 +152,7 @@ var get_taglists = function(json) {
 	tagList = "<table><tr><th><h2>タグリスト</h2></th></tr>";
 	for ( var i = 0; i < json.length; i++) {
 		tagList +=
-				"<tr align='left' valign='top'><td>"+
+				"<tr align='left' valign='top'><td width='300'>"+
 				"<h2><a href='index.html'onclick='javascript:$.cookie(\"viewMode\",\"2\");$.cookie(\"tagLists\",\""+json[i].tag_body+"\");'>"+json[i].tag_body + "</a></h2><br>" +
 				"<input type='hidden' value='"+json[i].lastest+"' name='lastest"+i+"'>"+
 				"</td><td><h2><a href='/' data-remodal-target='tagdeletemodal' onclick='javascript:getTag_id("+json[i].tag_id+");return false;'>削除</a></h2></td></tr>";
