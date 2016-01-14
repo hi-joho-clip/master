@@ -194,3 +194,18 @@ function getFriends(){
 	var URL = "http://localhost:8080/clipMaster/friendlist";
 	getJSON(URL, jsonParam, get_friends);
 }
+
+
+//フレンド申請があると、申請通知が来る
+var notice = function() {
+	var jsonParam = null;// 送りたいデータ
+	var URL = "http://localhost:8080/clipMaster/friendrequest";
+	var setappend = function(json) {
+		if(json.length > 0){
+			flag="★"+json[i].title;
+		}else if(json[i].favflag==false){
+			flag=json[i].title;
+		}
+	};
+	getJSON(URL, jsonParam, setappend);
+};
