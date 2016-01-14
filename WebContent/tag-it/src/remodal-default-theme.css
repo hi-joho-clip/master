@@ -145,12 +145,15 @@
 .remodal-confirm {
 	font-size : 20px;
   color: #fff;
-  background: #81c784;
+  background: rgba(169, 68, 66, 0.77);
+  border-radius: 25px;
 }
 
 .remodal-confirm:hover,
 .remodal-confirm:focus {
-  background: #66bb6a;
+  background: rgba(0, 0, 0, .075);
+  border-radius: 5%;
+
 }
 
 .remodal-cancel {
