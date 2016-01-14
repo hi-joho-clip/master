@@ -5,14 +5,14 @@ html { height:100%; font-size:62.5%; }
 body {
 position:relative;
 margin-left:auto; margin-right:auto; width:auto; height:auto;
-background:#000;
-color:#666;
+background:#333;
+color:#FFF;
 font-family:Avenir , "Open Sans" , "Helvetica Neue" , Helvetica , Arial , Verdana , Roboto ,"游ゴシック" ,  "ヒラギノ角ゴ Pro W3"  , "メイリオ"  , "ＭＳ Ｐゴシック"  ,  sans-serif;
 font-weight:100;
 -webkit-text-size-adjust: 100%;
 }
 section {
-background:#FFF;
+background:#333;
 }
 a, a:hover {
 text-decoration:none;
@@ -92,6 +92,7 @@ padding:10px 20px;
 background:#FFF;
 width:100%;
 font-size:24px;
+color:#000
 }
 ul a li {
 color:#999;
@@ -159,7 +160,7 @@ top:50%;
 transform:translate(-50%,-50%) rotate(-45deg);
  }
 .head-bar {
-background:#333;
+background:#000;
 position:absolute;
 position:fixed;
 top:0;

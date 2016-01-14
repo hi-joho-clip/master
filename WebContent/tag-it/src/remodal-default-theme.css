@@ -45,7 +45,7 @@
 
   transform: translate3d(0, 0, 0);
 
-  color: #949495;
+  color: #555;
   background: #fff;
 
   font-size: 15px;
@@ -145,7 +145,7 @@
 .remodal-confirm {
 	font-size : 20px;
   color: #fff;
-  background: rgba(169, 68, 66, 0.77);
+  background: #d3381c;
   border-radius: 25px;
 }
 
