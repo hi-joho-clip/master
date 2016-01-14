@@ -53,35 +53,23 @@ public class AddShareServlet extends HttpServlet {
 		*****************************************************/
 		//記事にシェアURLを追加
 		System.out.println(request.getParameter("id"));
-		/*int article_id = Integer.parseInt(request.getParameter("article_id"));
-		String share_url = request.getParameter("share_url");
+
+		int user_id = 0;
+		int friend_user_id = 0;
+		int article_id = 0;
+
 		ArticleBean articlebean = new ArticleBean();
 		ArticleBean newBean = new ArticleBean();
 
-		/*
-		 * 記事のURLを入力して追加ボタンを押すとJSONデータが送られてくる。
-		 * object.datename[]でアクセス可能
-		 *
-		 * */
 
-		/* JSONのデータがある限りArrayListに追加する
-		uri_list.add(URI);
-		try {
-			image_list.add(画像データ));
-		} catch (UnsupportedEncodingException e1) {
-			// TODO 自動生成された catch ブロック
-			e1.printStackTrace();
-		}
-		*/
-
-		int article_id = 0;
 		if (request.getParameter("article_id") != null) {
 			try {
 				article_id = Integer.parseInt(request.getParameter("article_id"));
+				friend_user_id = Integer.parseInt(request.getParameter("friend_id"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}*/
+		}
 		article_id = 78;
 
 		if (article_id != 0) {
@@ -93,7 +81,7 @@ public class AddShareServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}*/
+		}
 	}
 
 }
