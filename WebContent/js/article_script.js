@@ -158,7 +158,7 @@ function addFavArticle(article_id){
 function shareArticle(friend_user_id,article_id){
 	var arr=[];
 	arr[0]=article_id.item(0).value;
-	arr[1]=friend_user_id.item(0).value;
+	arr[1]=friend_user_id;
 	var jsonParam = "id="+JSON.parse(JSON.stringify(arr));
 	var URL = "http://localhost:8080/clipMaster/addshare";
 

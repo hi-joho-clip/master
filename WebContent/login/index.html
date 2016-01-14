@@ -79,8 +79,6 @@
   </div>
 </div>
 <div id="wrap">
-
-
 <div id="article_id"></div>
 	<section>
 <div class="remodal" data-remodal-id="tagmodal" >
@@ -101,11 +99,10 @@
 <div class="remodal" data-remodal-id="sharemodal" >
   <a data-remodal-action="close" class="remodal-close" ></a>
   <h2>この記事を共有する</h2><BR>
-	<select class="selectbox">
-	</select>
+	<select class="selectbox" id="selectbox" ></select>
 <BR>
 <BR>
-	<a class="remodal-confirm" href="#"onclick="javascript:shareArticle(document.selectbox.value,document.getElementsByName('article_id'));">共有</a>
+	<a class="remodal-confirm" href="#"onclick="javascript:shareArticle(document.getElementById('selectbox').value,document.getElementsByName('article_id'));">共有</a>
 </div>
 		<!-- <div class="wh DSmenu">
 			<ul>
