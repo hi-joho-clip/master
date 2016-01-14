@@ -7,9 +7,7 @@ import java.awt.image.IndexColorModel;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +18,7 @@ import beansdomain.ArticleBean;
 import daodto.ImageDTO;
 import de.l3s.boilerpipe.document.Image;
 
-public class imageTrans extends Thread{
+public class imageTrans extends Thread {
 
 	private int article_id;
 	private ArrayList<ImageDTO> imageDTO = new ArrayList<ImageDTO>();
@@ -33,29 +31,41 @@ public class imageTrans extends Thread{
 		this.image = image;
 	}
 
+	public static void main(String[] args) {
+
+		getImage("http://pc.watch.impress.co.jp/img/pcw/docs/738/654/2_s.jpg");
+	}
+
 	/**
 	 * 画像を保存する。
 	 * @param args
 	 */
-	public void run(){
+	public void run() {
 
 		ArticleBean artBean = new ArticleBean();
 		ImageDTO imDTO = null;
 
 		String image_url = null;
+		//System.out.println(image.size());
 		for (Image img : image) {
 			imDTO = new ImageDTO();
 			if (img.getSrc().startsWith("http://")) {
 				image_url = img.getSrc();
-				System.out.println("IMG:" + img.getSrc());
+				//System.out.println("IMG:" + img.getSrc());
 			} else {
 				image_url = "http://" + url.getHost() + img.getSrc();
-				System.out.println("IMG2:" + "http://" + url.getHost() + img.getSrc());
+				//System.out.println("IMG2:" + "http://" + url.getHost() + img.getSrc());
 			}
-			imDTO.setArticle_id(this.article_id);
-			imDTO.setBlob_image(getImage(image_url));
-			imDTO.setUri(image_url);
-			this.imageDTO.add(imDTO);
+
+			//System.out.println(extentHantei("URL:" + image_url));
+			if (extentHantei(image_url) != "FALSE") {
+				imDTO.setArticle_id(this.article_id);
+				imDTO.setExtenstion(extentHantei(image_url));
+				imDTO.setBlob_image(getImage(image_url));
+				imDTO.setUri(image_url);
+				this.imageDTO.add(imDTO);
+			}
+			// 拡張子を入れちゃえ
 		}
 		// 更新処理
 
@@ -68,39 +78,71 @@ public class imageTrans extends Thread{
 	}
 
 	/**
+	 * 拡張子の対応確認
+	 * 対応できる拡張子は、jpg,pngのみ
+	 */
+	public static String extentHantei(String src) {
+		if (src.indexOf(".jpg") != -1) {
+			return "jpg";
+		} else if (src.indexOf(".JPG") != -1) {
+			return "jpg";
+		} else if (src.indexOf(".png") != -1) {
+			return "png";
+		} else if (src.indexOf(".PNG") != -1) {
+			return "png";
+		} else if (src.indexOf(".jpeg") != -1) {
+			return "jpg";
+		} else if (src.indexOf(".JPEG") != -1) {
+			return "jpg";
+		} else if (src.indexOf(".gif") != -1) {
+			return "gif";
+		} else if (src.indexOf(".GIF") != -1) {
+			return "gif";
+		} else {
+			return "FALSE";
+		}
+	}
+
+	/**
 	 * 画像のURLからイメージを縮小してイメージバッファーを返す
 	 * @param str_url
 	 * @return
 	 */
-	private byte[] getImage(String str_url) {
+	public static byte[] getImage(String str_url) {
 
 		byte[] new_ByteImage = null;
-		try {
-			URI uri = new URI(str_url);
-			URL url = uri.toURL();
 
-			BufferedImage buf_img = ImageIO.read(url);
-			float hiritu = (float) buf_img.getHeight() / (float) buf_img.getWidth();
-			int width = 800;
-			int height = Math.round((float) width * hiritu);
+		// 未対応の場合は処理せずナルを返す（念のため）
+		if (!extentHantei(str_url).equals("FALSE")) {
+			try {
+				URI uri = new URI(str_url);
+				URL url = uri.toURL();
+				BufferedImage buf_img = ImageIO.read(url);
 
-			System.out.println("takasa:" + height + "hiritu:" + hiritu);
+				float hiritu = (float) buf_img.getHeight() / (float) buf_img.getWidth();
+				int width = 800;
+				int height = Math.round((float) width * hiritu);
 
-			BufferedImage new_img = rescale(buf_img, width, height);
+				//	System.out.println("takasa:" + height + "hiritu:" + hiritu);
 
-			System.out.println("img:" + buf_img.getWidth());
-			System.out.println("new_img:" + new_img.getWidth());
-			System.out.println("new_img:" + new_img.getHeight());
+				BufferedImage new_img = rescale(buf_img, width, height);
 
-			//ImageIO.write(new_img, "jpg", new FileOutputStream("C:\\Users\\121013\\Pictures\\test.jpg"));
-			new_ByteImage = getBytesFromImage(new_img, "jpg");
+				//				System.out.println("img:" + buf_img.getWidth());
+				//				System.out.println("new_img:" + new_img.getWidth());
+				//				System.out.println("new_img:" + new_img.getHeight());
 
-		} catch (URISyntaxException e) {
-			System.err.println(e);
-		} catch (MalformedURLException e) {
-			System.err.println(e);
-		} catch (IOException e) {
-			System.err.println(e);
+				//ImageIO.write(new_img, "gif", new FileOutputStream("C:\\Users\\121013\\Pictures\\testunfe.jpg"));
+				new_ByteImage = getBytesFromImage(new_img, extentHantei(str_url));
+
+				//			} catch (URISyntaxException e) {
+				//				e.printStackTrace();
+				//			} catch (MalformedURLException e) {
+				//				e.printStackTrace();
+				//			} catch (IOException e) {
+				//				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return new_ByteImage;
 	}
@@ -111,7 +153,7 @@ public class imageTrans extends Thread{
 	* @param format フォーマット名
 	* @return バイト列
 	*/
-	public static byte[] getBytesFromImage(BufferedImage img, String format) throws IOException {
+	private static byte[] getBytesFromImage(BufferedImage img, String format) throws IOException {
 
 		if (format == null) {
 			format = "jpg";
@@ -126,7 +168,7 @@ public class imageTrans extends Thread{
 	* @param bytes
 	* @return イメージデータ
 	*/
-	public static BufferedImage getImageFromBytes(byte[] bytes) throws IOException {
+	private BufferedImage getImageFromBytes(byte[] bytes) throws IOException {
 		ByteArrayInputStream baos = new ByteArrayInputStream(bytes);
 		BufferedImage img = ImageIO.read(baos);
 		return img;
@@ -139,7 +181,7 @@ public class imageTrans extends Thread{
 	 * @param nh
 	 * @return
 	 */
-	private BufferedImage rescale(BufferedImage srcImage, int nw, int nh) {
+	private static BufferedImage rescale(BufferedImage srcImage, int nw, int nh) {
 		BufferedImage dstImage = null;
 		if (srcImage.getColorModel() instanceof IndexColorModel) {
 			dstImage = new BufferedImage(nw, nh, srcImage.getType(), (IndexColorModel) srcImage.getColorModel());

@@ -4,12 +4,14 @@ public class ImageDTO {
 	private int image_id;
 	private int article_id;
 	private String uri;
+	private String extenstion;
 	private byte[] blob_image;
 
 	public ImageDTO(){
 		this.image_id=0;
 		this.article_id=0;
 		this.uri=null;
+		this.setExtenstion(null);
 		this.blob_image=null;
 
 	}
@@ -44,6 +46,14 @@ public class ImageDTO {
 
 	public void setArticle_id(int article_id) {
 		this.article_id = article_id;
+	}
+
+	public String getExtenstion() {
+		return extenstion;
+	}
+
+	public void setExtenstion(String extenstion) {
+		this.extenstion = extenstion;
 	}
 
 

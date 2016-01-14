@@ -25,6 +25,7 @@ public class ArticleBean {
 	private String uri;
 	private byte[] thum;
 	private byte[] blob_image;
+	private String extension;
 	private ImageDTO imageDTO;
 	private boolean favflag;
 	private ArrayList<ImageDTO> imageListDTO;
@@ -38,7 +39,51 @@ public class ArticleBean {
 	public int addArticle(int user_id) throws Exception {
 		this.articleDAO = new ArticleDAO();
 		setArticleDTO();
-		return this.articleDAO.add(this.articleDTO, user_id);
+
+		int mylist_id = this.articleDAO.getMylistID(user_id);
+
+		if (mylist_id != 0) {
+			System.out.println("MYLISTID:" + mylist_id);
+			return this.articleDAO.add(this.articleDTO, user_id);
+		}
+
+		// user_idからマイリストIDを引っ張ってくる
+		return 0;
+	}
+
+	/**
+	 *
+	 * Viewで記事のデータをセットする必要があるよ
+	 * @param user_id, friend_user_id,
+	 * @return
+	 * @throws Exception
+	 */
+	public int addShareArticle(int user_id, int friend_user_id) throws Exception {
+		int artid = 0;
+		this.articleDAO = new ArticleDAO();
+		setArticleDTO();
+		// たぶん、記事IDは初期化しないでも動く。
+
+		int mylist_id = this.articleDAO.getShareMylistID(user_id, friend_user_id);
+		System.out.println(mylist_id);
+
+		// 記事の追加 セットされてない場合は行わない
+		if (this.articleDTO.getArticle_id() != 0) {
+			artid = this.articleDAO.add(this.articleDTO, mylist_id);
+
+			// 画像の追加(画像リストをそのまま追加する
+			// たぶん、article_idが変更されてるので更新かかるはず。
+			if (artid != 0) {
+				// お気に入り、シェアURL、シェアURL期限
+				this.articleDTO.setFavflag(false);
+				this.articleDTO.setShare_expior(null);
+				this.articleDTO.setShare_url(null);
+				this.articleDAO.updateImage(artid, this.articleDTO.getImageDTO());
+			}
+		}
+
+		// 追加した記事IDを返す
+		return artid;
 	}
 
 	/**
@@ -49,7 +94,7 @@ public class ArticleBean {
 	public boolean addImage(int article_id, ArrayList<ImageDTO> img) throws Exception {
 		this.articleDAO = new ArticleDAO();
 		setArticleDTO();
-		return this.articleDAO.updateImage(  article_id, img);
+		return this.articleDAO.updateImage(article_id, img);
 	}
 
 	/**
@@ -146,7 +191,8 @@ public class ArticleBean {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleBean> viewTagFavArticleList(int user_id, ArrayList<String> tag_body_list, int page) throws Exception {
+	public ArrayList<ArticleBean> viewTagFavArticleList(int user_id, ArrayList<String> tag_body_list, int page)
+			throws Exception {
 		ArrayList<ArticleBean> articleList = new ArrayList<ArticleBean>();
 		this.articleDAO = new ArticleDAO();
 		article = articleDAO.searchFavoriteTagLists(user_id, tag_body_list, page);
@@ -321,6 +367,9 @@ public class ArticleBean {
 		this.articleDTO.setModified(this.modified);
 		this.articleDTO.setShare_url(this.share_url);
 		this.articleDTO.setMylist_id(this.mylist_id);
+		this.articleDTO.setThum(this.thum);
+		this.articleDTO.setFavflag(this.favflag);
+		this.articleDTO.setImageDTO(this.imageListDTO);
 		this.articleDTO.setShare_expior(this.share_expior);
 	}
 
@@ -330,6 +379,7 @@ public class ArticleBean {
 		this.imageDTO = new ImageDTO();
 		this.imageDTO.setImage_id(this.image_id);
 		this.imageDTO.setUri(this.uri);
+		this.imageDTO.setExtenstion(this.extension);
 		this.imageDTO.setBlob_image(this.blob_image);
 	}
 
@@ -337,6 +387,7 @@ public class ArticleBean {
 		this.imageDTO = new ImageDTO();
 		this.imageDTO.setImage_id(this.image_id);
 		this.imageDTO.setUri(this.uri);
+		this.imageDTO.setExtenstion(this.extension);
 		this.imageDTO.setBlob_image(this.blob_image);
 		return imageDTO;
 	}
@@ -468,7 +519,5 @@ public class ArticleBean {
 	public void setFavflag(boolean favflag) {
 		this.favflag = favflag;
 	}
-
-
 
 }

@@ -10,7 +10,9 @@ public class test_auth_bean {
 	public static void main(String[] args) {
 		// TODO 自動生成されたメソッド・スタブ
 
-		test_login();
+
+
+		//test_login();
 	}
 
 

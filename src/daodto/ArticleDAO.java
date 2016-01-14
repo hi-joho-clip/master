@@ -16,12 +16,62 @@ public class ArticleDAO {
 	}
 
 	/**
+	 * マイリストIDを返す
+	 * @param user_id
+	 * @return
+	 */
+	public int getMylistID(int user_id) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int mylist_id = 0;
+		String id_sql = "SELECT id FROM mylists,users WHERE mylists.user_id = users.user_id AND users.user_id = ? and share_flag = false";
+
+		try {
+			pstmt = con.prepareStatement(id_sql);
+			pstmt.setInt(1, user_id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				mylist_id = rs.getInt("id");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return mylist_id;
+	}
+
+	/**
+	 * フレンドとのマイリストID取得
+	 * @param user_id
+	 * @param friend_user_id
+	 * @return
+	 */
+	public int getShareMylistID(int user_id, int friend_user_id) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int mylist_id = 0;
+		String id_sql = "SELECT id FROM friends WHERE own_user_id = ? and friend_user_id = ?";
+		try {
+			pstmt = con.prepareStatement(id_sql);
+			pstmt.setInt(1, user_id);
+			pstmt.setInt(2, friend_user_id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				mylist_id = rs.getInt("id");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mylist_id;
+	}
+
+	/**
 	 * 記事の追加
 	 *
 	 * @return
 	 * @throws Exception
 	 */
-	public int add(ArticleDTO article, int user_id) throws Exception {
+	public int add(ArticleDTO article, int mylist_id) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		boolean flag = false;
@@ -30,7 +80,7 @@ public class ArticleDAO {
 
 		// サムネイルは
 		String hantei_sql = "SELECT * FROM articles WHERE url = ? AND articles.id = ?";
-		String id_sql = "SELECT id FROM mylists,users WHERE mylists.user_id = users.user_id AND users.user_id = ?";
+		//String id_sql = "SELECT id FROM mylists,users WHERE mylists.user_id = users.user_id AND users.user_id = ?";
 		String sql = "INSERT INTO articles(article_id, title,body,url,created,share_url,share_expior,id,thum,favflag,modified) VALUES(?,?,?,?,now(),null,null,?,?,FALSE,now()) "
 				+
 				"ON DUPLICATE KEY UPDATE title=VALUES(`title`), body=VALUES(`body`),modified = now()";
@@ -38,12 +88,12 @@ public class ArticleDAO {
 		//String sql3 = "INSERT INTO article_image(article_id,uri,blob_image) VALUES(?,?,?)";
 		try {
 			con.setAutoCommit(false);
-			pstmt = con.prepareStatement(id_sql);
-			pstmt.setInt(1, user_id);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				id = rs.getInt("id");
-			}
+			//			pstmt = con.prepareStatement(id_sql);
+			//			pstmt.setInt(1, user_id);
+			//			rs = pstmt.executeQuery();
+			//			if (rs.next()) {
+			id = mylist_id;//rs.getInt("id");
+			//}
 			pstmt = con.prepareStatement(hantei_sql);
 			pstmt.setString(1, article.getUrl());
 			pstmt.setInt(2, id);
@@ -145,7 +195,7 @@ public class ArticleDAO {
 	public boolean updateImage(int article_id, ArrayList<ImageDTO> image) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "insert into article_image values(?, ?, ?, ?) "
+		String sql = "insert into article_image values(?, ?, ?, ? ,?) "
 				+ "ON DUPLICATE KEY UPDATE blob_image=VALUES(`blob_image`)";
 		String select = "select id from article_image where article_id = ? and uri = ?";
 		boolean flag = false;
@@ -159,7 +209,7 @@ public class ArticleDAO {
 				pstmt = con.prepareStatement(select);
 				pstmt.setInt(1, article_id);
 				pstmt.setString(2, imgDTO.getUri());
-				System.out.println(pstmt);
+
 				rs = pstmt.executeQuery();
 				while (rs.next()) {
 					img_id = rs.getInt("id");
@@ -169,9 +219,10 @@ public class ArticleDAO {
 				pstmt.setInt(1, img_id);
 				pstmt.setInt(2, article_id);
 				pstmt.setString(3, imgDTO.getUri());
-				pstmt.setBytes(4, imgDTO.getBlob_image());
-				System.out.println(pstmt);
+				pstmt.setString(4, imgDTO.getExtenstion());
+				pstmt.setBytes(5, imgDTO.getBlob_image());
 				pstmt.executeUpdate();
+				img_id = 0;
 			}
 			con.commit();
 			con.setAutoCommit(true);
@@ -299,7 +350,7 @@ public class ArticleDAO {
 	public ArrayList<ArticleDTO> FavoriteLists(int user_id, int page) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		int def_page = 20 * (page -1);
+		int def_page = 20 * (page - 1);
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
 		String sql = "SELECT * FROM articles WHERE article_id IN"
 				+ " (SELECT article_id FROM article_tag WHERE tag_id ="
@@ -377,7 +428,7 @@ public class ArticleDAO {
 			int user_id, int page) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		int def_page = 20 * (page -1);
+		int def_page = 20 * (page - 1);
 		String tag_sql = "select tag_id from tags where tag_body like ? and user_id = ?";
 		String article_id_sql = "select article_id from article_tag where tag_id = ? limit 20 offset ?";
 
@@ -430,7 +481,8 @@ public class ArticleDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleDTO> viewTagArticle(ArrayList<String> tag_body_list, int user_id, int page) throws Exception {
+	public ArrayList<ArticleDTO> viewTagArticle(ArrayList<String> tag_body_list, int user_id, int page)
+			throws Exception {
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
 
 		ArrayList<Integer> article_id_list = new ArrayList<Integer>();
@@ -513,7 +565,6 @@ public class ArticleDAO {
 		return articleList;
 	}
 
-
 	/**
 	 * 記事全件一覧表示
 	 *
@@ -577,6 +628,7 @@ public class ArticleDAO {
 				articleDTO.setModified(DateEncode.toDate(rs.getString("modified")));
 				articleDTO.setShare_url(rs.getString("share_url"));
 				articleDTO.setFavflag(rs.getBoolean("favflag"));
+				articleDTO.setThum(rs.getBytes("thum"));
 				articleDTO.setShare_expior(rs.getDate("share_expior"));
 				articleDTO.setMylist_id(rs.getInt("id"));
 			}
@@ -591,6 +643,7 @@ public class ArticleDAO {
 					imageDTO.setImage_id(rs.getInt("id"));
 					imageDTO.setArticle_id(rs.getInt("article_id"));
 					imageDTO.setUri(rs.getString("uri"));
+					imageDTO.setExtenstion(rs.getString("extension"));
 					imageDTO.setBlob_image(rs.getBytes("blob_image"));
 					image_list.add(imageDTO);
 				}
@@ -616,7 +669,7 @@ public class ArticleDAO {
 			throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		int def_page = 20 * (page -1);
+		int def_page = 20 * (page - 1);
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
 		String sql = "SELECT * FROM articles WHERE articles.share_url IS NOT NULL AND articles.id = " +
 				"(SELECT M.id FROM friends F,mylists M WHERE F.own_user_id = ? AND F.friend_user_id = ? " +
@@ -737,7 +790,7 @@ public class ArticleDAO {
 					//更にこのユーザがそのタグを一つも使っていなければtagsの中のタグを削除する
 					pstmt = con.prepareStatement(get_id);
 					pstmt.setInt(1, tag_list.get(i).getTag_id());
-					System.out.println("消したいタグID"+tag_list.get(i).getTag_id());
+					System.out.println("消したいタグID" + tag_list.get(i).getTag_id());
 					rs = pstmt.executeQuery();
 					//検索結果がなければ削除
 					if (!rs.next()) {

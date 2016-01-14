@@ -14,12 +14,12 @@ public class test_friend_dao {
 		//test_serch(2, "9");
 		//test_serch(24,"");
 
-		//test_addRequest(2, 14);
+		//test_addRequest(1, 2);
 		//test_addRequest(2, 30);
 
 
 		//test_acceptRequest(2, 9);
-//		test_acceptRequest(2,30);
+		//test_acceptRequest(2,1);
 
 		//test_deleteFriend(2,18);
 
