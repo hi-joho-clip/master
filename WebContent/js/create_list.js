@@ -147,13 +147,15 @@ var get_taglists = function(json) {
 	//$.cookie('viewMode','2');$.cookie('tagLists',json[i].tag_body);
 
 	var tagList = "";
-	tagList = "<table><tr><th><h2>タグリスト</h2></th></tr>";
+	tagList = "<table>";
 	for ( var i = 0; i < json.length; i++) {
 		tagList +=
-				"<tr align='left' valign='top'><td width='300'>"+
-				"<h2><a href='index.html'onclick='javascript:$.cookie(\"viewMode\",\"2\");$.cookie(\"tagLists\",\""+json[i].tag_body+"\");'>"+json[i].tag_body + "</a></h2><br>" +
+
+				"<tr align='left' valign='top'><td>"+
+				"<h4><a href='index.html'onclick='javascript:$.cookie(\"viewMode\",\"2\");$.cookie(\"tagLists\",\""+json[i].tag_body+"\");'>"+json[i].tag_body + "</a></h4><br>" +
 				"<input type='hidden' value='"+json[i].lastest+"' name='lastest"+i+"'>"+
-				"</td><td><h2><a href='/' data-remodal-target='tagdeletemodal' onclick='javascript:getTag_id("+json[i].tag_id+");return false;'>削除</a></h2></td></tr>";
+				"</td><td><h4><a href='/' data-remodal-target='tagdeletemodal' onclick='javascript:getTag_id("+json[i].tag_id+");return false;'>削除</a></h4></td></tr>";
+
 		console.log(json[i].tag_body);
 	}
 	tagList += "</table>";

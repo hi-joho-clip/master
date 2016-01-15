@@ -57,8 +57,11 @@ h2,.h2,h3,.h3 {
 }
 
 h4,.h4,h5,.h5,h6,.h6 {
-	margin-top: 10px;
-	margin-bottom: 10px
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 0.01em;
+
+;
 }
 
 h4 small,.h4 small,h5 small,.h5 small,h6 small,.h6 small,h4 .small,.h4 .small,h5 .small,.h5 .small,h6 .small,.h6 .small
@@ -69,15 +72,20 @@ h4 small,.h4 small,h5 small,.h5 small,h6 small,.h6 small,h4 .small,.h4 .small,h5
 
 
 h2,.h2 {
-	font-size: 30px
+	font-size: 25px;
+
 }
 
 h3,.h3 {
-	font-size: 24px
+	font-size: 24px;
+
 }
 
 h4,.h4 {
-	font-size: 18px
+    font-size: 25px;
+    border-style: solid;
+    border-width: 5px 0px 5px 0px;
+    border-color: #d3381c;
 }
 
 h5,.h5 {
