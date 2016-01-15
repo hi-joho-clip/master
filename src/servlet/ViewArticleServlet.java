@@ -53,40 +53,57 @@ public class ViewArticleServlet extends HttpServlet {
 		******ある記事を選択して表示した際******
 		****************************************/
 
-		int user_id = 1;
+		int user_id = 0;
 		if (session.getAttribute("user_id") != null) {
 			user_id = (int) session.getAttribute("user_id");
 		}
 
-		int article_id = 1;
+		String art = request.getParameter("article_id");
+
+		int article_id = 0;
 		try {
 			if (request.getParameter("article_id") != null) {
-				article_id = Integer.parseInt(request.getParameter("article_id"));
+
+				article_id = Integer.parseInt(art);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		ArticleBean articlebean = new ArticleBean();
-		ArticleBean article = new ArticleBean();
-		TagBean tagbean = new TagBean();
+		if (article_id != 0 && user_id != 0) {
+			ArticleBean articlebean = new ArticleBean();
+			ArticleBean article = new ArticleBean();
+			TagBean tagbean = new TagBean();
 
-		try {
-			articlebean.setArticle_id(article_id);
-			article = articlebean.viewArticle();
-			article.setTagBeans(tagbean.viewExistingTag(user_id, article_id));
-			// ユーザ名も欲しい
-			article.setUsername((String) session.getAttribute("username"));
-			System.out.println("username:" + articlebean.getUsername());
+			try {
+				articlebean.setArticle_id(article_id);
+				article = articlebean.viewArticle();
+				article.setTagBeans(tagbean.viewExistingTag(user_id, article_id));
+				// ユーザ名も欲しい
+				article.setUsername((String) session.getAttribute("username"));
 
-		} catch (Exception e) {
-			e.getStackTrace();
+
+				System.out.println(article.getBody());
+				response.setContentType("application/json;charset=UTF-8");
+				response.setHeader("Cache-Control", "private");
+
+				PrintWriter out = response.getWriter();
+				out.println(JSON.encode(article, true).toString());
+
+			} catch (Exception e) {
+				e.getStackTrace();
+			}
+		} else {
+			response.setContentType("application/json;charset=UTF-8");
+			response.setHeader("Cache-Control", "private");
+
+			String resp = "Error: 認証できてない";
+			PrintWriter out = response.getWriter();
+			out.println();
+			// ログインへリダイレクト
+			String URL = "/clipMaster/login";
+			response.sendRedirect(URL + "/Login.html");
 		}
 
-		response.setContentType("application/json;charset=UTF-8");
-		response.setHeader("Cache-Control", "private");
-
-		PrintWriter out = response.getWriter();
-		out.println(JSON.encode(article, true).toString());
 	}
 }

@@ -220,7 +220,7 @@ JavaScriptが無効になっています。
 				getArticle('gori', 74).then(function(value) {
 					console.log(value[0].article.imageListDTO);
 					for (var image in value[0].article.imageListDTO) {
-						data = 'data:image/' + con_type + ';base64,' + image.blob_image;
+						data = 'data:image/' + con_type + ';base64,' +  value[0].article.imageListDTO[image].blob_image;
 						$("div.images").append('<img id="icon_here" width ="100px" src = ' + data +'>');
 					}
 				})['catch'](function(value) {

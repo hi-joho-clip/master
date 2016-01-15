@@ -1,16 +1,15 @@
-
 //マイリスト
 function getMyList() {
 	var jsonParam = null;// 送りたいデータ
 	var URL = "http://localhost:8080/clipMaster/mylist";
-	document.getElementById('title').innerHTML='<h1>マイリスト</h1>';
+	document.getElementById('title').innerHTML = '<h1>マイリスト</h1>';
 	getJSON(URL, jsonParam, get_mylists);
 }
-//お気に入り
+// お気に入り
 function getFavList() {
 	var jsonParam = null;// 送りたいデータ
 	var URL = "http://localhost:8080/clipMaster/favlist";
-	document.getElementById('title').innerHTML='<h1>お気に入り</h1>';
+	document.getElementById('title').innerHTML = '<h1>お気に入り</h1>';
 	getJSON(URL, jsonParam, get_mylists);
 }
 
@@ -91,20 +90,33 @@ function getViewArticle(article_id) {
 
 	var jsonParam = "article_id=" + article_id;// 送りたいデータ
 	var URL = "http://localhost:8080/clipMaster/viewarticle";
-	var viewArticle = "";
 	var setappend = function(json) {
 		alert(json.length);
 
-		viewArticle ="タイトル:" + json[0].title + "<br>" + "内容:"+ json[0].body + "<br>";
 
-		document.getElementById('viewArticle').innerHTML = viewArticle;
+		$("div.title").append("タイトル:" + json.title + "<br>");
+		$("div.editable").append("内容:" + json.body);
+
+		var con_type = "jpeg";
+		var data;
+
+		for ( var image in json.imageListDTO) {
+			console.log(image);
+			data = 'data:image/' + con_type + ';base64,'
+					+ json.imageListDTO[image].blob_image;
+			$("div.images").append(
+					'<img id="icon_here" width ="400px" src = ' + data + '>');
+		}
+
+		//document.getElementById('viewArticle').innerHTML = viewArticle;
 	};
 	getJSON(URL, jsonParam, setappend);
 }
-//記事の削除
+// 記事の削除
 function deleteArticle(article_id) {
 	console.log(article_id.item(0).value);
-	//getArticle_id(article_id);//html内の<div id='article_id'>にhiddenでarticle_idを持たせる
+	// getArticle_id(article_id);//html内の<div
+	// id='article_id'>にhiddenでarticle_idを持たせる
 	var jsonParam = "article_id=" + article_id.item(0).value;// 送りたいデータ
 	var URL = "http://localhost:8080/clipMaster/deletearticle";
 	var delete_article = function() {
@@ -114,52 +126,58 @@ function deleteArticle(article_id) {
 	location.reload();
 	toastr.success('記事を削除しました');
 }
-//お気に入りの追加削除
-function addFavArticle(article_id){
-	//グローバルFlagを用意する。記事リストを作成時にグローバルFlagはtrue
-	//true=追加可、false=削除可
+// お気に入りの追加削除
+function addFavArticle(article_id) {
+	// グローバルFlagを用意する。記事リストを作成時にグローバルFlagはtrue
+	// true=追加可、false=削除可
 
 	var jsonParam = "article_id=" + article_id;// 送りたいデータ
-	var grobalflag = "grobalflag"+article_id;//グローバルflagの名前付け
-	var favtitle = "favtitle"+article_id;//タイトルの★マークの名前
-	var title = "title"+article_id;
-	var url = "url"+article_id;
+	var grobalflag = "grobalflag" + article_id;// グローバルflagの名前付け
+	var favtitle = "favtitle" + article_id;// タイトルの★マークの名前
+	var title = "title" + article_id;
+	var url = "url" + article_id;
 	var flag = document.getElementById(grobalflag).value;
 	console.log(flag);
-	if(flag=="false"){
+	if (flag == "false") {
 
-		//追加の処理
+		// 追加の処理
 		var URL = "http://localhost:8080/clipMaster/addfav";
 
-			//タイトルの横に★マークをつける
+		// タイトルの横に★マークをつける
 
 		getJSON(URL, jsonParam, null);
 
-		document.getElementById(favtitle).innerHTML = "★"+document.getElementById(title).value +
-		"<BR><a href='"+document.getElementById(url).value+"'>"+document.getElementById(url).value+"</a>";
-		//グローバルflagをfalseにする
-		document.getElementById(grobalflag).value=true;
+		document.getElementById(favtitle).innerHTML = "★"
+				+ document.getElementById(title).value + "<BR><a href='"
+				+ document.getElementById(url).value + "'>"
+				+ document.getElementById(url).value + "</a>";
+		// グローバルflagをfalseにする
+		document.getElementById(grobalflag).value = true;
 
-	}else if(flag=="true"){
-		//削除の処理
+	} else if (flag == "true") {
+		// 削除の処理
 		var URL = "http://localhost:8080/clipMaster/deletefav";
 
-			//タイトルの横の★マークを削除
+		// タイトルの横の★マークを削除
 
 		getJSON(URL, jsonParam, null);
-		document.getElementById(favtitle).innerHTML = document.getElementById(title).value +
-		"<BR><a href='"+document.getElementById(url).value+"'>"+document.getElementById(url).value+"</a>";
-		//グローバルflagをtrueにする
-		document.getElementById(grobalflag).value=false;
+		document.getElementById(favtitle).innerHTML = document
+				.getElementById(title).value
+				+ "<BR><a href='"
+				+ document.getElementById(url).value
+				+ "'>"
+				+ document.getElementById(url).value + "</a>";
+		// グローバルflagをtrueにする
+		document.getElementById(grobalflag).value = false;
 
 	}
 }
-//シェア記事の追加
-function shareArticle(friend_user_id,article_id){
-	var arr=[];
-	arr[0]=article_id.item(0).value;
-	arr[1]=friend_user_id;
-	var jsonParam = "id="+JSON.parse(JSON.stringify(arr));
+// シェア記事の追加
+function shareArticle(friend_user_id, article_id) {
+	var arr = [];
+	arr[0] = article_id.item(0).value;
+	arr[1] = friend_user_id;
+	var jsonParam = "id=" + JSON.parse(JSON.stringify(arr));
 	var URL = "http://localhost:8080/clipMaster/addshare";
 
 	getJSON(URL, jsonParam, null);
