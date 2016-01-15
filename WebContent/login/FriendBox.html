@@ -38,13 +38,9 @@
 <body>
 	<div id="user_id"></div>
 	<div class="remodal" data-remodal-id="kyoka">
-		<a data-remodal-action="close" class="remodal-close"></a>
-		<h2>フレンド承認</h2>
-		<!-- <div id="friendregister"> </div> -->
+		<a data-remodal-action="close" class="remodal-close" onclick="empty();"></a>
 
-		<a class="remodal-confirm" href="#"
-			onclick="javascript:acceptRequest(document.getElementById('user_id').innerHTML);">OK</a>
-		<a class="remodal-cancel" href="#">キャンセル</a>
+		<div id="limitBox"></div>
 	</div>
 
 	<div class="remodal" data-remodal-id="kyohi">
@@ -108,6 +104,7 @@
 	<script>
 		$(document).ready(function() {
 			getFriendRequest();
+			//limitBox();
 		});
 	</script>
 
