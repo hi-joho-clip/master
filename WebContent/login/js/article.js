@@ -20,7 +20,7 @@ $(document).ready(function(){
 });
 
 $(document).ready(function() {
-	 $('#tag-it').tagit({fieldName:"tags[]"});
+	 $('#tag-it').tagit({fieldName:"tags[]",tagLimit:15});
 });
 
 	var $grid;
