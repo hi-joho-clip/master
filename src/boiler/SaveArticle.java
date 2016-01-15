@@ -35,6 +35,19 @@ public class SaveArticle {
 	//		}
 	//	}
 
+	private String encodeBR (String str ) {
+
+		String value = null;
+
+		 value = str.replaceAll("\r\n", "\n").replaceAll("\r", "\n");
+		 value = value.replaceAll("\n", "<br />");
+             // OutSupport.outで出力(escapeXml=true でエスケープ)
+
+		 System.out.println("nakami:" +value);
+
+		 return value;
+	}
+
 	/**
 	 * 普通のエクストラクター
 	 * @param user_id
@@ -108,7 +121,7 @@ public class SaveArticle {
 		ArticleBean artBean = new ArticleBean();
 		artBean.setUrl(str_url);
 		artBean.setTitle(title);
-		artBean.setBody(text);
+		artBean.setBody(encodeBR(text));
 
 		// これは本来いらないけど仕様上致し方ない
 		int article_id = artBean.addArticle(user_id);

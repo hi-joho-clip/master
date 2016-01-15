@@ -127,7 +127,9 @@ function getArticleListAsync(param) {
  */
 function getJSON(URL, param, callback) {
 
+	console.log("getJSON" + param);
 	getURL(URL, param).then(JSON.parse).then(function(json) {
+		console.log(json);
 		callback(json);
 	})['catch'](function(error) {
 		console.log(error);

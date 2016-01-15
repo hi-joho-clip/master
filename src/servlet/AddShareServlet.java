@@ -18,25 +18,27 @@ import beansdomain.ArticleBean;
 public class AddShareServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AddShareServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public AddShareServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		doPost(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+			IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(true);
 		/*if(セッション情報があるなら){
@@ -49,21 +51,31 @@ public class AddShareServlet extends HttpServlet {
 		*****************************************************/
 		//記事にシェアURLを追加
 		System.out.println(request.getParameter("id"));
-		/*int article_id = Integer.parseInt(request.getParameter("article_id"));
-		String share_url = request.getParameter("share_url");
-		ArticleBean articlebean = new ArticleBean();
-		articlebean.setArticle_id(article_id);
-		articlebean.setShare_url(share_url);
-		try {
-			if(articlebean.addShareArticle()){
-				//成功したポップアップを表示
-			}else{
-				//失敗したポップアップを表示
+
+		ArticleBean artbean = new ArticleBean();
+		ArticleBean newbean = new ArticleBean();
+
+		int user_id = 1;
+
+		int article_id = 2;
+		int friend_id = 2;
+		if (request.getParameter("article_id") != null && request.getParameter("article_id") != null) {
+			try {
+				user_id = (int)session.getAttribute("user_id");
+				article_id = Integer.parseInt(request.getParameter("article_id"));
+				friend_id = Integer.parseInt(request.getParameter("friend_id"));
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
+		}
+		try {
+			artbean.setArticle_id(article_id);
+			newbean = artbean.viewArticle();
+			newbean.addShareArticle(user_id, friend_id);
 		} catch (Exception e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}*/
+
+		}
+
 	}
 
 }
