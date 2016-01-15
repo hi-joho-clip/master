@@ -15,11 +15,11 @@ import net.arnx.jsonic.JSON;
 
 import beansdomain.Friend;
 
-@WebServlet("/friendlist")
-public class FriendListServlet extends HttpServlet {
+@WebServlet("/friendlistff")
+public class FriendListFFServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public FriendListServlet() {
+	public FriendListFFServlet() {
 		super();
 	}
 
@@ -45,7 +45,7 @@ public class FriendListServlet extends HttpServlet {
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
-			int own_user_id = (int) session.getAttribute("user_id");
+			int own_user_id = Integer.parseInt(request.getParameter("friend_user_id"));
 
 			response.setContentType("application/json; charset=utf-8");
 			response.setHeader("Cache-Control", "private");

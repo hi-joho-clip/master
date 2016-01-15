@@ -33,7 +33,9 @@ function getFriendList() {
 	getJSON(URL, jsonParam, setappend);
 
 }
-
+//+ "<a href='#' data-remodal-target='kyoka' onclick='document.getElementById(\"user_id\").innerHTML=\""
+//+ json[i].friend_user_id
+//+ "\";'>承認</a>"
 // フレンドボックス画面
 function getFriendRequest() {
 	var jsonParam = null;// 送りたいデータ
@@ -43,14 +45,11 @@ function getFriendRequest() {
 		for ( var i = 0; i < json.length; i++) {
 			friendList += json[i].nickname
 					+ "&emsp;"
-					+ "<a href='#' data-remodal-target='kyoka' onclick='document.getElementById(\"user_id\").innerHTML=\""
-					+ json[i].friend_user_id
-					+ "\";'>承認</a>"
+					+ "<a href='#' data-remodal-target='kyoka' onclick='javascript:limitBox("+json[i].friend_user_id+")'>承認</a>"
 					+ "&emsp;"
 					+ "<a href='#' data-remodal-target='kyohi' onclick='document.getElementById(\"user_id\").innerHTML=\""
 					+ json[i].friend_user_id + "\";'>拒否</a>" + "<br>";
 		}
-
 		document.getElementById('info').innerHTML = friendList + "</div>";
 	};
 	getJSON(URL, jsonParam, setappend);
@@ -102,6 +101,7 @@ function acceptRequest(user_id) {
 		for ( var i = 0; i < json.length; i++) {
 			friendList += "ID:" + jsonResult[i].friend_user_id + "<br>";
 		}
+
 		document.getElementById('info').innerHTML = friendList;
 	};
 	getJSON(URL, jsonParam, setappend);
@@ -155,6 +155,7 @@ function deleteFriend(user_id) {
 	location.reload();
 }
 
+//フレンド検索のフレンド、申請に上限
 function limit(){
 
 	var jsonParam = "";// 送りたいデータ
@@ -181,12 +182,41 @@ function limit(){
 		}else if(json.length < 50 && CON < 10){
 			$remodal += "<h2>リクエスト送信</h2>"
 				+ "<a class='remodal-confirm' href='#' onclick='addRequest(document.getElementById(\"user_id\").innerHTML);location.reload()\'>追加</a>"
-				+ "<a class='remodal-cancel' href='#'>キャンセル</a>";
+				+ "&emsp;<a class='remodal-cancel' href='#'>キャンセル</a>";
 		}
 		$("#limit").append($remodal).trigger("create");
 	};
 	getJSON(URL, jsonParam, setappend);
 }
+
+//フレンド数が上限だと、承認ボタンが消える処理
+function limitBox(friend_user_id){
+
+	console.log(friend_user_id);
+	var jsonParam = "friend_user_id=" + friend_user_id;// 送りたいデータ
+	var URL = "http://localhost:8080/clipMaster/friendlistff";
+	var $remodal = "";
+	var setappend = function(json) {
+		console.log("来てる");
+		var friend = 0; //フレンドの人数
+		for(var i=0; i < json.length; i++ ){
+			if(json[i].status == 3){
+				friend += 1;
+			}
+		}
+		if(friend > 49){
+			$remodal += "<h2>相手のフレンド数がオーバーしています</h2>"
+			+ "<a class='remodal-confirm' href='#'>OK</a>";
+		}else {
+			$remodal += "<h2>フレンド承認</h2>"
+			+ "<a class='remodal-confirm' href='#' onclick='acceptRequest(document.getElementById(\"user_id\").innerHTML);location.reload()\'>OK</a>"
+			+ "<a class='remodal-cancel' href='#' onclick='empty();'>キャンセル</a>";
+		}
+		$("#limitBox").append($remodal).trigger("create");
+	};
+	getJSON(URL, jsonParam, setappend);
+}
+
 
 //フレンド登録者のリストをもらう処理
 function getFriends(){
@@ -197,15 +227,22 @@ function getFriends(){
 
 
 //フレンド申請があると、申請通知が来る
-var notice = function() {
+function notice(){
 	var jsonParam = null;// 送りたいデータ
 	var URL = "http://localhost:8080/clipMaster/friendrequest";
 	var setappend = function(json) {
 		if(json.length > 0){
-			flag="★"+json[i].title;
-		}else if(json[i].favflag==false){
-			flag=json[i].title;
+			console.log("申請あるよ");
+			$remodal="<img src='img/friendBOX.png'>";
+		}else {
+			console.log("申請ないよ");
+			$remodal="";
 		}
+		$("#notice").append($remodal).trigger("create");
 	};
 	getJSON(URL, jsonParam, setappend);
 };
+
+function empty(){
+	$('#limitBox').empty();
+}

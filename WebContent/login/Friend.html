@@ -64,7 +64,7 @@
 				<a href="index.html" onclick="javascript:$.cookie('viewMode','1');"><li>お気に入り</li></a>
 				<a href="index.html" onclick="javascript:$.cookie('viewMode','2');"><li>タグ</li></a>
 				<a href="Friend.html"><li>フレンド一覧</li></a>
-				<a href="FriendBox.html"><li>フレンドボックス</li></a>
+				<a href="FriendBox.html"><li>フレンドボックス<div id="notice"></div></li></a>
 				<a href="FriendSeach.html"><li>フレンド検索</li></a>
 
 			</ul>
@@ -119,6 +119,7 @@
 
 	<script>
 		$(document).ready(function() {
+			notice();
 			getFriendList();
 		});
 	</script>
