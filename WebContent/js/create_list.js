@@ -130,6 +130,7 @@ var get_mylists = function(json) {
 							"<img src='http://www.kk1up.jp/wp-content/uploads/2015/07/201507290001-17.jpg'width='100%'height='100%'alt='"+json[i].title+"'/>" +
 							"<p class='absolute'id='favtitle"+json[i].article_id+"'>"+flag+"<BR><a href='"+json[i].url+"'>"+json[i].url+"</a></p>" +
 							"<input type='hidden' value='"+json[i].title+"' id='title"+json[i].article_id+"'>"+
+							"<input type='hidden' value='"+json[i].url+"' id='url"+json[i].article_id+"'>"+
 						"</div>"+
 					"</div>");
 		$grid.prepend($myList).isotope('prepended', $myList).trigger('create');

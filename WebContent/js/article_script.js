@@ -123,6 +123,7 @@ function addFavArticle(article_id){
 	var grobalflag = "grobalflag"+article_id;//グローバルflagの名前付け
 	var favtitle = "favtitle"+article_id;//タイトルの★マークの名前
 	var title = "title"+article_id;
+	var url = "url"+article_id;
 	var flag = document.getElementById(grobalflag).value;
 	console.log(flag);
 	if(flag=="false"){
@@ -130,28 +131,27 @@ function addFavArticle(article_id){
 		//追加の処理
 		var URL = "http://localhost:8080/clipMaster/addfav";
 
-		var setappend = function() {
 			//タイトルの横に★マークをつける
-		};
-		getJSON(URL, jsonParam, setappend);
-		//document.getElementsByClassName('absolute').style.color='#FF0000';
-		document.getElementById(favtitle).innerHTML = "★"+document.getElementById(title).value;
+
+		getJSON(URL, jsonParam, null);
+
+		document.getElementById(favtitle).innerHTML = "★"+document.getElementById(title).value +
+		"<BR><a href='"+document.getElementById(url).value+"'>"+document.getElementById(url).value+"</a>";
 		//グローバルflagをfalseにする
 		document.getElementById(grobalflag).value=true;
-		console.log("現ふらぐ"+document.getElementById(grobalflag).value);
+
 	}else if(flag=="true"){
 		//削除の処理
 		var URL = "http://localhost:8080/clipMaster/deletefav";
 
-		var setappend = function() {
 			//タイトルの横の★マークを削除
-		};
-		getJSON(URL, jsonParam, setappend);
-		document.getElementById(favtitle).innerHTML = document.getElementById(title).value;
+
+		getJSON(URL, jsonParam, null);
+		document.getElementById(favtitle).innerHTML = document.getElementById(title).value +
+		"<BR><a href='"+document.getElementById(url).value+"'>"+document.getElementById(url).value+"</a>";
 		//グローバルflagをtrueにする
 		document.getElementById(grobalflag).value=false;
-		//document.getElementsByClassName(absolute).style.color='#FFFFFF';
-		console.log("現ふらぐ"+document.getElementById(grobalflag).value);
+
 	}
 }
 //シェア記事の追加
