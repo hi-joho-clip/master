@@ -34,6 +34,11 @@
     <script src="../tag-it/src/remodal.js"></script>
 <script src="../tag-it/src/remodal.js"></script>
 
+<!-- 読み込み中 -->
+<link href="css/Yomikomi.css" rel="stylesheet">
+<script type="text/javascript" src="js/Yomikomi.js"></script>
+
+
 <style>
       .remodal-overlay.without-animation.remodal-is-opening,
       .remodal-overlay.without-animation.remodal-is-closing,
@@ -45,12 +50,24 @@
       }
 </style>
 
+
+
 </head>
 <body>
+
+<div id="loader-bg">
+  <div id="loader">
+
+    <p>Now Loading...</p>
+  </div>
+</div>
+<div id="wrap">
 
 <script>
 getTagList();
 </script>
+
+
 <div id="tag_id"></div>
 <div class="remodal" data-remodal-id="tagdeletemodal" >
 
@@ -59,6 +76,7 @@ getTagList();
 
 	<a class="remodal-confirm" href="#"onclick="javascript:deleteTag(document.getElementsByName('tag_id'));">削除</a> <a class="remodal-cancel" href="#">キャンセル</a>
 </div>
+
 	<section>
 		  <div class="pure-container" data-effect="pure-effect-slide">
             <input type="checkbox" id="pure-toggle-left" class="pure-toggle" data-toggle="left"/>
@@ -93,10 +111,10 @@ getTagList();
         </div>
         <div class="container" >
 			<div style="margin: 100px auto;">
-				<div id="title" >
-				</div>
+			<h1>タグリスト</h1>
 				<div align="center">
 					<div id="taglist"></div>
+				</div>
 				</div>
 				<section class="section">
 					<div class="head-bar">
@@ -107,7 +125,7 @@ getTagList();
 					</div>
 				</section>
 			</div>
-		</div>
+
 
 	</section>
 
