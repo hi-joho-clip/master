@@ -16,21 +16,18 @@
 
 /* Form Layout */
 .form-wrapper {
-  background: #fafafa;
+
   margin: 3em auto;
   padding: 0 1em;
   max-width: 400px;
 }
 
 h1 {
-  text-align: center;
-  padding: 1em 0;
+  text-align: left;
+
 }
 
-h1 {
-  text-align: center;
-  padding: 0;
-}
+
 
 
 form {
@@ -90,7 +87,7 @@ form {
 }
 
 .form-footer a {
-  color: #8c8c8c;
+  color: #CCC;
   text-decoration: none;
   transition: border-color 0.3s;
 }

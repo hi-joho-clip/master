@@ -37,8 +37,8 @@ function getUserList() {
 	var URL = "http://localhost:8080/clipMaster/viewuser";
 	var userList = "";
 	var setappend = function(json) {
-		userList = "ニックネーム:" + json.nickname + "<br>" + "メールアドレス:"
-				+ json.mailaddress + "<br>";
+		userList = "<h2>"+  "ニックネーム<br>" + json.nickname + "<br><br>" + "メールアドレス:<br>"
+				+ json.mailaddress + "<br><br></h2>";
 		document.getElementById('info').innerHTML = userList;
 		var kyoka = "";
 		var kyohi = "";
