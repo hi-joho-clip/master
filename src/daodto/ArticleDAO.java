@@ -716,6 +716,7 @@ public class ArticleDAO {
 		String get_tag_sql = "SELECT tag_id FROM tags WHERE tag_body = ? AND user_id = ?";
 		String sql1 = "INSERT INTO tags(tag_body,created,modified,lastest,user_id) values(?,now(),now(),now(),?)";
 		String sql2 = "INSERT INTO article_tag(article_id, tag_id) VALUES(?,?)";
+		String update_sql = "UPDATE tags SET lastest = now() WHERE tag_id = ?";
 		try {
 			con.setAutoCommit(false);
 			//tag_bodyがある限り
@@ -750,6 +751,10 @@ public class ArticleDAO {
 					pstmt = con.prepareStatement(sql2);
 					pstmt.setInt(1, article_id);
 					pstmt.setInt(2, tag_id);
+					pstmt.executeUpdate();
+					//タグを更新する
+					pstmt = con.prepareStatement(update_sql);
+					pstmt.setInt(1,tag_id);
 					pstmt.executeUpdate();
 				}
 			}
