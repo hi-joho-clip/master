@@ -11,13 +11,23 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet("/logout")
 public class LogOutServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
 
 	@Override
-	public void doPost(HttpServletRequest request,
-			HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		perform(request, response);
+	}
 
-		String URL = "/clipMaster";
+	@Override
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		perform(request, response);
+	}
+
+	private void perform(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 
 		//String inputbutton = request.getParameter("button");
 		//セッションを取り出す
@@ -33,7 +43,6 @@ public class LogOutServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		request.getRequestDispatcher(URL + "/login/index.html").forward(request, response);
 
 	}
 

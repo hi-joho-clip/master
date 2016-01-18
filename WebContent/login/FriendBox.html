@@ -37,19 +37,19 @@
 
 <body>
 	<div id="user_id"></div>
-	<div class="remodal" data-remodal-id="kyoka">
-		<a data-remodal-action="close" class="remodal-close" onclick="empty();"></a>
+	<div class="remodal" data-remodal-id="kyoka" data-remodal-options="hashTracking: false">
+		<a data-remodal-action="close" class="remodal-close" ></a>
 
 		<div id="limitBox"></div>
 	</div>
 
-	<div class="remodal" data-remodal-id="kyohi">
+	<div class="remodal" data-remodal-id="kyohi" data-remodal-options="hashTracking: false" >
 		<a data-remodal-action="close" class="remodal-close"></a>
 		<h2>フレンド拒否</h2>
 
-		<a class="remodal-confirm" href="#"
+		<a data-remodal-action="confirm" class="remodal-confirm" href="#"
 			onclick="javascript:denyRequest(document.getElementById('user_id').innerHTML);">OK</a>
-		<a class="remodal-cancel" href="#">キャンセル</a>
+		<a data-remodal-action="cancel" class="remodal-cancel" href="#" onclick="javascript:return false;">キャンセル</a>
 	</div>
 	<section>
 		<!-- <div class='remodal-bg'><anchor></div> -->
@@ -104,7 +104,7 @@
 	<script>
 		$(document).ready(function() {
 			getFriendRequest();
-			//limitBox();
+			limitBox();
 		});
 	</script>
 
