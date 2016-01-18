@@ -9,7 +9,7 @@
 	content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
 
 <link href="css/normalize.css" rel="stylesheet">
-<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="css/bootstrap.index.css" rel="stylesheet" media="screen">
 <link href="css/articlemenu.css" rel="stylesheet">
 <link href="css/grid.css" rel="stylesheet">
 <link href="css/button.css" rel="stylesheet" />
@@ -25,10 +25,67 @@
 <script type="text/javascript" src="js/mosaic.1.0.1.js"></script>
 <script src="../js/wysihtml/wysihtml.min.js"></script>
 <script src="../js/wysihtml/advanced_unwrap.js"></script>
+
+
+<link rel="stylesheet" href="css/pure-drawer.css">
+
+<!-- toastr -->
+<link rel='stylesheet' href='css/toastr.css' />
+<script src='js/toastr.min.js'></script>
+
+<!-- 読み込み中 -->
+<link href="css/Yomikomi.css" rel="stylesheet">
+<script type="text/javascript" src="js/Yomikomi.js"></script>
+
+
+
 </head>
 <body>
 
+<div id="loader-bg">
+  <div id="loader">
+
+    <p>Now Loading...</p>
+  </div>
+</div>
+<div id="wrap">
+
+
 	<section>
+
+		  <div class="pure-container" data-effect="pure-effect-slide">
+            <input type="checkbox" id="pure-toggle-left" class="pure-toggle" data-toggle="left"/>
+            <input type="checkbox" id="pure-toggle-right" class="pure-toggle" data-toggle="right"/>
+
+
+            <label class="pure-toggle-label" for="pure-toggle-left" data-toggle-label="left"><span class="pure-toggle-icon"></span></label>
+            <label class="pure-toggle-label" for="pure-toggle-right" data-toggle-label="right"><span class="pure-toggle-icon"></span></label>
+
+
+            <nav class="pure-drawer" data-position="left">
+
+
+
+                 <p style="padding: 50px 20px; margin: 0;">
+                 <h4><a href="UserInfo.html" >ユーザ情報</a></h4><br>
+               <h4> <a href="index.html" onclick="javascript:$.cookie('viewMode','0');">マイリスト</a></h4><br>
+                 <h4><a href="index.html" onclick="javascript:$.cookie('viewMode','1');">お気に入り</a></h4><br>
+				<h4><a href="taglist.html" >タグ</a></h4><br>
+				<h4><a href="#">フレンド</a></h4>
+				</p>
+            </nav>
+
+            <nav class="pure-drawer" data-position="right">
+					 <p style="padding: 100px 5px; margin: 0;"><a>Search Input</a><br>
+   					 <input type="search" name="search-1" id="search-1" value=""><br>
+
+					 	      <a> URL</a><br>
+   					   <input type="search" name="search-1" id="search-1" value="">
+					</p>
+            </nav>
+            <label class="pure-overlay" for="pure-toggle-left" data-overlay="left"></label>
+            <label class="pure-overlay" for="pure-toggle-right" data-overlay="right"></label>
+        </div>
 
 
 		<div class="container">
@@ -48,6 +105,8 @@
 			</div>
 		</div>
 	</section>
+	</div>
+
 
 	<div class="ewrapper">
 	  <div class="toolbar">
@@ -96,6 +155,7 @@
 	      <a id="centerbtn" class="editor-btn">Center</a>
 	      <a id="rightbtn" class="editor-btn">Right</a>
 
+	    </div>
 	    </div>
 	  </div><!-- toolbar -->
 
