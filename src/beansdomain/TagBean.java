@@ -81,6 +81,25 @@ public class TagBean {
 		}
 		return tagList;
 	}
+	/**
+	 * 更新日時が新しいタグの20件を取得
+	 *
+	 * @return
+	 * @throws Exception
+	 */
+	public ArrayList<TagBean> usingTagList(int user_id) throws Exception{
+		ArrayList<TagBean> tagList = new ArrayList<TagBean>();
+		this.tagDAO = new TagDAO();
+		taglists = tagDAO.usingTags(user_id);
+		for(int i=0; i< taglists.size(); i++){
+			TagBean tagBean = new TagBean();
+			tagBean.setTag_id(taglists.get(i).getTag_id());
+			tagBean.setTag_body(taglists.get(i).getTag_body());
+			tagBean.setLastest(taglists.get(i).getLastest());
+			tagList.add(tagBean);
+		}
+		return tagList;
+	}
 
 	public void setTagDTO(){
 		this.tagDTO = new TagDTO();

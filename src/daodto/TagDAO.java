@@ -161,4 +161,34 @@ public class TagDAO {
 		return tagList;
 	}
 
+	/**
+	 * 更新日時が新しいタグの20件を取得
+	 *
+	 * @return
+	 * @throws Exception
+	 */
+	public ArrayList<TagDTO> usingTags(int user_id) throws Exception {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<TagDTO> tagList = new ArrayList<TagDTO>();
+		String sql = "SELECT * FROM tags WHERE tag_body <> 'お気に入り' AND user_id = ? ORDER BY lastest DESC LIMIT 20";
+
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, user_id);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				TagDTO tag = new TagDTO();
+				tag.setTag_id(rs.getInt("tag_id"));
+				tag.setTag_body(rs.getString("tag_body"));
+				tag.setLastest(rs.getDate("lastest"));
+				tagList.add(tag);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception();
+		}
+		return tagList;
+	}
+
 }
