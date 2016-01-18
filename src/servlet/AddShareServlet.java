@@ -50,7 +50,6 @@ public class AddShareServlet extends HttpServlet {
 		****ある記事をフレンドと共有するボタンを押したとき****
 		*****************************************************/
 		//記事にシェアURLを追加
-		System.out.println(request.getParameter("id"));
 
 		ArticleBean artbean = new ArticleBean();
 		ArticleBean newbean = new ArticleBean();

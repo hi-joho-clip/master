@@ -177,8 +177,9 @@ function shareArticle(friend_user_id, article_id) {
 	var arr = [];
 	arr[0] = article_id.item(0).value;
 	arr[1] = friend_user_id;
-	var jsonParam = "id=" + JSON.parse(JSON.stringify(arr));
+	var param = "article_id="+arr[0]+"&friend_id="+arr[1]+"";
+
 	var URL = "http://localhost:8080/clipMaster/addshare";
 
-	getJSON(URL, jsonParam, null);
+	getJSON(URL, param, null);
 }

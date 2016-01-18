@@ -81,29 +81,64 @@
 <div id="wrap">
 <div id="article_id"></div>
 	<section>
-<div class="remodal" data-remodal-id="tagmodal" >
+<div class="remodal" data-remodal-id="tagmodal" data-remodal-options="hashTracking: false">
   <a data-remodal-action="close" class="remodal-close" ></a>
   <h2>タグの編集</h2>
   <ol id="tag-it"></ol>
 
-	<a class="remodal-confirm" href="#"onclick="javascript:addTagArticle(document.getElementsByName('tags[]'),document.getElementsByName('article_id'));">保存</a>
+	<a data-remodal-action="confirm" class="remodal-confirm" href="#"onclick="javascript:addTagArticle(document.getElementsByName('tags[]'),document.getElementsByName('article_id'));return false;">保存</a>
+	<a data-remodal-action="cancel" class="remodal-cancel" href="#"onclick="javascript:return false;">キャンセル</a>
 </div>
 
-<div class="remodal" data-remodal-id="deletemodal" >
+<div class="remodal" data-remodal-id="deletemodal"data-remodal-options="hashTracking: false" >
 
   <a data-remodal-action="close" class="remodal-close" ></a>
   <h2>削除しますか</h2>
 
-	<a class="remodal-confirm" href="#"onclick="javascript:deleteArticle(document.getElementsByName('article_id'));">削除</a>
+	<a data-remodal-action="confirm" class="remodal-confirm" href="#"onclick="javascript:deleteArticle(document.getElementsByName('article_id'));return false;">削除</a>
+	<a data-remodal-action="cancel" class="remodal-cancel" href="#"onclick="javascript:return false;">キャンセル</a>
 </div>
-<div class="remodal" data-remodal-id="sharemodal" >
+<div class="remodal" data-remodal-id="sharemodal" data-remodal-options="hashTracking: false">
   <a data-remodal-action="close" class="remodal-close" ></a>
   <h2>この記事を共有する</h2><BR>
 	<select class="selectbox" id="selectbox" ></select>
 <BR>
 <BR>
-	<a class="remodal-confirm" href="#"onclick="javascript:shareArticle(document.getElementById('selectbox').value,document.getElementsByName('article_id'));">共有</a>
+	<a data-remodal-action="confirm" class="remodal-confirm" href="#"onclick="javascript:shareArticle(document.getElementById('selectbox').value,document.getElementsByName('article_id'));return false;">共有</a>
+	<a data-remodal-action="cancel" class="remodal-cancel" href="#"onclick="javascript:return false;">キャンセル</a>
 </div>
+		<!-- <div class="wh DSmenu">
+			<ul>
+				<a href="UserInfo.html" ><li>ユーザ情報</li></a>
+				<a href="index.html" onclick="javascript:$.cookie('viewMode','0');"><li>マイリスト</li></a>
+				<a href="index.html" onclick="javascript:$.cookie('viewMode','1');"><li>お気に入り</li></a>
+				<a href="index.html" onclick="javascript:$.cookie('viewMode','2');"><li>タグ</li></a>
+				<a href="#"><li>フレンド</li></a>
+			</ul>
+			<div class="DSbtn">
+				<div class="hambarg"></div>
+				<div class="hambarg"></div>
+				<div class="hambarg"></div>
+			</div>
+		</div>
+
+		<div class="container" >
+			<div style="margin: 100px auto;">
+				<div id="title" >
+				</div>
+				<div align="center">
+					<div class="grid" align="left"></div>
+				</div>
+				<section class="section">
+					<div class="head-bar">
+						<div class="container-fluid">
+							<h1 class="text-center">CLIP</h1>
+
+						</div>
+					</div>
+				</section>
+			</div>
+		</div> -->
 
 		  <div class="pure-container" data-effect="pure-effect-slide">
             <input type="checkbox" id="pure-toggle-left" class="pure-toggle" data-toggle="left"/>
