@@ -116,7 +116,7 @@ var get_mylists = function(json) {
 
 									"<a href='#' data-remodal-target='sharemodal'onclick='javascript:getFriends();getArticle_id("+json[i].article_id+");return false;'><img src='img/share1.png' align='right'width='32'height='32'></img></a>"+
 
-									 "<a href='#' data-remodal-target='tagmodal' onclick='javascript:getTagArticle("+json[i].article_id+");return false;'>"+
+									 "<a href='#' data-remodal-target='tagmodal' onclick='javascript:getTagArticle("+json[i].article_id+");getUsingTags();return false;'>"+
 									  "<img src='img/tag1.png'align='right' width='32'height='32'></img>" +
 									  "</a>"+
 
@@ -164,6 +164,7 @@ var get_taglists = function(json) {
 
 //登録しているフレンドが入ったセレクトボックスを作成
 var get_friends = function(json){
+	$('.selectbox').empty();
 	var option = "";
 	for(var i=0; i<json.length; i++){
 		option=document.createElement('option');
@@ -174,5 +175,29 @@ var get_friends = function(json){
 		$('.selectbox').append(option).trigger('create');
 		option="";
 	}
+	$('.selectbox').select2({width:"40%"}).trigger('create');
+
+
+};
+
+//更新日時が新しいタグが入ったセレクトボックスを作成
+var get_using_tags = function(json){
+	$('.tagselect').empty();
+	var option = "";
+	for(var i=0; i<json.length; i++){
+		option=document.createElement('option');
+		option.value = json[i].tag_body;
+		//画面に表示されるテキスト部分は createTextNode で作って、optionの子要素として追加
+		option.appendChild(document.createTextNode(''+json[i].tag_body+''));
+		//プルダウンに追加
+		$(".tagselect").append(option).trigger('create');
+
+		option="";
+	}
+	$('.tagselect').select2({width:"40%",minimumResultsForSearch: Infinity}).trigger('create');
+	$('.tagselect').on("select2:select", function (){
+		console.log($(".tagselect").val());
+		$('#tag-it').tagit('createTag',$(".tagselect").val());
+	});
 
 };
