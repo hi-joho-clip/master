@@ -87,11 +87,9 @@ form {
 }
 
 .form-footer a {
-  color: #CCC;
-  text-decoration: none;
-  transition: border-color 0.3s;
+
 }
 
 .form-footer a:hover {
-  border-bottom: 1px dotted #8c8c8c;
+
 }
