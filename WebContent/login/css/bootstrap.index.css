@@ -89,7 +89,7 @@ h4,.h4 {
 }
 
 h5,.h5 {
-	font-size: 14px
+	font-size: 18px
 }
 
 h6,.h6 {
@@ -107,6 +107,7 @@ a:hover,a:focus {
 	color: #d3381c;
 	text-decoration: underline
 }
+
 
 a:focus {
 	outline: thin dotted;
@@ -177,6 +178,8 @@ img {
 .img-circle {
 	border-radius: 50%
 }
+
+
 
 hr {
 	margin-top: 20px;
