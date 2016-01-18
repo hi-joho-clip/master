@@ -31,79 +31,105 @@
 <link href="css/Yomikomi.css" rel="stylesheet">
 <script type="text/javascript" src="js/Yomikomi.js"></script>
 
+
 </head>
 <body>
 
 	<section>
 
 
- <div class="pure-container" data-effect="pure-effect-slide">
-            <input type="checkbox" id="pure-toggle-left" class="pure-toggle" data-toggle="left"/>
-            <input type="checkbox" id="pure-toggle-right" class="pure-toggle" data-toggle="right"/>
+		<div class="pure-container" data-effect="pure-effect-slide">
+			<input type="checkbox" id="pure-toggle-left" class="pure-toggle"
+				data-toggle="left" /> <input type="checkbox" id="pure-toggle-right"
+				class="pure-toggle" data-toggle="right" /> <label
+				class="pure-toggle-label" for="pure-toggle-left"
+				data-toggle-label="left"><span class="pure-toggle-icon"></span></label>
+			<label class="pure-toggle-label" for="pure-toggle-right"
+				data-toggle-label="right"><span class="pure-toggle-icon"></span></label>
 
 
-            <label class="pure-toggle-label" for="pure-toggle-left" data-toggle-label="left"><span class="pure-toggle-icon"></span></label>
-            <label class="pure-toggle-label" for="pure-toggle-right" data-toggle-label="right"><span class="pure-toggle-icon"></span></label>
-
-
-            <nav class="pure-drawer" data-position="left">
+			<nav class="pure-drawer" data-position="left">
 
 
 
-                 <p style="padding: 50px 20px; margin: 0;">
-                <h4><a href="UserInfo.html">ユーザ情報</a></h4>
-				<h4><a href="index.html" onclick="javascript:$.cookie('viewMode','0');">マイリスト</a></h4>
-				<h4><a href="index.html" onclick="javascript:$.cookie('viewMode','1');">お気に入り</a></h4>
-				<h4><a href="index.html" onclick="javascript:$.cookie('viewMode','2');">タグ</a></h4>
-				<h4><a href="Friend.html">フレンド一覧</a></h4>
-				<h4><a href="FriendBox.html">フレンドボックス</a></h4>
-				<h4><a href="FriendSeach.html">フレンド検索</a></h4>
+				<p style="padding: 50px 20px; margin: 0;">
+				<h4>
+					<a href="UserInfo.html">ユーザ情報</a>
+				</h4>
+				<h4>
+					<a href="index.html" onclick="javascript:$.cookie('viewMode','0');">マイリスト</a>
+				</h4>
+				<h4>
+					<a href="index.html" onclick="javascript:$.cookie('viewMode','1');">お気に入り</a>
+				</h4>
+				<h4>
+					<a href="index.html" onclick="javascript:$.cookie('viewMode','2');">タグ</a>
+				</h4>
+				<h4>
+					<a href="Friend.html">フレンド一覧</a>
+				</h4>
+				<h4>
+					<a href="FriendBox.html">フレンドボックス</a>
+				</h4>
+				<h4>
+					<a href="FriendSeach.html">フレンド検索</a>
+				</h4>
 				</p>
-            </nav>
+			</nav>
 
-            <nav class="pure-drawer" data-position="right">
-					 <p style="padding: 100px 5px; margin: 0;"><a>Search Input</a><br>
-   					 <input type="search" name="search-1" id="search-1" value=""><br>
-
-					 	      <a> URL</a><br>
-   					   <input type="search" name="search-1" id="search-1" value="">
-					</p>
-            </nav>
-            <label class="pure-overlay" for="pure-toggle-left" data-overlay="left"></label>
-            <label class="pure-overlay" for="pure-toggle-right" data-overlay="right"></label>
-        </div>
-       <div class="container">
+			<nav class="pure-drawer" data-position="right">
+				<p style="padding: 100px 5px; margin: 0;">
+					<a>Search Input</a><br>      <input type="search"
+						name="search-1" id="search-1" value=""><br> <a>
+						URL</a><br>      <input type="search" name="search-1"
+						id="search-1" value="">
+				</p>
+			</nav>
+			<label class="pure-overlay" for="pure-toggle-left"
+				data-overlay="left"></label> <label class="pure-overlay"
+				for="pure-toggle-right" data-overlay="right"></label>
+		</div>
+		<div class="container">
 			<div style="margin: 100px auto;">
-			<h1>ユーザー情報</h1>
+				<h1>ユーザー情報</h1>
 				<div class="form-wrapper">
 
-<div align="center">
-					<p>
-					<div id="info"></div>
+					<div align="center">
+						<p>
+						<div id="info"></div>
 					</div>
 					<div class="form-footer">
 
 
 						<!--　ニックネーム変更画面  -->
 
-						<h5><a href="NicknameChange.html">ニックネーム変更</a></h5><br>
+						<h5>
+							<a href="NicknameChange.html">ニックネーム変更</a>
+						</h5>
+						<br>
 
 
 						<!--　メールアドレス変更画面  -->
 
-						<h5><a href="MailChange.html">メールアドレス変更</a></h5><br>
+						<h5>
+							<a href="MailChange.html">メールアドレス変更</a>
+						</h5>
+						<br>
 
 						<!--　パスワード変更画面  -->
 
-						<h5><a href="PassChange.html">パスワード変更</a></h5><br>
-						<br>
+						<h5>
+							<a href="PassChange.html">パスワード変更</a>
+						</h5>
+						<br> <br>
 
 						<table>
-						<tr>
-						<td><h6>ユーザ申請 :</h6></td>
-						<td><div id="onoffswitch"></div></td>
-						</tr>
+							<tr>
+								<td><h6>ユーザ申請 :</h6></td>
+								<td><div id="onoffswitch"></div></td>
+							</tr>
 						</table>
+						<a href="Login.html" onclick="javascript:logout();">ログアウト</a>
 
 
 					</div>
@@ -116,15 +142,16 @@
 						</div>
 					</div>
 				</section>
-	<script>
-		$(document).ready(function() {
-			getUserList();
+				<script>
+					$(document).ready(function() {
+						getUserList();
+						message();
 
-		});
-	</script>
+					});
+				</script>
 
 			</div>
-			</div>
+		</div>
 
 	</section>
 

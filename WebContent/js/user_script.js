@@ -1,7 +1,14 @@
-//ログイン判定
-function login() {
+//ログアウト
+function logout() {
+	var jsonParam = null;// 送りたいデータ
+	var URL = "http://localhost:8080/clipMaster/logout";
+	var userList = "";
+	var setappend = function(json) {
+		userList = "";
 
-
+		document.getElementById('logout').innerHTML = userList;
+	};
+	getJSON(URL, jsonParam, setappend);
 }
 
 //新規登録後
