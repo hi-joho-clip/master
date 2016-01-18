@@ -145,7 +145,7 @@
 .remodal-confirm {
 	font-size : 20px;
   color: #fff;
-  background: #d3381c;
+  background: #F44336;
   border-radius: 25px;
 }
 
@@ -157,13 +157,16 @@
 }
 
 .remodal-cancel {
+  	font-size : 20px;
   color: #fff;
-  background: #e57373;
+  background: #2196F3;
+  border-radius: 25px;
 }
 
 .remodal-cancel:hover,
 .remodal-cancel:focus {
-  background: #ef5350;
+   background: rgba(0, 0, 0, .075);
+  border-radius: 5%;
 }
 
 /* Remove inner padding and border in Firefox 4+ for the button tag. */
