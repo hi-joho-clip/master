@@ -1,4 +1,51 @@
-//ログアウト
+// ログインロック
+function lock() {
+
+	var jsonParam = null;// 送りたいデータ
+	var URL = "http://localhost:8080/clipMaster/login";
+	var userList = "";
+
+	var result = null;
+	console.log("ロックスクリプト使われてるよ");
+	var cookieName = 'lock=';
+	var allcookies = document.cookie;
+
+	var position = allcookies.indexOf(cookieName);
+	if (position != -1) {
+		var startIndex = position + cookieName.length;
+
+		var endIndex = allcookies.indexOf(';', startIndex);
+		if (endIndex == -1) {
+			endIndex = allcookies.length;
+		}
+		result = decodeURIComponent(allcookies.substring(startIndex, endIndex));
+		console.log(result);
+	}
+
+	console.log("あとは、判定だわ");
+	if (result != null) {
+		if (result == "true") {
+			console.log("ロック判定：ロック");
+			$('#lock').attr('disabled', 'disabled');
+		} else {
+			console.log("ロック判定：ロック解除");
+			$('#lock').removeAttr('disabled');
+		}
+	} else {
+		console.log("ロック判定：ロック解除");
+		$('#lock').removeAttr('disabled');
+	}
+
+	var setappend = function(json) {
+		userList = "";
+
+		document.getElementById('login').innerHTML = userList;
+	};
+	getJSON(URL, jsonParam, setappend);
+
+}
+
+// ログアウト
 function logout() {
 	var jsonParam = null;// 送りたいデータ
 	var URL = "http://localhost:8080/clipMaster/logout";
@@ -11,7 +58,7 @@ function logout() {
 	getJSON(URL, jsonParam, setappend);
 }
 
-//新規登録後
+// 新規登録後
 function addUser() {
 
 	var jsonParam = null;// 送りたいデータ
@@ -44,25 +91,32 @@ function getUserList() {
 	var URL = "http://localhost:8080/clipMaster/viewuser";
 	var userList = "";
 	var setappend = function(json) {
-		userList = "<h2>"+  "ニックネーム<br>" + json.nickname + "<br><br>" + "メールアドレス:<br>"
-				+ json.mailaddress + "<br><br></h2>";
+		userList = "<h2>" + "ニックネーム<br>" + json.nickname + "<br><br>"
+				+ "メールアドレス:<br>" + json.mailaddress + "<br><br></h2>";
 		document.getElementById('info').innerHTML = userList;
 		var kyoka = "";
 		var kyohi = "";
-		var flag="";
+		var flag = "";
 		if (json.friend_flag == 0) {
 			kyoka = "checked";
 			kyohi = "";
-			flag="checked";
+			flag = "checked";
 		} else {
-			flag="";
+			flag = "";
 			kyoka = "";
 			kyohi = "checked";
 		}
-		var $onoffkun = $("<input type='checkbox' name='onoffswitch' class='onoffswitch-checkbox' id='myonoffswitch' "+flag+">"
+		var $onoffkun = $("<input type='checkbox' name='onoffswitch' class='onoffswitch-checkbox' id='myonoffswitch' "
+				+ flag
+				+ ">"
 				+ "<label class='onoffswitch-label' for='myonoffswitch' onclick='test()'>"
-				+ "<span  class='onoffswitch-inner'"+kyoka+"></span>"
-				+ "<span  class='onoffswitch-switch'"+kyohi+"></span>" + "</label>");
+				+ "<span  class='onoffswitch-inner'"
+				+ kyoka
+				+ "></span>"
+				+ "<span  class='onoffswitch-switch'"
+				+ kyohi
+				+ "></span>"
+				+ "</label>");
 		$("#onoffswitch").append($onoffkun).trigger("create");
 
 	};
