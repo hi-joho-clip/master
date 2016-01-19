@@ -67,6 +67,10 @@ public class UpdateArticleServlet extends HttpServlet {
 			}
 			//String title = request.getParameter("title");//JSON
 			String body = (String)request.getParameter("body");//JSON
+			System.out.println("body:" + body);
+
+
+			body = new String(body.getBytes("UTF-8"), "UTF-8");
 
 			//String url = request.getParameter("url");//JSON
 
@@ -80,7 +84,7 @@ public class UpdateArticleServlet extends HttpServlet {
 					articlebean.setArticle_id(article_id);
 					// 一時的に無効
 					//articlebean.setTitle(title);
-					System.out.println(body);
+					System.out.println("body:" + body);
 					articlebean.setBody(body);
 
 

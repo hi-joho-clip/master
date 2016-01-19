@@ -346,7 +346,8 @@ div[data-wysihtml5-dialog="createTable"] td {
 
 						<div align="left">
 
-							<div id="editable" class="editable" style="font-size: 200%; padding : 10px"></div>
+							<div id="editable" class="editable"
+								style="font-size: 200%; padding: 10px"></div>
 						</div>
 						<section class="section">
 							<div class="head-bar">
@@ -375,6 +376,24 @@ div[data-wysihtml5-dialog="createTable"] td {
 						updateArticle();
 
 					});
+
+					$('#editable').attr('contenteditable', 'true');
+
+					var isOnline = navigator.onLine;
+					if (navigator.onLine === true) {
+						alert("current network status is online");
+						$('.toolbar').css({
+							'display' : 'none'
+						});
+						$('#editable').attr('contenteditable', 'false');
+
+					} else if (navigator.onLine === false) {
+						alert("current network status is offline");
+						$('div.toolbar').css('display', 'none');
+
+					} else {
+						alert("current network status is unknown");
+					}
 
 				});
 
