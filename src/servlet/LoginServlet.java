@@ -134,6 +134,11 @@ public class LoginServlet extends HttpServlet {
 					visitedCookie.setMaxAge(300);
 					response.addCookie(visitedCookie);
 				} else {
+					int visited = Integer.parseInt(visitedCookie.getValue()) + 1;
+					visitedCookie.setValue(Integer.toString(visited));
+					visitedCookie.setMaxAge(300);
+					response.addCookie(visitedCookie);
+
 					Cookie c_lock = new Cookie("lock", "true");
 					c_lock.setMaxAge(300);
 					response.addCookie(c_lock);
