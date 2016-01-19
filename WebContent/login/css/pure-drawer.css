@@ -73,7 +73,7 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-@media only screen and (max-width: 760px) {
+@media only screen and (max-width: 767px) {
 .pure-toggle-label {
   display: none;
   cursor: pointer;
@@ -128,7 +128,7 @@ body {
           transition: all 250ms ease-in-out;
 }
 
-@media only screen and (max-width: 760px) {
+@media only screen and (max-width: 767px) {
 .pure-toggle-label .pure-toggle-icon,
 .pure-toggle-label .pure-toggle-icon:before,
 .pure-toggle-label .pure-toggle-icon:after {
