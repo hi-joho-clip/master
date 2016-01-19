@@ -9,8 +9,12 @@ function getFriendList() {
 		for ( var i = 0; i < json.length; i++) {
 			// リクエスト申請したユーザ一覧
 			if (json[i].status == 2) {
+				var now = new Date(json[i].created);
+				console.log(now.getHours()+ "時間" + now.getMinutes());
 				friendList += "<li>"
 						+ json[i].nickname
+						+ "&emsp;"
+						+ now.getHours()+ "時間" + now.getMinutes()
 						+ "&emsp;"
 						+ "<a href='#' data-remodal-target='delete_request' onclick='document.getElementById(\"user_id\").innerHTML=\""
 						+ json[i].friend_user_id + "\";'>取消</a></li>";
@@ -20,7 +24,9 @@ function getFriendList() {
 			// フレンド一覧
 			if (json[i].status == 3) {
 				friendList += "<li>"
-						+ json[i].nickname
+						+ "<a href='index.html'onclick='javascript:$.cookie(\"viewMode\",\"3\");$.cookie(\"shareLists\",\""+json[i].friend_user_id+"\");'>"+json[i].nickname + "</a>"
+						+ "&emsp;"
+						+ now.getHours()+ "時間" + now.getMinutes()
 						+ "&emsp;"
 						+ "<a href='#' data-remodal-target='delete_friend' onclick='document.getElementById(\"user_id\").innerHTML=\""
 						+ json[i].friend_user_id + "\";'>削除</a></li>";
@@ -51,6 +57,8 @@ function getFriendRequest() {
 	var setappend = function(json) {
 		for ( var i = 0; i < json.length; i++) {
 			friendList += json[i].nickname
+			+ "&emsp;"
+			+ json[i].created
 					+ "&emsp;"
 					+ "<a href='#' data-remodal-target='kyoka' onclick='document.getElementById(\"user_id\").innerHTML=\""
 					+ json[i].friend_user_id + "\";'>承認</a>"
@@ -73,6 +81,8 @@ function getFriendSearch(nickname) {
 		if (json.length != 0) {
 			for ( var i = 0; i < json.length; i++) {
 				friendList += json[i].nickname
+				+ "&emsp;"
+				+ json[i].created
 						+ "&emsp;"
 						+ "<a href='#' data-remodal-target='add' onclick='document.getElementById(\"user_id\").innerHTML=\""
 						+ json[i].user_id + "\";'>追加</a>" + "<br>";
