@@ -67,6 +67,8 @@ public class UpdateArticleServlet extends HttpServlet {
 			}
 			//String title = request.getParameter("title");//JSON
 			String body = request.getParameter("body");//JSON
+			body = "<>";
+			System.out.println(body);
 			//String url = request.getParameter("url");//JSON
 
 			if (article_id != 0) {
@@ -79,7 +81,7 @@ public class UpdateArticleServlet extends HttpServlet {
 					articlebean.setArticle_id(article_id);
 					// 一時的に無効
 					//articlebean.setTitle(title);
-					//System.out.println(body);
+					System.out.println(body);
 					articlebean.setBody(body);
 
 
