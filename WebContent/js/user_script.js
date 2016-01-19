@@ -53,7 +53,7 @@ function lock() {
 	if (cnt == null) {
 		$userList = "";
 		console.log("失敗してない");
-	} else if (cnt < 4) {
+	} else if (cnt < 5) {
 		console.log("1回以上失敗してる");
 		$userList = $("<h4>" + cnt
 				+ "回ログイン失敗しました<br>5回失敗すると、5分間ロックされます</h4>");
