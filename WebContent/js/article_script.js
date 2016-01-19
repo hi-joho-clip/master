@@ -16,8 +16,11 @@ function getFavList() {
 }
 
 // シェア記事一覧
-function getShareList() {
-
+function getShareList(friend_user_id) {
+	var jsonParam = "friend_user_id="+friend_user_id;// 送りたいデータ
+	var URL = "http://localhost:8080/clipMaster/sharelist";
+	document.getElementById('title').innerHTML = '<h1>シェア記事</h1>';
+	getJSON(URL, jsonParam, get_mylists);
 }
 
 // タグ内お気に入り一覧
@@ -196,10 +199,7 @@ function updateArticle() {
 
 // シェア記事の追加
 function shareArticle(friend_user_id, article_id) {
-	var arr = [];
-	arr[0] = article_id.item(0).value;
-	arr[1] = friend_user_id;
-	var param = "article_id="+arr[0]+"&friend_id="+arr[1]+"";
+	var param = "article_id="+article_id.item(0).value+"&friend_id="+friend_user_id+"";
 
 	var URL = "http://localhost:8080/clipMaster/addshare";
 
