@@ -74,6 +74,7 @@ public class ShareListServlet extends HttpServlet {
 		ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
 		try {
 			article_list=articlebean.viewShareArticleList(user_id, friend_user_id, page);
+			System.out.println(article_list.size());
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
