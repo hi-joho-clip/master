@@ -316,7 +316,11 @@ public class FriendDAO {
 
 		return friendDTO;
 	}
-
+	/**
+	 *
+	 * 申請しているユーザとフレンドになったユーザの一覧を取得
+	 * @param own_user_id
+	 */
 	public ArrayList<FriendDTO> friendList(int own_user_id) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -345,5 +349,37 @@ public class FriendDAO {
 		}
 		return friendList;
 	}
+	/**
+	 *
+	 * フレンドになったユーザの一覧を取得
+	 * @param own_user_id
+	 */
+	public ArrayList<FriendDTO> friend(int own_user_id) throws Exception {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<FriendDTO> friendList = new ArrayList<FriendDTO>();
+		// フレンドに申請済み、
+		String friend_sql = "select * from friends where own_user_id = ? AND status = 3 " +
+				"order by status asc, created desc, acceptdate desc";
 
+		try {
+			pstmt = con.prepareStatement(friend_sql);
+			pstmt.setInt(1, own_user_id);
+			rs= pstmt.executeQuery();
+			while (rs.next()) {
+				FriendDTO friendDTO = new FriendDTO();
+				friendDTO.setFriend_id(rs.getInt("friend_id"));
+				friendDTO.setOwn_user_id(rs.getInt("own_user_id"));
+				friendDTO.setFriend_user_id(rs.getInt("friend_user_id"));
+				friendDTO.setShare_id(rs.getInt("id"));
+				friendDTO.setStatus(rs.getInt("status"));
+				friendDTO.setCreated(DateEncode.toDate(rs.getString("created")));
+				friendList.add(friendDTO);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception();
+		}
+		return friendList;
+	}
 }

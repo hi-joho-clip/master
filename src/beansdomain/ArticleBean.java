@@ -65,11 +65,12 @@ public class ArticleBean {
 		// たぶん、記事IDは初期化しないでも動く。
 
 		int mylist_id = this.articleDAO.getShareMylistID(user_id, friend_user_id);
+		artid = this.articleDAO.add(this.articleDTO, mylist_id);
 		System.out.println(mylist_id);
 
 		// 記事の追加 セットされてない場合は行わない
-		if (this.articleDTO.getArticle_id() != 0) {
-			artid = this.articleDAO.add(this.articleDTO, mylist_id);
+//		if (this.articleDTO.getArticle_id() != 0) {
+//
 
 			// 画像の追加(画像リストをそのまま追加する
 			// たぶん、article_idが変更されてるので更新かかるはず。
@@ -80,7 +81,7 @@ public class ArticleBean {
 				this.articleDTO.setShare_url(null);
 				this.articleDAO.updateImage(artid, this.articleDTO.getImageDTO());
 			}
-		}
+		//}
 
 		// 追加した記事IDを返す
 		return artid;

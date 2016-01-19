@@ -97,6 +97,7 @@ public class ArticleDAO {
 			pstmt = con.prepareStatement(hantei_sql);
 			pstmt.setString(1, article.getUrl());
 			pstmt.setInt(2, id);
+			//System.out.println("pstmt2:" + pstmt);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				article_id = rs.getInt("article_id");
