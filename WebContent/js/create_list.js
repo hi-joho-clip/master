@@ -111,16 +111,16 @@ var get_mylists = function(json) {
 									"<input type='hidden' value='"+json[i].favflag+"' id='grobalflag"+json[i].article_id+"'>"+
 
 									"<a href='#' data-remodal-target='deletemodal'onclick='javascript:getArticle_id("+json[i].article_id+");return false;'>" +
-									"<img src='img/trash1.png' align='right'width='32'height='32'></img>" +
+									"<img src='img/trash1.png' align='right'width='42'height='42'></img>" +
 									"</a>"+
 
-									"<a href='#' data-remodal-target='sharemodal'onclick='javascript:getFriends();getArticle_id("+json[i].article_id+");return false;'><img src='img/share1.png' align='right'width='32'height='32'></img></a>"+
+									"<a href='#' data-remodal-target='sharemodal'onclick='javascript:getFriends();getArticle_id("+json[i].article_id+");return false;'><img src='img/share1.png' align='right'width='42'height='42'></img></a>"+
 
 									 "<a href='#' data-remodal-target='tagmodal' onclick='javascript:getTagArticle("+json[i].article_id+");getUsingTags();return false;'>"+
-									  "<img src='img/tag1.png'align='right' width='32'height='32'></img>" +
+									  "<img src='img/tag1.png'align='right' width='42'height='42'></img>" +
 									  "</a>"+
 
-									"<a href='#'onclick='javascript:addFavArticle("+json[i].article_id+");return false;'><img src='img/star1.png' align='right'width='32'height='32'></img></a>"+
+									"<a href='#'onclick='javascript:addFavArticle("+json[i].article_id+");return false;'><img src='img/star1.png' align='right'width='42'height='42'></img></a>"+
 
 									"</div>"+
 								"</div>"+
