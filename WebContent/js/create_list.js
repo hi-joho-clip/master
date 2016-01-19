@@ -165,11 +165,7 @@ var get_taglists = function(json) {
 var get_friends = function(json){
 	$('.selectbox').empty();//削除しないとフレンドがセレクトボックス内にたまるから削除する
 	var option = "";
-	var dummy = "";
-	dummy = document.createElement('option');
-	dummy.value = "";
-	dummy.appendChild(document.createTextNode('フレンドを選択'));
-	$(".selectbox").append(dummy).trigger('create');
+
 	for(var i=0; i<json.length; i++){
 		option=document.createElement('option');
 		option.value = json[i].friend_user_id;
