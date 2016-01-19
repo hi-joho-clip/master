@@ -163,8 +163,13 @@ var get_taglists = function(json) {
 
 //登録しているフレンドが入ったセレクトボックスを作成
 var get_friends = function(json){
-	$('.selectbox').empty();
+	$('.selectbox').empty();//削除しないとフレンドがセレクトボックス内にたまるから削除する
 	var option = "";
+	var dummy = "";
+	dummy = document.createElement('option');
+	dummy.value = "";
+	dummy.appendChild(document.createTextNode('フレンドを選択'));
+	$(".selectbox").append(dummy).trigger('create');
 	for(var i=0; i<json.length; i++){
 		option=document.createElement('option');
 		option.value = json[i].friend_user_id;
@@ -174,15 +179,22 @@ var get_friends = function(json){
 		$('.selectbox').append(option).trigger('create');
 		option="";
 	}
-	$('.selectbox').select2({width:"40%"}).trigger('create');
+	//ここでセレクトボックスを生成
+	$('.selectbox').select2({width:"50%"}).trigger('create');
 
 
 };
 
 //更新日時が新しいタグが入ったセレクトボックスを作成
 var get_using_tags = function(json){
-	$('.tagselect').empty();
+	$('.tagselect').empty();//削除しないとタグがセレクトボックス内にたまるから削除する
+	$('.tagselect').off();//イベントハンドラがたまるから解除する
 	var option = "";
+	var dummy = "";
+	dummy = document.createElement('option');
+	dummy.value = "";
+	dummy.appendChild(document.createTextNode('タグを選択'));
+	$(".tagselect").append(dummy).trigger('create');
 	for(var i=0; i<json.length; i++){
 		option=document.createElement('option');
 		option.value = json[i].tag_body;
@@ -193,11 +205,11 @@ var get_using_tags = function(json){
 
 		option="";
 	}
-	$('select').select2().enable(false);
-	$('.tagselect').select2({ placeholder: {id: "-1",text:"既存タグを選択"},width:"50%",minimumResultsForSearch: Infinity}).trigger('create');
-	$('.tagselect').on("select2:select", function (){
-		$('#tag-it').tagit('createTag',$(".tagselect").val());
+	//ここでセレクトボックスを生成
+	$('.tagselect').select2({width:"50%",minimumResultsForSearch: Infinity}).trigger('create');
+	//セレクトボックスを選択した際に発火するイベント
+	$(".tagselect").change(function () {
+			$('#tag-it').tagit('createTag',$(".tagselect").val());
 	});
-
 
 };
