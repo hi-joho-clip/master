@@ -14,9 +14,14 @@
 <link href="css/grid.css" rel="stylesheet">
 <link href="css/button.css" rel="stylesheet" />
 <link rel="stylesheet" href="css/mosaic.css" type="text/css" />
-<!-- <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
-<!-- <script src="js/articlemenu.js"></script>-->
+<link rel="stylesheet" href="../css/stylesheet.css" type="text/css"
+	media="screen" title="no title" charset="utf-8">
+
+<script src="../js/jquery/jquery-2.1.4.min.js" type="text/javascript"
+	charset="utf-8"></script>
+
+
+
 <script type="text/javascript" src="../js/jquery/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="../js/jquery/isotope.pkgd.min.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery.cookie.js"></script>
@@ -25,6 +30,168 @@
 <script type="text/javascript" src="js/mosaic.1.0.1.js"></script>
 <script src="../js/wysihtml/wysihtml.min.js"></script>
 <script src="../js/wysihtml/advanced_unwrap.js"></script>
+<script src="../js/wysihtml/wysihtml-toolbar.min.js"></script>
+<script src="../js/wysihtml/advanced_and_extended.js"></script>
+<script src="../js/lib/cookie.js"></script>
+
+
+<style>
+small {
+	display: block;
+	margin-top: 40px;
+	font-size: 9px;
+}
+
+small,small a {
+	color: #666;
+}
+
+.title {
+	color: #00CEFF
+}
+
+#toolbar [data-wysihtml5-action] {
+	float: right;
+}
+
+#toolbar,textarea {
+	width: 920px;
+	padding: 5px;
+	-webkit-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+textarea {
+	height: 280px;
+	border: 2px solid green;
+	font-family: Verdana;
+	font-size: 11px;
+}
+
+textarea:focus {
+	color: black;
+	border: 2px solid black;
+}
+
+.wysihtml5-command-active,.wysihtml5-action-active {
+	font-weight: bold;
+}
+
+[data-wysihtml5-dialog] {
+	margin: 5px 0 0;
+	padding: 5px;
+	border: 1px solid #666;
+}
+
+a[data-wysihtml5-command-value="red"] {
+	color: red;
+}
+
+a[data-wysihtml5-command-value="green"] {
+	color: green;
+}
+
+a[data-wysihtml5-command-value="blue"] {
+	color: blue;
+}
+
+.wysihtml5-editor,.wysihtml5-editor table td {
+	outline: 1px dotted #abc;
+}
+
+code {
+	background: #ddd;
+	padding: 10px;
+	white-space: pre;
+	display: block;
+	margin: 1em 0;
+}
+
+.toolbar {
+	display: block;
+	border-radius: 3px;
+	border: 1px solid #fff;
+	margin-bottom: 9px;
+	line-height: 1em;
+}
+
+.toolbar a {
+	display: inline-block;
+	height: 1.5em;
+	border-radius: 3px;
+	font-size: 20px;
+	line-height: 1.5em;
+	text-decoration: none;
+	background: #e1e1e1;
+	border: 1px solid #ddd;
+	padding: 0 0.2em;
+	margin: 1px 0;
+}
+
+.toolbar a.wysihtml5-command-active,.toolbar .wysihtml5-action-active {
+	background: #222;
+	color: white;
+}
+
+.toolbar .block {
+	padding: 1px 1px;
+	display: inline-block;
+	background: #eee;
+	border-radius: 3px;
+	margin: 0px 1px 1px 0;
+}
+
+div[data-wysihtml5-dialog="createTable"] {
+	position: absolute;
+	background: white;
+}
+
+div[data-wysihtml5-dialog="createTable"] td {
+	width: 10px;
+	height: 5px;
+	border: 1px solid #666;
+}
+
+.wysihtml5-editor table td.wysiwyg-tmp-selected-cell {
+	outline: 2px solid green;
+}
+
+.editor-container-tag {
+	padding: 5px 10px;
+	position: absolute;
+	color: white;
+	background: rgba(0, 0, 0, 0.8);
+	width: 100px;
+	margin-left: -50px;
+	-webkit-transition: 0.1s left, 0.1s top;
+}
+
+.wrap {
+	max-width: 700px;
+	margin: 40px;
+}
+
+.editable .wysihtml5-uneditable-container {
+	outline: 1px dotted gray;
+	position: relative;
+}
+
+.editable .wysihtml5-uneditable-container-right {
+	float: right;
+	width: 50%;
+	margin-left: 2em;
+	margin-bottom: 1em;
+}
+
+.editable .wysihtml5-uneditable-container-left {
+	float: left;
+	width: 50%;
+	margin-right: 2em;
+	margin-bottom: 1em;
+}
+</style>
 
 
 <link rel="stylesheet" href="css/pure-drawer.css">
@@ -42,414 +209,226 @@
 </head>
 <body>
 
-<div id="loader-bg">
-  <div id="loader">
+	<div id="loader-bg">
+		<div id="loader">
 
-    <p>Now Loading...</p>
-  </div>
-</div>
-<div id="wrap">
-
-
-	<section>
-
-		  <div class="pure-container" data-effect="pure-effect-slide">
-            <input type="checkbox" id="pure-toggle-left" class="pure-toggle" data-toggle="left"/>
-            <input type="checkbox" id="pure-toggle-right" class="pure-toggle" data-toggle="right"/>
-
-
-            <label class="pure-toggle-label" for="pure-toggle-left" data-toggle-label="left"><span class="pure-toggle-icon"></span></label>
-            <label class="pure-toggle-label" for="pure-toggle-right" data-toggle-label="right"><span class="pure-toggle-icon"></span></label>
-
-
-            <nav class="pure-drawer" data-position="left">
-
-
-
-                 <p style="padding: 50px 20px; margin: 0;">
-                 <h4><a href="UserInfo.html" >ユーザ情報</a></h4><br>
-               <h4> <a href="index.html" onclick="javascript:$.cookie('viewMode','0');">マイリスト</a></h4><br>
-                 <h4><a href="index.html" onclick="javascript:$.cookie('viewMode','1');">お気に入り</a></h4><br>
-				<h4><a href="taglist.html" >タグ</a></h4><br>
-				<h4><a href="#">フレンド</a></h4>
-				</p>
-            </nav>
-
-            <nav class="pure-drawer" data-position="right">
-					 <p style="padding: 100px 5px; margin: 0;"><a>Search Input</a><br>
-   					 <input type="search" name="search-1" id="search-1" value=""><br>
-
-					 	      <a> URL</a><br>
-   					   <input type="search" name="search-1" id="search-1" value="">
-					</p>
-            </nav>
-            <label class="pure-overlay" for="pure-toggle-left" data-overlay="left"></label>
-            <label class="pure-overlay" for="pure-toggle-right" data-overlay="right"></label>
-        </div>
-
-
-		<div class="container">
-			<div style="margin: 100px auto;">
-				<div style="font-size: 100" class="title"></div>
-
-				<div align="left">
-					<div class="editable" data-placeholder="Enter text ..."></div>
-				</div>
-				<section class="section">
-					<div class="head-bar">
-						<div class="container-fluid">
-							<h1 class="text-center">CLIP</h1>
-						</div>
-					</div>
-				</section>
-			</div>
+			<p>Now Loading...</p>
 		</div>
-	</section>
 	</div>
 
 
-	<div class="ewrapper">
-	  <div class="toolbar">
+	<div id="wrap">
+		<section>
+			<div class="pure-container" data-effect="pure-effect-slide">
+				<input type="checkbox" id="pure-toggle-left" class="pure-toggle"
+					data-toggle="left" /> <input type="checkbox"
+					id="pure-toggle-right" class="pure-toggle" data-toggle="right" />
+				<label class="pure-toggle-label" for="pure-toggle-left"
+					data-toggle-label="left"><span class="pure-toggle-icon"></span></label>
+				<label class="pure-toggle-label" for="pure-toggle-right"
+					data-toggle-label="right"><span class="pure-toggle-icon"></span></label>
+				<nav class="pure-drawer" data-position="left">
 
-	    <div class="block">
-	      <a id="boldbtn" class="editor-btn">bold</a>
-	      <a id="italicbtn" class="editor-btn">italic</a>
+					<p style="padding: 50px 20px; margin: 0;">
+					<h4>
+						<a href="UserInfo.html">ユーザ情報</a>
+					</h4>
+					<br>
+					<h4>
+						<a href="index.html"
+							onclick="javascript:$.cookie('viewMode','0');">マイリスト</a>
+					</h4>
+					<br>
+					<h4>
+						<a href="index.html"
+							onclick="javascript:$.cookie('viewMode','1');">お気に入り</a>
+					</h4>
+					<br>
+					<h4>
+						<a href="taglist.html">タグ</a>
+					</h4>
+					<br>
+					<h4>
+						<a href="#">フレンド</a>
+					</h4>
+					</p>
+				</nav>
 
-	      <a id="colorbtn" class="editor-btn">color</a>
-	      <span style="display:none" id="colorBtns">
-	        <a class="color-btn" style="background-color: rgb(255,0,0)" data-value="rgb(255,0,0)">R</a>
-	        <a class="color-btn" style="background-color: rgb(0,255,0)" data-value="rgb(0,255,0)">G</a>
-	        <a class="color-btn" style="background-color: rgb(0,0,255)" data-value="rgb(0,0,255)">B</a>
-	      </span>
+				<nav class="pure-drawer" data-position="right">
+					<p style="padding: 100px 5px; margin: 0;">
+						<a>Search Input</a><br>      <input type="search"
+							name="search-1" id="search-1" value=""><br> <a>
+							URL</a><br>      <input type="search" name="search-1"
+							id="search-1" value="">
+					</p>
+				</nav>
+				<label class="pure-overlay" for="pure-toggle-left"
+					data-overlay="left"></label> <label class="pure-overlay"
+					for="pure-toggle-right" data-overlay="right"></label>
+			</div>
 
-	      <a id="bgcolorbtn" class="editor-btn">BG color</a>
-	      <span style="display:none" id="bgColorBtns">
-	        <a class="bg-color-btn" style="background-color: rgb(255,128,128)" data-value="rgb(255,128,128)">R</a>
-	        <a class="bg-color-btn" style="background-color: rgb(128,255,128)" data-value="rgb(128,255,128)">G</a>
-	        <a class="bg-color-btn" style="background-color: rgb(128,128,255)" data-value="rgb(128,128,255)">B</a>
-	      </span>
+			<div class="container">
+				<h1>wysihtml5 - Advanced Editor Example</h1>
 
-	      &nbsp;
-	      <a id="fontSizeSmaller" class="editor-btn">-</a>
-	      <input type="text" style="width: 30px; border: none; text-align: right;" id="fontSize"/>
-	      <a id="fontSizeRemove" class="editor-btn">x</a>
-	      <a id="fontSizeBigger" class="editor-btn">+</a>
-	      &nbsp;
-
-	      <span style="display:none" id="tableBtns">
-	        &nbsp;
-	        <a id="addRowAbove" class="editor-btn">+⋀</a>
-	        <a id="addRowBelow" class="editor-btn">+⋁</a>
-	        <a id="addRowBefore" class="editor-btn">+&lt;</a>
-	        <a id="addRowAfter" class="editor-btn">+&gt;</a>
-
-	        &nbsp;
-	        <a id="removeRow" class="editor-btn">-=</a>
-	        <a id="removeCol" class="editor-btn">-||</a>
-
-	        &nbsp;
-	        <a id="merge" class="editor-btn">[&nbsp;]</a>
-	      </span>
-
-	      <a id="leftbtn" class="editor-btn">Left</a>
-	      <a id="centerbtn" class="editor-btn">Center</a>
-	      <a id="rightbtn" class="editor-btn">Right</a>
-
-	    </div>
-	    </div>
-	  </div><!-- toolbar -->
-
-
+				<div class="ewrapper" contentEditable="false">
+					<div class="toolbar" style="display:;">
+						<div class="block">
+							<a data-wysihtml5-command="bold" title="CTRL+B">太字</a> <a
+								data-wysihtml5-command="italic" title="CTRL+I">斜体</a> <a
+								data-wysihtml5-command="underline" title="CTRL+U">下線</a>
 
 
-	<div class="images">
+							<!-- <a
+								data-wysihtml5-command="fontSize"
+								data-wysihtml5-command-value="large">大文字</a>-->
+						</div>
+
+						<div class="block">
+							<a id="colorbtn" class="editor-btn">文字色変更</a> <a
+								data-wysihtml5-command="foreColor"
+								data-wysihtml5-command-value="blue">青色</a> <a
+								data-wysihtml5-command="foreColor"
+								data-wysihtml5-command-value="red">赤色</a> <a
+								data-wysihtml5-command="foreColor"
+								data-wysihtml5-command-value="green">緑色</a>
+						</div>
+
+						<div class="block">
+							<a id="bgcolorbtn" class="editor-btn">背景色変更</a> <span style=""
+								id="bgColorBtns"> <a class="bg-color-btn"
+								style="background-color: rgb(255, 200, 200)"
+								data-value="rgb(255,200,200)">赤色</a> <a class="bg-color-btn"
+								style="background-color: rgb(185, 255, 185)"
+								data-value="rgb(185,255,185)">緑色</a> <a class="bg-color-btn"
+								style="background-color: rgb(255, 255, 185)"
+								data-value="rgb(255,255,185)">黄色</a> <a class="bg-color-btn"
+								style="background-color: rgb(185, 185, 255)"
+								data-value="rgb(185,185,255)">青色</a> <a class="bg-color-btn"
+								style="background-color: rgba(255, 255, 255, 0)"
+								data-value="rgba(255,255,255,0)">デフォルト</a>
+							</span>
+						</div>
+
+						<div class="block">
+							<a data-wysihtml5-command="undo">戻る</a> <a
+								data-wysihtml5-command="redo">やり直す</a>
+						</div>
+
+
+						<div data-wysihtml5-dialog="createLink" style="display: none;">
+							<label> Link: <input data-wysihtml5-dialog-field="href"
+								value="http://">
+							</label> <a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a
+								data-wysihtml5-dialog-action="cancel">Cancel</a>
+						</div>
+						<div data-wysihtml5-dialog="insertImage" style="display: none;">
+							<label> Image: <input data-wysihtml5-dialog-field="src"
+								value="http://">
+							</label> <label> Align: <select
+								data-wysihtml5-dialog-field="className">
+									<option value="">default</option>
+									<option value="wysiwyg-float-left">left</option>
+									<option value="wysiwyg-float-right">right</option>
+							</select>
+							</label> <a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a
+								data-wysihtml5-dialog-action="cancel">Cancel</a>
+						</div>
+					</div>
+					<div style="">
+
+						<p>更新ボタン</p>
+						<input id="updatebutton" type="button" name="check" value="確認">
+						<br />
+
+						<div style="font-size: 300%;" class="title"></div>
+
+						<div class="hiddenarea"></div>
+
+						<div align="left">
+
+							<div id="editable" class="editable" style="font-size: 150%"></div>
+						</div>
+						<section class="section">
+							<div class="head-bar">
+								<div class="container-fluid">
+									<h1 class="text-center">CLIP</h1>
+								</div>
+							</div>
+						</section>
+					</div>
+				</div>
+
+			</div>
+		</section>
 	</div>
 
 	<script>
-	/*
-	 * article.html(記事表示)の最初に行う処理
-	 * */
+		$(document).ready(
+				function() {
 
-	$(document).ready(function(){
-		getViewArticle(location.search.substring(1,location.search.length));
+					// ここはオフライン判定が必要
+					getViewArticle(location.search.substring(1,
+							location.search.length));
 
-	});
+					// 書き込みテスト
+					$('#updatebutton').click(function() {
+						updateArticle();
 
+					});
 
+				});
 
-	// WYSIWIG対応
+		var editors = [];
 
-    var editor = new wysihtml5.Editor($('.editable').get(0), {
-      parserRules:    wysihtml5ParserRules
-      //showToolbarAfterInit: false
-    }),
-    composer = editor.composer;
+		$('.ewrapper').each(function(idx, wrapper) {
+			var e = new wysihtml5.Editor($(wrapper).find('.editable').get(0), {
+				toolbar : $(wrapper).find('.toolbar').get(0),
+				parserRules : wysihtml5ParserRules,
+				pasteParserRulesets : wysihtml5ParserPasteRulesets
+			//showToolbarAfterInit: false
+			});
+			editors.push(e);
 
-    function updateStates() {
-      var value;
+			e.on("showSource", function() {
+				alert(e.getValue(true));
+			});
 
-      if (composer.commands.state('bold')) {
-        $('#boldbtn').addClass('active');
-      } else {
-        $('#boldbtn').removeClass('active');
-      }
+		});
 
-      if (composer.commands.state('italic')) {
-        $('#italicbtn').addClass('active');
-      } else {
-        $('#italicbtn').removeClass('active');
-      }
+		var editor = new wysihtml5.Editor($('.editable').get(0), {
+			parserRules : wysihtml5ParserRules
+		//showToolbarAfterInit: false
+		}), composer = editor.composer;
 
-      if (composer.commands.state('mergeTableCells')) {
-        $('#merge').addClass('active');
-      } else {
-        $('#merge').removeClass('active');
-      }
+		function updateStates() {
+			var value;
 
-      if (composer.commands.state('alignLeftStyle')) {
-        $('#leftbtn').addClass('active');
-      } else {
-        $('#leftbtn').removeClass('active');
-      }
+			if (composer.commands.state('bgColorStyle')) {
+				$('#bgcolorbtn').addClass('active');
+				value = composer.commands.stateValue('bgColorStyle');
+				$('.bg-color-btn.active').removeClass('active');
+				if (value) {
+					$('.bg-color-btn[data-value="' + value + '"]').addClass(
+							'active');
+				}
 
-      if (composer.commands.state('alignRightStyle')) {
-        $('#rightbtn').addClass('active');
-      } else {
-        $('#rightbtn').removeClass('active');
-      }
+				$('#bgColorBtns').show();
 
-      if (composer.commands.state('alignCenterStyle')) {
-        $('#centerbtn').addClass('active');
-      } else {
-        $('#centerbtn').removeClass('active');
-      }
+			} else {
+				$('#bgcolorbtn').removeClass('active');
+				//$('#bgColorBtns').hide();
+			}
+		}
+		$('#bgcolorbtn').click(function(event) {
+			event.preventDefault();
+			$('#bgColorBtns').show();
+		});
 
-      if (composer.commands.state('foreColorStyle')) {
-        $('#colorbtn').addClass('active');
-        value = composer.commands.stateValue('foreColorStyle');
-        $('.color-btn.active').removeClass('active');
-        if (value) {
-          $('.color-btn[data-value="'+ value +'"]').addClass('active');
-        }
-
-        $('#colorBtns').show();
-
-      } else {
-        $('#colorbtn').removeClass('active');
-        $('#colorBtns').hide();
-      }
-
-      if (composer.commands.state('bgColorStyle')) {
-        $('#bgcolorbtn').addClass('active');
-        value = composer.commands.stateValue('bgColorStyle');
-        $('.bg-color-btn.active').removeClass('active');
-        if (value) {
-          $('.bg-color-btn[data-value="'+ value +'"]').addClass('active');
-        }
-
-        $('#bgColorBtns').show();
-
-      } else {
-        $('#bgcolorbtn').removeClass('active');
-        $('#bgColorBtns').hide();
-      }
-
-      // font size state
-      if (composer.commands.state('fontSizeStyle')) {
-        $('#fontSize').val(composer.commands.stateValue('fontSizeStyle'));
-        $('#fontSizeRemove').addClass('active');
-      } else {
-        $('#fontSize').val('');
-        $('#fontSizeRemove').removeClass('active');
-      }
-
-    }
-
-// Listen to events and update menu
-    editor.on("interaction", function() {
-      updateStates();
-    });
-
-    editor.on("tableselect", function() {
-      $('#tableBtns').show();
-    });
-
-    editor.on("tableunselect", function() {
-      $('#tableBtns').hide();
-    });
-
-// Prevent buttons from deselecting selected text before action is performed
-    $(".editor-btn").mousedown(function(event){
-      var b = composer.selection.getBookmark();
-      event.preventDefault();
-
-      // ie8 bug fix. mousedown does not prevent loosing focus
-      setTimeout(function() {
-        composer.selection.setBookmark(b);
-      }, 0);
-
-    });
-
-// commands binding
-    $('#boldbtn').click(function(event) {
-      event.preventDefault();
-      composer.commands.exec('bold');
-      updateStates();
-    });
-
-    $('#italicbtn').click(function(event) {
-      event.preventDefault();
-      composer.commands.exec('italic');
-      updateStates();
-    });
-
-    $('#leftbtn').click(function(event) {
-      event.preventDefault();
-      composer.commands.exec('alignLeftStyle');
-      updateStates();
-    });
-
-    $('#rightbtn').click(function(event) {
-      event.preventDefault();
-      composer.commands.exec('alignRightStyle');
-      updateStates();
-    });
-
-    $('#centerbtn').click(function(event) {
-      event.preventDefault();
-      composer.commands.exec('alignCenterStyle');
-      updateStates();
-    });
-
-
-
-    //table
-    $('#addRowBelow').click(function(event) {
-      event.preventDefault();
-      composer.commands.exec("addTableCells", "below");
-    });
-
-    $('#addRowAbove').click(function(event) {
-      event.preventDefault();
-      composer.commands.exec("addTableCells", "above");
-    });
-
-    $('#addRowBefore').click(function(event) {
-      event.preventDefault();
-      composer.commands.exec("addTableCells", "before");
-    });
-
-    $('#addRowAfter').click(function(event) {
-      event.preventDefault();
-      composer.commands.exec("addTableCells", "after");
-    });
-
-    $('#removeRow').click(function(event) {
-      event.preventDefault();
-      composer.commands.exec("deleteTableCells", "row");
-    });
-
-    $('#removeCol').click(function(event) {
-      event.preventDefault();
-      composer.commands.exec("deleteTableCells", "column");
-    });
-
-    $('#merge').click(function(event) {
-      event.preventDefault();
-      composer.commands.exec("mergeTableCells");
-    });
-
-
-
-    // color by style
-    $('#colorbtn').click(function(event) {
-      event.preventDefault();
-      $('#colorBtns').show();
-    });
-
-    $('.color-btn').mousedown(function(event) {
-      event.preventDefault();
-      event.stopPropagation();
-      var val = $(this).data("value");
-      composer.commands.exec("foreColorStyle", val);
-      updateStates();
-    });
-
-    $('#bgcolorbtn').click(function(event) {
-      event.preventDefault();
-      $('#bgColorBtns').show();
-    });
-
-    $('.bg-color-btn').mousedown(function(event) {
-      event.preventDefault();
-      event.stopPropagation();
-      var val = $(this).data("value");
-      composer.commands.exec("bgColorStyle", val);
-      updateStates();
-    });
-
-// font size actions
-    var selBookmark = null;
-    $('#fontSize').mousedown(function() {
-      if (selBookmark == null) {
-        selBookmark = composer.selection.getBookmark();
-      }
-    });
-
-    $('#fontSize').change(function(){
-      if (selBookmark) {
-        setTimeout(function() {
-          composer.selection.setBookmark(selBookmark);
-          composer.commands.exec("fontSizeStyle", $('#fontSize').val());
-          selBookmark = null;
-        },0);
-      }
-    });
-
-    $('#fontSize').keydown(function(event) {
-      if (event.which == 13) {
-        event.preventDefault();
-        $('#fontSize').trigger('blur');
-      }
-    });
-
-    $('#fontSizeSmaller').click(function(event) {
-      event.preventDefault();
-      selBookmark = composer.selection.getBookmark();
-      var val = $('#fontSize').val(),
-          nr;
-      if (val && !(/^\s*$/).test(val)) {
-        nr = parseInt(val, 10);
-        if (nr > 1) {
-          $('#fontSize').val(val.replace(/\d+/, nr -1)).trigger('change');
-          selBookmark = null;
-        }
-      }
-    });
-
-    $('#fontSizeBigger').click(function(event) {
-      event.preventDefault();
-      selBookmark = composer.selection.getBookmark();
-      var val = $('#fontSize').val(),
-          nr;
-      if (val && !(/^\s*$/).test(val)) {
-        nr = parseInt(val, 10);
-      $('#fontSize').val(val.replace(/\d+/, nr +1)).trigger('change');
-      selBookmark = null;
-      }
-    });
-
-    // executing with same value removes size
-    $('#fontSizeRemove').click(function(event) {
-      event.preventDefault();
-      var val = composer.commands.stateValue('fontSizeStyle');
-      if (val) {
-        composer.commands.exec("fontSizeStyle", val);
-        selBookmark = null;
-      }
-    });
-
-</script>
-
-</body>
-</html>
+		$('.bg-color-btn').mousedown(function(event) {
+			event.preventDefault();
+			event.stopPropagation();
+			var val = $(this).data("value");
+			composer.commands.exec("bgColorStyle", val);
+			updateStates();
+		});
+	</script>

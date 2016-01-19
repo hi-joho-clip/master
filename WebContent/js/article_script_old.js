@@ -1,5 +1,3 @@
-var hostURL = "http://localhost:8080";
-
 //マイリスト
 function getMyList() {
 	var jsonParam = null;// 送りたいデータ
@@ -91,20 +89,19 @@ function getTag() {
 function getViewArticle(article_id) {
 
 	var jsonParam = "article_id=" + article_id;// 送りたいデータ
-	var URL = hostURL + "/clipMaster/viewarticle";
+	var URL = "http://localhost:8080/clipMaster/viewarticle";
 	var setappend = function(json) {
+		alert(json.length);
 
-		// nonceとArticleID設定
-		$("div.hiddenarea").append('<input type="hidden" id="article_id" value="' + article_id + '">');
-		$("div.hiddenarea").append('<input type="hidden" id="nonce" value="' + docCookies.getItem("nonce") + '">');
 
-		$("div.title").append(json.title + "<br>");
-		$("div#editable").append(json.body);
+		$("div.title").append("タイトル:" + json.title + "<br>");
+		$("div.editable").append("内容:" + json.body);
 
 		var con_type = "jpeg";
 		var data;
 
 		for ( var image in json.imageListDTO) {
+			console.log(image);
 			data = 'data:image/' + con_type + ';base64,'
 					+ json.imageListDTO[image].blob_image;
 			$("div.images").append(
@@ -121,7 +118,7 @@ function deleteArticle(article_id) {
 	// getArticle_id(article_id);//html内の<div
 	// id='article_id'>にhiddenでarticle_idを持たせる
 	var jsonParam = "article_id=" + article_id.item(0).value;// 送りたいデータ
-	var URL = hostURL  + "/clipMaster/deletearticle";
+	var URL = "http://localhost:8080/clipMaster/deletearticle";
 	var delete_article = function() {
 
 	};
@@ -144,7 +141,7 @@ function addFavArticle(article_id) {
 	if (flag == "false") {
 
 		// 追加の処理
-		var URL = hostURL + "/clipMaster/addfav";
+		var URL = "http://localhost:8080/clipMaster/addfav";
 
 		// タイトルの横に★マークをつける
 
@@ -175,25 +172,6 @@ function addFavArticle(article_id) {
 
 	}
 }
-
-/**
- * 記事の更新（本文のみバージョン）
- */
-function updateArticle() {
-	// getArticle_id(article_id);//html内の<div
-	// id='article_id'>にhiddenでarticle_idを持たせる
-	var jsonParam = "article_id=" + $('#article_id').val(); // 送りたいデータ
-	// Nonceを載せる
-	jsonParam = jsonParam + "&nonce=" + $('#nonce').val();
-	jsonParam = jsonParam + "&body=" + $("div#editable").html();
-	console.log("log:" + $("div#editable").html());
-	var URL = hostURL + "/clipMaster/updatearticle";
-	var update_article = function(json) {
-		toastr.success(json.state);
-	};
-	getJSON(URL, jsonParam, update_article);
-}
-
 // シェア記事の追加
 function shareArticle(friend_user_id, article_id) {
 	var arr = [];
