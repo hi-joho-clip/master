@@ -10,6 +10,7 @@
 <script type="text/javascript" src="../js/jquery/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery.cookie.js"></script>
   <script type='text/javascript' src='../js/jquery/jquery.particleground.js'></script>
+<script src="../js/user_script.js"></script>
 
   <script type='text/javascript' src='js/demo.js'></script>
 
@@ -38,7 +39,7 @@
 
 
   <!--　ログイン  -->
-  <form  method="post" action="../login">
+  <form  method="post" action="../login" >
     <div class="form-item">
       <!--　メールアドレスまたはユーザネーム  -->
       <label for="email"></label>
@@ -49,9 +50,12 @@
       <label for="password"></label>
       <input type="password" name="password" required="required" placeholder="Password"></input>
     </div>
+
+    <div id="logon"></div>
+
       <!--　ログインボタン  -->
     <div class="button-panel">
-      <input type="submit" class="button" title="Sign In" value="Sign In"></input>
+      <input type="submit" class="button" title="Sign In" value="Sign In" id="lock"></input>
     </div>
 
 
@@ -72,6 +76,7 @@
 <script>
 $(document).ready(function() {
 	$.cookie('viewMode', '0');
+	lock();
 });
 </script>
 
