@@ -17,14 +17,14 @@ import beansdomain.TagBean;
 /**
  * Servlet implementation class ViewArticleServlet
  */
-@WebServlet("/viewarticle")
-public class ViewArticleServlet extends HttpServlet {
+@WebServlet("/viewarticleold")
+public class ViewArticleServletold extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public ViewArticleServlet() {
+	public ViewArticleServletold() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -69,7 +69,6 @@ public class ViewArticleServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(article_id + "," +user_id);
 
 		if (article_id != 0 && user_id != 0) {
 			ArticleBean articlebean = new ArticleBean();
@@ -98,9 +97,9 @@ public class ViewArticleServlet extends HttpServlet {
 			response.setContentType("application/json;charset=UTF-8");
 			response.setHeader("Cache-Control", "private");
 
-			String resp = "{\"Error\": \"認証できてない\"}";
+			String resp = "Error: 認証できてない";
 			PrintWriter out = response.getWriter();
-			out.println(resp);
+			out.println();
 			// ログインへリダイレクト
 			String URL = "/clipMaster/login";
 			response.sendRedirect(URL + "/Login.html");
