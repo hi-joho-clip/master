@@ -165,11 +165,11 @@ function updateIDBArticleList(values) {
  * @param guid
  * @param page
  */
-function getIDEArticleList(guid, page) {
+function getIDEArticleList(username, page) {
 
 	return new Promise(function(resolve, reject) {
 
-		console.log(guid + page);
+		//console.log(guid + page);
 
 		var offset_filter = {
 			filter : guid_filter,
@@ -199,7 +199,7 @@ function getIDEArticleList(guid, page) {
 		});
 
 		function guid_filter(record) {
-			return record.guid === guid;
+			return record.username === username;
 		}
 	});
 };
