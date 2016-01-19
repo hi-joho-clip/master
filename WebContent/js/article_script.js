@@ -188,8 +188,8 @@ function updateArticle() {
 	var jsonParam = "article_id=" + $('#article_id').val(); // 送りたいデータ
 	// Nonceを載せる
 	jsonParam = jsonParam + "&nonce=" + $('#nonce').val();
-	jsonParam = jsonParam + "&body=" + $("div#editable").html();
-	console.log("log:" + $("div#editable").html());
+	jsonParam = jsonParam + '&body=' + encodeURIComponent($("div#editable").html());
+	console.log("log:" + encodeURIComponent($("div#editable").html()));
 	var URL = hostURL + "/clipMaster/updatearticle";
 	var update_article = function(json) {
 		toastr.success(json.state);
