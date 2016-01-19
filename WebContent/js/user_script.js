@@ -1,10 +1,6 @@
 // ログインロック
 function lock() {
 
-	var jsonParam = null;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/login";
-	var userList = "";
-
 	var result = null;
 	console.log("ロックスクリプト使われてるよ");
 	var cookieName = 'lock=';
@@ -36,13 +32,36 @@ function lock() {
 		$('#lock').removeAttr('disabled');
 	}
 
-	var setappend = function(json) {
-		userList = "";
+	var cookieName = 'visited=';
+	var allcookies = document.cookie;
 
-		document.getElementById('login').innerHTML = userList;
-	};
-	getJSON(URL, jsonParam, setappend);
+	var position = allcookies.indexOf(cookieName);
+	if (position != -1) {
+		var startIndex = position + cookieName.length;
 
+		var endIndex = allcookies.indexOf(';', startIndex);
+		if (endIndex == -1) {
+			endIndex = allcookies.length;
+		}
+		result2 = decodeURIComponent(allcookies.substring(startIndex, endIndex));
+		console.log(result2);
+	}
+
+	var cnt = Number(result2);
+	console.log(cnt);
+
+	if (cnt == null) {
+		$userList = "";
+		console.log("失敗してない");
+	} else if (cnt < 4) {
+		console.log("1回以上失敗してる");
+		$userList = $("<h4>" + cnt
+				+ "回ログイン失敗しました<br>5回失敗すると、5分間ロックされます</h4>");
+	} else {
+		$userList = $("<h4>5分間ロックされます</h4>");
+		console.log("ロックされちゃった");
+	}
+	$("#login").append($userList).trigger("create");
 }
 
 // ログアウト
@@ -130,7 +149,7 @@ function NickName() {
 	var URL = "http://localhost:8080/clipMaster/viewuser";
 	var userList = "";
 	var setappend = function(json) {
-		userList = "ニックネーム:"+"<br>" + json.nickname + "<br>";
+		userList = "ニックネーム:" + "<br>" + json.nickname + "<br>";
 		document.getElementById('info').innerHTML = userList;
 	};
 	getJSON(URL, jsonParam, setappend);
@@ -143,7 +162,7 @@ function MailAddress() {
 	var URL = "http://localhost:8080/clipMaster/viewuser";
 	var userList = "";
 	var setappend = function(json) {
-		userList = "メールアドレス:"+"<br>" + json.mailaddress + "<br>";
+		userList = "メールアドレス:" + "<br>" + json.mailaddress + "<br>";
 		document.getElementById('info').innerHTML = userList;
 	};
 	getJSON(URL, jsonParam, setappend);
@@ -155,7 +174,7 @@ function MailAddress() {
 	var URL = "http://localhost:8080/clipMaster/viewuser";
 	var userList = "";
 	var setappend = function(json) {
-		userList = "メールアドレス:"+"<br>" + json.mailaddress + "<br>";
+		userList = "メールアドレス:" + "<br>" + json.mailaddress + "<br>";
 		document.getElementById('info').innerHTML = userList;
 	};
 	getJSON(URL, jsonParam, setappend);
