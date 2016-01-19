@@ -108,38 +108,7 @@
 	<a data-remodal-action="confirm" class="remodal-confirm" href="#"onclick="javascript:shareArticle(document.getElementById('selectbox').value,document.getElementsByName('article_id'));return false;">共有</a>
 	<a data-remodal-action="cancel" class="remodal-cancel" href="#"onclick="javascript:return false;">キャンセル</a>
 </div>
-		<!-- <div class="wh DSmenu">
-			<ul>
-				<a href="UserInfo.html" ><li>ユーザ情報</li></a>
-				<a href="index.html" onclick="javascript:$.cookie('viewMode','0');"><li>マイリスト</li></a>
-				<a href="index.html" onclick="javascript:$.cookie('viewMode','1');"><li>お気に入り</li></a>
-				<a href="index.html" onclick="javascript:$.cookie('viewMode','2');"><li>タグ</li></a>
-				<a href="#"><li>フレンド</li></a>
-			</ul>
-			<div class="DSbtn">
-				<div class="hambarg"></div>
-				<div class="hambarg"></div>
-				<div class="hambarg"></div>
-			</div>
-		</div>
 
-		<div class="container" >
-			<div style="margin: 100px auto;">
-				<div id="title" >
-				</div>
-				<div align="center">
-					<div class="grid" align="left"></div>
-				</div>
-				<section class="section">
-					<div class="head-bar">
-						<div class="container-fluid">
-							<h1 class="text-center">CLIP</h1>
-
-						</div>
-					</div>
-				</section>
-			</div>
-		</div> -->
 
 		  <div class="pure-container" data-effect="pure-effect-slide">
             <input type="checkbox" id="pure-toggle-left" class="pure-toggle" data-toggle="left"/>
@@ -155,11 +124,27 @@
 
 
                  <p style="padding: 50px 20px; margin: 0;">
-                 <h4><a href="UserInfo.html" >ユーザ情報</a></h4><br>
-               <h4> <a href="index.html" onclick="javascript:$.cookie('viewMode','0');">マイリスト</a></h4><br>
-                 <h4><a href="index.html" onclick="javascript:$.cookie('viewMode','1');">お気に入り</a></h4><br>
-				<h4><a href="taglist.html" >タグ</a></h4><br>
-				<h4><a href="#">フレンド</a></h4>
+	              <div id="bg-link">
+					<a href="UserInfo.html"><h4>ユーザ情報</h4></a>
+				 </div>
+				 <div id="bg-link">
+					<a href="index.html" onclick="javascript:$.cookie('viewMode','0');"><h4>マイリスト</h4></a>
+				 </div>
+				 <div id="bg-link">
+					<a href="index.html" onclick="javascript:$.cookie('viewMode','1');"><h4>お気に入り</h4></a>
+				 </div>
+				 <div id="bg-link">
+					<a href="index.html" onclick="javascript:$.cookie('viewMode','2');"><h4>タグ</h4></a>
+				 </div>
+				 <div id="bg-link">
+					<a href="Friend.html"><h4>フレンド一覧</h4></a>
+				 </div>
+				 <div id="bg-link">
+					<a href="FriendBox.html"><h4>フレンドボックス</h4></a>
+				 </div>
+				 <div id="bg-link">
+					<a href="FriendSeach.html"><h4>フレンド検索</h4></a>
+				 </div>
 				</p>
             </nav>
 
