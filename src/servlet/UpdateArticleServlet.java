@@ -66,9 +66,8 @@ public class UpdateArticleServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			//String title = request.getParameter("title");//JSON
-			String body = request.getParameter("body");//JSON
-			body = "<>";
-			System.out.println(body);
+			String body = (String)request.getParameter("body");//JSON
+
 			//String url = request.getParameter("url");//JSON
 
 			if (article_id != 0) {

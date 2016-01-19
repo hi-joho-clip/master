@@ -38,10 +38,10 @@ $(document).ready(function() {
 
 		var isOnline = navigator.onLine;
 		if (navigator.onLine === true) {
-			// alert("current network status is online");
+			 alert("current network status is online");
 
 		} else if (navigator.onLine === false) {
-			// alert("current network status is offline");
+			 alert("current network status is offline");
 
 		} else {
 			alert("current network status is unknown");
