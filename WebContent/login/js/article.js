@@ -61,5 +61,10 @@ $(document).ready(function() {
 		console.log($.cookie("tagLists"));
 		getTagArticleList(0, $.cookie("tagLists"));
 		break;
+	case "3":// 特定のタグ画面を表示しているとき
+		$('.grid').empty();
+		// オフライン判断
+		getShareList($.cookie("shareLists"));
+		break;
 	}
 });

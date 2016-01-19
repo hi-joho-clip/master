@@ -109,6 +109,7 @@ public class ArticleDAO {
 			pstmt.setString(4, article.getUrl());
 			pstmt.setInt(5, id);
 			pstmt.setBytes(6, article.getThum());
+			System.out.println(pstmt);
 			pstmt.executeUpdate();
 			pstmt = con.prepareStatement(sql2);
 			rs = pstmt.executeQuery();
@@ -671,7 +672,7 @@ public class ArticleDAO {
 		ResultSet rs = null;
 		int def_page = 20 * (page - 1);
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
-		String sql = "SELECT * FROM articles WHERE articles.share_url IS NOT NULL AND articles.id = " +
+		String sql = "SELECT * FROM articles WHERE articles.id = " +
 				"(SELECT M.id FROM friends F,mylists M WHERE F.own_user_id = ? AND F.friend_user_id = ? " +
 				"AND M.id = F.id AND M.share_flag=1) limit 20 offset ?";
 		try {
@@ -679,6 +680,7 @@ public class ArticleDAO {
 			pstmt.setInt(1, user_id);
 			pstmt.setInt(2, friend_user_id);
 			pstmt.setInt(3, def_page);
+			System.out.println(pstmt);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				ArticleDTO article = new ArticleDTO();
