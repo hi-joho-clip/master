@@ -12,15 +12,11 @@ $(document).ready(function() {
 		});
 });
 
-$(document).ready(function(){
-    $('.selectbox').select2({
-    	placeholder: "共有したいフレンドを選択"
-    });
 
-});
+
 
 $(document).ready(function() {
-	 $('#tag-it').tagit({fieldName:"tags[]",tagLimit:15});
+	 $('#tag-it').tagit({fieldName:"tags[]",tagLimit:15,autocomplete:{}});
 });
 
 	var $grid;

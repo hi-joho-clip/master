@@ -130,7 +130,7 @@ function NickName() {
 	var URL = "http://localhost:8080/clipMaster/viewuser";
 	var userList = "";
 	var setappend = function(json) {
-		userList = "ニックネーム:" + json.nickname + "<br>";
+		userList = "ニックネーム:"+"<br>" + json.nickname + "<br>";
 		document.getElementById('info').innerHTML = userList;
 	};
 	getJSON(URL, jsonParam, setappend);
@@ -143,7 +143,7 @@ function MailAddress() {
 	var URL = "http://localhost:8080/clipMaster/viewuser";
 	var userList = "";
 	var setappend = function(json) {
-		userList = "メールアドレス:" + json.mailaddress + "<br>";
+		userList = "メールアドレス:"+"<br>" + json.mailaddress + "<br>";
 		document.getElementById('info').innerHTML = userList;
 	};
 	getJSON(URL, jsonParam, setappend);
@@ -155,7 +155,7 @@ function MailAddress() {
 	var URL = "http://localhost:8080/clipMaster/viewuser";
 	var userList = "";
 	var setappend = function(json) {
-		userList = "メールアドレス:" + json.mailaddress + "<br>";
+		userList = "メールアドレス:"+"<br>" + json.mailaddress + "<br>";
 		document.getElementById('info').innerHTML = userList;
 	};
 	getJSON(URL, jsonParam, setappend);

@@ -51,6 +51,12 @@ function getTagList() {
 	var URL = "http://localhost:8080/clipMaster/taglist";
 	getJSON(URL, jsonParam, get_taglists);
 }
+//更新日時が新しいタグ20件を表示
+function getUsingTags(){
+	var jsonParam = null;// 送りたいデータ
+	var URL = "http://localhost:8080/clipMaster/getusingtags";
+	getJSON(URL, jsonParam, get_using_tags);
+}
 //タグを削除
 function deleteTag(tag_id){
 
