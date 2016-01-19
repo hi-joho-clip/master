@@ -20,7 +20,7 @@ function getShareList(friend_user_id) {
 	var jsonParam = "friend_user_id="+friend_user_id;// 送りたいデータ
 	var URL = "http://localhost:8080/clipMaster/sharelist";
 	document.getElementById('title').innerHTML = '<h1>シェア記事</h1>';
-	getJSON(URL, jsonParam, get_mylists);
+	getJSON(URL, jsonParam, get_sharelists);
 }
 
 // タグ内お気に入り一覧
@@ -204,4 +204,5 @@ function shareArticle(friend_user_id, article_id) {
 	var URL = "http://localhost:8080/clipMaster/addshare";
 
 	getJSON(URL, param, null);
+	toastr.success('記事を共有しました');
 }

@@ -101,11 +101,6 @@ var get_mylists = function(json) {
 
 						 "<div id='link-body'><a href='../login/article.html?"+json[i].article_id+"'target='_blank'></a></div>" +
 							"<div id='menu-block'>" +
-								/*"<div id='menu'>"+
-									"<ol>"+
-										"<li><a href='"+json[i].url+"'>"+json[i].url+"</a></li>"+
-									"</ol>"+
-								"</div>"+*/
 								"<div id='menu2'>"+
 									"<div class='remodal-bg'>"+
 									"<input type='hidden' value='"+json[i].favflag+"' id='grobalflag"+json[i].article_id+"'>"+
@@ -142,6 +137,44 @@ var get_mylists = function(json) {
     });
 };
 
+//シェア記事一覧を作成
+var get_sharelists = function(json) {
+	var random =Math.floor(Math.random()*3);
+	$myList = $("<div class='grid-sizer'></div>");
+	$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
+	for ( var i = json.length - 1; i >= 0; i--) {
+		$myList = $("<div class='"+item[random][i] + " mosaic-block bar'>" +
+						"<div class='mosaic-overlay'>"+
+						 "<div id='link-body'><a href='../login/article.html?"+json[i].article_id+"'target='_blank'></a></div>" +
+							"<div id='menu-block'>" +
+								"<div id='menu2'>"+
+									"<div class='remodal-bg'>"+
+
+										"<a href='#' data-remodal-target='deletemodal'onclick='javascript:getArticle_id("+json[i].article_id+");return false;'>" +
+										"<img src='img/trash1.png' align='right'width='42'height='42'></img>" +
+										"</a>"+
+
+										 "<a href='#' data-remodal-target='tagmodal' onclick='javascript:getTagArticle("+json[i].article_id+");getUsingTags();return false;'>"+
+										  "<img src='img/tag1.png'align='right' width='42'height='42'></img>" +
+										  "</a>"+
+
+									"</div>"+
+								"</div>"+
+							"</div>"+
+						"</div>"+
+						"<div class='mosaic-backdrop relative'>" +
+							"<img src='http://www.kk1up.jp/wp-content/uploads/2015/07/201507290001-17.jpg'width='100%'height='100%'alt='"+json[i].title+"'/>" +
+							"<p class='absolute'>"+json[i].title+"<BR><a href='"+json[i].url+"'>"+json[i].url+"</a></p>" +
+						"</div>"+
+					"</div>");
+		$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
+	}
+	jQuery(function($){
+		$('.bar').mosaic({
+			animation	:	'slide'		//fade or slide
+		});
+    });
+};
 //タグ一覧を作成
 var get_taglists = function(json) {
 	//$.cookie('viewMode','2');$.cookie('tagLists',json[i].tag_body);
