@@ -156,7 +156,6 @@ var get_taglists = function(json) {
 				"<input type='hidden' value='"+json[i].lastest+"' name='lastest"+i+"'>"+
 				"</td><td><h4><a href='/' data-remodal-target='tagdeletemodal' onclick='javascript:getTag_id("+json[i].tag_id+");return false;'>削除</a></h4></td></tr>";
 
-		console.log(json[i].tag_body);
 	}
 	tagList += "</table>";
 	document.getElementById('taglist').innerHTML = tagList;
@@ -194,10 +193,11 @@ var get_using_tags = function(json){
 
 		option="";
 	}
-	$('.tagselect').select2({width:"40%",minimumResultsForSearch: Infinity}).trigger('create');
+	$('select').select2().enable(false);
+	$('.tagselect').select2({ placeholder: {id: "-1",text:"既存タグを選択"},width:"50%",minimumResultsForSearch: Infinity}).trigger('create');
 	$('.tagselect').on("select2:select", function (){
-		console.log($(".tagselect").val());
 		$('#tag-it').tagit('createTag',$(".tagselect").val());
 	});
+
 
 };
