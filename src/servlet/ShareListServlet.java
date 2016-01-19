@@ -56,8 +56,8 @@ public class ShareListServlet extends HttpServlet {
 		**********フレンドを選択した際**********
 		****************************************/
 		//シェアしている記事一覧表示
-		int user_id =25;//sessionからuser_idを取得
-		int friend_user_id = 18;//JSONから取得
+		int user_id = (int) session.getAttribute("user_id");
+		int friend_user_id = Integer.parseInt(request.getParameter("friend_user_id"));
 		int page = 1; // パラメータからページ番号取得初期値1
 
 		if (request.getParameter("page") != null) {
