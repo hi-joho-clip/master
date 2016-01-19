@@ -72,7 +72,11 @@ public class Friend {
 		return this;
 
 	}
-
+	/**
+	 *
+	 * 申請しているユーザとフレンドになったユーザの一覧を取得
+	 * @param own_user_id
+	 */
 	public ArrayList<Friend> getFriendList(int own_user_id) throws Exception{
 		friendDAO = new FriendDAO();
 		UserDAO userDAO = new UserDAO();
@@ -97,7 +101,35 @@ public class Friend {
 		return this.friendList;
 
 	}
+	/**
+	 *
+	 * フレンドになったユーザの一覧を取得
+	 * @param own_user_id
+	 */
+	public ArrayList<Friend> getFriend(int own_user_id) throws Exception{
+		friendDAO = new FriendDAO();
+		UserDAO userDAO = new UserDAO();
+		ArrayList<FriendDTO> friendArrayDTO = new ArrayList<FriendDTO>();
 
+		friendArrayDTO = friendDAO.friend(own_user_id);
+
+		for (int i = 0; i< friendArrayDTO.size(); i++) {
+			Friend friendbean = new Friend();
+			friendbean.setFriend_id(friendArrayDTO.get(i).getFriend_id());
+			friendbean.setOwn_user_id(friendArrayDTO.get(i).getOwn_user_id());
+			friendbean.setFriend_user_id(friendArrayDTO.get(i).getFriend_user_id());
+			friendbean.setShare_id(friendArrayDTO.get(i).getShare_id());
+			friendbean.setStatus(friendArrayDTO.get(i).getStatus());
+			friendbean.setAcceptdate(friendArrayDTO.get(i).getAcceptdate());
+			friendbean.setCreated(friendArrayDTO.get(i).getCreated());
+			friendbean.setModified(friendArrayDTO.get(i).getModified());
+			friendbean.setUser_name(userDAO.view(friendArrayDTO.get(i).getFriend_user_id()).getUser_name());
+			friendbean.setNickname(userDAO.view(friendArrayDTO.get(i).getFriend_user_id()).getNickname());
+			this.friendList.add(friendbean);
+		}
+		return this.friendList;
+
+	}
 	/**
 	 *
 	 * 取得するのはユーザID、ニックネームのみ

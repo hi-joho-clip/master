@@ -60,7 +60,7 @@ public class AddShareServlet extends HttpServlet {
 		int friend_id = 1;
 		if (request.getParameter("article_id") != null && request.getParameter("friend_id") != null) {
 			try {
-				System.out.println(article_id);
+
 				user_id = (int)session.getAttribute("user_id");
 				article_id = Integer.parseInt(request.getParameter("article_id"));
 				friend_id = Integer.parseInt(request.getParameter("friend_id"));
@@ -69,10 +69,12 @@ public class AddShareServlet extends HttpServlet {
 			}
 		}
 		try {
+			System.out.println("aaaa" + article_id);
 			System.out.println(article_id + friend_id);
 			artbean.setArticle_id(article_id);
 			newbean = artbean.viewArticle();
 			System.out.println(newbean.getTitle());
+			newbean.setArticle_id(0);
 			newbean.addShareArticle(user_id, friend_id);
 		} catch (Exception e) {
 
