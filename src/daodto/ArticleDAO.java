@@ -149,7 +149,7 @@ public class ArticleDAO {
 		int hikaku_user_id = 0;
 		boolean flag = false;
 		boolean hantei_flag = false;
-		boolean share_flag =false;
+		boolean share_flag = false;
 		String getSQL = "select id from articles where article_id = ? ";
 		String getART = "select user_id, share_flag from mylists where id = ? ";
 		String getSART = "select own_user_id from friends where id = ? ";
@@ -162,7 +162,6 @@ public class ArticleDAO {
 				mylist_id = rs.getInt("id");
 			}
 
-
 			if (mylist_id != 0) {
 				pstmt = con.prepareStatement(getART);
 				pstmt.setInt(1, mylist_id);
@@ -173,7 +172,7 @@ public class ArticleDAO {
 				}
 
 				// シェア記事処理
-				if(share_flag) {
+				if (share_flag) {
 					pstmt = con.prepareStatement(getSART);
 					pstmt.setInt(1, mylist_id);
 					rs = pstmt.executeQuery();
@@ -340,6 +339,85 @@ public class ArticleDAO {
 			throw new Exception();
 		}
 		return flag;
+	}
+
+
+	/**
+	 * 記事IDからシェア記事かを判定する
+	 * @param article_id
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean isShare(int article_id) throws Exception {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int mylist_id = 0;
+		boolean hantei_flag = false;
+		String getSQL = "select id from articles where article_id = ? ";
+		String getART = "select share_flag from mylists where id = ? ";
+
+		try {
+			pstmt = con.prepareStatement(getSQL);
+			pstmt.setInt(1, article_id);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				mylist_id = rs.getInt("id");
+			}
+			if (mylist_id != 0) {
+				pstmt = con.prepareStatement(getART);
+				pstmt.setInt(1, mylist_id);
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					// own_user_idが一致したら
+					hantei_flag = rs.getBoolean("share_flag");
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception();
+		}
+		return hantei_flag;
+
+
+	}
+
+	/**
+	 * シェア記事の場合、Article_IDとUser_IDから
+	 * そのユーザのマイリスト内にある記事かを示す
+	 * @return
+	 * @throws Exception
+	 */
+	public int getShareMylistIDArt(int user_id, int article_id) throws Exception {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int mylist_id = 0;
+
+		String getSQL = "select id from articles where article_id = ? ";
+		String getART = "select own_user_id, id from friends where id = ? ";
+
+		try {
+			pstmt = con.prepareStatement(getSQL);
+			pstmt.setInt(1, article_id);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				mylist_id = rs.getInt("id");
+			}
+			if (mylist_id != 0) {
+				pstmt = con.prepareStatement(getART);
+				pstmt.setInt(1, mylist_id);
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					// own_user_idが一致したら
+					if (user_id == rs.getInt("own_user_id")) {
+						mylist_id = rs.getInt("id");
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception();
+		}
+		return mylist_id;
 	}
 
 	/**
