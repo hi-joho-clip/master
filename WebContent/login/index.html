@@ -155,6 +155,9 @@
 
 					 	      <a> URL</a><br>
    					   <input type="search" name="search-1" id="search-1" value="">
+
+					<a href="index.html" onclick="javascript:$.cookie('viewMode','1');"><h4>記事追加</h4></a>
+
 					</p>
             </nav>
             <label class="pure-overlay" for="pure-toggle-left" data-overlay="left"></label>
@@ -185,18 +188,6 @@
 
 	</section>
 	</div>
-
-	<script>
-	$(document).ready(function() {
-
-
-		$("div.hiddenarea").append(
-				'<input type="hidden" id="nonce" value="'
-						+ docCookies.getItem("nonce") + '">');
-
-	});
-
-	</script>
 
 </body>
 </html>
