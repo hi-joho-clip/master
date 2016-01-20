@@ -82,7 +82,7 @@ public class ViewArticleServlet extends HttpServlet {
 				article.setUsername((String) session.getAttribute("username"));
 
 
-				System.out.println(article.getBody());
+				//System.out.println(article.getBody());
 				response.setContentType("application/json;charset=UTF-8");
 				response.setHeader("Cache-Control", "private");
 

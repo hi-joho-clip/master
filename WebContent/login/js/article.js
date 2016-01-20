@@ -19,6 +19,15 @@ $(document).ready(function() {
 	});
 });
 
+$(document).ready(function() {
+
+
+	$("div.hiddenarea").append(
+			'<input type="hidden" id="nonce" value="'
+					+ docCookies.getItem("nonce") + '">');
+
+});
+
 var $grid;
 $(document).ready(function() {
 
