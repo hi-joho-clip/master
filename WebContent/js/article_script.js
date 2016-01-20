@@ -194,7 +194,12 @@ function updateArticle() {
 	console.log("log:" + encodeURIComponent($("div#editable").html()));
 	var URL = hostURL + "/clipMaster/updatearticle";
 	var update_article = function(json) {
+
+		if(json.flag==0){
+		toastr.error(json.state);
+		}else{
 		toastr.success(json.state);
+		}
 	};
 	getJSON(URL, jsonParam, update_article);
 }
@@ -206,5 +211,10 @@ function shareArticle(friend_user_id, article_id) {
 	var URL = "http://localhost:8080/clipMaster/addshare";
 
 	getJSON(URL, param, null);
-	toastr.success('記事を共有しました');
+	if(json.flag==0){
+		toastr.error(json.state);
+		}else{
+		toastr.success(json.state);
+		}
+
 }
