@@ -102,3 +102,17 @@
     white-space: nowrap;
     z-index:2;
 }
+
+input#searchsubmit{
+
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    border:none;
+    width:18px; height:18px;
+}
+
+input#searchsubmit {
+    background:url(../img/search.png) no-repeat 0 ;
+    position:relative; top:0px; right:28px;
+}
