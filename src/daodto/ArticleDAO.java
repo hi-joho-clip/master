@@ -142,17 +142,67 @@ public class ArticleDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean delete(int article_id) throws Exception {
+	public boolean delete(int user_id, int article_id) throws Exception {
 		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int mylist_id = 0;
+		int hikaku_user_id = 0;
 		boolean flag = false;
+		boolean hantei_flag = false;
+		boolean share_flag =false;
+		String getSQL = "select id from articles where article_id = ? ";
+		String getART = "select user_id, share_flag from mylists where id = ? ";
+		String getSART = "select own_user_id from friends where id = ? ";
 		String sql = "DELETE FROM articles WHERE article_id =?";
 		try {
-			con.setAutoCommit(false);
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(getSQL);
 			pstmt.setInt(1, article_id);
-			pstmt.executeUpdate();
-			con.commit();
-			flag = true;
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				mylist_id = rs.getInt("id");
+			}
+
+
+			if (mylist_id != 0) {
+				pstmt = con.prepareStatement(getART);
+				pstmt.setInt(1, mylist_id);
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					hikaku_user_id = rs.getInt("user_id");
+					share_flag = rs.getBoolean("share_flag");
+				}
+
+				// シェア記事処理
+				if(share_flag) {
+					pstmt = con.prepareStatement(getSART);
+					pstmt.setInt(1, mylist_id);
+					rs = pstmt.executeQuery();
+					while (rs.next()) {
+						// own_user_idが一致したら
+						if (user_id == rs.getInt("own_user_id")) {
+							hantei_flag = true;
+						}
+					}
+				} else {
+					if (hikaku_user_id == user_id) {
+						hantei_flag = true;
+					}
+				}
+
+				/**
+				 * 記事のマイリストIDと、自分のマイリストIDを比較
+				 * 正しければ更新処理
+				 */
+
+				if (hantei_flag) {
+					con.setAutoCommit(false);
+					pstmt = con.prepareStatement(sql);
+					pstmt.setInt(1, article_id);
+					pstmt.executeUpdate();
+					con.commit();
+					flag = true;
+				}
+			}
 		} catch (Exception e) {
 			con.rollback();
 			con.setAutoCommit(true);
@@ -248,15 +298,43 @@ public class ArticleDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean deleteShare(int article_id) throws Exception {
+	public boolean deleteShare(int user_id, int article_id) throws Exception {
 		PreparedStatement pstmt = null;
-		String sql = "UPDATE articles SET share_url = null,share_expior = null WHERE article_id = ?";
+		ResultSet rs = null;
+		int mylist_id = 0;
+		boolean hantei_flag = false;
+		String getSQL = "select id from articles where article_id = ? ";
+		String getART = "select own_user_id from friends where id = ? ";
+		String sql = "UPDATE articles SET share_url = null,share_expior = null WHERE article_id = ? and id = ?";
 		boolean flag = false;
 		try {
-			pstmt = con.prepareStatement(sql);
+
+			pstmt = con.prepareStatement(getSQL);
 			pstmt.setInt(1, article_id);
-			pstmt.executeUpdate();
-			flag = true;
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				mylist_id = rs.getInt("id");
+			}
+
+			if (mylist_id != 0) {
+				pstmt = con.prepareStatement(getART);
+				pstmt.setInt(1, mylist_id);
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					// own_user_idが一致したら
+					if (user_id == rs.getInt("own_user_id")) {
+						hantei_flag = true;
+					}
+				}
+
+				if (hantei_flag) {
+					pstmt = con.prepareStatement(sql);
+					pstmt.setInt(1, article_id);
+					pstmt.setInt(2, mylist_id);
+					pstmt.executeUpdate();
+					flag = true;
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
@@ -764,7 +842,7 @@ public class ArticleDAO {
 					pstmt.executeUpdate();
 					//タグを更新する
 					pstmt = con.prepareStatement(update_sql);
-					pstmt.setInt(1,tag_id);
+					pstmt.setInt(1, tag_id);
 					pstmt.executeUpdate();
 				}
 			}

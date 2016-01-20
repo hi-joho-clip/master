@@ -65,13 +65,13 @@ public class ArticleBean {
 		// たぶん、記事IDは初期化しないでも動く。
 
 		int mylist_id = this.articleDAO.getShareMylistID(user_id, friend_user_id);
-		artid = this.articleDAO.add(this.articleDTO, mylist_id);
-		System.out.println(mylist_id);
 
 		// 記事の追加 セットされてない場合は行わない
-//		if (this.articleDTO.getArticle_id() != 0) {
-//
+		// マイリストIDが0だと処理しないよ→Not Friend
+		if (mylist_id != 0) {
 
+			artid = this.articleDAO.add(this.articleDTO, mylist_id);
+			//System.out.println(mylist_id);
 			// 画像の追加(画像リストをそのまま追加する
 			// たぶん、article_idが変更されてるので更新かかるはず。
 			if (artid != 0) {
@@ -81,7 +81,7 @@ public class ArticleBean {
 				this.articleDTO.setShare_url(null);
 				this.articleDAO.updateImage(artid, this.articleDTO.getImageDTO());
 			}
-		//}
+		}
 
 		// 追加した記事IDを返す
 		return artid;
@@ -103,9 +103,9 @@ public class ArticleBean {
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean deleteArticle() throws Exception {
+	public boolean deleteArticle(int user_id, int article_id) throws Exception {
 		this.articleDAO = new ArticleDAO();
-		return this.articleDAO.delete(this.article_id);
+		return this.articleDAO.delete(user_id, article_id);
 
 	}
 
@@ -250,9 +250,10 @@ public class ArticleBean {
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean deleteShareArticle() throws Exception {
+	public boolean deleteShareArticle(int user_id,int article_id) throws Exception {
 		this.articleDAO = new ArticleDAO();
-		return this.articleDAO.deleteShare(this.article_id);
+
+		return this.articleDAO.deleteShare(user_id, article_id);
 	}
 
 	/**
@@ -280,7 +281,6 @@ public class ArticleBean {
 		int mylist_id = this.articleDAO.getMylistID(user_id);
 
 		System.out.println(mylist_id);
-
 
 		articleDTO = articleDAO.view(this.articleDTO.getArticle_id(), mylist_id);
 
