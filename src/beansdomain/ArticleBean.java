@@ -232,7 +232,22 @@ public class ArticleBean {
 	 */
 	public boolean addFavorite(int user_id) throws Exception {
 		this.articleDAO = new ArticleDAO();
-		return this.articleDAO.addFavorite(this.article_id, user_id);//true=成功、false=失敗
+
+		int mylist_id = 0;
+		// マイリスト取得
+		if (this.articleDAO.isShare(article_id)) {
+			// user_idとarticle_idからその人のもつシェアマイリストだった場合
+			// 記事のマイリストIDは正しい。
+			mylist_id = this.articleDAO.getShareMylistIDArt(user_id, article_id);
+
+		} else {
+			mylist_id = this.articleDAO.getMylistID(user_id);
+		}
+		if (mylist_id != 0) {
+			return this.articleDAO.addFavorite(this.article_id, user_id);//true=成功、false=失敗
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -240,9 +255,27 @@ public class ArticleBean {
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean deleteFavorite(int user_id) throws Exception {
+	public boolean deleteFavorite(int user_id, int article_id) throws Exception {
 		this.articleDAO = new ArticleDAO();
-		return this.articleDAO.deleteFavorite(this.article_id, user_id);
+
+
+		int mylist_id = 0;
+		// マイリスト取得
+		if (this.articleDAO.isShare(article_id)) {
+			// user_idとarticle_idからその人のもつシェアマイリストだった場合
+			// 記事のマイリストIDは正しい。
+			mylist_id = this.articleDAO.getShareMylistIDArt(user_id, article_id);
+
+		} else {
+			mylist_id = this.articleDAO.getMylistID(user_id);
+		}
+		if (mylist_id != 0) {
+			return this.articleDAO.deleteFavorite(article_id, user_id);
+		} else {
+			return false;
+		}
+
+
 	}
 
 	/**
@@ -250,7 +283,7 @@ public class ArticleBean {
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean deleteShareArticle(int user_id,int article_id) throws Exception {
+	public boolean deleteShareArticle(int user_id, int article_id) throws Exception {
 		this.articleDAO = new ArticleDAO();
 
 		return this.articleDAO.deleteShare(user_id, article_id);
@@ -277,28 +310,40 @@ public class ArticleBean {
 		this.articleDAO = new ArticleDAO();
 		setArticleDTO();
 
+		int mylist_id = 0;
 		// マイリスト取得
-		int mylist_id = this.articleDAO.getMylistID(user_id);
+		if (this.articleDAO.isShare(article_id)) {
+			// user_idとarticle_idからその人のもつシェアマイリストだった場合
+			// 記事のマイリストIDは正しい。
+			mylist_id = this.articleDAO.getShareMylistIDArt(user_id, article_id);
+
+		} else {
+			mylist_id = this.articleDAO.getMylistID(user_id);
+		}
 
 		System.out.println(mylist_id);
 
-		articleDTO = articleDAO.view(this.articleDTO.getArticle_id(), mylist_id);
+		if (mylist_id != 0) {
+			articleDTO = articleDAO.view(this.articleDTO.getArticle_id(), mylist_id);
 
-		// 記事共通部分
-		articleBean.setArticle_id(articleDTO.getArticle_id());
-		articleBean.setBody(articleDTO.getBody());
-		articleBean.setTitle(articleDTO.getTitle());
-		articleBean.setUrl(articleDTO.getUrl());
-		articleBean.setCreated(articleDTO.getCreated());
-		articleBean.setModified(articleDTO.getModified());
-		// サムネイル
-		articleBean.setThum(articleDTO.getThum());
-		articleBean.setShare_url(articleDTO.getShare_url());
-		articleBean.setShare_expior(articleDTO.getShare_expior());
-		articleBean.setMylist_id(articleDTO.getMylist_id());
-		articleBean.setImageListDTO(articleDTO.getImageDTO());
+			// 記事共通部分
+			articleBean.setArticle_id(articleDTO.getArticle_id());
+			articleBean.setBody(articleDTO.getBody());
+			articleBean.setTitle(articleDTO.getTitle());
+			articleBean.setUrl(articleDTO.getUrl());
+			articleBean.setCreated(articleDTO.getCreated());
+			articleBean.setModified(articleDTO.getModified());
+			// サムネイル
+			articleBean.setThum(articleDTO.getThum());
+			articleBean.setShare_url(articleDTO.getShare_url());
+			articleBean.setShare_expior(articleDTO.getShare_expior());
+			articleBean.setMylist_id(articleDTO.getMylist_id());
+			articleBean.setImageListDTO(articleDTO.getImageDTO());
 
-		//画像のリスト
+			//画像のリスト
+		} else {
+			articleBean.setArticle_id(0);
+		}
 
 		return articleBean;
 	}

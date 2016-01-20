@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -41,62 +42,66 @@ public class AddArticleServlet extends HttpServlet {
 			IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(true);
-		System.out.println("kitaaaa");
-		/*if(セッション情報があるなら){
-			//何もしない
-		}else if(セッション情報がないなら){
-			//ログイン画面に戻る
-		}*/
-		/***************************************
-		****URLを入力して保存を決定したとき*****
-		****************************************/
-		//記事の追加
-		//int user_id =1;//sessionからuser_idを取得
 
-		int user_id = (int) session.getAttribute("user_id");
-		user_id = 1;
+		response.setContentType("application/json;charset=UTF-8");
+		response.setHeader("Cache-Control", "private");
+		String resp = "{\"state\": \"unknownError\",  \"flag\": 0}";
 
-		String url = request.getParameter("url");//JSON
-		String mode = request.getParameter("mode");
-		mode = "eaaa";
+		int user_id = 0;
+		String url = "";
+		// NORMAL, FULL
+		String mode = "NORMAL";
 
-		//		ArticleBean articlebean = new ArticleBean();
-		//		ArrayList<String> uri_list = new ArrayList<String>();
-		//		ArrayList<byte[]> image_list = new ArrayList<byte[]>();
-		/*
-		 * 記事のURLを入力して追加ボタンを押すとJSONデータが送られてくる。
-		 * object.datename[]でアクセス可能
-		 *
-		 * */
+		// nonceの検証が必要です。
 
-		/* JSONのデータがある限りArrayListに追加する
-		uri_list.add(URI);
-		try {
-			image_list.add(画像データ));
-		} catch (UnsupportedEncodingException e1) {
-			// TODO 自動生成された catch ブロック
-			e1.printStackTrace();
-		}
-		*/
+		Nonce nonce = new Nonce(request);
 
-		SaveArticle save = new SaveArticle();
+		if (nonce.isNonce()) {
+			// urlはUTF-8でエンコして送ろう
+			if (request.getParameter("url") != null) {
 
-		url = "http://akiba-pc.watch.impress.co.jp/docs/wakiba/find/20160114_738863.html";
-		String url2 = "https://www.mtgox.com/img/pdf/20140320-btc-announce.pdf";
-		System.out.println(url);
-		if (mode.equals("every")) {
-			if (save.keep_extractor(user_id, url)) {
-				System.out.println("eve.success");
+				try {
+					url = request.getParameter("url");//JSON
+					url = new String(url.getBytes("UTF-8"), "UTF-8");
+					user_id = (int) session.getAttribute("user_id");
+					mode = request.getParameter("mode");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				System.out.println("URL:" + url);
+
+				SaveArticle save = new SaveArticle();
+				if (mode.equals("FULL")) {
+					if (save.keep_extractor(user_id, url)) {
+
+						resp = "{\"state\": \"追加しました\", \"flag\": 1}";
+					} else {
+						resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
+					}
+				} else if (mode.equals("NORMAL")) {
+					if (save.def_extractor(user_id, url)) {
+						resp = "{\"state\": \"追加しました\", \"flag\": 1}";
+					} else {
+						resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
+					}
+
+				}
+
+				PrintWriter out = response.getWriter();
+				out.println(resp);
+
 			} else {
-				System.out.println("evfaild");
+				resp = "{\"state\": \"URLエラー\",  \"flag\": 0}";
+				PrintWriter out = response.getWriter();
+				out.println(resp);
 			}
 		} else {
-			if (save.def_extractor(user_id, url)) {
-				System.out.println("success");
-			} else {
-				System.out.println("faild");
-			}
+			// 不正アクセス
+			resp = "{\"state\": \"不正なアクセス\",  \"flag\": 0}";
+			PrintWriter out = response.getWriter();
+			out.println(resp);
 		}
-	}
 
+	}
 }

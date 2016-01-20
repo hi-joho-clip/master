@@ -44,36 +44,22 @@ public class UpdateArticleServlet extends HttpServlet {
 
 		String resp = "{\"state\": \"unknownError\",  \"flag\": 0}";
 
+		Nonce nonce = new Nonce(request);
 
-		Boolean ses_flag = false;
-		//nonceの検証を行う
-		String s_nonce = (String) session.getAttribute("nonce");
 		int user_id = 0;
 		int article_id = 0;
-		String nonce = request.getParameter("nonce");
 
-		// Nullでもなく空でもない
-		if (nonce != null && s_nonce != null) {
-			// nonceがない
-			if (s_nonce.equals(nonce)) {
-				// nonceが同一の場合
-				ses_flag = true;
-			}
-		}
-
-		if (ses_flag) {
-
+		// Nonceの検証
+		if (nonce.isNonce()) {
 
 			try {
 				article_id = Integer.parseInt(request.getParameter("article_id"));
-				user_id = (int)session.getAttribute("user_id");
+				user_id = (int) session.getAttribute("user_id");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			//String title = request.getParameter("title");//JSON
-			String body = (String)request.getParameter("body");//JSON
-			System.out.println("body:" + body);
-
+			String body = (String) request.getParameter("body");//JSON
 
 			body = new String(body.getBytes("UTF-8"), "UTF-8");
 
@@ -86,29 +72,44 @@ public class UpdateArticleServlet extends HttpServlet {
 					oldBean.setArticle_id(article_id);
 					ArticleBean articlebean = new ArticleBean();
 					articlebean = oldBean.viewArticle(user_id, article_id);
-					articlebean.setArticle_id(article_id);
-					// 一時的に無効
-					//articlebean.setTitle(title);
-					System.out.println("body:" + body);
-					articlebean.setBody(body);
 
+					if (articlebean.getArticle_id() != 0) {
 
-					if (articlebean.updateArticle()) {
-						//成功したポップアップを表示
-						response.setContentType("application/json;charset=UTF-8");
-						response.setHeader("Cache-Control", "private");
+						if (articlebean.getTitle() == null) {
+							articlebean.setTitle(" ");
+						}
+						if (articlebean.getUrl() == null) {
+							articlebean.setUrl("http://homo/" + article_id);
+						}
 
-						resp = "{\"state\": \"更新しました\", \"flag\": 1}";
+						articlebean.setArticle_id(article_id);
+						// 一時的に無効
+						//articlebean.setTitle(title);
+						//System.out.println("body:" + body);
+						articlebean.setBody(body);
 
-						System.out.println(resp);
+						if (articlebean.updateArticle()) {
+							//成功したポップアップを表示
+							response.setContentType("application/json;charset=UTF-8");
+							response.setHeader("Cache-Control", "private");
 
+							resp = "{\"state\": \"更新しました\", \"flag\": 1}";
+
+							//System.out.println(resp);
+
+						} else {
+							response.setContentType("application/json;charset=UTF-8");
+							response.setHeader("Cache-Control", "private");
+
+							resp = "{\"state\": \"更新できませんでした\", \"flag\": 0}";
+
+							//失敗したポップアップを表示
+						}
 					} else {
 						response.setContentType("application/json;charset=UTF-8");
 						response.setHeader("Cache-Control", "private");
 
-						resp = "{\"state\": \"更新できませんでした\", \"flag\": 0}";
-
-						//失敗したポップアップを表示
+						resp = "{\"state\": \"不正なアクセス\", \"flag\": 0}";
 					}
 				} catch (Exception e) {
 					// TODO 自動生成された catch ブロック

@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,13 +19,13 @@ import beansdomain.ArticleBean;
 public class AddFavServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AddFavServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public AddFavServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -36,31 +37,51 @@ public class AddFavServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+			IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(true);
-		/*if(セッション情報があるなら){
-			//何もしない
-		}else if(セッション情報がないなら){
-			//ログイン画面に戻る
-		}*/
-		/***************************************
-		*ある記事にお気に入りボタンを押したとき*
-		****************************************/
+
+		String resp = "{\"state\": \"unknown\", \"flag\": 0}";
+		response.setContentType("application/json;charset=UTF-8");
+		response.setHeader("Cache-Control", "private");
+
+		Nonce nonce = new Nonce(request);
+
+		//if (nonce.isNonce())
 		//記事にお気に入りとして追加
-		int user_id =1;//sessionからuser_idを取得
-		int article_id = Integer.parseInt(request.getParameter("article_id"));
-		ArticleBean articlebean = new ArticleBean();
-		articlebean.setArticle_id(article_id);
-		try {
-			if(articlebean.addFavorite(user_id)){
-				//成功したポップアップを表示
-			}else{
-				//失敗したポップアップを表示
+		int user_id = 0;//sessionからuser_idを取得
+		int article_id = 0;
+
+		if (request.getParameter("article_id") != null) {
+
+			try {
+				article_id = Integer.parseInt(request.getParameter("article_id"));
+				user_id = (int) session.getAttribute("user_id");
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
+			ArticleBean articlebean = new ArticleBean();
+			articlebean.setArticle_id(article_id);
+			try {
+				if (articlebean.addFavorite(user_id)) {
+					//成功したポップアップを表示
+					resp = "{\"state\": \"追加しました\", \"flag\": 1}";
+				} else {
+					//失敗したポップアップを表示
+					resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
+				}
+			} catch (Exception e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
+
+			PrintWriter out = response.getWriter();
+			out.println(resp);
+		} else {
+			PrintWriter out = response.getWriter();
+			out.println(resp);
 		}
+
 	}
 }

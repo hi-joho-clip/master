@@ -58,13 +58,11 @@ public class ViewArticleServlet extends HttpServlet {
 			user_id = (int) session.getAttribute("user_id");
 		}
 
-		String art = request.getParameter("article_id");
-
 		int article_id = 0;
 		try {
 			if (request.getParameter("article_id") != null) {
 
-				article_id = Integer.parseInt(art);
+				article_id =Integer.parseInt(request.getParameter("article_id"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

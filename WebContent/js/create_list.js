@@ -128,7 +128,13 @@ var get_mylists = function(json) {
 							"<input type='hidden' value='"+json[i].url+"' id='url"+json[i].article_id+"'>"+
 						"</div>"+
 					"</div>");
+
+		console.log("tooru");
 		$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
+		if(json[i].favflag==true){
+			console.log('#favtitle'+json[i].article_id);
+			$('#favtitle'+json[i].article_id).attr('style', 'color:#FFEB3B');
+		}
 	}
 	jQuery(function($){
 		$('.bar').mosaic({
