@@ -159,6 +159,7 @@ function addFavArticle(article_id) {
 				+ document.getElementById(url).value + "</a>";
 		// グローバルflagをfalseにする
 		document.getElementById(grobalflag).value = true;
+		toastr.success('お気に入りました');
 
 	} else if (flag == "true") {
 		// 削除の処理
@@ -175,6 +176,7 @@ function addFavArticle(article_id) {
 				+ document.getElementById(url).value + "</a>";
 		// グローバルflagをtrueにする
 		document.getElementById(grobalflag).value = false;
+		toastr.success('気に入りませんでした');
 
 	}
 }
