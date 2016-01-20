@@ -271,11 +271,18 @@ public class ArticleBean {
 	 * @return
 	 * @throws Exception
 	 **/
-	public ArticleBean viewArticle() throws Exception {
+	public ArticleBean viewArticle(int user_id, int article_id) throws Exception {
 		ArticleBean articleBean = new ArticleBean();
 		this.articleDAO = new ArticleDAO();
 		setArticleDTO();
-		articleDTO = articleDAO.view(this.articleDTO.getArticle_id());
+
+		// マイリスト取得
+		int mylist_id = this.articleDAO.getMylistID(user_id);
+
+		System.out.println(mylist_id);
+
+
+		articleDTO = articleDAO.view(this.articleDTO.getArticle_id(), mylist_id);
 
 		// 記事共通部分
 		articleBean.setArticle_id(articleDTO.getArticle_id());

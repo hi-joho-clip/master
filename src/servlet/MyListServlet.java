@@ -21,13 +21,13 @@ import beansdomain.ArticleBean;
 public class MyListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public MyListServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public MyListServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -40,13 +40,16 @@ public class MyListServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+			IOException {
 		// TODO Auto-generated method stub
 		perform(request, response);
 	}
-	protected void perform(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void perform(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+			IOException {
 		HttpSession session = request.getSession(true);
-		System.out.println("来ている"+request.getParameter("user_id"));
+		System.out.println("来ている" + request.getParameter("user_id"));
 		/*if(セッション情報があるなら){
 			//何もしない
 		}else if(セッション情報がないなら){
@@ -56,23 +59,26 @@ public class MyListServlet extends HttpServlet {
 		*サイドメニューのマイリストを押したとき*
 		****************************************/
 		//記事一覧表示
-		int user_id =1;//sessionからuser_idを取得
-		int page = 1; // パラメータからページ番号取得
+		int user_id = 0;//sessionからuser_idを取得
+		int page = 1; // パラメータからページ番号取得(デフォルト1）
 
-		if (request.getParameter("page") != null) {
-			try {
-					page = Integer.parseInt(request.getParameter("page"));
-			} catch (NumberFormatException e) {
-				e.printStackTrace();
-			} catch (Exception e) {
-				e.printStackTrace();
+		try {
+			user_id = (int) session.getAttribute("user_id");
+			System.out.println("user_id" + user_id);
+			if (request.getParameter("page") != null) {
+
+				page = Integer.parseInt(request.getParameter("page"));
 			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		ArticleBean articlebean = new ArticleBean();
 		ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
 		try {
-			article_list=articlebean.viewArticleList(user_id, page);
+			article_list = articlebean.viewArticleList(user_id, page);
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();

@@ -179,8 +179,12 @@ public class ArticleDAO {
 			pstmt.setString(2, article.getBody());
 			pstmt.setString(3, article.getUrl());
 			pstmt.setInt(4, article.getArticle_id());
-			pstmt.executeUpdate();
-			flag = true;
+			System.out.println("upate:" + pstmt);
+			if (pstmt.executeUpdate() == 0) {
+				flag = false;
+			} else {
+				flag = true;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
@@ -409,7 +413,7 @@ public class ArticleDAO {
 				for (int search_id : search_id_list) {
 					// System.out.println("search_id:" + search_id);
 					if (fav_id == search_id) {
-						articleList.add(view(fav_id));
+						articleList.add(view(fav_id, getMylistID(user_id)));
 					}
 				}
 			}
@@ -494,7 +498,7 @@ public class ArticleDAO {
 
 			// 記事リストがあるだけ記事のデータを取得
 			for (int article_id : article_id_list) {
-				articleList.add(view(article_id));
+				articleList.add(view(article_id, getMylistID(user_id)));
 			}
 
 		} catch (Exception e) {
@@ -609,17 +613,19 @@ public class ArticleDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArticleDTO view(int article_id) throws Exception {
+	public ArticleDTO view(int article_id, int mylist_id) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArticleDTO articleDTO = new ArticleDTO();
 		ArrayList<ImageDTO> image_list = new ArrayList<ImageDTO>();
-		String sql = "SELECT * FROM articles where article_id = ? ";
+		String sql = "SELECT * FROM articles where article_id = ? and id = ? ";
 		String image_sql = "select * from article_image where article_id = ?";
 
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, article_id);
+			pstmt.setInt(2, mylist_id);
+			System.out.println("view:" + pstmt);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				articleDTO.setArticle_id(rs.getInt("article_id"));
@@ -635,7 +641,8 @@ public class ArticleDAO {
 				articleDTO.setMylist_id(rs.getInt("id"));
 			}
 
-			if (articleDTO != null) {
+			// 記事IDがセットされてないと処理しない
+			if (articleDTO.getArticle_id() != 0) {
 				pstmt = con.prepareStatement(image_sql);
 				pstmt.setInt(1, article_id);
 				rs = pstmt.executeQuery();

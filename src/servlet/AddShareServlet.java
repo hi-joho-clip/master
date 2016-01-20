@@ -72,7 +72,7 @@ public class AddShareServlet extends HttpServlet {
 			System.out.println("aaaa" + article_id);
 			System.out.println(article_id + friend_id);
 			artbean.setArticle_id(article_id);
-			newbean = artbean.viewArticle();
+			newbean = artbean.viewArticle(user_id, article_id);
 			System.out.println(newbean.getTitle());
 			newbean.setArticle_id(0);
 			newbean.addShareArticle(user_id, friend_id);

@@ -42,10 +42,12 @@ public class UpdateArticleServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(true);
 		Boolean ses_flag = false;
-		String resp = "{\"state\": \"unknownError\"}";
+		String resp = "{\"state\": \"unknownError\",  \"flag\": 0}";
 
 		//nonceの検証を行う
 		String s_nonce = (String) session.getAttribute("nonce");
+		int user_id = 0;
+		int article_id = 0;
 		String nonce = request.getParameter("nonce");
 
 		// Nullでもなく空でもない
@@ -58,10 +60,11 @@ public class UpdateArticleServlet extends HttpServlet {
 		}
 
 		if (ses_flag) {
-			int article_id = 0;
+
 
 			try {
 				article_id = Integer.parseInt(request.getParameter("article_id"));
+				user_id = (int)session.getAttribute("user_id");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -74,13 +77,13 @@ public class UpdateArticleServlet extends HttpServlet {
 
 			//String url = request.getParameter("url");//JSON
 
-			if (article_id != 0) {
+			if (article_id != 0 && user_id != 0) {
 
 				try {
 					ArticleBean oldBean = new ArticleBean();
 					oldBean.setArticle_id(article_id);
 					ArticleBean articlebean = new ArticleBean();
-					articlebean = oldBean.viewArticle();
+					articlebean = oldBean.viewArticle(user_id, article_id);
 					articlebean.setArticle_id(article_id);
 					// 一時的に無効
 					//articlebean.setTitle(title);
@@ -93,7 +96,7 @@ public class UpdateArticleServlet extends HttpServlet {
 						response.setContentType("application/json;charset=UTF-8");
 						response.setHeader("Cache-Control", "private");
 
-						resp = "{\"state\": \"更新しました\"}";
+						resp = "{\"state\": \"更新しました\", \"flag\": 1}";
 
 						System.out.println(resp);
 
@@ -101,7 +104,7 @@ public class UpdateArticleServlet extends HttpServlet {
 						response.setContentType("application/json;charset=UTF-8");
 						response.setHeader("Cache-Control", "private");
 
-						resp = "{\"state\": \"更新できませんでした\"}";
+						resp = "{\"state\": \"更新できませんでした\", \"flag\": 0}";
 
 						//失敗したポップアップを表示
 					}
@@ -113,7 +116,7 @@ public class UpdateArticleServlet extends HttpServlet {
 				response.setContentType("application/json;charset=UTF-8");
 				response.setHeader("Cache-Control", "private");
 
-				resp = "{\"state\": \"認証が必要です\"}";
+				resp = "{\"state\": \"認証が必要です\", \"flag\": 0}";
 
 			}
 
@@ -122,7 +125,7 @@ public class UpdateArticleServlet extends HttpServlet {
 		} else {
 			response.setContentType("application/json;charset=UTF-8");
 			response.setHeader("Cache-Control", "private");
-			resp = "{\"state\": \"不正なアクセス\"}";
+			resp = "{\"state\": \"不正なアクセス\",  \"flag\": 0}";
 			PrintWriter out = response.getWriter();
 			out.println(resp);
 		}

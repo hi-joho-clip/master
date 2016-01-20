@@ -78,7 +78,7 @@ public class ViewArticleServlet extends HttpServlet {
 
 			try {
 				articlebean.setArticle_id(article_id);
-				article = articlebean.viewArticle();
+				article = articlebean.viewArticle(user_id, article_id);
 				article.setTagBeans(tagbean.viewExistingTag(user_id, article_id));
 				// ユーザ名も欲しい
 				article.setUsername((String) session.getAttribute("username"));
