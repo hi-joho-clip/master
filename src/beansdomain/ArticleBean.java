@@ -105,7 +105,22 @@ public class ArticleBean {
 	 */
 	public boolean deleteArticle(int user_id, int article_id) throws Exception {
 		this.articleDAO = new ArticleDAO();
-		return this.articleDAO.delete(user_id, article_id);
+
+		int mylist_id = 0;
+		// マイリスト取得
+		if (this.articleDAO.isShare(article_id)) {
+			// user_idとarticle_idからその人のもつシェアマイリストだった場合
+			// 記事のマイリストIDは正しい。
+			mylist_id = this.articleDAO.getShareMylistIDArt(user_id, article_id);
+
+		} else {
+			mylist_id = this.articleDAO.getMylistIDArt(user_id, article_id);
+		}
+		if (mylist_id != 0) {
+			return  this.articleDAO.delete(user_id, article_id);
+		} else {
+			return false;
+		}
 
 	}
 
@@ -241,7 +256,7 @@ public class ArticleBean {
 			mylist_id = this.articleDAO.getShareMylistIDArt(user_id, article_id);
 
 		} else {
-			mylist_id = this.articleDAO.getMylistID(user_id);
+			mylist_id = this.articleDAO.getMylistIDArt(user_id, article_id);
 		}
 		if (mylist_id != 0) {
 			return this.articleDAO.addFavorite(this.article_id, user_id);//true=成功、false=失敗
@@ -267,7 +282,7 @@ public class ArticleBean {
 			mylist_id = this.articleDAO.getShareMylistIDArt(user_id, article_id);
 
 		} else {
-			mylist_id = this.articleDAO.getMylistID(user_id);
+			mylist_id = this.articleDAO.getMylistIDArt(user_id, article_id);
 		}
 		if (mylist_id != 0) {
 			return this.articleDAO.deleteFavorite(article_id, user_id);
@@ -318,7 +333,7 @@ public class ArticleBean {
 			mylist_id = this.articleDAO.getShareMylistIDArt(user_id, article_id);
 
 		} else {
-			mylist_id = this.articleDAO.getMylistID(user_id);
+			mylist_id = this.articleDAO.getMylistIDArt(user_id, article_id);
 		}
 
 		System.out.println(mylist_id);
@@ -379,9 +394,25 @@ public class ArticleBean {
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean addArticleTag(int user_id, ArrayList<String> tag_body_list) throws Exception {
+	public boolean addArticleTag(int user_id, ArrayList<String> tag_body_list, int article_id) throws Exception {
 		this.articleDAO = new ArticleDAO();
-		return this.articleDAO.addTag(this.article_id, user_id, tag_body_list);
+
+		int mylist_id = 0;
+		// マイリスト取得
+		if (this.articleDAO.isShare(article_id)) {
+			// user_idとarticle_idからその人のもつシェアマイリストだった場合
+			// 記事のマイリストIDは正しい。
+			mylist_id = this.articleDAO.getShareMylistIDArt(user_id, article_id);
+
+		} else {
+			mylist_id = this.articleDAO.getMylistIDArt(user_id, article_id);
+		}
+
+		if (mylist_id != 0) {
+			return this.articleDAO.addTag(article_id, user_id, tag_body_list);
+		} else {
+			return false;
+		}
 	}
 
 	/**
