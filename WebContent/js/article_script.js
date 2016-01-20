@@ -3,14 +3,14 @@ var hostURL = "http://localhost:8080";
 // マイリスト
 function getMyList() {
 	var jsonParam = null;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/mylist";
+	var URL = hostURL + "/clipMaster/mylist";
 	document.getElementById('title').innerHTML = '<h1>マイリスト</h1>';
 	getJSON(URL, jsonParam, get_mylists);
 }
 // お気に入り
 function getFavList() {
 	var jsonParam = null;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/favlist";
+	var URL = hostURL + "/clipMaster/favlist";
 	document.getElementById('title').innerHTML = '<h1>お気に入り</h1>';
 	getJSON(URL, jsonParam, get_mylists);
 }
@@ -18,7 +18,7 @@ function getFavList() {
 // シェア記事一覧
 function getShareList(friend_user_id) {
 	var jsonParam = "friend_user_id=" + friend_user_id;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/sharelist";
+	var URL = hostURL + "/clipMaster/sharelist";
 	document.getElementById('title').innerHTML = '<h1>シェア記事</h1>';
 	getJSON(URL, jsonParam, get_sharelists);
 }
@@ -27,7 +27,7 @@ function getShareList(friend_user_id) {
 function getTagFavList() {
 	var xmlResult = new XMLHttpRequest();
 	var jsonParam = null;// 送りたいデータ
-	var xmlURL = "http://localhost:8080/clipMaster/tagfavlist";
+	var xmlURL = hostURL + "/clipMaster/tagfavlist";
 
 	xmlResult.open("POST", xmlURL, true);
 	xmlResult.responseText = "json";
@@ -62,7 +62,7 @@ function getTagFavList() {
 function getTag() {
 	var xmlResult = new XMLHttpRequest();
 	var jsonParam = null;// 送りたいデータ
-	var xmlURL = "http://localhost:8080/clipMaster/gettag";
+	var xmlURL = hostURL + "/clipMaster/gettag";
 
 	xmlResult.open("POST", xmlURL, true);
 	xmlResult.responseText = "json";
@@ -90,7 +90,7 @@ function getTag() {
 	xmlResult.send(jsonParam);
 	return true;
 }
-// 記事の表示（内容と画像の表示がよくわからん）
+// 記事の表示
 function getViewArticle(article_id) {
 
 	var jsonParam = "article_id=" + article_id;// 送りたいデータ
@@ -170,7 +170,7 @@ function addFavArticle(article_id) {
 
 	} else if (flag == "true") {
 		// 削除の処理
-		var URL = "http://localhost:8080/clipMaster/deletefav";
+		var URL = hostURL + "/clipMaster/deletefav";
 
 		// タイトルの横の★マークを削除
 
@@ -222,7 +222,7 @@ function shareArticle(friend_user_id, article_id) {
 	var param = "article_id=" + article_id.item(0).value + "&friend_id="
 			+ friend_user_id + "";
 
-	var URL = "http://localhost:8080/clipMaster/addshare";
+	var URL = hostURL + "/clipMaster/addshare";
 
 	getJSON(URL, param, null);
 	if (json.flag == 0) {

@@ -110,7 +110,7 @@ public class ArticleDAO {
 			pstmt.setString(4, article.getUrl());
 			pstmt.setInt(5, id);
 			pstmt.setBytes(6, article.getThum());
-			System.out.println(pstmt);
+			//System.out.println(pstmt);
 			pstmt.executeUpdate();
 			pstmt = con.prepareStatement(sql2);
 			rs = pstmt.executeQuery();
@@ -228,7 +228,7 @@ public class ArticleDAO {
 			pstmt.setString(2, article.getBody());
 			pstmt.setString(3, article.getUrl());
 			pstmt.setInt(4, article.getArticle_id());
-			System.out.println("upate:" + pstmt);
+			//System.out.println("upate:" + pstmt);
 			if (pstmt.executeUpdate() == 0) {
 				flag = false;
 			} else {
@@ -421,6 +421,48 @@ public class ArticleDAO {
 	}
 
 	/**
+	 * 記事の場合、Article_IDとUser_IDから
+	 * そのユーザのマイリスト内にある記事かを示す
+	 * @return
+	 * @throws Exception
+	 */
+	public int getMylistIDArt(int user_id, int article_id) throws Exception {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int mylist_id = 0;
+		int ret_id = 0;
+
+		String getSQL = "select id from articles where article_id = ? ";
+		String getART = "select id from mylists where user_id = ? and share_flag = false";
+
+		try {
+			pstmt = con.prepareStatement(getSQL);
+			pstmt.setInt(1, article_id);
+			//System.out.println(pstmt);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				mylist_id = rs.getInt("id");
+			}
+			if (mylist_id != 0) {
+				pstmt = con.prepareStatement(getART);
+				pstmt.setInt(1, user_id);
+				//System.out.println(pstmt);
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					// own_user_idが一致したら
+					if (mylist_id == rs.getInt("id")) {
+						ret_id = rs.getInt("id");
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception();
+		}
+		return ret_id;
+	}
+
+	/**
 	 * 記事にお気に入りとして追加
 	 *
 	 * @return
@@ -448,7 +490,7 @@ public class ArticleDAO {
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, article_id);
 				pstmt.setInt(2, user_id);
-				System.out.println("pstmt:" + pstmt);
+				//System.out.println("pstmt:" + pstmt);
 				pstmt.executeUpdate();
 				pstmt = con.prepareStatement(article_fav);
 				pstmt.setInt(1, article_id);
@@ -698,7 +740,7 @@ public class ArticleDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int def_page = 20 * (page - 1);
-		System.out.println(def_page);
+		//System.out.println(def_page);
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
 		String sql = "SELECT * FROM articles WHERE id = ANY (SELECT id FROM mylists WHERE user_id = ?) limit 20 offset ?";
 
@@ -781,7 +823,7 @@ public class ArticleDAO {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, article_id);
 			pstmt.setInt(2, mylist_id);
-			System.out.println("view:" + pstmt);
+			//System.out.println("view:" + pstmt);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				articleDTO.setArticle_id(rs.getInt("article_id"));
@@ -844,7 +886,7 @@ public class ArticleDAO {
 			pstmt.setInt(1, user_id);
 			pstmt.setInt(2, friend_user_id);
 			pstmt.setInt(3, def_page);
-			System.out.println(pstmt);
+			//System.out.println(pstmt);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				ArticleDTO article = new ArticleDTO();
@@ -933,7 +975,7 @@ public class ArticleDAO {
 			TagBean tagbean = new TagBean();
 			ArrayList<TagBean> tag_list = new ArrayList<TagBean>();
 			tag_list = tagbean.viewExistingTag(user_id, article_id);
-			System.out.println(tag_list.size());
+
 			//データベースに存在するタグリストがある限り
 			for (int i = 0; i < tag_list.size(); i++) {
 				boolean deleteflag = true;
