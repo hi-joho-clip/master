@@ -41,9 +41,11 @@ public class UpdateArticleServlet extends HttpServlet {
 			IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(true);
-		Boolean ses_flag = false;
+
 		String resp = "{\"state\": \"unknownError\",  \"flag\": 0}";
 
+
+		Boolean ses_flag = false;
 		//nonceの検証を行う
 		String s_nonce = (String) session.getAttribute("nonce");
 		int user_id = 0;
