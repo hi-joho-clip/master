@@ -18,7 +18,7 @@ function lock() {
 		console.log(result);
 	}
 
-	//console.log("あとは、判定だわ");
+	// console.log("あとは、判定だわ");
 	if (result != null) {
 		if (result == "true") {
 			console.log("ロック判定：ロック");
@@ -55,8 +55,7 @@ function lock() {
 		console.log("失敗してない");
 	} else if (cnt < 5) {
 		console.log("1回以上失敗してる");
-		$userList = $("<h4>" + cnt
-				+ "回ログイン失敗しました<br>5回失敗すると、5分間ロックされます</h4>");
+		$userList = $("<h4>" + cnt + "回ログイン失敗しました<br>5回失敗すると、5分間ロックされます</h4>");
 	} else {
 		$userList = $("<h4>5分間ロックされます</h4>");
 		console.log("ロックされちゃった");
@@ -127,16 +126,20 @@ function getUserList() {
 		}
 
 		var online_flag = "";
-		if (docCookies.getItem('online') == true) {
-			online_flag = "checked";
-			on_kyohi = "";
-			on_kyoka = "checked";
-			console.log("on");
-		} else if (docCookies.getItem('online') == false){
+		var on_kyohi = "";
+		var on_kyoka = "";
+		if (docCookies.getItem('online') === 'false') {
 			online_flag = "";
 			on_kyohi = "checked";
 			on_kyoka = "";
 			console.log("off");
+		} else if (docCookies.getItem('online') === 'true') {
+			online_flag = "checked";
+			on_kyohi = "";
+			on_kyoka = "checked";
+			console.log("on");
+		} else  {
+			console.log("unknown");
 		}
 		var $onoffkun = $("<input type='checkbox' name='onoffswitch' class='onoffswitch-checkbox' id='myonoffswitch' "
 				+ flag
@@ -249,7 +252,7 @@ function DenyFriend() {
 
 function test() {
 	var data = document.getElementById('myonoffswitch').checked;
-	//console.log(data);
+	// console.log(data);
 
 	if (data == false) {
 		AcceptFriend();
