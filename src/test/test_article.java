@@ -9,13 +9,17 @@ import daodto.Unique;
 
 public class test_article {
 	public static void main(String[] args) {
+		//100% aaa  aaaaaaa        ffff　　　ああ_あ  　　  fshgjsrhgsdg
 		ArrayList<String> text_list = new ArrayList<String>();
-		text_list = escapekai("100% aaa  aaaaaaa        ffff　　　ああ_あ  　　  fshgjsrhgsdg");
+		text_list = escapekai("");
 		//test_add(1);//記事の追加○
 		//test_delete(54);//記事の削除○
 		//test_view_article_list(1,2);//記事一覧表示○
-		test_view_mylist_search(1,text_list,1);//マイリスト検索の記事一覧表示
+		//test_view_mylist_search(1,text_list,1);//マイリスト検索の記事一覧表示
 		//test_view_fav_list(1);//お気に入りの記事一覧表示○
+		//test_view_favlist_search(1,text_list,1);//お気に入り検索の記事一覧表示
+		//test_view_tag_search(1,text_list,"aaa",1);//タグ検索の記事一覧表示
+		test_view_sharelist_search(1,text_list,2,1);//シェア検索の記事一覧表示
 		//test_tag_fav_list(1);//タグ内でお気に入りした記事一覧○
 		//test_update_article(1);//記事の更新○
 		//test_add_fav_article(2,1);//記事にお気に入りとして追加○
@@ -34,14 +38,6 @@ public class test_article {
 
 		//test_addImage();
 	}
-	// _ %が含まれる文字列のエスケープ
-	static String escape(String text){
-		String textkun="";
-
-		textkun=text.replaceAll("_","\\\\_").replaceAll("%", "\\\\%").replaceAll("　"," ");
-		System.out.println(textkun);
-		return textkun;
-	}
 	static ArrayList<String> escapekai(String text){
 		ArrayList<String> text_list = new ArrayList<String>();
 		// _ %が含まれる文字列のエスケープ
@@ -49,10 +45,13 @@ public class test_article {
 		text=text.replaceAll("_","\\\\_").replaceAll("%", "\\\\%").replaceAll("　"," ");
 		//空白があるなら分割
 		String[] text_body = text.split("[\\s]+");
-		for(int i=0;i<text_body.length;i++){
-			text_list.add(i, text_body[i]);
-			System.out.println(text_list.get(i));
-			//サイズ分
+		if(text_body.length!=0){
+			for(int i=0;i<text_body.length;i++){
+				text_list.add(i, text_body[i]);
+				System.out.println(text_list.get(i));
+			}
+		}else{
+			text_list.add(0," ");//空白が送られてきた場合
 		}
 		return text_list;
 	}
@@ -171,6 +170,52 @@ public class test_article {
 			System.out.println(a.get(i).getTitle());
 		}
 	}
+
+	//お気に入り検索の記事一覧表示(テスト済)
+	static void test_view_favlist_search(int user_id,ArrayList<String> text_list, int page) {
+		ArticleBean ab = new ArticleBean();
+		ArrayList<ArticleBean> a = new ArrayList<ArticleBean>();
+		try {
+			a = ab.viewFavListSearch(user_id,text_list, page);//修正する
+		} catch (Exception e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		for (int i = 0; i < a.size(); i++) {
+			System.out.println(a.get(i).getTitle());
+		}
+	}
+
+	//タグ検索の記事一覧表示(テスト済)
+		static void test_view_tag_search(int user_id,ArrayList<String> text_list,String tag, int page) {
+			ArticleBean ab = new ArticleBean();
+			ArrayList<ArticleBean> a = new ArrayList<ArticleBean>();
+			try {
+				a = ab.viewTagSearch(user_id,text_list,tag, page);//修正する
+			} catch (Exception e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
+			for (int i = 0; i < a.size(); i++) {
+				System.out.println(a.get(i).getTitle());
+			}
+		}
+
+	//シェア検索の記事一覧表示(テスト済)
+		static void test_view_sharelist_search(int user_id,ArrayList<String> text_list,int friend_user_id, int page) {
+			ArticleBean ab = new ArticleBean();
+			ArrayList<ArticleBean> a = new ArrayList<ArticleBean>();
+			try {
+				a = ab.viewShareListSearch(user_id,text_list,friend_user_id, page);//修正する
+			} catch (Exception e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
+			for (int i = 0; i < a.size(); i++) {
+				System.out.println(a.get(i).getTitle());
+			}
+		}
+
 
 	//タグ内でお気に入りした記事一覧(テスト済）
 	static void test_tag_fav_list(int user_id, int page) {
