@@ -343,7 +343,7 @@ div[data-wysihtml5-dialog="createTable"] td {
 						<div align="left">
 
 							<div id="editable" class="editable"
-								style="font-size: 200%; padding: 10px"></div>
+								style="font-size: 200%; padding: 10px" contenteditable ="false"></div>
 						</div>
 						<section class="section">
 							<div class="head-bar">
@@ -377,15 +377,17 @@ div[data-wysihtml5-dialog="createTable"] td {
 						updateArticle();
 					});
 
-					$('#editable').attr('contenteditable', 'true');
+					$('#editable').attr('contenteditable', 'false');
+
 
 					var isOnline = navigator.onLine;
 					if (navigator.onLine === true) {
 						alert("current network status is online");
-						$('.toolbar').css({
-							'display' : 'none'
-						});
-						$('#editable').attr('contenteditable', 'false');
+
+						//$('.toolbar').css({
+					//		'display' : 'none'
+						//});
+						//$('#editable').attr('contenteditable', 'false');
 
 					} else if (navigator.onLine === false) {
 						alert("current network status is offline");
@@ -403,12 +405,16 @@ div[data-wysihtml5-dialog="createTable"] td {
 			var e = new wysihtml5.Editor($(wrapper).find('.editable').get(0), {
 				toolbar : $(wrapper).find('.toolbar').get(0),
 				parserRules : wysihtml5ParserRules,
-				pasteParserRulesets : wysihtml5ParserPasteRulesets
+				pasteParserRulesets : wysihtml5ParserPasteRulesets,
+				supportTouchDevices : true,
+
+
 			//showToolbarAfterInit: false
 			});
 			editors.push(e);
 
 			e.on("showSource", function() {
+
 				alert(e.getValue(true));
 			});
 
@@ -416,6 +422,7 @@ div[data-wysihtml5-dialog="createTable"] td {
 
 		var editor = new wysihtml5.Editor($('.editable').get(0), {
 			parserRules : wysihtml5ParserRules
+
 		//showToolbarAfterInit: false
 		}), composer = editor.composer;
 
