@@ -1,4 +1,4 @@
-var hostURL = "http://localhost:8080";
+
 
 // マイリスト
 function getMyList() {
