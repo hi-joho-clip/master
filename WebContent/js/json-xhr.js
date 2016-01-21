@@ -14,6 +14,7 @@ function initPromise() {
 		operative.Promise = ES6Promise.Promise;
 	}
 }
+var hostURL = "http://localhost:8080";
 
 
 /**
@@ -80,17 +81,17 @@ function getRequest() {
 	var request = {
 		articlelist : function getArticleLists() {
 
-			return getURL("http://localhost:8080/clipMaster/mylist", null)
+			return getURL(hostURL + "/clipMaster/mylist", null)
 					.then(JSON.parse);
 		},
 		article : function getArticle(param) {
 
 			// JSONをテキストからオブジェクトへパースする必要がある。
-			return getURL("http://localhost:8080/clipMaster/viewarticle", param)
+			return getURL(hostURL + "/clipMaster/viewarticle", param)
 					.then(JSON.parse);
 		},
 		updatelist : function getArticleLists(param) {
-			return getURL("http://localhost:8080/clipMaster/getupdatearticle",
+			return getURL(hostURL + "/clipMaster/getupdatearticle",
 					param);
 		}
 

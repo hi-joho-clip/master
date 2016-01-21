@@ -66,7 +66,7 @@ function lock() {
 // ログアウト
 function logout() {
 	var jsonParam = null;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/logout";
+	var URL = hostURL + "/clipMaster/logout";
 	var userList = "";
 	var setappend = function(json) {
 		userList = "";
@@ -80,7 +80,7 @@ function logout() {
 function addUser() {
 
 	var jsonParam = null;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/adduser";
+	var URL = hostURL +  "/clipMaster/adduser";
 	var userList = "";
 	var setappend = function(json) {
 		userList = json.ErrorMessage + "<br>";
@@ -93,7 +93,7 @@ function addUser() {
 function deleteUser() {
 
 	var jsonParam = null;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/deleteuser";
+	var URL = hostURL + "/clipMaster/deleteuser";
 	var userList = "";
 	var setappend = function(json) {
 		userList = "ニックネーム:" + json.nickname + "<br>" + "メールアドレス:"
@@ -106,7 +106,7 @@ function deleteUser() {
 // ユーザ情報の表示
 function getUserList() {
 
-	var URL = "http://localhost:8080/clipMaster/viewuser";
+	var URL = hostURL + "/clipMaster/viewuser";
 	var userList = "";
 	var setappend = function(json) {
 		userList = "<h2>" + "ニックネーム<br>" + json.nickname + "<br><br>"
@@ -190,7 +190,7 @@ function onlineMode() {
 function NickName() {
 
 	var jsonParam = null;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/viewuser";
+	var URL = hostURL + "/clipMaster/viewuser";
 	var userList = "";
 	var setappend = function(json) {
 		userList = "ニックネーム:" + "<br>" + json.nickname + "<br>";
@@ -203,7 +203,7 @@ function NickName() {
 function MailAddress() {
 
 	var jsonParam = null;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/viewuser";
+	var URL = hostURL + "/clipMaster/viewuser";
 	var userList = "";
 	var setappend = function(json) {
 		userList = "メールアドレス:" + "<br>" + json.mailaddress + "<br>";
@@ -215,7 +215,7 @@ function MailAddress() {
 function MailAddress() {
 
 	var jsonParam = null;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/viewuser";
+	var URL = hostURL + "/clipMaster/viewuser";
 	var userList = "";
 	var setappend = function(json) {
 		userList = "メールアドレス:" + "<br>" + json.mailaddress + "<br>";
@@ -228,7 +228,7 @@ function MailAddress() {
 function AcceptFriend() {
 
 	var jsonParam = null;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/acceptfriend";
+	var URL = hostURL + "/clipMaster/acceptfriend";
 	var userList = "";
 	var setappend = function(json) {
 		userList = json.Message;
@@ -241,7 +241,7 @@ function AcceptFriend() {
 function DenyFriend() {
 
 	var jsonParam = null;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/denyfriend";
+	var URL = hostURL + "/clipMaster/denyfriend";
 	var userList = "";
 	var setappend = function(json) {
 		userList = json.Message;
