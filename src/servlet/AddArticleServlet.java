@@ -55,16 +55,17 @@ public class AddArticleServlet extends HttpServlet {
 		// nonceの検証が必要です。
 
 		Nonce nonce = new Nonce(request);
+		url = "https://ja.wikipedia.org/wiki/%E3%81%84%E3%81%A1%E3%81%94100%25";
 
-		if (nonce.isNonce()) {
+		if (true) {//nonce.isNonce()) {
 			// urlはUTF-8でエンコして送ろう
-			if (request.getParameter("url") != null) {
+			if (true) {//request.getParameter("url") != null) {
 
 				try {
-					url = request.getParameter("url");//JSON
-					url = new String(url.getBytes("UTF-8"), "UTF-8");
+					//url = request.getParameter("url");//JSON
+					//url = new String(url.getBytes("UTF-8"), "UTF-8");
 					user_id = (int) session.getAttribute("user_id");
-					mode = request.getParameter("mode");
+					//mode = request.getParameter("mode");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

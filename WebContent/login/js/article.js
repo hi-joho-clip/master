@@ -19,14 +19,14 @@ $(document).ready(function() {
 	});
 });
 
-$(document).ready(function() {
+$(document).ready(
+		function() {
 
+			$("div.hiddenarea").append(
+					'<input type="hidden" id="nonce" value="'
+							+ docCookies.getItem("nonce") + '">');
 
-	$("div.hiddenarea").append(
-			'<input type="hidden" id="nonce" value="'
-					+ docCookies.getItem("nonce") + '">');
-
-});
+		});
 
 var $grid;
 $(document).ready(function() {
@@ -43,37 +43,79 @@ $(document).ready(function() {
 	switch ($.cookie("viewMode")) {
 	case "0":// マイリスト画面を表示しているとき
 		$('.grid').empty();
-		getMyList();
 
-		var isOnline = navigator.onLine;
-		if (navigator.onLine === true) {
-			 alert("current network status is online");
+		// document.write('<script type="text/javascript"
+		// src="../../js/import.js"></script>');
+		// var isOnline = navigator.onLine;
+		if (isSettinOnLine() === true) {
+			getMyList();
+			initTopPage();
+			toastr.warning("オンライン状態なり");
 
-		} else if (navigator.onLine === false) {
-			 alert("current network status is offline");
+		} else if (isSettinOnLine() === false) {
 
-		} else {
-			alert("current network status is unknown");
+			$('.head-bar').css({
+				'background' : '#31708f'
+			});
+			toastr.warning("オフラインなんだなーこれ");
+			var username = docCookies.getItem('username');
+			page = 1;
+			getIDEArticleList(username, page).then(function(json) {
+				// 純粋なリストが必要
+				$('#title').append('<h1>マイリスト</h1>');
+				get_mylists(json);
+			})['catch'](function(error) {
+				console.log(error);
+			});
+
 		}
-		// オフライン判断
 
 		break;
 	case "1":// お気に入り画面を表示しているとき
 		$('.grid').empty();
-		// オフライン判断
-		getFavList();
+
+		if (isSettinOnLine() === true) {
+			// オフライン判断
+			getFavList();
+		} else {
+
+		}
 
 		break;
 	case "2":// 特定のタグ画面を表示しているとき
 		$('.grid').empty();
 		// オフライン判断
-		console.log($.cookie("tagLists"));
-		getTagArticleList(0, $.cookie("tagLists"));
+		if (isSettinOnLine() === true) {
+			console.log($.cookie("tagLists"));
+			getTagArticleList(0, $.cookie("tagLists"));
+		}
 		break;
 	case "3":// 特定のタグ画面を表示しているとき
 		$('.grid').empty();
-		// オフライン判断
-		getShareList($.cookie("shareLists"));
+
+		if (isSettinOnLine() === true) {
+			// オフライン判断
+			getShareList($.cookie("shareLists"));
+		}
 		break;
 	}
 });
+
+function isSettinOnLine() {
+	var SetFlag = docCookies.getItem('online');
+
+	if (SetFlag == null) {
+		docCookies.setItem('online', true);
+	}
+
+	console.log(SetFlag);
+	if (SetFlag) {
+		if (navigator.onLine === true) {
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		return false;
+	}
+}
