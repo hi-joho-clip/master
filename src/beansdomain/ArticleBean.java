@@ -441,6 +441,32 @@ public class ArticleBean {
 		return articleList;
 	}
 
+	/**
+	 * マイリスト検索の記事一覧表示
+	 * @return
+	 * @throws Exception
+	 */
+	public ArrayList<ArticleBean> viewMyListSearch(int user_id,ArrayList<String> text_list, int page) throws Exception {
+		ArrayList<ArticleBean> articleList = new ArrayList<ArticleBean>();
+		this.articleDAO = new ArticleDAO();
+		article = articleDAO.mylist_search(user_id,text_list, page);
+		for (int i = 0; i < article.size(); i++) {
+			ArticleBean articleBean = new ArticleBean();
+			articleBean.setArticle_id(article.get(i).getArticle_id());
+			articleBean.setTitle(article.get(i).getTitle());
+			articleBean.setUrl(article.get(i).getUrl());
+			articleBean.setCreated(article.get(i).getCreated());
+			articleBean.setModified(article.get(i).getModified());
+			articleBean.setShare_url(article.get(i).getShare_url());
+			articleBean.setShare_expior(article.get(i).getShare_expior());
+			articleBean.setFavflag(article.get(i).isFavflag());
+			articleBean.setMylist_id(article.get(i).getMylist_id());
+			articleBean.setThum(article.get(i).getThum());
+			articleList.add(articleBean);
+		}
+		return articleList;
+	}
+
 	public void setArticleDTO() {
 		this.articleDTO = new ArticleDTO();
 		this.articleDTO.setArticle_id(this.article_id);

@@ -9,10 +9,12 @@ import daodto.Unique;
 
 public class test_article {
 	public static void main(String[] args) {
-
+		ArrayList<String> text_list = new ArrayList<String>();
+		text_list = escapekai("100% aaa  aaaaaaa        ffff　　　ああ_あ  　　  fshgjsrhgsdg");
 		//test_add(1);//記事の追加○
 		//test_delete(54);//記事の削除○
-		test_view_article_list(1,2);//記事一覧表示○
+		//test_view_article_list(1,2);//記事一覧表示○
+		test_view_mylist_search(1,text_list,1);//マイリスト検索の記事一覧表示
 		//test_view_fav_list(1);//お気に入りの記事一覧表示○
 		//test_tag_fav_list(1);//タグ内でお気に入りした記事一覧○
 		//test_update_article(1);//記事の更新○
@@ -32,7 +34,28 @@ public class test_article {
 
 		//test_addImage();
 	}
+	// _ %が含まれる文字列のエスケープ
+	static String escape(String text){
+		String textkun="";
 
+		textkun=text.replaceAll("_","\\\\_").replaceAll("%", "\\\\%").replaceAll("　"," ");
+		System.out.println(textkun);
+		return textkun;
+	}
+	static ArrayList<String> escapekai(String text){
+		ArrayList<String> text_list = new ArrayList<String>();
+		// _ %が含まれる文字列のエスケープ
+		//全角の空白文字をひとつの半角空白に置換
+		text=text.replaceAll("_","\\\\_").replaceAll("%", "\\\\%").replaceAll("　"," ");
+		//空白があるなら分割
+		String[] text_body = text.split("[\\s]+");
+		for(int i=0;i<text_body.length;i++){
+			text_list.add(i, text_body[i]);
+			System.out.println(text_list.get(i));
+			//サイズ分
+		}
+		return text_list;
+	}
 	static void test_addImage() {
 
 		try {
@@ -91,7 +114,7 @@ public class test_article {
 		}
 	}
 
-	//記事の削除（テスト済）
+	/*//記事の削除（テスト済）
 	static void test_delete(int article_id) {
 		ArticleBean ab = new ArticleBean();
 		ab.setArticle_id(article_id);
@@ -101,7 +124,7 @@ public class test_article {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	//記事一覧表示(テスト済)
 	static void test_view_article_list(int user_id, int page) {
@@ -118,6 +141,21 @@ public class test_article {
 			System.out.println(a.get(i).isFavflag());
 		}
 	}
+
+	//マイリスト検索の記事一覧表示(テスト済)
+		static void test_view_mylist_search(int user_id,ArrayList<String> text_list, int page) {
+			ArticleBean ab = new ArticleBean();
+			ArrayList<ArticleBean> a = new ArrayList<ArticleBean>();
+			try {
+				a = ab.viewMyListSearch(user_id,text_list, page);//修正する
+			} catch (Exception e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
+			for (int i = 0; i < a.size(); i++) {
+				System.out.println(a.get(i).getTitle());
+			}
+		}
 
 	//お気に入りの記事一覧表示（テスト済）
 	static void test_view_fav_list(int user_id, int page) {
@@ -181,7 +219,7 @@ public class test_article {
 			e.printStackTrace();
 		}
 	}
-
+/*
 	//お気に入りの解除(テスト済)
 	static void test_fav_delete(int article_id, int user_id) {
 		ArticleBean ab = new ArticleBean();
@@ -204,7 +242,7 @@ public class test_article {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	//記事にシェアURLを追加(テスト済)
 	static void test_share_add(String share_url, int article_id) {
@@ -234,7 +272,7 @@ public class test_article {
 		}
 	}
 
-	//記事にタグを追加（テスト済）
+/*	//記事にタグを追加（テスト済）
 	static void test_add_tag(int article_id, int user_id) {
 		ArticleBean ab = new ArticleBean();
 		ab.setArticle_id(article_id);
@@ -249,7 +287,7 @@ public class test_article {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	//特定のタグの記事一覧表示（テスト済）
 	static void test_tag_search(int user_id, int page) {
