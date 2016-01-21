@@ -466,7 +466,81 @@ public class ArticleBean {
 		}
 		return articleList;
 	}
-
+	/**
+	 * お気に入り検索の記事一覧表示
+	 * @return
+	 * @throws Exception
+	 */
+	public ArrayList<ArticleBean> viewFavListSearch(int user_id,ArrayList<String> text_list, int page) throws Exception {
+		ArrayList<ArticleBean> articleList = new ArrayList<ArticleBean>();
+		this.articleDAO = new ArticleDAO();
+		article = articleDAO.favlist_search(user_id,text_list, page);
+		for (int i = 0; i < article.size(); i++) {
+			ArticleBean articleBean = new ArticleBean();
+			articleBean.setArticle_id(article.get(i).getArticle_id());
+			articleBean.setTitle(article.get(i).getTitle());
+			articleBean.setUrl(article.get(i).getUrl());
+			articleBean.setCreated(article.get(i).getCreated());
+			articleBean.setModified(article.get(i).getModified());
+			articleBean.setShare_url(article.get(i).getShare_url());
+			articleBean.setShare_expior(article.get(i).getShare_expior());
+			articleBean.setFavflag(article.get(i).isFavflag());
+			articleBean.setMylist_id(article.get(i).getMylist_id());
+			articleBean.setThum(article.get(i).getThum());
+			articleList.add(articleBean);
+		}
+		return articleList;
+	}
+	/**
+	 * タグ検索の記事一覧表示
+	 * @return
+	 * @throws Exception
+	 */
+	public ArrayList<ArticleBean> viewTagSearch(int user_id,ArrayList<String> text_list,String tag, int page) throws Exception {
+		ArrayList<ArticleBean> articleList = new ArrayList<ArticleBean>();
+		this.articleDAO = new ArticleDAO();
+		article = articleDAO.tag_search(user_id,text_list,tag, page);
+		for (int i = 0; i < article.size(); i++) {
+			ArticleBean articleBean = new ArticleBean();
+			articleBean.setArticle_id(article.get(i).getArticle_id());
+			articleBean.setTitle(article.get(i).getTitle());
+			articleBean.setUrl(article.get(i).getUrl());
+			articleBean.setCreated(article.get(i).getCreated());
+			articleBean.setModified(article.get(i).getModified());
+			articleBean.setShare_url(article.get(i).getShare_url());
+			articleBean.setShare_expior(article.get(i).getShare_expior());
+			articleBean.setFavflag(article.get(i).isFavflag());
+			articleBean.setMylist_id(article.get(i).getMylist_id());
+			articleBean.setThum(article.get(i).getThum());
+			articleList.add(articleBean);
+		}
+		return articleList;
+	}
+	/**
+	 * シェア検索の記事一覧表示
+	 * @return
+	 * @throws Exception
+	 */
+	public ArrayList<ArticleBean> viewShareListSearch(int user_id,ArrayList<String> text_list,int friend_user_id, int page) throws Exception {
+		ArrayList<ArticleBean> articleList = new ArrayList<ArticleBean>();
+		this.articleDAO = new ArticleDAO();
+		article = articleDAO.sharelist_search(user_id,text_list,friend_user_id, page);
+		for (int i = 0; i < article.size(); i++) {
+			ArticleBean articleBean = new ArticleBean();
+			articleBean.setArticle_id(article.get(i).getArticle_id());
+			articleBean.setTitle(article.get(i).getTitle());
+			articleBean.setUrl(article.get(i).getUrl());
+			articleBean.setCreated(article.get(i).getCreated());
+			articleBean.setModified(article.get(i).getModified());
+			articleBean.setShare_url(article.get(i).getShare_url());
+			articleBean.setShare_expior(article.get(i).getShare_expior());
+			articleBean.setFavflag(article.get(i).isFavflag());
+			articleBean.setMylist_id(article.get(i).getMylist_id());
+			articleBean.setThum(article.get(i).getThum());
+			articleList.add(articleBean);
+		}
+		return articleList;
+	}
 	public void setArticleDTO() {
 		this.articleDTO = new ArticleDTO();
 		this.articleDTO.setArticle_id(this.article_id);

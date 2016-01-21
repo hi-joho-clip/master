@@ -17,14 +17,14 @@ import beansdomain.ArticleBean;
 /**
  * Servlet implementation class MylistServlet
  */
-@WebServlet("/mylistsearch")
-public class MyListSearchServlet extends HttpServlet {
+@WebServlet("/sharelistsearch")
+public class ShareListSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public MyListSearchServlet() {
+	public ShareListSearchServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -55,6 +55,7 @@ public class MyListSearchServlet extends HttpServlet {
 		int page = 1; // パラメータからページ番号取得(デフォルト1）
 		ArrayList<String> text_list = new ArrayList<String>();
 		String text = "";
+		int friend_user_id=0;
 		try {
 			user_id = (int) session.getAttribute("user_id");
 			text = request.getParameter("text");
@@ -74,7 +75,7 @@ public class MyListSearchServlet extends HttpServlet {
 			}
 			System.out.println("user_id" + user_id);
 			if (request.getParameter("page") != null) {
-
+				friend_user_id = Integer.parseInt(request.getParameter("friend_user_id"));
 				page = Integer.parseInt(request.getParameter("page"));
 			}
 		} catch (NumberFormatException e) {
@@ -86,7 +87,7 @@ public class MyListSearchServlet extends HttpServlet {
 		ArticleBean articlebean = new ArticleBean();
 		ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
 		try {
-			article_list = articlebean.viewMyListSearch(user_id,text_list, page);
+			article_list = articlebean.viewShareListSearch(user_id,text_list,friend_user_id, page);
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();

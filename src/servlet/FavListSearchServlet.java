@@ -17,14 +17,14 @@ import beansdomain.ArticleBean;
 /**
  * Servlet implementation class MylistServlet
  */
-@WebServlet("/mylistsearch")
-public class MyListSearchServlet extends HttpServlet {
+@WebServlet("/favlistsearch")
+public class FavListSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public MyListSearchServlet() {
+	public FavListSearchServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -86,7 +86,7 @@ public class MyListSearchServlet extends HttpServlet {
 		ArticleBean articlebean = new ArticleBean();
 		ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
 		try {
-			article_list = articlebean.viewMyListSearch(user_id,text_list, page);
+			article_list = articlebean.viewFavListSearch(user_id,text_list, page);
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();

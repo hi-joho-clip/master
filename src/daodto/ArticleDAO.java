@@ -1026,7 +1026,6 @@ public class ArticleDAO {
 		return flag;
 	}
 
-
 	/**
 	 * マイリスト内検索
 	 * * paginator(OK)
@@ -1039,7 +1038,7 @@ public class ArticleDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int def_page = 20 * (page - 1);
-		System.out.println(def_page);
+		System.out.println("page:"+def_page);
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
 		String sql = "";
 		String like = "";
@@ -1047,18 +1046,11 @@ public class ArticleDAO {
 
 		//text_list.size()-1なのは最後のANDを取り除きたいから
 		for(int i=0;i<text_list.size()-1;i++){
-			if(text_list.size()==1){
-				like += "title LIKE ?";
-			}else{
-				like += "title LIKE ? AND ";
-			}
+			like += "title LIKE ? AND ";
 			count++;
 		}
-		if(text_list.size()==1){
-		}else{
 			like += "title LIKE ?";
 			count++;
-		}
 		System.out.println(like);
 
 		sql = "SELECT * FROM articles WHERE "+like+" AND id = ANY (SELECT id FROM mylists WHERE user_id = ?) limit 20 offset ?";
@@ -1092,6 +1084,199 @@ public class ArticleDAO {
 		}
 		return articleList;
 	}
-	//
+	/**
+	 * お気に入り内検索
+	 * * paginator(OK)
+	 *
+	 * @return
+	 * @throws Exception
+	 */
+	public ArrayList<ArticleDTO> favlist_search(int user_id,ArrayList<String> text_list,int page) throws Exception {
 
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int def_page = 20 * (page - 1);
+		System.out.println("page:"+def_page);
+		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
+		String sql = "";
+		String like = "";
+		int count = 0;//値をセットするために必要なカウント変数
+
+		//text_list.size()-1なのは最後のANDを取り除きたいから
+		for(int i=0;i<text_list.size()-1;i++){//2
+			like += "title LIKE ? AND ";
+			count++;
+		}
+			like += "title LIKE ?";
+			count++;
+
+		System.out.println(like);
+
+		sql = "SELECT * FROM articles WHERE "+like+" AND article_id IN"
+				+ " (SELECT article_id FROM article_tag WHERE tag_id ="
+				+ " (SELECT tag_id FROM tags WHERE tag_body = 'お気に入り' AND user_id = ?)) limit 20 offset ?";
+
+
+		try {
+			pstmt = con.prepareStatement(sql);
+
+			for(int i=1; i<=count;i++){
+				pstmt.setString(i, "%"+text_list.get(i-1)+"%");
+			}
+			pstmt.setInt(count+1, user_id);
+			pstmt.setInt(count+2, def_page);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				ArticleDTO article = new ArticleDTO();
+				article.setArticle_id(rs.getInt("article_id"));
+				article.setTitle(rs.getString("title"));
+				article.setUrl(rs.getString("url"));
+				article.setCreated(DateEncode.toDate(rs.getString("created")));
+				article.setModified(DateEncode.toDate(rs.getString("modified")));
+				article.setShare_url(rs.getString("share_url"));
+				article.setShare_expior(rs.getDate("share_expior"));
+				article.setFavflag(rs.getBoolean("favflag"));
+				article.setThum(rs.getBytes("thum"));
+				articleList.add(article);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception();
+		}
+		return articleList;
+	}
+	/**
+	 * タグ内検索
+	 * * paginator(OK)
+	 *
+	 * @return
+	 * @throws Exception
+	 */
+	public ArrayList<ArticleDTO> tag_search(int user_id,ArrayList<String> text_list,String tag,int page) throws Exception {
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int def_page = 20 * (page - 1);
+		System.out.println("page:"+def_page);
+		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
+		String sql = "";
+		int tag_id = 0;
+		int mylist_id = 0;
+		String like = "";
+		int count = 0;//値をセットするために必要なカウント変数
+
+		//text_list.size()-1なのは最後のANDを取り除きたいから
+		for(int i=0;i<text_list.size()-1;i++){//2
+			like += "title LIKE ? AND ";
+			count++;
+		}
+			like += "title LIKE ?";
+			count++;
+
+		System.out.println(like);
+
+		String get_tagid="SELECT tag_id FROM tags WHERE tag_body = ? AND user_id = ?";
+		sql="SELECT * FROM articles WHERE "+like+" AND id = ? AND " +
+				"article_id IN (SELECT article_id FROM article_tag WHERE tag_id = ?) limit 20 offset ?";
+
+		mylist_id=getMylistID(user_id);
+
+
+		try {
+			pstmt=con.prepareStatement(get_tagid);
+			pstmt.setString(1,tag);
+			pstmt.setInt(2, user_id);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				tag_id=rs.getInt("tag_id");
+			}
+			pstmt = con.prepareStatement(sql);
+
+			for(int i=1; i<=count;i++){
+				pstmt.setString(i, "%"+text_list.get(i-1)+"%");
+			}
+			pstmt.setInt(count+1, mylist_id);
+			pstmt.setInt(count+2, tag_id);
+			pstmt.setInt(count+3, def_page);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				ArticleDTO article = new ArticleDTO();
+				article.setArticle_id(rs.getInt("article_id"));
+				article.setTitle(rs.getString("title"));
+				article.setUrl(rs.getString("url"));
+				article.setCreated(DateEncode.toDate(rs.getString("created")));
+				article.setModified(DateEncode.toDate(rs.getString("modified")));
+				article.setShare_url(rs.getString("share_url"));
+				article.setShare_expior(rs.getDate("share_expior"));
+				article.setFavflag(rs.getBoolean("favflag"));
+				article.setThum(rs.getBytes("thum"));
+				articleList.add(article);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception();
+		}
+		return articleList;
+	}
+	/**
+	 * シェア内検索
+	 * * paginator(OK)
+	 *
+	 * @return
+	 * @throws Exception
+	 */
+	public ArrayList<ArticleDTO> sharelist_search(int user_id,ArrayList<String> text_list,int friend_user_id,int page) throws Exception {
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int def_page = 20 * (page - 1);
+		System.out.println("page:"+def_page);
+		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
+		String sql = "";
+		String like = "";
+		int count = 0;//値をセットするために必要なカウント変数
+
+		//text_list.size()-1なのは最後のANDを取り除きたいから
+		for(int i=0;i<text_list.size()-1;i++){//2
+			like += "title LIKE ? AND ";
+			count++;
+		}
+			like += "title LIKE ?";
+			count++;
+
+		System.out.println(like);
+
+		sql = "SELECT * FROM articles WHERE "+like+" AND articles.id = " +
+				"(SELECT M.id FROM friends F,mylists M WHERE F.own_user_id = ? AND F.friend_user_id = ? " +
+				"AND M.id = F.id AND M.share_flag=1) limit 20 offset ?";
+
+		try {
+			pstmt = con.prepareStatement(sql);
+
+			for(int i=1; i<=count;i++){
+				pstmt.setString(i, "%"+text_list.get(i-1)+"%");
+			}
+			pstmt.setInt(count+1, user_id);
+			pstmt.setInt(count+2, friend_user_id);
+			pstmt.setInt(count+3, def_page);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				ArticleDTO article = new ArticleDTO();
+				article.setArticle_id(rs.getInt("article_id"));
+				article.setTitle(rs.getString("title"));
+				article.setUrl(rs.getString("url"));
+				article.setCreated(DateEncode.toDate(rs.getString("created")));
+				article.setModified(DateEncode.toDate(rs.getString("modified")));
+				article.setShare_url(rs.getString("share_url"));
+				article.setShare_expior(rs.getDate("share_expior"));
+				article.setFavflag(rs.getBoolean("favflag"));
+				article.setThum(rs.getBytes("thum"));
+				articleList.add(article);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception();
+		}
+		return articleList;
+	}
 }
