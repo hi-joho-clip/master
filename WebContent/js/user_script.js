@@ -18,7 +18,7 @@ function lock() {
 		console.log(result);
 	}
 
-	console.log("あとは、判定だわ");
+	//console.log("あとは、判定だわ");
 	if (result != null) {
 		if (result == "true") {
 			console.log("ロック判定：ロック");
@@ -125,6 +125,19 @@ function getUserList() {
 			kyoka = "";
 			kyohi = "checked";
 		}
+
+		var online_flag = "";
+		if (docCookies.getItem('online') == true) {
+			online_flag = "checked";
+			on_kyohi = "";
+			on_kyoka = "checked";
+			console.log("on");
+		} else if (docCookies.getItem('online') == false){
+			online_flag = "";
+			on_kyohi = "checked";
+			on_kyoka = "";
+			console.log("off");
+		}
 		var $onoffkun = $("<input type='checkbox' name='onoffswitch' class='onoffswitch-checkbox' id='myonoffswitch' "
 				+ flag
 				+ ">"
@@ -138,8 +151,36 @@ function getUserList() {
 				+ "</label>");
 		$("#onoffswitch").append($onoffkun).trigger("create");
 
+		var $online = $("<input type='checkbox' name='onlineswitch' class='onlineswitch-checkbox' id='myonlineswitch' "
+				+ online_flag
+				+ ">"
+				+ "<label class='onlineswitch-label' for='myonlineswitch' onclick='onlineMode()'>"
+				+ "<span  class='onlineswitch-inner'"
+				+ on_kyoka
+				+ "></span>"
+				+ "<span  class='onlineswitch-switch'"
+				+ on_kyohi
+				+ "></span>"
+				+ "</label>");
+		$("#onlineswitch").append($online).trigger("create");
+
 	};
 	getJSON(URL, null, setappend);
+}
+
+/**
+ * オンラインとオフラインモード切替
+ */
+function onlineMode() {
+	var data = document.getElementById('myonlineswitch').checked;
+	console.log(data);
+
+	if (data == false) {
+		docCookies.setItem('online', true);
+		console.log(docCookies.getItem('online'));
+	} else if (data == true) {
+		docCookies.setItem('online', false);
+	}
 }
 
 // ニックネーム変更画面
@@ -208,6 +249,7 @@ function DenyFriend() {
 
 function test() {
 	var data = document.getElementById('myonoffswitch').checked;
+	//console.log(data);
 
 	if (data == false) {
 		AcceptFriend();

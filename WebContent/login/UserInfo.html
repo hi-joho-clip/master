@@ -25,6 +25,7 @@
 <script type="text/javascript" src="../js/jquery/isotope.pkgd.min.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery.cookie.js"></script>
 <script type="text/javascript" src="../js/json-xhr.js"></script>
+<script type="text/javascript" src="../js/lib/cookie.js"></script>
 
 <link rel="stylesheet" href="css/pure-drawer.css">
 
@@ -129,6 +130,10 @@
 								<td><h6>ユーザ申請 :</h6></td>
 								<td><div id="onoffswitch"></div></td>
 							</tr>
+							<tr>
+								<td><h6>オンライン :</h6></td>
+								<td><div id="onlineswitch"></div></td>
+							</tr>
 						</table>
 						<br><br>
 						 <h5><a href="Login.html" onclick="javascript:logout();">ログアウト</a></h5>
@@ -151,7 +156,7 @@
 				<script>
 					$(document).ready(function() {
 						getUserList();
-						message();
+						//message();
 
 					});
 				</script>
