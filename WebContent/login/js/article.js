@@ -109,13 +109,15 @@ function isSettinOnLine() {
 	}
 
 	console.log(SetFlag);
-	if (SetFlag) {
+	if (SetFlag  === 'true') {
 		if (navigator.onLine === true) {
 			return true;
 		} else {
 			return false;
 		}
-	} else {
+	} else if (SetFlag === 'false'){
 		return false;
+	} else {
+		toastr.warning('再ログインしてくだaさい');
 	}
 }
