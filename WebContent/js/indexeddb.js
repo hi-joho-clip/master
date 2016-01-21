@@ -46,6 +46,9 @@ function getArticle(username, article_id) {
 	});
 };
 
+
+
+
 /**
  * 記事の件数分ループさせて更新する
  *
@@ -161,7 +164,7 @@ function updateIDBArticleList(values) {
 
 /**
  * データベース内の記事一覧のJSONを取得 なお画像は関係ない模様 (Promise)
- *
+ * 純粋なリストを作ろう
  * @param guid
  * @param page
  */
@@ -188,9 +191,14 @@ function getIDEArticleList(username, page) {
 		tutorial.tx([ "article" ], function(tx, todo) {
 			todo.fetch(offset_filter, function(values) {
 				if (values) {
-					console.log("values = " + JSON.stringify(values));
-					console.log("done.");
-					resolve(values);
+					//console.log("values = " + JSON.stringify(values));
+					var val = [];
+					for ( var i in values) {
+						val.push(values[i]["article"]);
+						console.log("art:" + values[i]['modified']);
+					}
+					console.log(val.length);
+					resolve(val);
 				} else {
 					reject(new Error("not found"));
 				}

@@ -54,13 +54,13 @@ function startUpdate(username) {
 	if (window.Worker) {
 		console.log('worker start:' + username);
 		// これが疑似的なPromiseオブジェクト→Deferredオブジェクト
-		var worker = new Worker('js/worker.js');
+		var worker = new Worker('../js/worker.js');
 		worker.addEventListener('message', function(e) {
 			// ここではconsoleでJSONデータを表示する
-			alert('更新が完了しました');
+			toastr.success('更新が完了しました');
 
 			// testDataなら書き込める
-			console.log('JSON data: ', e.data);
+			//console.log('JSON data: ', e.data);
 		}, true);
 
 		worker.postMessage({

@@ -168,12 +168,6 @@ public class testServlet {
 		/*
 		 *
 		 */
-		String param = "{article_id :1,modified:149810990000}" +
-				",{\"article_id\" :\"2\",\"modified\":1449729990000}" +
-				",{\"article_id\" :\"42\",\"modified\":1449729990000}" +
-				",{\"article_id\" :\"4\",\"modified\":1449729990000}" +
-				",{\"article_id\" :\"5\",\"modified\":1449725590000}";
-
 
 		//req.setParameter("json", "");
 		//req.setParameter("json", "[" + param + "]");

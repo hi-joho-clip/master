@@ -15,6 +15,7 @@ function initPromise() {
 	}
 }
 
+
 /**
  * URLからJSONオブジェクトを取得する
  *
