@@ -33,6 +33,29 @@
 
 
 <style>
+div#footerArea {
+	position: fixed !important;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 50px;
+	background-color: #4E9ABE;
+	color: #fff;
+	z-index: 100;
+}
+
+a#edit-button {
+	position: fixed !important;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 150px;
+	background-color: #4E9ABE;
+	color: #fff;
+}
+
 small {
 	display: block;
 	margin-top: 40px;
@@ -230,30 +253,32 @@ div[data-wysihtml5-dialog="createTable"] td {
 					data-toggle-label="right"><span class="pure-toggle-icon"></span></label>
 				<nav class="pure-drawer" data-position="left">
 
-				  <p style="padding: 50px 20px; margin: 0;">
-	              <div id="bg-link">
-					<a href="UserInfo.html"><h4>ユーザ情報</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="index.html" onclick="javascript:$.cookie('viewMode','0');"><h4>マイリスト</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="index.html" onclick="javascript:$.cookie('viewMode','1');"><h4>お気に入り</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="taglist.html" ><h4>タグ</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="Friend.html"><h4>フレンド一覧</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="FriendBox.html"><h4>フレンドボックス</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="FriendSeach.html"><h4>フレンド検索</h4></a>
-				 </div>
-				</p>
-            </nav>
+					<p style="padding: 50px 20px; margin: 0;">
+					<div id="bg-link">
+						<a href="UserInfo.html"><h4>ユーザ情報</h4></a>
+					</div>
+					<div id="bg-link">
+						<a href="index.html"
+							onclick="javascript:$.cookie('viewMode','0');"><h4>マイリスト</h4></a>
+					</div>
+					<div id="bg-link">
+						<a href="index.html"
+							onclick="javascript:$.cookie('viewMode','1');"><h4>お気に入り</h4></a>
+					</div>
+					<div id="bg-link">
+						<a href="taglist.html"><h4>タグ</h4></a>
+					</div>
+					<div id="bg-link">
+						<a href="Friend.html"><h4>フレンド一覧</h4></a>
+					</div>
+					<div id="bg-link">
+						<a href="FriendBox.html"><h4>フレンドボックス</h4></a>
+					</div>
+					<div id="bg-link">
+						<a href="FriendSeach.html"><h4>フレンド検索</h4></a>
+					</div>
+					</p>
+				</nav>
 
 
 				<nav class="pure-drawer" data-position="right">
@@ -270,92 +295,117 @@ div[data-wysihtml5-dialog="createTable"] td {
 			</div>
 
 			<div class="container">
-			<div style="margin: 100px auto;">
-				<h7><div class="title"></div></h7>
+				<div style="margin: 100px auto;">
+					<h7>
+					<div class="title"></div>
+					</h7>
 
 
-				<div class="ewrapper" contentEditable="false">
-					<div class="toolbar" style="display:;">
-						<div class="block">
-							<a data-wysihtml5-command="bold" title="Bold"><img src='img/bold.png' width='25'height='25'></img></a>
-							<a data-wysihtml5-command="italic" title="Italic"><img src='img/italic.png' width='25'height='25'></img></a>
-							<a data-wysihtml5-command="underline" title="Under line"><img src='img/under line.png' width='25'height='25'></img></a>
+					<div class="ewrapper" contentEditable="false">
+						<div id="footerArea">
+							<div class="toolbar" style="display:;">
+								<div class="block">
+									<a data-wysihtml5-command="bold" title="Bold"><img
+										src='img/bold.png' width='25' height='25'></img></a> <a
+										data-wysihtml5-command="italic" title="Italic"><img
+										src='img/italic.png' width='25' height='25'></img></a> <a
+										data-wysihtml5-command="underline" title="Under line"><img
+										src='img/under line.png' width='25' height='25'></img></a>
 
 
-							<!-- <a
+									<!-- <a
 								data-wysihtml5-command="fontSize"
 								data-wysihtml5-command-value="large">大文字</a>-->
-						</div>
+								</div>
 
-						<div class="block">
+								<div class="block">
 
-							<a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="red" title="Font-Color RED"><img src='img/redF.png' width='25'height='25'></a>
-							<a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="blue"title="Font-Color BLUE"><img src='img/blueF.png' width='25'height='25'></a>
-						    <a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="green"title="Font-Color GREEN"><img src='img/greenF.png' width='25'height='25'></a>
+									<a data-wysihtml5-command="foreColor"
+										data-wysihtml5-command-value="red" title="Font-Color RED"><img
+										src='img/redF.png' width='25' height='25'></a> <a
+										data-wysihtml5-command="foreColor"
+										data-wysihtml5-command-value="blue" title="Font-Color BLUE"><img
+										src='img/blueF.png' width='25' height='25'></a> <a
+										data-wysihtml5-command="foreColor"
+										data-wysihtml5-command-value="green" title="Font-Color GREEN"><img
+										src='img/greenF.png' width='25' height='25'></a>
 
-						</div>
+								</div>
 
-						<div class="block">
+								<div class="block">
 
-							<span style="" id="bgColorBtns">
-							<a class="bg-color-btn" data-value="#990000"title="BG-Color RED"><img src='img/redBG.png' width='25'height='25'></a>
-							<a class="bg-color-btn" data-value="#3F51B5"title="BG-Color BLUE"><img src='img/blueBG.png' width='25'height='25'></a>
-							<a class="bg-color-btn" data-value="#3C763D"title="BG-Color GREEN"><img src='img/greenBG.png' width='25'height='25'></a>
-							<a class="bg-color-btn"	data-value="rgba(255,255,255,0)"title="BG-Color Defort"><img src='img/defoBG.png' width='25'height='25'></a>
-							</span>
-						</div>
+									<span style="" id="bgColorBtns"> <a class="bg-color-btn"
+										data-value="#990000" title="BG-Color RED"><img
+											src='img/redBG.png' width='25' height='25'></a> <a
+										class="bg-color-btn" data-value="#3F51B5"
+										title="BG-Color BLUE"><img src='img/blueBG.png' width='25'
+											height='25'></a> <a class="bg-color-btn"
+										data-value="#3C763D" title="BG-Color GREEN"><img
+											src='img/greenBG.png' width='25' height='25'></a> <a
+										class="bg-color-btn" data-value="rgba(255,255,255,0)"
+										title="BG-Color Defort"><img src='img/defoBG.png'
+											width='25' height='25'></a>
+									</span>
+								</div>
 
-						<div class="block">
-							<a data-wysihtml5-command="undo"title="Undo"><img src='img/back.png' width='25'height='25'></a>
-							<a data-wysihtml5-command="redo"title="Redo"><img src='img/return.png' width='25'height='25'></a>
-						</div>
-
-
-						<div data-wysihtml5-dialog="createLink" style="display: none;">
-							<label> Link: <input data-wysihtml5-dialog-field="href"
-								value="http://">
-							</label> <a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a
-								data-wysihtml5-dialog-action="cancel">Cancel</a>
-						</div>
-						<div data-wysihtml5-dialog="insertImage" style="display: none;">
-							<label> Image: <input data-wysihtml5-dialog-field="src"
-								value="http://">
-							</label> <label> Align: <select
-								data-wysihtml5-dialog-field="className">
-									<option value="">default</option>
-									<option value="wysiwyg-float-left">left</option>
-									<option value="wysiwyg-float-right">right</option>
-							</select>
-							</label> <a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a
-								data-wysihtml5-dialog-action="cancel">Cancel</a>
-						</div>
-					</div>
-					<div style="">
+								<div class="block">
+									<a data-wysihtml5-command="undo" title="Undo"><img
+										src='img/back.png' width='25' height='25'></a> <a
+										data-wysihtml5-command="redo" title="Redo"><img
+										src='img/return.png' width='25' height='25'></a>
+								</div>
 
 
-						<input id="updatebutton" type="button" name="check" value="確認" >
-						<br />
-
-
-
-						<div class="hiddenarea"></div>
-
-						<div align="left">
-
-							<div id="editable" class="editable"
-								style="font-size: 200%; padding: 10px" contenteditable ="false"></div>
-						</div>
-						<section class="section">
-							<div class="head-bar">
-								<div class="container-fluid">
-									<h1 class="text-center">
-
-									<a href="index.html"  onclick="javascript:$.cookie('viewMode','0');">CLIP</a>
-
-									</h1>
+								<div data-wysihtml5-dialog="createLink" style="display: none;">
+									<label> Link: <input data-wysihtml5-dialog-field="href"
+										value="http://">
+									</label> <a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a
+										data-wysihtml5-dialog-action="cancel">Cancel</a>
+								</div>
+								<div data-wysihtml5-dialog="insertImage" style="display: none;">
+									<label> Image: <input data-wysihtml5-dialog-field="src"
+										value="http://">
+									</label> <label> Align: <select
+										data-wysihtml5-dialog-field="className">
+											<option value="">default</option>
+											<option value="wysiwyg-float-left">left</option>
+											<option value="wysiwyg-float-right">right</option>
+									</select>
+									</label> <a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a
+										data-wysihtml5-dialog-action="cancel">Cancel</a>
 								</div>
 							</div>
-						</section>
+						</div>
+						<a id="edit-button" title="Undo"><img src='img/back.png'
+							width='25' height='25'></a> <a id="edit-text" title="Undo"><img
+							src='img/back.png' width='25' height='25'></a>
+						<div style="">
+
+
+							<input id="updatebutton" type="button" name="check" value="確認">
+							<br />
+
+
+
+							<div class="hiddenarea"></div>
+
+							<div align="left">
+
+								<div id="editable" class="editable"
+									style="font-size: 200%; padding: 10px" contenteditable="false"></div>
+							</div>
+							<section class="section">
+								<div class="head-bar">
+									<div class="container-fluid">
+										<h1 class="text-center">
+
+											<a href="index.html"
+												onclick="javascript:$.cookie('viewMode','0');">CLIP</a>
+
+										</h1>
+									</div>
+								</div>
+							</section>
 						</div>
 					</div>
 				</div>
@@ -377,15 +427,36 @@ div[data-wysihtml5-dialog="createTable"] td {
 						updateArticle();
 					});
 
-					$('#editable').attr('contenteditable', 'false');
+					$('.toolbar').attr('style', 'visibility:hidden');
 
+					var edit_flag = 'false';
+					$('#edit-button').click(function() {
+						if (edit_flag === 'false') {
+							$('.toolbar').attr('style', 'visibility:show');
+							edit_flag = 'true';
+						} else if (edit_flag === 'true') {
+							$('.toolbar').attr('style', 'visibility:hidden');
+							edit_flag = 'false';
+						}
+					});
+
+					var text_edit_flag = 'false';
+					$('#edit-text').click(function() {
+						if (edit_flag === 'false') {
+							$('#editable').attr('contenteditable', 'true');
+							edit_flag = 'true';
+						} else if (edit_flag === 'true') {
+							$('#editable').attr('contenteditable', 'false');
+							edit_flag = 'false';
+						}
+					});
 
 					var isOnline = navigator.onLine;
 					if (navigator.onLine === true) {
 						alert("current network status is online");
 
 						//$('.toolbar').css({
-					//		'display' : 'none'
+						//		'display' : 'none'
 						//});
 						//$('#editable').attr('contenteditable', 'false');
 
@@ -407,7 +478,6 @@ div[data-wysihtml5-dialog="createTable"] td {
 				parserRules : wysihtml5ParserRules,
 				pasteParserRulesets : wysihtml5ParserPasteRulesets,
 				supportTouchDevices : true,
-
 
 			//showToolbarAfterInit: false
 			});
