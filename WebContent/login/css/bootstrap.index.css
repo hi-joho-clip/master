@@ -32,14 +32,14 @@ p,h2,h3 {
 	h2,h3 {
 		page-break-after: avoid
 	}
-h2,h3,h4,h5,h6,..h2,.h3,.h4,.h5,.h6 {
+h2,h3,h4,h5,h6,h7,..h2,.h3,.h4,.h5,.h6,.h7 {
 	font-family: inherit;
 	font-weight: 500;
 	line-height: 1.1;
 	color: inherit
 }
 
-h2 small,h3 small,h4 small,h5 small,h6 small,. .h2 small,.h3 small,.h4 small,.h5 small,.h6 small, small,h2 .small,h3 .small,h4 .small,h5 .small,h6 .small,.h2 .small,.h3 .small,.h4 .small,.h5 .small,.h6 .small
+h2 small,h3 small,h4 small,h5 small,h6 small,h7 small,. .h2 small,.h3 small,.h4 small,.h5 small,.h6 small,.h7 small, .small,h2 .small,h3 .small,h4 .small,h5 .small,h6 .small,h7 .small,.h2 .small,.h3 .small,.h4 .small,.h5 .small,.h6 .small,.h7 .small
 	{
 	font-weight: 400;
 	line-height: 1;
@@ -56,7 +56,7 @@ h2,.h2,h3,.h3 {
 	font-size: 65%
 }
 
-h4,.h4,h5,.h5,h6,.h6 {
+h4,.h4,h5,.h5,h6,.h6,h7,.h7 {
     margin-top: 0px;
     margin-bottom: 0px;
     padding: 0.3em;
@@ -64,7 +64,7 @@ h4,.h4,h5,.h5,h6,.h6 {
 ;
 }
 
-h4 small,.h4 small,h5 small,.h5 small,h6 small,.h6 small,h4 .small,.h4 .small,h5 .small,.h5 .small,h6 .small,.h6 .small
+h4 small,.h4 small,h5 small,.h5 small,h6 small,.h6 small,h7 small,.h7 small,h4 .small,.h4 .small,h5 .small,.h5 .small,h6 .small,.h6 .small,h7 .small,.h7 .small
 	{
 	font-size: 75%
 }
@@ -96,6 +96,10 @@ h6,.h6 {
 	font-size: 22px
 }
 
+h7,.h7{
+	font-size: 30px;
+}
+
 
 
 a {
@@ -115,24 +119,6 @@ a:focus {
 	outline-offset: -2px
 }
 
-
-b {
-	color: #FFF;
-	text-decoration: none;
-	    font-size: medium;
-    font-weight: 500;
-}
-
-b:hover,a:focus {
-	color: #d3381c;
-	text-decoration: underline
-}
-
-b:focus {
-	outline: thin dotted;
-	outline: 5px auto -webkit-focus-ring-color;
-	outline-offset: -2px
-}
 
 
 
