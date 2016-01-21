@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>json - table</title>
+  <script type="text/javascript">
+  <!--
+  /**
+   * データ定義
+   */
+  var tableData = [
+    {"Name":"aa","Time":200,"Submit":300},
+    {"Name":"bb","Time":100,"Submit":200},
+    {"Name":"cc","Time":300,"Submit":200},
+    {"Name":"dd","Time":400,"Submit":150},
+    {"Name":"ee","Time":500,"Submit":50},
+    {"Name":"ff","Time":350,"Submit":450}
+  ]; // 実際のデータ
+
+  console.log(tableData);
+
+  var sortKey = ["Name","Time"]; // ソート項目
+  var asc = false; // 昇順(true)/降順(false)
+  var nowSortKey = "Name"; // 現在ソートキー
+
+  /**
+   * テーブルデータ生成
+   */
+  function createTable(obj) {
+	  console.log(obj.id);
+    var sort = "Name"; // デフォルトソート
+    if (obj != undefined && obj.id != undefined) {
+      sort = obj.id;
+      var sortFlg = false;
+      for (var i=0; i<sortKey.length; i++) {
+        if (sortKey[i] == sort) {
+          sortFlg = true;
+          break;
+        } else {
+          continue;
+        }
+      }
+      if (!sortFlg) return false; // ソート項目でなければ処理スキップ
+    }
+    asc = !asc; // 昇順/降順切り替え
+    if (nowSortKey != sort) {
+      asc = true; // ソート項目変更時は昇順
+      nowSortKey = sort;
+    }
+    // ヘッダー編集
+    editHeader();
+
+    var tbodyElm = document.getElementById("tbody_detail");
+    // tbody配下クリア
+    deleteTable(tbodyElm);
+    // データをソート
+    tableData.sort(
+      function (a, b) {
+        var aName = a[sort];
+        var bName = b[sort];
+        if (asc) return (aName > bName) ? 1 : -1;
+        else return (aName < bName) ? 1 : -1;
+      }
+    );
+    // tbody配下再作成
+    for (var i=0; i<tableData.length; i++) {
+      tbodyElm.appendChild(createTrElement(tableData[i]));
+    }
+  }
+  /**
+   * テーブルデータ削除
+   */
+  function deleteTable(tbodyElm) {
+    // 全ての子ノードを削除
+    for (var i=tbodyElm.childNodes.length-1; i>=0; i--) {
+      tbodyElm.removeChild(tbodyElm.childNodes[i]);
+    }
+  }
+  /**
+   * <tr>タグ生成
+   */
+  function createTrElement(data) {
+    var trElm = document.createElement("tr");
+    trElm.appendChild(createTdElement(data.Name));
+    trElm.appendChild(createTdElement(data.Time));
+    trElm.appendChild(createTdElement(data.Submit));
+    return trElm;
+  }
+  /**
+   * <td>タグ生成
+   */
+  function createTdElement(txt) {
+    var tdElm = document.createElement("td");
+    var txtObj = document.createTextNode(txt);
+    tdElm.appendChild(txtObj);
+    return tdElm;
+  }
+  /**
+   * テーブルヘッダー編集
+   */
+  function editHeader() {
+    // ヘッダー初期化
+    for (var i=0; i<sortKey.length; i++) {
+      var obj = document.getElementById(sortKey[i]);
+      obj.style.color = "#000000";
+      obj.removeChild(obj.childNodes[0]);
+      obj.appendChild(document.createTextNode(sortKey[i]));
+    }
+    // ソート項目の編集
+    if (nowSortKey != undefined && nowSortKey != "") {
+      var sortObj = document.getElementById(nowSortKey);
+      sortObj.style.color = "#0000FF";
+      sortObj.removeChild(sortObj.childNodes[0]);
+      var txt = (asc) ? "▼" : "▲";
+      sortObj.appendChild(document.createTextNode(nowSortKey + txt));
+    }
+  }
+  /**
+   * onloadイベント付与
+   */
+  if (window.addEventListener) { //for W3C DOM
+    window.addEventListener("load", createTable, false);
+  } else if (window.attachEvent) { //for IE
+    window.attachEvent("onload", createTable);
+  } else  {
+    window.onload = createTable;
+  }
+  </script>
+</head>
+<body>
+
+<table border="1">
+  <thead id="thead_header">
+    <tr id="tr_header">
+      <th><span id="Name" onclick="javascript:createTable(this);">ニックネーム</span></th>
+      <th><span id="Time" onclick="javascript:createTable(this);">登録日時</span></th>
+      <th><span id="Submit" onclick="javascript:createTable(this);">#</span></th>
+    </tr>
+  </thead>
+  <tbody id="tbody_detail">
+  </tbody>
+</table>
+
+</body>
