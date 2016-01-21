@@ -44,7 +44,7 @@ small,small a {
 }
 
 .title {
-	color: #00CEFF
+	color: #f5f5f5
 }
 
 #toolbar [data-wysihtml5-action] {
@@ -109,7 +109,6 @@ code {
 .toolbar {
 	display: block;
 	border-radius: 3px;
-	border: 1px solid #fff;
 	margin-bottom: 9px;
 	line-height: 1em;
 }
@@ -119,16 +118,21 @@ code {
 	height: 1.5em;
 	border-radius: 3px;
 	font-size: 25px;
-	line-height: 1.5em;
+	line-height: 1.3em;
 	text-decoration: none;
-	background: #e1e1e1;
+	background: transparent;
 	border: 1px solid #ddd;
 	padding: 0 0.2em;
 	margin: 1px 0;
 }
 
+.toolbar a:hover,a:focus {
+	background-color: #DDD;
+	border: 1px solid #000;
+}
+
 .toolbar a.wysihtml5-command-active,.toolbar .wysihtml5-action-active {
-	background: #222;
+	background: #999;
 	color: white;
 }
 
@@ -226,30 +230,31 @@ div[data-wysihtml5-dialog="createTable"] td {
 					data-toggle-label="right"><span class="pure-toggle-icon"></span></label>
 				<nav class="pure-drawer" data-position="left">
 
-					<p style="padding: 50px 20px; margin: 0;">
-					<h4>
-						<a href="UserInfo.html">ユーザ情報</a>
-					</h4>
-					<br>
-					<h4>
-						<a href="index.html"
-							onclick="javascript:$.cookie('viewMode','0');">マイリスト</a>
-					</h4>
-					<br>
-					<h4>
-						<a href="index.html"
-							onclick="javascript:$.cookie('viewMode','1');">お気に入り</a>
-					</h4>
-					<br>
-					<h4>
-						<a href="taglist.html">タグ</a>
-					</h4>
-					<br>
-					<h4>
-						<a href="#">フレンド</a>
-					</h4>
-					</p>
-				</nav>
+				  <p style="padding: 50px 20px; margin: 0;">
+	              <div id="bg-link">
+					<a href="UserInfo.html"><h4>ユーザ情報</h4></a>
+				 </div>
+				 <div id="bg-link">
+					<a href="index.html" onclick="javascript:$.cookie('viewMode','0');"><h4>マイリスト</h4></a>
+				 </div>
+				 <div id="bg-link">
+					<a href="index.html" onclick="javascript:$.cookie('viewMode','1');"><h4>お気に入り</h4></a>
+				 </div>
+				 <div id="bg-link">
+					<a href="taglist.html" ><h4>タグ</h4></a>
+				 </div>
+				 <div id="bg-link">
+					<a href="Friend.html"><h4>フレンド一覧</h4></a>
+				 </div>
+				 <div id="bg-link">
+					<a href="FriendBox.html"><h4>フレンドボックス</h4></a>
+				 </div>
+				 <div id="bg-link">
+					<a href="FriendSeach.html"><h4>フレンド検索</h4></a>
+				 </div>
+				</p>
+            </nav>
+
 
 				<nav class="pure-drawer" data-position="right">
 					<p style="padding: 100px 5px; margin: 0;">
@@ -265,14 +270,16 @@ div[data-wysihtml5-dialog="createTable"] td {
 			</div>
 
 			<div class="container">
-				<h1>wysihtml5 - Advanced Editor Example</h1>
+			<div style="margin: 100px auto;">
+				<h7><div class="title"></div></h7>
+
 
 				<div class="ewrapper" contentEditable="false">
 					<div class="toolbar" style="display:;">
 						<div class="block">
-							<a data-wysihtml5-command="bold" title="CTRL+B">太字</a> <a
-								data-wysihtml5-command="italic" title="CTRL+I">斜体</a> <a
-								data-wysihtml5-command="underline" title="CTRL+U">下線</a>
+							<a data-wysihtml5-command="bold" title="Bold"><img src='img/bold.png' width='25'height='25'></img></a>
+							<a data-wysihtml5-command="italic" title="Italic"><img src='img/italic.png' width='25'height='25'></img></a>
+							<a data-wysihtml5-command="underline" title="Under line"><img src='img/under line.png' width='25'height='25'></img></a>
 
 
 							<!-- <a
@@ -281,34 +288,26 @@ div[data-wysihtml5-dialog="createTable"] td {
 						</div>
 
 						<div class="block">
-							<a id="colorbtn" class="editor-btn">文字色変更</a> <a
-								data-wysihtml5-command="foreColor"
-								data-wysihtml5-command-value="blue">青色</a> <a
-								data-wysihtml5-command="foreColor"
-								data-wysihtml5-command-value="red">赤色</a> <a
-								data-wysihtml5-command="foreColor"
-								data-wysihtml5-command-value="green">緑色</a>
+
+							<a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="red" title="Font-Color RED"><img src='img/redF.png' width='25'height='25'></a>
+							<a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="blue"title="Font-Color BLUE"><img src='img/blueF.png' width='25'height='25'></a>
+						    <a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="green"title="Font-Color GREEN"><img src='img/greenF.png' width='25'height='25'></a>
+
 						</div>
 
 						<div class="block">
-							<a id="bgcolorbtn" class="editor-btn">背景色変更</a> <span style=""
-								id="bgColorBtns"> <a class="bg-color-btn"
-								style="background-color: rgb(255, 200, 200)"
-								data-value="rgb(255,200,200)">赤色</a> <a class="bg-color-btn"
-								style="background-color: rgb(185, 255, 185)"
-								data-value="rgb(185,255,185)">緑色</a> <a class="bg-color-btn"
-								style="background-color: rgb(255, 255, 185)"
-								data-value="rgb(255,255,185)">黄色</a> <a class="bg-color-btn"
-								style="background-color: rgb(185, 185, 255)"
-								data-value="rgb(185,185,255)">青色</a> <a class="bg-color-btn"
-								style="background-color: rgba(255, 255, 255, 0)"
-								data-value="rgba(255,255,255,0)">デフォルト</a>
+
+							<span style="" id="bgColorBtns">
+							<a class="bg-color-btn" data-value="#990000"title="BG-Color RED"><img src='img/redBG.png' width='25'height='25'></a>
+							<a class="bg-color-btn" data-value="#3F51B5"title="BG-Color BLUE"><img src='img/blueBG.png' width='25'height='25'></a>
+							<a class="bg-color-btn" data-value="#3C763D"title="BG-Color GREEN"><img src='img/greenBG.png' width='25'height='25'></a>
+							<a class="bg-color-btn"	data-value="rgba(255,255,255,0)"title="BG-Color Defort"><img src='img/defoBG.png' width='25'height='25'></a>
 							</span>
 						</div>
 
 						<div class="block">
-							<a data-wysihtml5-command="undo">戻る</a> <a
-								data-wysihtml5-command="redo">やり直す</a>
+							<a data-wysihtml5-command="undo"title="Undo"><img src='img/back.png' width='25'height='25'></a>
+							<a data-wysihtml5-command="redo"title="Redo"><img src='img/return.png' width='25'height='25'></a>
 						</div>
 
 
@@ -333,11 +332,11 @@ div[data-wysihtml5-dialog="createTable"] td {
 					</div>
 					<div style="">
 
-						<p>更新ボタン</p>
-						<input id="updatebutton" type="button" name="check" value="確認">
+
+						<input id="updatebutton" type="button" name="check" value="確認" >
 						<br />
 
-						<div style="font-size: 300%;" class="title"></div>
+
 
 						<div class="hiddenarea"></div>
 
@@ -349,10 +348,15 @@ div[data-wysihtml5-dialog="createTable"] td {
 						<section class="section">
 							<div class="head-bar">
 								<div class="container-fluid">
-									<h1 class="text-center">CLIP</h1>
+									<h1 class="text-center">
+
+									<a href="index.html"  onclick="javascript:$.cookie('viewMode','0');">CLIP</a>
+
+									</h1>
 								</div>
 							</div>
 						</section>
+						</div>
 					</div>
 				</div>
 
