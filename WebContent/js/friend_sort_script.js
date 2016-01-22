@@ -16,23 +16,22 @@ function getFriendList() {
 				now.setTime(json[i].created);
 
 				tableData[i] = new Array();
-				tableData[i] = {Name:json[i].nickname, Time:now.getFullYear() + "年" + (now.getMonth() + 1) + "月" + now.getDate() + "日", Submit: "<a href=\"#\">取消</a>"};
-
-				/*"<a href='#' data-remodal-target='delete_request' onclick='document.getElementById(\"user_id\").innerHTML=\""
-					+ json[i].friend_user_id + "\";'>取消</a>"};*/
-			}else if(json[i].status == 3){
+				tableData[i] = {Name:json[i].nickname, Time:now.getFullYear() + "年" + (now.getMonth() + 1) + "月" + now.getDate() + "日", Submit: "<a href='#' data-remodal-target='delete_request' onclick='document.getElementById(\"user_id\").innerHTML=\""
+					+ json[i].friend_user_id + "\";'>取消</a>"};
+			}
+		}
+		for ( var i = 0; i < json.length; i++) {
+			if(json[i].status == 3){
 				//フレンド一覧
 				var now = new Date();
 				now.setTime(json[i].created);
 
 				tableData[i] = new Array();
-				tableData[i] = {Name:json[i].nickname, Time:now.getFullYear() + "年" + (now.getMonth() + 1) + "月" + now.getDate() + "日", Submit: "<a href=\"#\">削除</a>"};
-
-				/*<a href='#' data-remodal-target='delete_friend' onclick='document.getElementById(\"user_id\").innerHTML=\""
-					+ json[i].friend_user_id + "\";'>削除</a>*/
+				tableData[i] = {Name:"<a href='index.html'onclick='javascript:$.cookie(\"viewMode\",\"3\");$.cookie(\"shareLists\",\""+json[i].friend_user_id+"\");'>"+json[i].nickname, Time:now.getFullYear() + "年" + (now.getMonth() + 1) + "月" + now.getDate() + "日", Submit: "<a href='#' data-remodal-target='delete_friend' onclick='document.getElementById(\"user_id\").innerHTML=\""
+					+ json[i].friend_user_id + "\";'>削除</a>"};
 			}
 		}
-		document.getElementById('info').innerHTML = tableData[0].Submit;
+		$('input#id_search').quicksearch('section div div ul li');
 	};
 	getJSON(URL, jsonParam, setappend);
 	return tableData;
@@ -98,10 +97,9 @@ function deleteTable(tbodyElm) {
  */
 function createTrElement(data) {
 	var trElm = document.createElement("tr");
-	trElm.appendChild(createTdElement(data.Name));
+	trElm.appendChild(createTdSubmitElement(data.Name));
 	trElm.appendChild(createTdElement(data.Time));
-	trElm.appendChild(createTdElement(data.Submit));
-	console.log("trElm:"+trElm);
+	trElm.appendChild(createTdSubmitElement(data.Submit));
 	return trElm;
 }
 /**
@@ -111,10 +109,16 @@ function createTdElement(txt) {
 	var tdElm = document.createElement("td");
 	var txtObj = document.createTextNode(txt);
 	tdElm.appendChild(txtObj);
-	//$("td").append(tdElm).trigger('create');
-	console.log("tdElm:"+tdElm);
 	return tdElm;
 }
+
+//タグを反応させるため
+function createTdSubmitElement(txt) {
+	var tdElm = document.createElement("td");
+	tdElm.innerHTML=txt;
+	return tdElm;
+}
+
 /**
  * テーブルヘッダー編集
  */
