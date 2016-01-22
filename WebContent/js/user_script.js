@@ -76,6 +76,19 @@ function logout() {
 	getJSON(URL, jsonParam, setappend);
 }
 
+//ログアウト
+function deleteuser() {
+	var jsonParam = null;// 送りたいデータ
+	var URL = hostURL + "/clipMaster/deleteuser";
+	var userList = "";
+	var setappend = function(json) {
+		userList = "";
+		document.getElementById('deleteuser').innerHTML = userList;
+	};
+	getJSON(URL, jsonParam, setappend);
+}
+
+
 // 新規登録後
 function addUser() {
 
