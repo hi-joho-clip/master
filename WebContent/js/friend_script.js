@@ -30,7 +30,10 @@ function getFriendSearch(nickname) {
 				friendList += json[i].nickname
 				+ "&emsp;"
 						+ "<a href='#' data-remodal-target='add' onclick='document.getElementById(\"user_id\").innerHTML=\""
-						+ json[i].user_id + "\";'>追加</a>" + "<br>";
+						+ json[i].user_id + "\";'>追加</a>" + "&emsp;&emsp;&emsp;";
+				if(i%2 == 1){
+					friendList += "<br>";
+				}
 			}
 		} else {
 			friendList += "空入力 または、検索結果が1件もない場合は、表示しません";
