@@ -148,19 +148,7 @@ var get_mylists = function(json) {
 };
 
 function addViewNext(json) {
-//	var page = 1;
-//
-//
-//	if ( $('#art-page').val()) {
-//		if ($('#art-page').val() === '1') {
-//			page = 1;
-//		} else {
-//			page =  parseInt($('#art-page').val());
-//			//$('#art-page').val(page + 1);
-//		}
-//	} else {
-//		console.log(json.length);
-//	}
+
 	// 20件以上の場合はValueを加算し、20件未満の場合はボタンを削除する。
 	if (json.length >= 19) {
 		console.log($('#art-page').val());
@@ -177,7 +165,7 @@ var get_sharelists = function(json) {
 	var random =Math.floor(Math.random()*3);
 	$myList = $("<div class='grid-sizer'></div>");
 	$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
-	for ( var i = json.length - 1; i >= 0; i--) {
+	for ( var i = 0; i < json.length ; i++) {
 		$myList = $("<div class='"+item[random][i] + " mosaic-block bar'>" +
 						"<div class='mosaic-overlay'>"+
 						 "<div id='link-body'><a href='../login/article.html?"+json[i].article_id+"'></a></div>" +
@@ -204,6 +192,8 @@ var get_sharelists = function(json) {
 					"</div>");
 		$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
 	}
+
+	addViewNext(json);
 	jQuery(function($){
 		$('.bar').mosaic({
 			animation	:	'slide'		//fade or slide

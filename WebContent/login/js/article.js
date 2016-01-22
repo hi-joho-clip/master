@@ -31,13 +31,32 @@ function initPagingMylist(callback) {
 	//var page = parseInt($('#art-page').val());
 	// ページング用番号の初期化
 
+	// モードがタイルの場合
 	if ($('#art-page').val() === '1') {
 		callback(1);
+		//callback(2);
 	} else {
 		// 1でないときはその分までループする
 		for (var i =1; i <=  parseInt($('#art-page').val()) ; i++) {
 			console.log("grid:" + i);
 			callback(i);
+		}
+	}
+}
+
+function initPagingSharelist(callback, friend_id) {
+	//var page = parseInt($('#art-page').val());
+	// ページング用番号の初期化
+
+	// モードがタイルの場合
+	if ($('#art-page').val() === '1') {
+		callback(friend_id,1);
+		//callback(2);
+	} else {
+		// 1でないときはその分までループする
+		for (var i =1; i <=  parseInt($('#art-page').val()) ; i++) {
+			console.log("grid:" + i);
+			callback(friend_id,i);
 		}
 	}
 }
@@ -60,7 +79,18 @@ $(document).ready(function() {
 		console.log("tuikadesu");
 		var page = parseInt($('#art-page').val()) + 1;
 		$('#art-page').val(page);
-		getMyList(page);
+		switch ($.cookie("viewMode")) {
+		case "0":
+			getMyList(page);
+			break;
+		case "2":
+
+			// お気に入り
+			break;
+		case "3":
+			getShareList($.cookie("shareLists"),page);
+			break;
+		}
 	});
 
 	// 記事追加用のリスナー
@@ -118,12 +148,19 @@ $(document).ready(function() {
 			getTagArticleList(0, $.cookie("tagLists"));
 		}
 		break;
-	case "3":// 特定のタグ画面を表示しているとき
+	case "3":// シェア画面を表示しているとき
 		$('.grid').empty();
 
 		if (isSettinOnLine() === true) {
 			// オフライン判断
-			getShareList($.cookie("shareLists"));
+			initPagingSharelist(getShareList,$.cookie("shareLists"));
+			initTopPage();
+			toastr.warning("オンライン");
+
+		} else if (isSettinOnLine() === false) {
+
+		} else {
+
 		}
 		break;
 	}

@@ -2,7 +2,7 @@ function importJS() {
     if (! new Array().push) return false;
         var scripts = new Array(
 
-    		"../js/test_ajax.js",
+    		//"../js/test_ajax.js",
     		"../js/lib/kagedb.js",
     		"../js/browsersupport.js",
     		"../js/lib/operative.js",
