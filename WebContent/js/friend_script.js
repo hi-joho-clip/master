@@ -9,6 +9,7 @@ function getFriendList() {
 	var URL = "http://localhost:8080/clipMaster/friendlist";
 	var setappend = function(json) {
 
+
 		for ( var i = 0; i < json.length; i++) {
 			// リクエスト申請したユーザ一覧
 			if (json[i].status == 2) {
@@ -18,6 +19,8 @@ function getFriendList() {
 				tableData[i] = new Array();
 				tableData[i] = {Name:json[i].nickname, Time:now.getFullYear() + "年" + (now.getMonth() + 1) + "月" + now.getDate() + "日", Submit: "<a href='#' data-remodal-target='delete_request' onclick='document.getElementById(\"user_id\").innerHTML=\""
 					+ json[i].friend_user_id + "\";'>取消</a>"};
+			}else {
+				tableData[i] = new Array();
 			}
 		}
 		for ( var i = 0; i < json.length; i++) {
@@ -26,7 +29,6 @@ function getFriendList() {
 				var now = new Date();
 				now.setTime(json[i].created);
 
-				tableData[i] = new Array();
 				tableData[i] = {Name:"<a href='index.html'onclick='javascript:$.cookie(\"viewMode\",\"3\");$.cookie(\"shareLists\",\""+json[i].friend_user_id+"\");'>"+json[i].nickname, Time:now.getFullYear() + "年" + (now.getMonth() + 1) + "月" + now.getDate() + "日", Submit: "<a href='#' data-remodal-target='delete_friend' onclick='document.getElementById(\"user_id\").innerHTML=\""
 					+ json[i].friend_user_id + "\";'>削除</a>"};
 			}
