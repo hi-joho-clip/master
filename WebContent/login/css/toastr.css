@@ -4,6 +4,7 @@
 .toast-message {
   -ms-word-wrap: break-word;
   word-wrap: break-word;
+
 }
 .toast-message a,
 .toast-message label {
@@ -92,6 +93,7 @@ button.toast-close-button {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
+  position : bottom-left;
 }
 #toast-container > div {
   position: relative;

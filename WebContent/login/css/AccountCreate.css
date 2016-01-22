@@ -48,7 +48,7 @@ form {
   color: #666;
   font-family:Avenir , "Open Sans" , "Helvetica Neue" , Helvetica , Arial , Verdana , Roboto ,"游ゴシック" ,  "ヒラギノ角ゴ Pro W3"  , "メイリオ"  , "ＭＳ Ｐゴシック"  ,  sans-serif;
   font-size: 1em;
-  height: 70px;
+  height: 50px;
   transition: border-color 0.3s;
   width: 100%;
 }
