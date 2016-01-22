@@ -1,8 +1,8 @@
 
 
 // マイリスト
-function getMyList() {
-	var jsonParam = null;// 送りたいデータ
+function getMyList(page) {
+	var jsonParam = 'page='+page;// 送りたいデータ(ページ番号）
 	var URL = hostURL + "/clipMaster/mylist";
 	document.getElementById('title').innerHTML = '<h1>マイリスト</h1>';
 	getJSON(URL, jsonParam, get_mylists);

@@ -70,7 +70,7 @@ function updateArticle(json_article) {
 
 		var article = json_article;
 
-		console.log('jsonarticle:' + article['article_id']);
+		//console.log('jsonarticle:' + article['article_id']);
 		// スキーマのインスタンス取得
 		var tutorial = getArticleInstance();
 		tutorial.onerror = function(event) {
@@ -107,7 +107,7 @@ function updateIDBUser(prop) {
 
 	return new Promise(function(resolve, reject) {
 
-		console.log(prop);
+		//console.log(prop);
 		// スキーマのインスタンス取得
 		var tutorial = getUserInstance();
 		tutorial.onerror = function(event) {
@@ -150,7 +150,7 @@ function updateIDBArticleList(values) {
 	 */
 	for ( var art_json in jsons) {
 		param = "article_id=" + jsons[art_json].article_id;
-		console.log(param);
+		//console.log(param);
 		pro_list.push(getRequest().article(param).then(updateArticle));
 	}
 	if (pro_list) {

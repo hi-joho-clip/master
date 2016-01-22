@@ -150,9 +150,9 @@ public class SaveArticle {
 
 		boolean flag = false;
 		try {
-			// 60MBまで
+			// 30MBまで
 			System.out.println("conURL:" + str_url);
-			byte[] bytes = new byte[62914560];
+			byte[] bytes = new byte[31457280];
 
 			URL url = new URL(str_url);
 			HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -182,6 +182,7 @@ public class SaveArticle {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			return flag;
 		}
 		return flag;
 
