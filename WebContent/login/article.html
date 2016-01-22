@@ -33,27 +33,69 @@
 
 
 <style>
+
 div#footerArea {
 	position: fixed !important;
 	position: absolute;
 	bottom: 0;
 	left: 0;
 	width: 100%;
-	height: 50px;
+	height: 43px;
 	background-color: #4E9ABE;
 	color: #fff;
-	z-index: 100;
+	z-index: 2;
+
 }
 
-a#edit-button {
+@media only screen and (max-width: 425px) {
+div#footerArea {
 	position: fixed !important;
 	position: absolute;
 	bottom: 0;
 	left: 0;
 	width: 100%;
-	height: 150px;
+	height: 80px;
 	background-color: #4E9ABE;
 	color: #fff;
+	z-index: 2;
+
+}
+}
+
+a#edit-button {
+    position: fixed !important;
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    width: 70px;
+    height: 70px;
+    background-color: #EEE;
+    color: #fff;
+    z-index: 30;
+    border-radius:20%;
+
+}
+
+a#edit-button:hover,a:focus {
+	background-color: #DDD;
+	border: 3px solid #999;
+
+}
+
+
+@media only screen and (max-width: 767px) {
+a#edit-button {
+    position: fixed !important;
+    position: absolute;
+    top: 2px;
+    right: 0;
+    width: 45px;
+    height: 45px;
+    background-color: #EEE;
+    color: #fff;
+    z-index: 30;
+    border-radius:20%;
+}
 }
 
 small {
@@ -118,7 +160,7 @@ a[data-wysihtml5-command-value="blue"] {
 }
 
 .wysihtml5-editor,.wysihtml5-editor table td {
-	outline: 1px dotted #abc;
+
 }
 
 code {
@@ -147,6 +189,36 @@ code {
 	border: 1px solid #ddd;
 	padding: 0 0.2em;
 	margin: 1px 0;
+}
+
+@media only screen and (max-width: 550px) {
+.toolbar a {
+	display: inline-block;
+	height: 1.5em;
+	border-radius: 3px;
+	font-size: 25px;
+	line-height: 1.3em;
+	text-decoration: none;
+	background: transparent;
+	border: 1px solid #ddd;
+    padding: 0 0.1em;
+    margin: 0px 0;
+}
+}
+
+@media only screen and (max-width: 485px) {
+.toolbar a {
+	display: inline-block;
+	height: 1.5em;
+	border-radius: 3px;
+	font-size: 25px;
+	line-height: 1.3em;
+	text-decoration: none;
+	background: transparent;
+	border: 1px solid #ddd;
+    padding: 0 0.01em;
+    margin: 0px 0;
+}
 }
 
 .toolbar a:hover,a:focus {
@@ -249,8 +321,7 @@ div[data-wysihtml5-dialog="createTable"] td {
 					id="pure-toggle-right" class="pure-toggle" data-toggle="right" />
 				<label class="pure-toggle-label" for="pure-toggle-left"
 					data-toggle-label="left"><span class="pure-toggle-icon"></span></label>
-				<label class="pure-toggle-label" for="pure-toggle-right"
-					data-toggle-label="right"><span class="pure-toggle-icon"></span></label>
+
 				<nav class="pure-drawer" data-position="left">
 
 					<p style="padding: 50px 20px; margin: 0;">
@@ -281,17 +352,9 @@ div[data-wysihtml5-dialog="createTable"] td {
 				</nav>
 
 
-				<nav class="pure-drawer" data-position="right">
-					<p style="padding: 100px 5px; margin: 0;">
-						<a>Search Input</a><br>      <input type="search"
-							name="search-1" id="search-1" value=""><br> <a>
-							URL</a><br>      <input type="search" name="search-1"
-							id="search-1" value="">
-					</p>
-				</nav>
+
 				<label class="pure-overlay" for="pure-toggle-left"
-					data-overlay="left"></label> <label class="pure-overlay"
-					for="pure-toggle-right" data-overlay="right"></label>
+					data-overlay="left"></label>
 			</div>
 
 			<div class="container">
@@ -355,6 +418,9 @@ div[data-wysihtml5-dialog="createTable"] td {
 										src='img/return.png' width='25' height='25'></a>
 								</div>
 
+								<div class="block">
+								<a id="edit-text" title="Text"><img	src='img/Text.png' width='25' height='25'></a>
+								</div>
 
 								<div data-wysihtml5-dialog="createLink" style="display: none;">
 									<label> Link: <input data-wysihtml5-dialog-field="href"
@@ -376,17 +442,11 @@ div[data-wysihtml5-dialog="createTable"] td {
 								</div>
 							</div>
 						</div>
-						<a id="edit-button" title="Undo"><img src='img/back.png'
-							width='25' height='25'></a> <a id="edit-text" title="Undo"><img
-							src='img/back.png' width='25' height='25'></a>
-						<div style="">
 
-
-							<input id="updatebutton" type="button" name="check" value="確認">
+						<a id="edit-button" title="Edit"><img src='img/edit.png'
+							width='100%' height='100%'></a>
+						<div style="border-top: 1px solid #ccc;">
 							<br />
-
-
-
 							<div class="hiddenarea"></div>
 
 							<div align="left">
@@ -427,27 +487,32 @@ div[data-wysihtml5-dialog="createTable"] td {
 						updateArticle();
 					});
 
-					$('.toolbar').attr('style', 'visibility:hidden');
+					$('#footerArea').attr('style', 'visibility:hidden');
 
 					var edit_flag = 'false';
 					$('#edit-button').click(function() {
 						if (edit_flag === 'false') {
-							$('.toolbar').attr('style', 'visibility:show');
+							$('#footerArea').attr('style', 'visibility:show');
 							edit_flag = 'true';
 						} else if (edit_flag === 'true') {
-							$('.toolbar').attr('style', 'visibility:hidden');
+							$('#footerArea').attr('style', 'visibility:hidden');
 							edit_flag = 'false';
+							updateArticle();
 						}
 					});
 
 					var text_edit_flag = 'false';
 					$('#edit-text').click(function() {
-						if (edit_flag === 'false') {
+						if (text_edit_flag === 'false') {
 							$('#editable').attr('contenteditable', 'true');
-							edit_flag = 'true';
-						} else if (edit_flag === 'true') {
+							$('#editable').attr('style','outline: 2px dotted #abc;font-size: 200%;padding: 10px;');
+							text_edit_flag = 'true';
+						} else if (text_edit_flag === 'true') {
 							$('#editable').attr('contenteditable', 'false');
-							edit_flag = 'false';
+							$('#editable').attr('style','font-size: 200%;padding: 10px;');
+							text_edit_flag = 'false';
+
+
 						}
 					});
 
