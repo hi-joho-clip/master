@@ -6,6 +6,7 @@
 <title>CLIP</title>
 
 
+
 <meta name="viewport"
 	content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
 
@@ -37,7 +38,6 @@
 <script type="text/javascript" src="js/Yomikomi.js"></script>
 
 
-
 <style>
 .remodal-overlay.without-animation.remodal-is-opening,.remodal-overlay.without-animation.remodal-is-closing,.remodal.without-animation.remodal-is-opening,.remodal.without-animation.remodal-is-closing,.remodal-bg.without-animation.remodal-is-opening,.remodal-bg.without-animation.remodal-is-closing
 	{
@@ -55,8 +55,7 @@
 		<!-- <a class="remodal-confirm" href="#" onclick="javascript:addRequest(document.getElementById('user_id').innerHTML);">追加</a>
 		<a class="remodal-cancel" href="#">キャンセル</a> -->
 	</div>
-<section>
-
+	<section>
 
 		<div class="pure-container" data-effect="pure-effect-slide">
 			<input type="checkbox" id="pure-toggle-left" class="pure-toggle"
@@ -99,9 +98,9 @@
 
 			<nav class="pure-drawer" data-position="right">
 				<p style="padding: 100px 5px; margin: 0;">
-					<a>Search Input</a><br>      <input type="search"
+					<a>Search Input</a><br>      <input type="search"
 						name="search-1" id="search-1" value=""><br> <a>
-						URL</a><br>      <input type="search" name="search-1"
+						URL</a><br>      <input type="search" name="search-1"
 						id="search-1" value="">
 				</p>
 			</nav>
@@ -115,12 +114,27 @@
 				<h1>フレンド検索</h1>
 				<div class="form-wrapper">
 
-					<div align="center">
+						<div align="center">
+
+						<div class="form-item">
+							<!-- フレンドのニックネーム -->
+							<label for="friend_name or mail"></label> <input type="text"
+								name="nickname" required="required"
+								placeholder="Friend Nick Name"></input>
+						</div>
+
+							<input type="submit" class="button"
+								value="検索"onclick="javascript:getFriendSearch(document.getElementsByName('nickname'));"></input>
+
+						<div id="info"></div>
+
 
 					<div class="form-footer">
 
 
-
+						<p>
+							<a href="index.html">BACK</a>
+						</p>
 					</div>
 
 					<section class="section">
@@ -128,18 +142,17 @@
 							<div class="container-fluid">
 								<h1 class="text-center">
 
+
 								<a href="index.html"  onclick="javascript:$.cookie('viewMode','0');">CLIP</a>
+
 
 								</h1>
 							</div>
 						</div>
 					</section>
-					</div>
-					</div>
-					</div>
-					</div>
-
-
+				</div>
+			</div>
+		</div>
 	</section>
 
 	<script>
