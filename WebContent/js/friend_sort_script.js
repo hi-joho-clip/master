@@ -6,7 +6,7 @@ var nowSortKey = "Name"; // 現在ソートキー
 function getFriendList() {
 
 	var jsonParam = null;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/friendlist";
+	var URL = hostURL + "/clipMaster/friendlist";
 	var setappend = function(json) {
 		var cnt = 0;
 
@@ -71,8 +71,13 @@ function createTable(obj) {
 	deleteTable(tbodyElm);
 	// データをソート
 	tableData.sort(function(a, b) {
+
 		var aName = a[sort];
 		var bName = b[sort];
+
+		aName = deleteTag(aName);
+		bName = deleteTag(bName);
+
 		if (asc)
 			return (aName > bName) ? 1 : -1;
 		else
@@ -119,6 +124,20 @@ function createTdSubmitElement(txt) {
 	return tdElm;
 }
 
+//ソートうまく動かすために必要、不要なタグを削除
+function deleteTag(wasteA) {
+	console.log(wasteA[0]);
+	if(wasteA[0] == "<"){
+		for(var i=0; wasteA[i] != ">"; 0){
+			wasteA = wasteA.slice(1);
+		}
+		wasteA = wasteA.slice(1);
+	}
+	return wasteA;
+}
+
+
+
 /**
  * テーブルヘッダー編集
  */
@@ -152,7 +171,7 @@ if (window.addEventListener) { // for W3C DOM
 //リクエストを削除後の画面
 function deleteRequest(user_id) {
 	var jsonParam = "friend_user_id=" + user_id;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/deleterequest";
+	var URL = hostURL + "/clipMaster/deleterequest";
 	var friendList = "";
 	var setappend = function(json) {
 		for ( var i = 0; i < json.length; i++) {
@@ -168,7 +187,7 @@ function deleteRequest(user_id) {
 function deleteFriend(user_id) {
 
 	var jsonParam = "friend_user_id=" + user_id;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/deletefriend";
+	var URL = hostURL + "/clipMaster/deletefriend";
 	var friendList = "";
 	var setappend = function(json) {
 		for ( var i = 0; i < json.length; i++) {
@@ -183,7 +202,7 @@ function deleteFriend(user_id) {
 //フレンド登録者のリストをもらう処理
 function getFriends() {
 	var jsonParam = null;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/friendlistff";
+	var URL = hostURL + "/clipMaster/friendlistff";
 	getJSON(URL, jsonParam, get_friends);
 }
 
@@ -191,7 +210,7 @@ function getFriends() {
 //フレンド申請があると、申請通知が来る
 function notice() {
 	var jsonParam = null;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/friendrequest";
+	var URL = hostURL + "/clipMaster/friendrequest";
 	var setappend = function(json) {
 		if (json.length > 0) {
 			console.log("申請あるよ");

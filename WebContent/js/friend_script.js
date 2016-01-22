@@ -151,6 +151,12 @@ function limitBox() {
 	getJSON(URL, jsonParam, setappend);
 }
 
+//フレンド登録者のリストをもらう処理
+function getFriends() {
+	var jsonParam = null;// 送りたいデータ
+	var URL = hostURL + "/clipMaster/friendlistff";
+	getJSON(URL, jsonParam, get_friends);
+}
 
 // フレンド申請があると、申請通知が来る
 function notice() {
