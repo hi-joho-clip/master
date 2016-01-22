@@ -21,12 +21,26 @@ $(document).ready(function() {
 
 $(document).ready(
 		function() {
-
 			$("div.hiddenarea").append(
 					'<input type="hidden" id="nonce" value="'
 							+ docCookies.getItem("nonce") + '">');
-
 		});
+
+
+function initPagingMylist(callback) {
+	//var page = parseInt($('#art-page').val());
+	// ページング用番号の初期化
+
+	if ($('#art-page').val() === '1') {
+		callback(1);
+	} else {
+		// 1でないときはその分までループする
+		for (var i =1; i <=  parseInt($('#art-page').val()) ; i++) {
+			console.log("grid:" + i);
+			callback(i);
+		}
+	}
+}
 
 var $grid;
 $(document).ready(function() {
@@ -40,15 +54,29 @@ $(document).ready(function() {
 		},
 	});
 
+	// 追加読み込み用のリスナー
+	$(document).on('click','#add-button',function(){
+		// 今のページ番号を取得
+		console.log("tuikadesu");
+		var page = parseInt($('#art-page').val()) + 1;
+		$('#art-page').val(page);
+		getMyList(page);
+	});
+
+	// 記事追加用のリスナー
+	$(document).on('click','#add-article',function(){
+		// 今のページ番号を取得
+		addArticle();
+	});
+
+
 	switch ($.cookie("viewMode")) {
 	case "0":// マイリスト画面を表示しているとき
 		$('.grid').empty();
 
-		// document.write('<script type="text/javascript"
-		// src="../../js/import.js"></script>');
-		// var isOnline = navigator.onLine;
 		if (isSettinOnLine() === true) {
-			getMyList();
+			// ページング処理
+			initPagingMylist(getMyList);
 			initTopPage();
 			toastr.warning("オンライン状態なり");
 
@@ -111,9 +139,14 @@ function isSettinOnLine() {
 	console.log(SetFlag);
 	if (SetFlag  === 'true') {
 		if (navigator.onLine === true) {
+			console.log('true');
 			return true;
+		} else if (navigator.onLine === false){
+			return false;
+			console.log('false');
 		} else {
 			return false;
+			console.log('UnknownNetworkState');
 		}
 	} else if (SetFlag === 'false'){
 		return false;

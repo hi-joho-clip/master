@@ -31,7 +31,7 @@ function getURL(URL, param) {
 
 		// サーバからアーティクルリストを取得する
 
-		console.log('parameter:' + param);
+		//console.log('parameter:' + param);
 		if (URL === "") {
 			reject(new Error("url is null"));
 		}
@@ -131,7 +131,7 @@ function getJSON(URL, param, callback) {
 
 	console.log("getJSON" + param);
 	getURL(URL, param).then(JSON.parse).then(function(json) {
-		console.log(json);
+		//console.log(json);
 		callback(json);
 	})['catch'](function(error) {
 		console.log(error);
@@ -140,4 +140,29 @@ function getJSON(URL, param, callback) {
 	/*
 	 * .then(function(value) { return JSON.stringify(value, null, ' '); })
 	 */
+}
+
+
+/**
+ * 記事追加用リンク
+ */
+function addArticle() {
+
+	// getArticle_id(article_id);//html内の<div
+	// UTF-8で取得する
+	var jsonParam = 'url=' + encodeURIComponent($("#search-2").val());
+	console.log(jsonParam);
+	// Nonceを載せる
+	jsonParam = jsonParam + "&nonce=" + $('#nonce').val();
+	console.log("log:" + encodeURIComponent($("#search-1e").html()));
+	var URL = hostURL + "/clipMaster/addarticle";
+	var update_article = function(json) {
+
+		if(json.flag==0){
+			toastr.error(json.state);
+		}else{
+			toastr.success(json.state);
+		}
+	};
+	getJSON(URL, jsonParam, update_article);
 }

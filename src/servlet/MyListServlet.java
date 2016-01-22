@@ -49,24 +49,14 @@ public class MyListServlet extends HttpServlet {
 	protected void perform(HttpServletRequest request, HttpServletResponse response) throws ServletException,
 			IOException {
 		HttpSession session = request.getSession(true);
-		System.out.println("来ている" + request.getParameter("user_id"));
-		/*if(セッション情報があるなら){
-			//何もしない
-		}else if(セッション情報がないなら){
-			//ログイン画面に戻る
-		}*/
-		/***************************************
-		*サイドメニューのマイリストを押したとき*
-		****************************************/
+
 		//記事一覧表示
 		int user_id = 0;//sessionからuser_idを取得
 		int page = 1; // パラメータからページ番号取得(デフォルト1）
 
 		try {
 			user_id = (int) session.getAttribute("user_id");
-			System.out.println("user_id" + user_id);
 			if (request.getParameter("page") != null) {
-
 				page = Integer.parseInt(request.getParameter("page"));
 			}
 		} catch (NumberFormatException e) {

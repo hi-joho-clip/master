@@ -88,8 +88,8 @@ function getTag_id(tag_id){
 var get_mylists = function(json) {
 	var random =Math.floor(Math.random()*3);
 	$myList = $("<div class='grid-sizer'></div>");
-	$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
-	for ( var i = json.length - 1; i >= 0; i--) {
+	$grid.append($myList).isotope('appended', $myList).trigger('create');
+	for ( var i = 0; i < json.length; i++) {
 		var flag="";
 		if(json[i].favflag==true){
 			flag="★"+json[i].title;
@@ -99,7 +99,7 @@ var get_mylists = function(json) {
 		$myList = $("<div class='"+item[random][i] + " mosaic-block bar'>" +
 						"<div class='mosaic-overlay'>"+
 
-						 "<div id='link-body'><a href='../login/article.html?"+json[i].article_id+"'target='_blank'></a></div>" +
+						 "<div id='link-body'><a href='../login/article.html?"+json[i].article_id+"'></a></div>" +
 							"<div id='menu-block'>" +
 								"<div id='menu2'>"+
 									"<div class='remodal-bg'>"+
@@ -123,25 +123,54 @@ var get_mylists = function(json) {
 						"</div>"+
 						"<div class='mosaic-backdrop relative'>" +
 							"<img src='http://www.kk1up.jp/wp-content/uploads/2015/07/201507290001-17.jpg'width='100%'height='100%'alt='"+json[i].title+"'/>" +
-							"<p class='absolute'id='favtitle"+json[i].article_id+"'>"+flag+"<BR><a href='"+json[i].url+"'>"+json[i].url+"</a></p>" +
+							"<p class='absolute'id='favtitle"+json[i].article_id+"'>"+flag+"<BR><a href='"+json[i].url+"'target='_blank'>"+json[i].url+"</a></p>" +
 							"<input type='hidden' value='"+json[i].title+"' id='title"+json[i].article_id+"'>"+
 							"<input type='hidden' value='"+json[i].url+"' id='url"+json[i].article_id+"'>"+
 						"</div>"+
 					"</div>");
 
-		console.log("tooru");
-		$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
+
+
+		$grid.prepend($myList).isotope('insert', $myList).trigger('create');
 		if(json[i].favflag==true){
 			console.log('#favtitle'+json[i].article_id);
 			$('#favtitle'+json[i].article_id).attr('style', 'color:#FFEB3B');
 		}
 	}
+
+	// ページング処理
+	addViewNext(json);
 	jQuery(function($){
 		$('.bar').mosaic({
 			animation	:	'slide'		//fade or slide
 		});
     });
 };
+
+function addViewNext(json) {
+//	var page = 1;
+//
+//
+//	if ( $('#art-page').val()) {
+//		if ($('#art-page').val() === '1') {
+//			page = 1;
+//		} else {
+//			page =  parseInt($('#art-page').val());
+//			//$('#art-page').val(page + 1);
+//		}
+//	} else {
+//		console.log(json.length);
+//	}
+	// 20件以上の場合はValueを加算し、20件未満の場合はボタンを削除する。
+	if (json.length >= 19) {
+		console.log($('#art-page').val());
+		//$('#art-page').val(page + 1);
+	} else if (json.length < 19){
+		console.log("under 19");
+		$('#add-button').remove();
+	}
+}
+
 
 //シェア記事一覧を作成
 var get_sharelists = function(json) {
@@ -151,7 +180,7 @@ var get_sharelists = function(json) {
 	for ( var i = json.length - 1; i >= 0; i--) {
 		$myList = $("<div class='"+item[random][i] + " mosaic-block bar'>" +
 						"<div class='mosaic-overlay'>"+
-						 "<div id='link-body'><a href='../login/article.html?"+json[i].article_id+"'target='_blank'></a></div>" +
+						 "<div id='link-body'><a href='../login/article.html?"+json[i].article_id+"'></a></div>" +
 							"<div id='menu-block'>" +
 								"<div id='menu2'>"+
 									"<div class='remodal-bg'>"+
@@ -170,7 +199,7 @@ var get_sharelists = function(json) {
 						"</div>"+
 						"<div class='mosaic-backdrop relative'>" +
 							"<img src='http://www.kk1up.jp/wp-content/uploads/2015/07/201507290001-17.jpg'width='100%'height='100%'alt='"+json[i].title+"'/>" +
-							"<p class='absolute'>"+json[i].title+"<BR><a href='"+json[i].url+"'>"+json[i].url+"</a></p>" +
+							"<p class='absolute'>"+json[i].title+"<BR><a href='"+json[i].url+"' target='_blank'>"+json[i].url+"</a></p>" +
 						"</div>"+
 					"</div>");
 		$grid.prepend($myList).isotope('prepended', $myList).trigger('create');

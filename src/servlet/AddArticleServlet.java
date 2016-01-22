@@ -55,38 +55,44 @@ public class AddArticleServlet extends HttpServlet {
 		// nonceの検証が必要です。
 
 		Nonce nonce = new Nonce(request);
-		url = "https://ja.wikipedia.org/wiki/%E3%81%84%E3%81%A1%E3%81%94100%25";
+		//url = "https://ja.wikipedia.org/wiki/%E3%81%84%E3%81%A1%E3%81%94100%25";
 
-		if (true) {//nonce.isNonce()) {
+		if (nonce.isNonce()) {
 			// urlはUTF-8でエンコして送ろう
-			if (true) {//request.getParameter("url") != null) {
+			if (request.getParameter("url") != null) {
 
 				try {
-					//url = request.getParameter("url");//JSON
-					//url = new String(url.getBytes("UTF-8"), "UTF-8");
+					url = request.getParameter("url");//JSON
+					url = new String(url.getBytes("UTF-8"), "UTF-8");
 					user_id = (int) session.getAttribute("user_id");
-					//mode = request.getParameter("mode");
+					mode = request.getParameter("mode");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+				mode = ("NORMAL");
 
 				System.out.println("URL:" + url);
 
-				SaveArticle save = new SaveArticle();
-				if (mode.equals("FULL")) {
-					if (save.keep_extractor(user_id, url)) {
+				// http://か,https://以外はダメ
+				if (url.startsWith("http://") || url.startsWith("https://")) {
+					SaveArticle save = new SaveArticle();
+					if (mode.equals("FULL")) {
+						if (save.keep_extractor(user_id, url)) {
 
-						resp = "{\"state\": \"追加しました\", \"flag\": 1}";
-					} else {
-						resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
-					}
-				} else if (mode.equals("NORMAL")) {
-					if (save.def_extractor(user_id, url)) {
-						resp = "{\"state\": \"追加しました\", \"flag\": 1}";
-					} else {
-						resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
-					}
+							resp = "{\"state\": \"追加しました\", \"flag\": 1}";
+						} else {
+							resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
+						}
+					} else if (mode.equals("NORMAL")) {
+						if (save.def_extractor(user_id, url)) {
+							resp = "{\"state\": \"追加しました\", \"flag\": 1}";
+						} else {
+							resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
+						}
 
+					}
+				} else {
+					resp = "{\"state\": \"正しいURLではありません。\", \"flag\": 0}";
 				}
 
 				PrintWriter out = response.getWriter();
