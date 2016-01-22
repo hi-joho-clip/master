@@ -21,13 +21,13 @@ import beansdomain.ArticleBean;
 public class ShareListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ShareListServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public ShareListServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -40,49 +40,46 @@ public class ShareListServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+			IOException {
 		// TODO Auto-generated method stub
-		perform(request,response);
+		perform(request, response);
 	}
 
-	protected void perform(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void perform(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+			IOException {
 		HttpSession session = request.getSession(true);
-		/*if(セッション情報があるなら){
-			//何もしない
-		}else if(セッション情報がないなら){
-			//ログイン画面に戻る
-		}*/
-		/***************************************
-		**********フレンドを選択した際**********
-		****************************************/
-		//シェアしている記事一覧表示
-		int user_id = (int) session.getAttribute("user_id");
-		int friend_user_id = Integer.parseInt(request.getParameter("friend_user_id"));
+
+		int user_id = 0;
+		int friend_user_id = 0;
 		int page = 1; // パラメータからページ番号取得初期値1
 
-		if (request.getParameter("page") != null) {
+		if (request.getParameter("page") != null && request.getParameter("friend_user_id") != null) {
 			try {
+				user_id = (int) session.getAttribute("user_id");
 				page = Integer.parseInt(request.getParameter("page"));
+				friend_user_id = Integer.parseInt(request.getParameter("friend_user_id"));
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
+			System.out.println(page);
 
-		ArticleBean articlebean = new ArticleBean();
-		ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
-		try {
-			article_list=articlebean.viewShareArticleList(user_id, friend_user_id, page);
-			System.out.println(article_list.size());
-		} catch (Exception e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
+			ArticleBean articlebean = new ArticleBean();
+			ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
+			try {
+				article_list = articlebean.viewShareArticleList(user_id, friend_user_id, page);
+				//System.out.println(article_list.size());
+			} catch (Exception e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
+			response.setContentType("application/json;charset=UTF-8");
+			response.setHeader("Cache-Control", "private");
+			PrintWriter out = response.getWriter();
+			out.println(JSON.encode(article_list, true).toString());
 		}
-		response.setContentType("application/json;charset=UTF-8");
-		response.setHeader("Cache-Control", "private");
-		PrintWriter out = response.getWriter();
-		out.println(JSON.encode(article_list, true).toString());
 	}
 
 }
