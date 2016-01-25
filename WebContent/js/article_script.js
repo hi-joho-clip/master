@@ -1,15 +1,13 @@
-
-
 // マイリスト
 function getMyList(page) {
-	var jsonParam = 'page='+page;// 送りたいデータ(ページ番号）
+	var jsonParam = 'page=' + page;// 送りたいデータ(ページ番号）
 	var URL = hostURL + "/clipMaster/mylist";
 	document.getElementById('title').innerHTML = '<h1>マイリスト</h1>';
 	getJSON(URL, jsonParam, get_mylists);
 }
 
 function getMyListList(page) {
-	var jsonParam = 'page='+page;// 送りたいデータ(ページ番号）
+	var jsonParam = 'page=' + page;// 送りたいデータ(ページ番号）
 	var URL = hostURL + "/clipMaster/mylist";
 	document.getElementById('title').innerHTML = '<h1>マイリスト</h1>';
 	getJSON(URL, jsonParam, get_mylists_list);
@@ -24,12 +22,23 @@ function getFavList() {
 }
 
 // シェア記事一覧
-function getShareList(friend_user_id,page) {
+function getShareList(friend_user_id, page) {
 	var jsonParam = "friend_user_id=" + friend_user_id + '&page=' + page;// 送りたいデータ
 	var URL = hostURL + "/clipMaster/sharelist";
 	document.getElementById('title').innerHTML = '<h1>シェア記事</h1>';
 	getJSON(URL, jsonParam, get_sharelists);
 }
+
+function thumView(json, width, height) {
+	if (json.thum != null) {
+		console.log("now null");
+		return "<img src='data:image/jpeg;base64," + json.thum +  "' width='" + width + "' height='" + height + "'alt='"+json.title+"'/>";
+	} else {
+		console.log("notttt null");
+		return "<img src='http://www.kk1up.jp/wp-content/uploads/2015/07/201507290001-17.jpg' width='" + width + "' height='" + height + "'alt='"+json.title+"'/>";
+	}
+}
+
 
 // 記事の表示
 function getViewArticle(article_id) {
@@ -37,6 +46,9 @@ function getViewArticle(article_id) {
 	var jsonParam = "article_id=" + article_id;// 送りたいデータ
 	var URL = hostURL + "/clipMaster/viewarticle";
 	var setappend = function(json) {
+
+
+		$('#image').append(thumView(json,"300px","100%"));
 
 		// nonceとArticleID設定
 		$("div.hiddenarea").append(
@@ -94,18 +106,29 @@ function addFavArticle(article_id) {
 
 		// タイトルの横に★マークをつける
 
+		var success = null;
 
-
-		var success = function(json) {
-			$('#' + favtitle).attr('style', 'color:#FFEB3B');
-			document.getElementById(favtitle).innerHTML = "★"
-					+ document.getElementById(title).value + "<BR><a href='"
-					+ document.getElementById(url).value + "'>"
-					+ document.getElementById(url).value + "</a>";
-			// グローバルflagをfalseにする
-			document.getElementById(grobalflag).value = true;
-			toastr.success(json.state);
-		};
+		if ($('#mode').val() === "tile") {
+			success = function(json) {
+				$('#' + favtitle).attr('style', 'color:#FFEB3B');
+				document.getElementById(favtitle).innerHTML = "★"
+						+ document.getElementById(title).value
+						+ "<BR><a href='" + document.getElementById(url).value
+						+ "'>" + document.getElementById(url).value + "</a>";
+				// グローバルflagをfalseにする
+				document.getElementById(grobalflag).value = true;
+				toastr.success(json.state);
+			};
+		} else if ($('#mode').val() === 'list') {
+			success = function(json) {
+				$('#' + favtitle).attr('style', 'color:#FFEB3B');
+				document.getElementById(favtitle).innerHTML = "★"
+						+ document.getElementById(title).value;
+				// グローバルflagをfalseにする
+				document.getElementById(grobalflag).value = true;
+				toastr.success(json.state);
+			};
+		}
 
 		getJSON(URL, jsonParam, success);
 
@@ -114,21 +137,35 @@ function addFavArticle(article_id) {
 		var URL = hostURL + "/clipMaster/deletefav";
 
 		// タイトルの横の★マークを削除
+		var failed = null;
 
-		var failed = function(json) {
-		$('#' + favtitle).removeAttr('style', 'color:#FFEB3B');
+		if ($('#mode').val() === "tile") {
+			failed = function(json) {
+				$('#' + favtitle).removeAttr('style', 'color:#FFEB3B');
 
-		getJSON(URL, jsonParam, null);
-		document.getElementById(favtitle).innerHTML = document
-				.getElementById(title).value
-				+ "<BR><a href='"
-				+ document.getElementById(url).value
-				+ "'>"
-				+ document.getElementById(url).value + "</a>";
-		// グローバルflagをtrueにする
-		document.getElementById(grobalflag).value = false;
-		toastr.success(json.state);
-		};
+				getJSON(URL, jsonParam, null);
+				document.getElementById(favtitle).innerHTML = document
+						.getElementById(title).value
+						+ "<BR><a href='"
+						+ document.getElementById(url).value
+						+ "'>" + document.getElementById(url).value + "</a>";
+				// グローバルflagをtrueにする
+				document.getElementById(grobalflag).value = false;
+				toastr.success(json.state);
+			};
+		} else if ($('#mode').val() === "list") {
+			failed = function(json) {
+				$('#' + favtitle).removeAttr('style', 'color:#FFEB3B');
+
+				getJSON(URL, jsonParam, null);
+				document.getElementById(favtitle).innerHTML = document
+						.getElementById(title).value;
+				// グローバルflagをtrueにする
+				document.getElementById(grobalflag).value = false;
+				toastr.success(json.state);
+			};
+
+		}
 
 		getJSON(URL, jsonParam, failed);
 
@@ -164,7 +201,6 @@ function shareArticle(friend_user_id, article_id) {
 			+ friend_user_id + "";
 
 	var URL = hostURL + "/clipMaster/addshare";
-
 
 	var cal = function(json) {
 		if (json.flag == 0) {

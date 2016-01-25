@@ -86,6 +86,7 @@ function getTag_id(tag_id){
 //記事一覧を作成
 
 var get_mylists = function(json) {
+	$('#mode').val('tile');
 	var random =Math.floor(Math.random()*3);
 	$myList = $("<div class='grid-sizer'></div>");
 	$grid.append($myList).isotope('appended', $myList).trigger('create');
@@ -96,7 +97,7 @@ var get_mylists = function(json) {
 		}else if(json[i].favflag==false){
 			flag=json[i].title;
 		}
-		$myList = $("<div class='"+item[random][i] + " mosaic-block bar'>" +
+		$myList = $("<div class='"+item[random][i] + " mosaic-block bar' title='" + json[i].title +"'>" +
 						"<div class='mosaic-overlay'>"+
 
 						 "<div id='link-body'><a href='../login/article.html?"+json[i].article_id+"'></a></div>" +
@@ -209,6 +210,7 @@ var get_sharelists = function(json) {
 };
 //記事一覧を作成（リスト）
 var get_mylists_list = function(json) {
+	$('#mode').val('list');
 	var random =Math.floor(Math.random()*3);
 	$myList = $("<div class='grid-sizer' ></div>");
 	$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
