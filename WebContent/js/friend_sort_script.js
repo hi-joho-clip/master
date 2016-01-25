@@ -2,6 +2,11 @@ var tableData = new Array();
 var sortKey = ["Name","Time"]; // ソート項目
 var asc = false; // 昇順(true)/降順(false)
 var nowSortKey = "Name"; // 現在ソートキー
+
+$(document).ready(function() {
+	getFriendList();
+});
+
 //フレンド登録者一覧画面
 function getFriendList() {
 
@@ -31,7 +36,7 @@ function getFriendList() {
 					+ json[i].friend_user_id + "\";'>削除</a>"};
 			}
 		}
-		$('input#id_search').quicksearch('section div div ul li');
+		$('input#id_search').quicksearch('table tbody tr');
 	};
 	getJSON(URL, jsonParam, setappend);
 	return tableData;
@@ -145,14 +150,14 @@ function editHeader() {
 	// ヘッダー初期化
 	for ( var i = 0; i < sortKey.length; i++) {
 		var obj = document.getElementById(sortKey[i]);
-		obj.style.color = "#000000";
+		obj.style.color = "#999";
 		obj.removeChild(obj.childNodes[0]);
 		obj.appendChild(document.createTextNode(sortKey[i]));
 	}
 	// ソート項目の編集
 	if (nowSortKey != undefined && nowSortKey != "") {
 		var sortObj = document.getElementById(nowSortKey);
-		sortObj.style.color = "#0000FF";
+		sortObj.style.color = "#428bca";
 		sortObj.removeChild(sortObj.childNodes[0]);
 		var txt = (asc) ? "▼" : "▲";
 		sortObj.appendChild(document.createTextNode(nowSortKey + txt));
