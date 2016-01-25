@@ -585,7 +585,7 @@ public class ArticleDAO {
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
 		String sql = "SELECT * FROM articles WHERE article_id IN"
 				+ " (SELECT article_id FROM article_tag WHERE tag_id ="
-				+ " (SELECT tag_id FROM tags WHERE tag_body = 'お気に入り' AND user_id = ?)) order by article_id desc limit 20 offset ?";
+				+ " (SELECT tag_id FROM tags WHERE tag_body = 'お気に入り' AND user_id = ?)) order by modified desc limit 20 offset ?";
 
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -769,7 +769,7 @@ public class ArticleDAO {
 		int def_page = 20 * (page - 1);
 		//System.out.println(def_page);
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
-		String sql = "SELECT * FROM articles WHERE id = ANY (SELECT id FROM mylists WHERE user_id = ?) order by article_id desc limit 20 offset ?";
+		String sql = "SELECT * FROM articles WHERE id = ANY (SELECT id FROM mylists WHERE user_id = ?) order by modified desc limit 20 offset ?";
 
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -949,7 +949,7 @@ public class ArticleDAO {
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
 		String sql = "SELECT * FROM articles WHERE articles.id = " +
 				"(SELECT M.id FROM friends F,mylists M WHERE F.own_user_id = ? AND F.friend_user_id = ? " +
-				"AND M.id = F.id AND M.share_flag=1) order by article_id desc limit 20 offset ?";
+				"AND M.id = F.id AND M.share_flag=1) order by modified desc limit 20 offset ?";
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, user_id);

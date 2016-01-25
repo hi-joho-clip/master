@@ -119,7 +119,7 @@ public class SaveArticle {
 		String title = url.getHost();
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Element element = (Element) nodeList.item(i);
-			title = new String(element.getTextContent().toString().getBytes("UTF-8"), "UTF-8");
+			title = new String(element.getTextContent().toString());//.getBytes("UTF-8"), "UTF-8");
 			System.out.println(title);
 		}
 
