@@ -122,13 +122,14 @@ var get_mylists = function(json) {
 							"</div>"+
 						"</div>"+
 						"<div class='mosaic-backdrop relative'>" +
-							"<img src='http://www.kk1up.jp/wp-content/uploads/2015/07/201507290001-17.jpg'width='100%'height='100%'alt='"+json[i].title+"'/>" +
+							"<img src='data:image/jpeg;base64," + json[i].thum +  "' width='100%' height='auto'alt='"+json[i].title+"'/>" +
 							"<p class='absolute'id='favtitle"+json[i].article_id+"'>"+flag+"<BR><a href='"+json[i].url+"'target='_blank'>"+json[i].url+"</a></p>" +
 							"<input type='hidden' value='"+json[i].title+"' id='title"+json[i].article_id+"'>"+
 							"<input type='hidden' value='"+json[i].url+"' id='url"+json[i].article_id+"'>"+
 						"</div>"+
 					"</div>");
 
+		// http://www.kk1up.jp/wp-content/uploads/2015/07/201507290001-17.jpg
 
 
 		$grid.prepend($myList).isotope('insert', $myList).trigger('create');
@@ -155,7 +156,7 @@ function addViewNext(json) {
 		//$('#art-page').val(page + 1);
 	} else if (json.length < 19){
 		console.log("under 19");
-		$('#add-button').remove();
+		$('#art-add').val('false');
 	}
 }
 
@@ -199,7 +200,7 @@ var get_sharelists = function(json) {
 //記事一覧を作成（リスト）
 var get_mylists_list = function(json) {
 	var random =Math.floor(Math.random()*3);
-	$myList = $("<div class='grid-sizer'></div>");
+	$myList = $("<div class='grid-sizer' ></div>");
 	$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
 	for ( var i = 0; i < json.length ; i++) {
 		var flag="";
@@ -248,7 +249,7 @@ var get_mylists_list = function(json) {
 							"</div>"+
 						"</li></a>"+
 					"</ol>");
-		$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
+		$grid.append($myList).isotope('insert', $myList).trigger('create');
 		if(json[i].favflag==true){
 			console.log('#favtitle'+json[i].article_id);
 			$('#favtitle'+json[i].article_id).attr('style', 'color:#FFEB3B');

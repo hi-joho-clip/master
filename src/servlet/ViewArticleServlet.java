@@ -67,7 +67,7 @@ public class ViewArticleServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(article_id + "," +user_id);
+		//System.out.println(article_id + "," +user_id);
 
 		if (article_id != 0 && user_id != 0) {
 			ArticleBean articlebean = new ArticleBean();
@@ -77,6 +77,7 @@ public class ViewArticleServlet extends HttpServlet {
 			try {
 				articlebean.setArticle_id(article_id);
 				article = articlebean.viewArticle(user_id, article_id);
+				System.out.println("fav:" + article.isFavflag());
 				article.setTagBeans(tagbean.viewExistingTag(user_id, article_id));
 				// ユーザ名も欲しい
 				article.setUsername((String) session.getAttribute("username"));

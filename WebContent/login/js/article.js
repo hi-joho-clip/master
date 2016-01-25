@@ -26,18 +26,17 @@ $(document).ready(
 							+ docCookies.getItem("nonce") + '">');
 		});
 
-
 function initPagingMylist(callback) {
-	//var page = parseInt($('#art-page').val());
+	// var page = parseInt($('#art-page').val());
 	// ページング用番号の初期化
 
 	// モードがタイルの場合
 	if ($('#art-page').val() === '1') {
 		callback(1);
-		//callback(2);
+		// callback(2);
 	} else {
 		// 1でないときはその分までループする
-		for (var i =1; i <=  parseInt($('#art-page').val()) ; i++) {
+		for ( var i = 1; i <= parseInt($('#art-page').val()); i++) {
 			console.log("grid:" + i);
 			callback(i);
 		}
@@ -45,18 +44,18 @@ function initPagingMylist(callback) {
 }
 
 function initPagingSharelist(callback, friend_id) {
-	//var page = parseInt($('#art-page').val());
+	// var page = parseInt($('#art-page').val());
 	// ページング用番号の初期化
 
 	// モードがタイルの場合
 	if ($('#art-page').val() === '1') {
-		callback(friend_id,1);
-		//callback(2);
+		callback(friend_id, 1);
+		// callback(2);
 	} else {
 		// 1でないときはその分までループする
-		for (var i =1; i <=  parseInt($('#art-page').val()) ; i++) {
+		for ( var i = 1; i <= parseInt($('#art-page').val()); i++) {
 			console.log("grid:" + i);
-			callback(friend_id,i);
+			callback(friend_id, i);
 		}
 	}
 }
@@ -73,8 +72,38 @@ $(document).ready(function() {
 		},
 	});
 
+	$(window).on("scroll", function() {
+		var scrollHeight = $(document).height();
+		var scrollPosition = $(window).height() + $(window).scrollTop();
+		if ((scrollHeight - scrollPosition) / scrollHeight === 0) {
+			// when scroll to bottom of the page
+
+			if ($('#art-add').val() === 'true') {
+				// 今のページ番号を取得
+				console.log("tuikadesu");
+				var page = parseInt($('#art-page').val()) + 1;
+				$('#art-page').val(page);
+				switch ($.cookie("viewMode")) {
+				case "0":
+					getMyList(page);
+					break;
+				case "2":
+
+					// お気に入り
+					break;
+				case "3":
+					getShareList($.cookie("shareLists"), page);
+					break;
+				case "4":
+					getMyListList(page);
+					break;
+				}
+			}
+		}
+	});
+
 	// 追加読み込み用のリスナー
-	$(document).on('click','#add-button',function(){
+	$(document).on('click', '#add-button', function() {
 		// 今のページ番号を取得
 		console.log("tuikadesu");
 		var page = parseInt($('#art-page').val()) + 1;
@@ -88,17 +117,19 @@ $(document).ready(function() {
 			// お気に入り
 			break;
 		case "3":
-			getShareList($.cookie("shareLists"),page);
+			getShareList($.cookie("shareLists"), page);
+			break;
+		case "4":
+			getMyListList(page);
 			break;
 		}
 	});
 
 	// 記事追加用のリスナー
-	$(document).on('click','#add-article',function(){
+	$(document).on('click', '#add-article', function() {
 		// 今のページ番号を取得
 		addArticle();
 	});
-
 
 	switch ($.cookie("viewMode")) {
 	case "0":// マイリスト画面を表示しているとき
@@ -153,8 +184,22 @@ $(document).ready(function() {
 
 		if (isSettinOnLine() === true) {
 			// オフライン判断
-			initPagingSharelist(getShareList,$.cookie("shareLists"));
+			initPagingSharelist(getShareList, $.cookie("shareLists"));
 			initTopPage();
+			toastr.warning("オンライン");
+
+		} else if (isSettinOnLine() === false) {
+
+		} else {
+
+		}
+		break;
+	case "4":// シェア画面を表示しているとき
+		$('.grid').empty();
+
+		if (isSettinOnLine() === true) {
+			// オフライン判断
+			initPagingMylist(getMyListList);
 			toastr.warning("オンライン");
 
 		} else if (isSettinOnLine() === false) {
@@ -174,18 +219,18 @@ function isSettinOnLine() {
 	}
 
 	console.log(SetFlag);
-	if (SetFlag  === 'true') {
+	if (SetFlag === 'true') {
 		if (navigator.onLine === true) {
 			console.log('true');
 			return true;
-		} else if (navigator.onLine === false){
+		} else if (navigator.onLine === false) {
 			return false;
 			console.log('false');
 		} else {
 			return false;
 			console.log('UnknownNetworkState');
 		}
-	} else if (SetFlag === 'false'){
+	} else if (SetFlag === 'false') {
 		return false;
 	} else {
 		toastr.warning('再ログインしてくだaさい');

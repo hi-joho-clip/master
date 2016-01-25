@@ -21,14 +21,16 @@ import de.l3s.boilerpipe.document.Image;
 public class imageTrans extends Thread {
 
 	private int article_id;
+	private int user_id;
 	private ArrayList<ImageDTO> imageDTO = new ArrayList<ImageDTO>();
 	private URL url;
 	private List<Image> image;
 
-	public imageTrans(int article_id, URL url, List<Image> image) {
+	public imageTrans(int article_id, URL url, List<Image> image, int user_id) {
 		this.article_id = article_id;
 		this.url = url;
 		this.image = image;
+		this.user_id = user_id;
 	}
 
 	public static void main(String[] args) {
@@ -46,6 +48,8 @@ public class imageTrans extends Thread {
 		ImageDTO imDTO = null;
 
 		String image_url = null;
+		Boolean flag = true;
+		ImageDTO thumDTO = null;
 		//System.out.println(image.size());
 		for (Image img : image) {
 			imDTO = new ImageDTO();
@@ -59,17 +63,30 @@ public class imageTrans extends Thread {
 
 			//System.out.println(extentHantei("URL:" + image_url));
 			if (extentHantei(image_url) != "FALSE") {
-				imDTO.setArticle_id(this.article_id);
-				imDTO.setExtenstion(extentHantei(image_url));
+				// nullだったら画像が小さすぎる
 				imDTO.setBlob_image(getImage(image_url));
-				imDTO.setUri(image_url);
-				this.imageDTO.add(imDTO);
+				System.out.println("setBlob:" + imDTO.getBlob_image() == null);
+				if (imDTO.getBlob_image() != null) {
+					imDTO.setArticle_id(this.article_id);
+					imDTO.setExtenstion(extentHantei(image_url));
+					//imDTO.setBlob_image(getImage(image_url));
+					imDTO.setUri(image_url);
+					this.imageDTO.add(imDTO);
+					if (flag) {
+						thumDTO = imDTO;
+						flag = false;
+					}
+				}
 			}
 			// 拡張子を入れちゃえ
 		}
 		// 更新処理
 
 		try {
+			ArticleBean art = new ArticleBean();
+			ArticleBean new_art = art.viewForThum(this.article_id);
+			new_art.setThum(thumDTO.getBlob_image());
+			new_art.addArticle(user_id);
 			artBean.addImage(this.article_id, this.imageDTO);
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
@@ -119,27 +136,30 @@ public class imageTrans extends Thread {
 				URL url = uri.toURL();
 				BufferedImage buf_img = ImageIO.read(url);
 
-				float hiritu = (float) buf_img.getHeight() / (float) buf_img.getWidth();
-				int width = 800;
-				int height = Math.round((float) width * hiritu);
+				if (buf_img.getHeight() >= 60) {
 
-				//	System.out.println("takasa:" + height + "hiritu:" + hiritu);
+					float hiritu = (float) buf_img.getHeight() / (float) buf_img.getWidth();
+					int width = 800;
+					int height = Math.round((float) width * hiritu);
 
-				BufferedImage new_img = rescale(buf_img, width, height);
+					//	System.out.println("takasa:" + height + "hiritu:" + hiritu);
 
-				//				System.out.println("img:" + buf_img.getWidth());
-				//				System.out.println("new_img:" + new_img.getWidth());
-				//				System.out.println("new_img:" + new_img.getHeight());
+					BufferedImage new_img = rescale(buf_img, width, height);
 
-				//ImageIO.write(new_img, "gif", new FileOutputStream("C:\\Users\\121013\\Pictures\\testunfe.jpg"));
-				new_ByteImage = getBytesFromImage(new_img, extentHantei(str_url));
+					//				System.out.println("img:" + buf_img.getWidth());
+					//				System.out.println("new_img:" + new_img.getWidth());
+					//				System.out.println("new_img:" + new_img.getHeight());
 
-				//			} catch (URISyntaxException e) {
-				//				e.printStackTrace();
-				//			} catch (MalformedURLException e) {
-				//				e.printStackTrace();
-				//			} catch (IOException e) {
-				//				e.printStackTrace();
+					//ImageIO.write(new_img, "gif", new FileOutputStream("C:\\Users\\121013\\Pictures\\testunfe.jpg"));
+					new_ByteImage = getBytesFromImage(new_img, extentHantei(str_url));
+
+					//			} catch (URISyntaxException e) {
+					//				e.printStackTrace();
+					//			} catch (MalformedURLException e) {
+					//				e.printStackTrace();
+					//			} catch (IOException e) {
+					//				e.printStackTrace();
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

@@ -1,11 +1,16 @@
 package boiler;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import org.cyberneko.html.parsers.DOMParser;
 import org.w3c.dom.Document;
@@ -35,17 +40,17 @@ public class SaveArticle {
 	//		}
 	//	}
 
-	private String encodeBR (String str ) {
+	private String encodeBR(String str) {
 
 		String value = null;
 
-		 value = str.replaceAll("\r\n", "\n").replaceAll("\r", "\n");
-		 value = value.replaceAll("\n", "<br />");
-             // OutSupport.outで出力(escapeXml=true でエスケープ)
+		value = str.replaceAll("\r\n", "\n").replaceAll("\r", "\n");
+		value = value.replaceAll("\n", "<br />");
+		// OutSupport.outで出力(escapeXml=true でエスケープ)
 
-		 System.out.println("nakami:" +value);
+		System.out.println("nakami:" + value);
 
-		 return value;
+		return value;
 	}
 
 	/**
@@ -123,6 +128,11 @@ public class SaveArticle {
 		artBean.setTitle(title);
 		artBean.setBody(encodeBR(text));
 
+		if (image.size() == 0) {
+			// 画像がなければデフォルト
+			artBean.setThum(createThum());
+		}
+
 		// これは本来いらないけど仕様上致し方ない
 		int article_id = artBean.addArticle(user_id);
 
@@ -132,12 +142,40 @@ public class SaveArticle {
 
 		// 画像のスレッド起動
 		System.out.println(image.size());
-		imageTrans it = new imageTrans(article_id, url, image);
+		if (image.size() != 0) {
+			imageTrans it = new imageTrans(article_id, url, image, user_id);
 
-		it.start();
+			it.start();
+		} else {
+			// thum
+		}
 		System.out.println(text);
 
 		return article_id;
+	}
+
+	/**
+	 * サムネを作るよ
+	 * @return
+	 */
+	public byte[] createThum() {
+		BufferedImage readImage = null;
+
+		ByteArrayOutputStream baos = null;
+		try {
+
+			URI uri = new URI("http://localhost:8080/clipMaster/img/thum.jpg");
+			URL url = uri.toURL();
+			BufferedImage buf_img = ImageIO.read(url);
+			baos = new ByteArrayOutputStream();
+			//readImage = ImageIO.read(new File("http://localhost:8080/clipMaster/img/thum.jpg"));
+			ImageIO.write(buf_img, "jpg", baos);
+		} catch (Exception e) {
+			e.printStackTrace();
+			readImage = null;
+		}
+		return baos.toByteArray();
+
 	}
 
 	/**

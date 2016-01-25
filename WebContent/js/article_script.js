@@ -7,6 +7,14 @@ function getMyList(page) {
 	document.getElementById('title').innerHTML = '<h1>マイリスト</h1>';
 	getJSON(URL, jsonParam, get_mylists);
 }
+
+function getMyListList(page) {
+	var jsonParam = 'page='+page;// 送りたいデータ(ページ番号）
+	var URL = hostURL + "/clipMaster/mylist";
+	document.getElementById('title').innerHTML = '<h1>マイリスト</h1>';
+	getJSON(URL, jsonParam, get_mylists_list);
+}
+
 // お気に入り
 function getFavList() {
 	var jsonParam = null;// 送りたいデータ

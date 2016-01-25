@@ -11,6 +11,7 @@ public class DBManagerAdmin {
 	//final static String USER="root";
 	final static String USER = "manager";
 	final static String PASSWORD = "password";
+	//final static String PASSWORD = "clipforspacecat";
 
 	private DBManagerAdmin() throws SQLException{
 		try{
