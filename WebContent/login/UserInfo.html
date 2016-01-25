@@ -21,6 +21,7 @@
 <script src="../js/1.11.1_jquery.min.js"></script>
 <script src="js/articlemenu.js"></script>
 <script src="../js/user_script.js"></script>
+<script type="text/javascript" src="../js/friend_script.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="../js/jquery/isotope.pkgd.min.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery.cookie.js"></script>
@@ -72,7 +73,7 @@
 					<a href="Friend.html"><h4>フレンド一覧</h4></a>
 				 </div>
 				 <div id="bg-link">
-					<a href="FriendBox.html"><h4>フレンドボックス</h4></a>
+					<a href="FriendBox.html"><div id ="notice"></div></a>
 				 </div>
 				 <div id="bg-link">
 					<a href="FriendSeach.html"><h4>フレンド検索</h4></a>
@@ -157,7 +158,7 @@
 				<script>
 					$(document).ready(function() {
 						getUserList();
-						//message();
+						notice();
 
 					});
 				</script>

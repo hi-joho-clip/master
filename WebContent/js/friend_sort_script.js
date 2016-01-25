@@ -1,20 +1,14 @@
 var tableData = new Array();
-var sortKey = ["Name","Time"]; // ソート項目
+var sortKey = [ "Name", "Time" ]; // ソート項目
 var asc = false; // 昇順(true)/降順(false)
 var nowSortKey = "Name"; // 現在ソートキー
 
-$(document).ready(function() {
-	getFriendList();
-});
-
-//フレンド登録者一覧画面
+// フレンド登録者一覧画面
 function getFriendList() {
-
 	var jsonParam = null;// 送りたいデータ
 	var URL = hostURL + "/clipMaster/friendlist";
 	var setappend = function(json) {
 		var cnt = 0;
-
 
 		for ( var i = 0; i < json.length; i++) {
 			// リクエスト申請したユーザ一覧
@@ -23,30 +17,46 @@ function getFriendList() {
 				now.setTime(json[i].created);
 				cnt += 1;
 
-				tableData[i] = new Array();
-				tableData[i] = {Name:json[i].nickname, Time:now.getFullYear() + "年" + (now.getMonth() + 1) + "月" + now.getDate() + "日", Submit: "<a href='#' data-remodal-target='delete_request' onclick='document.getElementById(\"user_id\").innerHTML=\""
-					+ json[i].friend_user_id + "\";'>取消</a>"};
-			}else if(json[i].status == 3){
 
-				//フレンド一覧
+				tableData[i] = {
+					Name : json[i].nickname,
+					Time : now.getFullYear() + "年" + (now.getMonth() + 1) + "月"
+							+ now.getDate() + "日",
+					Submit : "<a href='#' data-remodal-target='delete_request' onclick='document.getElementById(\"user_id\").innerHTML=\""
+							+ json[i].friend_user_id + "\";'>取消</a>"
+				};
+			}
+		}
+		for ( var i = 0; i < json.length; i++) {
+			//フレンドを一覧
+			if (json[i].status == 3) {
+				// フレンド一覧
 				var now = new Date();
 				now.setTime(json[i].created);
 
-				tableData[i] = {Name:"<a href='index.html'onclick='javascript:$.cookie(\"viewMode\",\"3\");$.cookie(\"shareLists\",\""+json[i].friend_user_id+"\");'>"+json[i].nickname, Time:now.getFullYear() + "年" + (now.getMonth() + 1) + "月" + now.getDate() + "日", Submit: "<a href='#' data-remodal-target='delete_friend' onclick='document.getElementById(\"user_id\").innerHTML=\""
-					+ json[i].friend_user_id + "\";'>削除</a>"};
+				tableData[i] = {
+					Name : "<a href='index.html'onclick='javascript:$.cookie(\"viewMode\",\"3\");$.cookie(\"shareLists\",\""
+							+ json[i].friend_user_id
+							+ "\");'>"
+							+ json[i].nickname,
+					Time : now.getFullYear() + "年" + (now.getMonth() + 1) + "月"
+							+ now.getDate() + "日",
+					Submit : "<a href='#' data-remodal-target='delete_friend' onclick='document.getElementById(\"user_id\").innerHTML=\""
+							+ json[i].friend_user_id + "\";'>削除</a>"
+				};
 			}
 		}
 		$('input#id_search').quicksearch('table tbody tr');
+		console.log("owatta");
+
 	};
 	getJSON(URL, jsonParam, setappend);
 	return tableData;
+
 }
-//ソート機能
+// ソート機能
 
 function createTable(obj) {
-	$(document).ready(function() {
-		getFriendList();
-	});
 
 	var sort = "Name"; // デフォルトソート
 	if (obj != undefined && obj.id != undefined) {
@@ -122,26 +132,24 @@ function createTdElement(txt) {
 	return tdElm;
 }
 
-//タグを反応させるため
+// タグを反応させるため
 function createTdSubmitElement(txt) {
 	var tdElm = document.createElement("td");
-	tdElm.innerHTML=txt;
+	tdElm.innerHTML = txt;
 	return tdElm;
 }
 
-//ソートうまく動かすために必要、不要なタグを削除
+// ソートうまく動かすために必要、不要なタグを削除
 function deleteTag(wasteA) {
 	console.log(wasteA[0]);
-	if(wasteA[0] == "<"){
-		for(var i=0; wasteA[i] != ">"; 0){
+	if (wasteA[0] == "<") {
+		for ( var i = 0; wasteA[i] != ">"; 0) {
 			wasteA = wasteA.slice(1);
 		}
 		wasteA = wasteA.slice(1);
 	}
 	return wasteA;
 }
-
-
 
 /**
  * テーブルヘッダー編集
@@ -166,14 +174,22 @@ function editHeader() {
 /**
  * onloadイベント付与
  */
+
 if (window.addEventListener) { // for W3C DOM
+	window.addEventListener("load", getFriendList, false);
+	getFriendList();
+	console.log("addevent");
 	window.addEventListener("load", createTable, false);
+
+	console.log("addeventlistener createtable");
 } else if (window.attachEvent) { // for IE
 	window.attachEvent("onload", createTable);
+	console.log("attachevent createtable");
 } else {
 	window.onload = createTable;
+	console.log("onload createtable");
 }
-//リクエストを削除後の画面
+// リクエストを削除後の画面
 function deleteRequest(user_id) {
 	var jsonParam = "friend_user_id=" + user_id;// 送りたいデータ
 	var URL = hostURL + "/clipMaster/deleterequest";
@@ -204,25 +220,24 @@ function deleteFriend(user_id) {
 	location.reload();
 }
 
-//フレンド登録者のリストをもらう処理
+// フレンド登録者のリストをもらう処理
 function getFriends() {
 	var jsonParam = null;// 送りたいデータ
 	var URL = hostURL + "/clipMaster/friendlistff";
 	getJSON(URL, jsonParam, get_friends);
 }
 
-
-//フレンド申請があると、申請通知が来る
+// フレンド申請があると、申請通知が来る
 function notice() {
 	var jsonParam = null;// 送りたいデータ
 	var URL = hostURL + "/clipMaster/friendrequest";
 	var setappend = function(json) {
 		if (json.length > 0) {
 			console.log("申請あるよ");
-			$remodal = "<img src='img/friendBOX.png'>";
+			$remodal = "<h4>フレンドボックス<img src='img/friendBOX.png'></h4>";
 		} else {
 			console.log("申請ないよ");
-			$remodal = "";
+			$remodal = "<h4>フレンドボックス</h4>";
 		}
 		$("#notice").append($remodal).trigger("create");
 	};

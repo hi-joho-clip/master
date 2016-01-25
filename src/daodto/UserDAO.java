@@ -424,6 +424,46 @@ public class UserDAO {
 		return userDTO;
 	}
 
+
+
+	/**
+	 * ユーザ名とメールアドレスからパスワード検索
+	 * @param user_name
+	 * @param password
+	 * @return
+	 * @throws Exception
+	 */
+	public UserDTO PasswordSearch(String mailaddress, String username) throws Exception {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		UserDTO userDTO = new UserDTO();
+		String sql = "select * from users where mailaddress = ? and username = ?";
+
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, mailaddress);
+			pstmt.setString(2, username);
+			System.out.println(pstmt);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				userDTO.setUser_id(rs.getInt("user_id"));
+				userDTO.setUser_name(rs.getString("user_name"));
+				userDTO.setNickname(rs.getString("nickname"));
+				userDTO.setPassword(rs.getString("password"));
+				userDTO.setMailaddress(rs.getString("mailaddress"));
+				userDTO.setFriend_flag(rs.getInt("friend_flag"));
+				userDTO.setCreated(DateEncode.toDate(rs.getString("created")));
+				userDTO.setModified(DateEncode.toDate(rs.getString("modified")));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception();
+		} finally {
+			pstmt.close();
+		}
+		return userDTO;
+	}
+
 	/**
 	 *
 	 * フレンドフラグを許可(0)に設定
@@ -484,6 +524,40 @@ public class UserDAO {
 		} else {
 			return true;
 		}
+	}
+
+
+
+
+	public boolean updatePassword(String User_name, String mailaddress) throws Exception {
+		PreparedStatement pstmt = null;
+		UserDTO userDTO = new UserDTO();
+		String sql = " users set password = ?, modified = now()" +
+				" where user_name = ?, mailaddress = ?";
+
+		int state = 0;
+		try {
+			pstmt = con.prepareStatement(sql);
+			// パスワードはユーザ名＋パスワードでハッシュ化
+			pstmt.setString(1, ToSHA2.getDigest(User_name + Password));
+			// ユーザID
+			pstmt.setString(2, User_name);
+			pstmt.setString(3, mailaddress);
+			state = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception();
+		} finally {
+			pstmt.close();
+		}
+
+		if (state == 1) {
+			return true;
+		} else {
+			return false;
+		}
+
 	}
 
 }
