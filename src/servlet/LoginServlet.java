@@ -102,15 +102,15 @@ public class LoginServlet extends HttpServlet {
 			loginsession.setAttribute("guid", guid.toString());
 
 			// 成功した場合、クッキー情報、削除
-			if (cookie != null) {
-				for (Cookie cookies : cookie) {
-					if ("visitedCookie".equals(cookies.getName())) {
-						cookies.setMaxAge(0);
-						cookies.setPath("/");
-						response.addCookie(cookies);
-					}
+			for (int i = 0; i < cookie.length; i++) {
+				if (cookie[i].getName().equals("visited")) {
+					visitedCookie = cookie[i];
+					visitedCookie.setPath("/");
+					visitedCookie.setMaxAge(0);
+					response.addCookie(visitedCookie);
 				}
 			}
+
 
 			// URLは絶対パスで書かない。
 			// 本番環境でURL=nullにすれば簡単に動く
@@ -126,14 +126,17 @@ public class LoginServlet extends HttpServlet {
 				}
 				if (visitedCookie == null) {
 					Cookie newCookie = new Cookie("visited", "1");
+					newCookie.setPath("/");
 					newCookie.setMaxAge(300);
 					response.addCookie(newCookie);
 				} else if (Integer.parseInt(visitedCookie.getValue()) < 4) {
+					visitedCookie.setPath("/");
 					int visited = Integer.parseInt(visitedCookie.getValue()) + 1;
 					visitedCookie.setValue(Integer.toString(visited));
 					visitedCookie.setMaxAge(300);
 					response.addCookie(visitedCookie);
 				} else {
+					visitedCookie.setPath("/");
 					int visited = Integer.parseInt(visitedCookie.getValue()) + 1;
 					visitedCookie.setValue(Integer.toString(visited));
 					visitedCookie.setMaxAge(300);
@@ -145,6 +148,7 @@ public class LoginServlet extends HttpServlet {
 				}
 			} else {
 				Cookie newCookie = new Cookie("visited", "1");
+				newCookie.setPath("/");
 				newCookie.setMaxAge(300);
 				response.addCookie(newCookie);
 			}

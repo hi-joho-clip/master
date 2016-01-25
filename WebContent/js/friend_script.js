@@ -158,17 +158,17 @@ function getFriends() {
 	getJSON(URL, jsonParam, get_friends);
 }
 
-// フレンド申請があると、申請通知が来る
+//フレンド申請があると、申請通知が来る
 function notice() {
 	var jsonParam = null;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/friendrequest";
+	var URL = hostURL + "/clipMaster/friendrequest";
 	var setappend = function(json) {
 		if (json.length > 0) {
 			console.log("申請あるよ");
-			$remodal = "<img src='img/friendBOX.png'>";
+			$remodal = "<h4>フレンドボックス<img src='img/friendBOX.png'></h4>";
 		} else {
 			console.log("申請ないよ");
-			$remodal = "";
+			$remodal = "<h4>フレンドボックス</h4>";
 		}
 		$("#notice").append($remodal).trigger("create");
 	};
