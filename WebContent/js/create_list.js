@@ -177,10 +177,6 @@ var get_sharelists = function(json) {
 										"<img src='img/trash1.png' align='right'width='42'height='42'></img>" +
 										"</a>"+
 
-										 "<a href='#' data-remodal-target='tagmodal' onclick='javascript:getTagArticle("+json[i].article_id+");getUsingTags();return false;'>"+
-										  "<img src='img/tag1.png'align='right' width='42'height='42'></img>" +
-										  "</a>"+
-
 									"</div>"+
 								"</div>"+
 							"</div>"+
@@ -191,6 +187,72 @@ var get_sharelists = function(json) {
 						"</div>"+
 					"</div>");
 		$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
+	}
+
+	addViewNext(json);
+	jQuery(function($){
+		$('.bar').mosaic({
+			animation	:	'slide'		//fade or slide
+		});
+    });
+};
+//記事一覧を作成（リスト）
+var get_mylists_list = function(json) {
+	var random =Math.floor(Math.random()*3);
+	$myList = $("<div class='grid-sizer'></div>");
+	$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
+	for ( var i = 0; i < json.length ; i++) {
+		var flag="";
+		if(json[i].favflag==true){
+			flag="★"+json[i].title;
+		}else if(json[i].favflag==false){
+			flag=json[i].title;
+		}
+		$myList = $("<ol>"+
+						"<a href='../login/article.html?"+json[i].article_id+"'><li class='first'>"+
+							"<div class='dan'>"+
+								"<img src='http://www.kk1up.jp/wp-content/uploads/2015/07/201507290001-17.jpg'width='100'height='100'/>"+
+							"</div>"+
+							"<div class='mawari'>"+
+								"<div class='dan2'id='favtitle"+json[i].article_id+"'>"+
+								""+flag+""+
+								"</div>"+
+								"<div class='dan3'>"+
+								"<a href='"+json[i].url+"' target='_blank'>"+json[i].url+"</a>"+
+								"</div>"+
+								"<input type='hidden' value='"+json[i].title+"' id='title"+json[i].article_id+"'>"+
+								"<input type='hidden' value='"+json[i].url+"' id='url"+json[i].article_id+"'>"+
+							"</div>"+
+							"<div class='firstbuttons'>"+
+
+
+									"<div id='menu2'>"+
+										"<div class='remodal-bg'>"+
+										"<input type='hidden' value='"+json[i].favflag+"' id='grobalflag"+json[i].article_id+"'>"+
+
+										"<a href='#' data-remodal-target='deletemodal'onclick='javascript:getArticle_id("+json[i].article_id+");return false;'>" +
+										"<img src='img/trash1.png' align='right'width='30'height='30'></img>" +
+										"</a>"+
+
+										"<a href='#' data-remodal-target='sharemodal'onclick='javascript:getFriends();getArticle_id("+json[i].article_id+");return false;'><img src='img/share1.png' align='right'width='30'height='30'></img></a>"+
+
+										 "<a href='#' data-remodal-target='tagmodal' onclick='javascript:getTagArticle("+json[i].article_id+");getUsingTags();return false;'>"+
+										  "<img src='img/tag1.png'align='right' width='30'height='30'></img>" +
+										  "</a>"+
+
+										"<a href='#'onclick='javascript:addFavArticle("+json[i].article_id+");return false;'><img src='img/star1.png' align='right'width='30'height='30'></img></a>"+
+
+										"</div>"+
+									"</div>"+
+
+							"</div>"+
+						"</li></a>"+
+					"</ol>");
+		$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
+		if(json[i].favflag==true){
+			console.log('#favtitle'+json[i].article_id);
+			$('#favtitle'+json[i].article_id).attr('style', 'color:#FFEB3B');
+		}
 	}
 
 	addViewNext(json);
