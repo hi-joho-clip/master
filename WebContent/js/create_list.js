@@ -149,15 +149,6 @@ var get_mylists = function(json) {
     });
 };
 
-function thumView(json, width, height) {
-	if (json.thum != null) {
-		console.log("now null");
-		return "<img src='data:image/jpeg;base64," + json.thum +  "' width='" + width + "' height='" + height + "'alt='"+json.title+"'/>";
-	} else {
-		console.log("notttt null");
-		return "<img src='http://www.kk1up.jp/wp-content/uploads/2015/07/201507290001-17.jpg' width='" + width + "' height='" + height + "'alt='"+json.title+"'/>";
-	}
-}
 
 function addViewNext(json) {
 
