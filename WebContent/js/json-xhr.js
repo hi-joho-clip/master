@@ -166,3 +166,14 @@ function addArticle() {
 	};
 	getJSON(URL, jsonParam, update_article);
 }
+
+function thumView(json, width, height) {
+	if (json.thum != null) {
+		console.log("now null");
+		return "<img src='data:image/jpeg;base64," + json.thum +  "' width='" + width + "' height='" + height + "'alt='"+json.title+"'/>";
+	} else {
+		console.log("notttt null");
+		return "<img src='" + hostURL + "/clipMaster/img/sm2.png" +
+				"' width='" + width + "' height='" + height + "'alt='"+json.title+"'/>";
+	}
+}

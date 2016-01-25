@@ -138,7 +138,7 @@ public class imageTrans extends Thread {
 				URL url = uri.toURL();
 				BufferedImage buf_img = ImageIO.read(url);
 
-				if (buf_img.getHeight() >= 110) {
+				if (buf_img.getHeight() >= 200) {
 
 					float hiritu = (float) buf_img.getHeight() / (float) buf_img.getWidth();
 					int width = 800;

@@ -69,7 +69,7 @@ public class AddArticleServlet extends HttpServlet {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				mode = ("FULL");
+				mode = ("NORMAL");
 
 				System.out.println("URL:" + url);
 
