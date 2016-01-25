@@ -130,12 +130,13 @@ public class SaveArticle {
 
 		if (image.size() == 0) {
 			// 画像がなければデフォルト
-			artBean.setThum(createThum());
+			//artBean.setThum(createThum());
 		}
 
 		// これは本来いらないけど仕様上致し方ない
 		int article_id = artBean.addArticle(user_id);
 
+		System.out.println("ガゾウスウ:" + image.size());
 		for (Image img : image) {
 			System.out.println("sa:" + img.getSrc());
 		}

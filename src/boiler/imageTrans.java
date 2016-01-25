@@ -83,10 +83,12 @@ public class imageTrans extends Thread {
 		// 更新処理
 
 		try {
+			// サムネイルの保存
 			ArticleBean art = new ArticleBean();
-			ArticleBean new_art = art.viewForThum(this.article_id);
-			new_art.setThum(thumDTO.getBlob_image());
-			new_art.addArticle(user_id);
+			art.setArticle_id(article_id);
+			art.setThum(thumDTO.getBlob_image());
+			art.updateThum();
+			// 画像の保存
 			artBean.addImage(this.article_id, this.imageDTO);
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック

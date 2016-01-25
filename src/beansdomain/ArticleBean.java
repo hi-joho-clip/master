@@ -242,6 +242,17 @@ public class ArticleBean {
 	}
 
 	/**
+	 * Thumの更新
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean updateThum() throws Exception {
+		this.articleDAO = new ArticleDAO();
+		setArticleDTO();
+		return this.articleDAO.updateThum(this.articleDTO);
+	}
+
+	/**
 	 * 記事にお気に入りとして追加
 	 * @return
 	 * @throws Exception

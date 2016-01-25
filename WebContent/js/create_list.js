@@ -121,8 +121,8 @@ var get_mylists = function(json) {
 								"</div>"+
 							"</div>"+
 						"</div>"+
-						"<div class='mosaic-backdrop relative'>" +
-							"<img src='data:image/jpeg;base64," + json[i].thum +  "' width='100%' height='auto'alt='"+json[i].title+"'/>" +
+						"<div class='mosaic-backdrop relative'>" + thumView(json[i], "100%", "100%")
+							+
 							"<p class='absolute'id='favtitle"+json[i].article_id+"'>"+flag+"<BR><a href='"+json[i].url+"'target='_blank'>"+json[i].url+"</a></p>" +
 							"<input type='hidden' value='"+json[i].title+"' id='title"+json[i].article_id+"'>"+
 							"<input type='hidden' value='"+json[i].url+"' id='url"+json[i].article_id+"'>"+
@@ -147,6 +147,16 @@ var get_mylists = function(json) {
 		});
     });
 };
+
+function thumView(json, width, height) {
+	if (json.thum != null) {
+		console.log("now null");
+		return "<img src='data:image/jpeg;base64," + json.thum +  "' width='" + width + "' height='" + height + "'alt='"+json.title+"'/>";
+	} else {
+		console.log("notttt null");
+		return "<img src='http://www.kk1up.jp/wp-content/uploads/2015/07/201507290001-17.jpg' width='" + width + "' height='" + height + "'alt='"+json.title+"'/>";
+	}
+}
 
 function addViewNext(json) {
 
@@ -212,7 +222,7 @@ var get_mylists_list = function(json) {
 		$myList = $("<ol>"+
 						"<a href='../login/article.html?"+json[i].article_id+"'><li class='first'>"+
 							"<div class='dan'>"+
-								"<img src='http://www.kk1up.jp/wp-content/uploads/2015/07/201507290001-17.jpg'width='100'height='100'/>"+
+								thumView(json[i], "100px", "100px")+
 							"</div>"+
 							"<div class='mawari'>"+
 								"<div class='dan2'id='favtitle"+json[i].article_id+"'>"+
