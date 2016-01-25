@@ -57,12 +57,12 @@ table {
 html, body {
   width: 100%;
   height: 100%;
-  overflow-y: scroll;
 }
 
 body {
   line-height: 1.3;
   -webkit-font-smoothing: antialiased;
+      overflow-y: scroll;
 }
 
 

@@ -145,14 +145,14 @@ function editHeader() {
 	// ヘッダー初期化
 	for ( var i = 0; i < sortKey.length; i++) {
 		var obj = document.getElementById(sortKey[i]);
-		obj.style.color = "#000000";
+		obj.style.color = "#999";
 		obj.removeChild(obj.childNodes[0]);
 		obj.appendChild(document.createTextNode(sortKey[i]));
 	}
 	// ソート項目の編集
 	if (nowSortKey != undefined && nowSortKey != "") {
 		var sortObj = document.getElementById(nowSortKey);
-		sortObj.style.color = "#0000FF";
+		sortObj.style.color = "#428bca";
 		sortObj.removeChild(sortObj.childNodes[0]);
 		var txt = (asc) ? "▼" : "▲";
 		sortObj.appendChild(document.createTextNode(nowSortKey + txt));
