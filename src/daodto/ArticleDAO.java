@@ -242,6 +242,33 @@ public class ArticleDAO {
 	}
 
 	/**
+	 * Thumの更新
+	 *
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean updateThum(ArticleDTO article) throws Exception {
+		PreparedStatement pstmt = null;
+		String sql = "UPDATE articles SET thum = ?,modified = now() WHERE article_id = ?";
+		boolean flag = false;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setBytes(1, article.getThum());
+			pstmt.setInt(2, article.getArticle_id());
+			//System.out.println("upate:" + pstmt);
+			if (pstmt.executeUpdate() == 0) {
+				flag = false;
+			} else {
+				flag = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception();
+		}
+		return flag;
+	}
+
+	/**
 	 * 画像の更新
 	 *
 	 * @return
