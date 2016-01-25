@@ -466,6 +466,7 @@ div[data-wysihtml5-dialog="createTable"] td {
 									</div>
 								</div>
 							</section>
+							<div class="images">
 						</div>
 					</div>
 				</div>
@@ -498,6 +499,10 @@ div[data-wysihtml5-dialog="createTable"] td {
 							$('#footerArea').attr('style', 'visibility:hidden');
 							edit_flag = 'false';
 							updateArticle();
+
+							$('#editable').attr('contenteditable', 'false');
+							$('#editable').attr('style','font-size: 200%;padding: 10px;');
+							text_edit_flag = 'false';
 						}
 					});
 

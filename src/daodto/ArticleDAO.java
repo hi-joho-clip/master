@@ -110,7 +110,7 @@ public class ArticleDAO {
 			pstmt.setString(4, article.getUrl());
 			pstmt.setInt(5, id);
 			pstmt.setBytes(6, article.getThum());
-			//System.out.println(pstmt);
+			System.out.println(pstmt);
 			pstmt.executeUpdate();
 			pstmt = con.prepareStatement(sql2);
 			rs = pstmt.executeQuery();
@@ -477,7 +477,7 @@ public class ArticleDAO {
 		String sql = "INSERT INTO article_tag(article_id,tag_id) VALUES(?,"
 				+ " (SELECT tag_id FROM tags " + " WHERE user_id = ? "
 				+ " AND tag_body = 'お気に入り'))";
-		String article_fav = "update articles set favflag = TRUE where article_id = ?";
+		String article_fav = "update articles set favflag = TRUE , modified = now() where article_id = ?";
 
 		try {
 			con.setAutoCommit(false);
@@ -520,7 +520,7 @@ public class ArticleDAO {
 		boolean flag = false;
 		String sql = "DELETE FROM article_tag WHERE article_id = ? AND tag_id = "
 				+ " (SELECT tag_id FROM tags WHERE user_id = ? AND tag_body = 'お気に入り')";
-		String article_fav = "update articles set favflag = FALSE where article_id = ?";
+		String article_fav = "update articles set favflag = FALSE , modified = now() where article_id = ?";
 
 		try {
 			con.setAutoCommit(false);
@@ -834,6 +834,7 @@ public class ArticleDAO {
 				articleDTO.setModified(DateEncode.toDate(rs.getString("modified")));
 				articleDTO.setShare_url(rs.getString("share_url"));
 				articleDTO.setFavflag(rs.getBoolean("favflag"));
+				System.out.println("db:" + rs.getBoolean("favflag"));
 				articleDTO.setThum(rs.getBytes("thum"));
 				articleDTO.setShare_expior(rs.getDate("share_expior"));
 				articleDTO.setMylist_id(rs.getInt("id"));
@@ -856,6 +857,47 @@ public class ArticleDAO {
 				}
 				articleDTO.setImageDTO(image_list);
 
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception();
+		}
+		return articleDTO;
+	}
+
+
+	/**
+	 * Thum
+	 *
+	 * @return
+	 * @throws Exception
+	 */
+	public ArticleDTO viewForThum(int article_id) throws Exception {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArticleDTO articleDTO = new ArticleDTO();
+		ArrayList<ImageDTO> image_list = new ArrayList<ImageDTO>();
+		String sql = "SELECT * FROM articles where article_id = ? ";
+
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, article_id);
+			//System.out.println("view:" + pstmt);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				articleDTO.setArticle_id(rs.getInt("article_id"));
+				articleDTO.setTitle(rs.getString("title"));
+				articleDTO.setBody(rs.getString("body"));
+				articleDTO.setUrl(rs.getString("url"));
+				articleDTO.setCreated(DateEncode.toDate(rs.getString("created")));
+				articleDTO.setModified(DateEncode.toDate(rs.getString("modified")));
+				articleDTO.setShare_url(rs.getString("share_url"));
+				articleDTO.setFavflag(rs.getBoolean("favflag"));
+				System.out.println("db:" + rs.getBoolean("favflag"));
+				articleDTO.setThum(rs.getBytes("thum"));
+				articleDTO.setShare_expior(rs.getDate("share_expior"));
+				articleDTO.setMylist_id(rs.getInt("id"));
 			}
 
 		} catch (Exception e) {

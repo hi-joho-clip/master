@@ -12,6 +12,7 @@ function initTopPage() {
 	store.set('username', username);
 	store.set('auto', true);
 
+	console.log("initPage");
 	/*
 	 * 対応ブラウザならオフライン処理を開始 （ここでダイアログ
 	 */

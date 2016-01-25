@@ -14,6 +14,7 @@ public class ArticleDTO {
 	private Date share_expior;
 	private int mylist_id;
 	private byte[] thum;
+	private int share_id;
 	private boolean favflag;
 	private ArrayList<ImageDTO> imageDTO;
 
@@ -29,6 +30,7 @@ public class ArticleDTO {
 		this.favflag=false;
 		this.share_expior=null;
 		this.thum=null;
+		this.share_id = 0;
 	}
 
 	public int getArticle_id() {
@@ -125,6 +127,14 @@ public class ArticleDTO {
 
 	public void setFavflag(boolean favflag) {
 		this.favflag = favflag;
+	}
+
+	public int getShare_id() {
+		return share_id;
+	}
+
+	public void setShare_id(int share_id) {
+		this.share_id = share_id;
 	}
 
 }
