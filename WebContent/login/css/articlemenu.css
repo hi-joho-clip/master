@@ -35,7 +35,43 @@ font-weight:700;
 -webkit-margin-before: 0;
 -webkit-margin-after: 0;
 margin:0;
+padding: 50px 20px;
 }
+
+@media only screen and (max-width: 767px) {
+p {
+font-size:39px;
+font-weight:700;
+-webkit-margin-before: 0;
+-webkit-margin-after: 0;
+margin:0;
+padding: 25px 20px;
+}
+}
+
+p2 {
+font-size:39px;
+font-weight:700;
+-webkit-margin-before: 0;
+-webkit-margin-after: 0;
+margin:0;
+padding: 100px 20px;
+}
+
+@media only screen and (max-width: 767px) {
+p2 {
+font-size:39px;
+font-weight:700;
+-webkit-margin-before: 0;
+-webkit-margin-after: 0;
+margin:0;
+padding: 25px 20px;
+}
+}
+
+
+
+
 
 .DSmenu {
 width:300px;
