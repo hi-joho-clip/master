@@ -53,14 +53,14 @@ function deleteTag(tag_id){
 	toastr.success('タグを削除しました');
 
 }
-//特定のタグの記事一覧
+//特定のタグの記事一覧（タイル表示）
 function getTagArticleList(tag_list,tag_id) {
 	if(tag_id==0 && tag_list!=0){//tag_idが0なら、タグが複数あるリストをもとに検索をして一覧表示させる処理
 		for(var i=0;i<tag_list.length;i++){
 			arr[i]=tag_list.item(i).value;//1番目からタグが入る
 		}
 		taglists = "tag_list="+JSON.parse(JSON.stringify(arr));
-		document.getElementById('title').innerHTML='<h1>'+JSON.parse(JSON.stringify(arr))+'</h1>';
+		document.getElementById('title').innerHTML='<h1>'+JSON.parse(JSON.stringify(arr))+'</h1>'+'<input type="button" id="stylechange"value="AAA">';
 	}else if(tag_list==0 && tag_id!=0){//tag_listが0なら、特定のタグをクリックして一覧表示させる処理
 		taglists = "tag_list="+tag_id;
 		document.getElementById('title').innerHTML='<h1>'+tag_id+'</h1>';
@@ -68,5 +68,21 @@ function getTagArticleList(tag_list,tag_id) {
 	$('#viewmode').val('2');
 	var URL = hostURL + "/clipMaster/tagarticlelist";
 	getJSON(URL, taglists, get_mylists);
+}
+//特定のタグの記事一覧（リスト表示）
+function getTagArticleList(tag_list,tag_id) {
+	if(tag_id==0 && tag_list!=0){//tag_idが0なら、タグが複数あるリストをもとに検索をして一覧表示させる処理
+		for(var i=0;i<tag_list.length;i++){
+			arr[i]=tag_list.item(i).value;//1番目からタグが入る
+		}
+		taglists = "tag_list="+JSON.parse(JSON.stringify(arr));
+		document.getElementById('title').innerHTML='<h1>'+JSON.parse(JSON.stringify(arr))+'</h1>'+'<input type="button" id="stylechange"value="AAA">';
+	}else if(tag_list==0 && tag_id!=0){//tag_listが0なら、特定のタグをクリックして一覧表示させる処理
+		taglists = "tag_list="+tag_id;
+		document.getElementById('title').innerHTML='<h1>'+tag_id+'</h1>';
+	}
+	$('#viewmode').val('2');
+	var URL = hostURL + "/clipMaster/tagarticlelist";
+	getJSON(URL, taglists, get_mylists_list);
 }
 

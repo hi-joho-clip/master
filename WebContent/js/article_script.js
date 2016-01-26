@@ -1,36 +1,52 @@
-// マイリスト
+// マイリスト（タイル表示）
 function getMyList(page) {
 	var jsonParam = 'page=' + page;// 送りたいデータ(ページ番号）
 	var URL = hostURL + "/clipMaster/mylist";
-	document.getElementById('title').innerHTML = '<h1>マイリスト</h1>';
+	document.getElementById('title').innerHTML = '<h1>マイリスト</h1>'+'<input type="button" id="stylechange"value="AAA">';
 	$('#viewmode').val('0');
 	getJSON(URL, jsonParam, get_mylists);
 }
-
+//マイリスト（リスト表示）
 function getMyListList(page) {
 	var jsonParam = 'page=' + page;// 送りたいデータ(ページ番号）
 	var URL = hostURL + "/clipMaster/mylist";
-	document.getElementById('title').innerHTML = '<h1>マイリスト</h1>';
+	document.getElementById('title').innerHTML = '<h1>マイリスト</h1>'+'<input type="button" id="stylechange"value="AAA">';
 	$('#viewmode').val('0');
 	getJSON(URL, jsonParam, get_mylists_list);
 }
 
-// お気に入り
-function getFavList() {
-	var jsonParam = null;// 送りたいデータ
+// お気に入り（タイル表示）
+function getFavList(page) {
+	var jsonParam = 'page=' + page;// 送りたいデータ
 	var URL = hostURL + "/clipMaster/favlist";
-	document.getElementById('title').innerHTML = '<h1>お気に入り</h1>';
+	document.getElementById('title').innerHTML = '<h1>お気に入り</h1>'+'<input type="button" id="stylechange"value="AAA">';
 	$('#viewmode').val("1");
 	getJSON(URL, jsonParam, get_mylists);
 }
+//お気に入り（リスト表示）
+function getFavListList(page) {
+	var jsonParam = 'page=' + page;// 送りたいデータ
+	var URL = hostURL + "/clipMaster/favlist";
+	document.getElementById('title').innerHTML = '<h1>お気に入り</h1>'+'<input type="button" id="stylechange"value="AAA">';
+	$('#viewmode').val("1");
+	getJSON(URL, jsonParam, get_mylists_list);
+}
 
-// シェア記事一覧
+// シェア記事一覧（タイル表示）
 function getShareList(friend_user_id, page) {
 	var jsonParam = "friend_user_id=" + friend_user_id + '&page=' + page;// 送りたいデータ
 	var URL = hostURL + "/clipMaster/sharelist";
-	document.getElementById('title').innerHTML = '<h1>シェア記事</h1>';
+	document.getElementById('title').innerHTML = '<h1>シェア記事</h1>'+'<input type="button" id="stylechange"value="AAA">';
 	$('#viewmode').val('3');
 	getJSON(URL, jsonParam, get_sharelists);
+}
+//シェア記事一覧（リスト表示）
+function getShareList(friend_user_id, page) {
+	var jsonParam = "friend_user_id=" + friend_user_id + '&page=' + page;// 送りたいデータ
+	var URL = hostURL + "/clipMaster/sharelist";
+	document.getElementById('title').innerHTML = '<h1>シェア記事</h1>'+'<input type="button" id="stylechange"value="AAA">';
+	$('#viewmode').val('3');
+	getJSON(URL, jsonParam, get_sharelists_list);
 }
 
 
