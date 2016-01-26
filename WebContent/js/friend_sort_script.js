@@ -177,7 +177,7 @@ function editHeader() {
 
 if (window.addEventListener) { // for W3C DOM
 	window.addEventListener("load", getFriendList, false);
-	getFriendList();
+	getFriendList().createTable(obj);
 	console.log("addevent");
 	window.addEventListener("load", createTable, false);
 

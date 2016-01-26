@@ -41,23 +41,21 @@ public class SearchFriendServlet extends HttpServlet {
 
 		Friend friendbeans = new Friend();
 		ArrayList<User> friend_list = new ArrayList<User>();
-		HttpSession session = request.getSession(false);
-
+		HttpSession session = request.getSession(true);
 
 		if (session != null) {
-
-			int own_user_id = (int) session.getAttribute("user_id");
-			String str = request.getParameter("nickname");
 
 			response.setContentType("application/json; charset=utf-8");
 			response.setHeader("Cache-Control", "private");
 			PrintWriter out = response.getWriter();
 
 			try {
-				if(str.length() > 0){
+				int own_user_id = (int) session.getAttribute("user_id");
+				String str = request.getParameter("nickname");
+				if (str.length() > 0) {
 					friend_list = friendbeans.searchFriend(own_user_id, str);
 					out.println(JSON.encode(friend_list, true).toString());
-				}else{
+				} else {
 					out.println(JSON.encode(friend_list, true).toString());
 				}
 			} catch (Exception e) {

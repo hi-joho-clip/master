@@ -39,18 +39,18 @@ public class AcceptRequestServlet extends HttpServlet {
 
 		Friend friendbeans = new Friend();
 		boolean flag = false;
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession(true);
 
 		if (session != null) {
-
-			int own_user_id = (int) session.getAttribute("user_id");
-			int friend_user_id = Integer.parseInt(request.getParameter("friend_user_id"));
 
 			response.setContentType("application/json; charset=utf-8");
 			response.setHeader("Cache-Control", "private");
 			PrintWriter out = response.getWriter();
 
 			try {
+				int own_user_id = (int) session.getAttribute("user_id");
+				int friend_user_id = Integer.parseInt(request
+						.getParameter("friend_user_id"));
 				flag = friendbeans.acceptRequest(own_user_id, friend_user_id);
 
 				if (flag) {

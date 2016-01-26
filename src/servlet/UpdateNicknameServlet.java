@@ -41,25 +41,22 @@ public class UpdateNicknameServlet extends HttpServlet {
 		User userbean = null;
 		UserAuth userauth = new UserAuth();
 		boolean hantei = false;
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession(true);
 
 		String URL = "/clipMaster/login";
 
-		System.out.println("updatenickname");
-
 		if (session != null) {
-			int user_id = (int) session.getAttribute("user_id");
-
-			/* int user_id = Integer.parseInt(request.getParameter("user_id")); */
-
-			String inputname = request.getParameter("newnickname");
-			String inputpass = request.getParameter("password");
 
 			response.setContentType("application/json; charset=utf-8");
 			response.setHeader("Cache-Control", "private");
 			PrintWriter out = response.getWriter();
 
 			try {
+				int user_id = (int) session.getAttribute("user_id");
+
+				String inputname = request.getParameter("newnickname");
+				String inputpass = request.getParameter("password");
+
 				userbean = new User(user_id);
 				hantei = userauth.loginUserName(userbean.getUser_name(),
 						inputpass);

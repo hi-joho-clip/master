@@ -39,18 +39,17 @@ public class AcceptFriendServlet extends HttpServlet {
 
 		User userbean = new User();
 		String Message = null;
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession(true);
 		String URL = "/clipMaster/login";
 
 		if (session != null) {
-
-			int user_id = (int) session.getAttribute("user_id");
 
 			response.setContentType("application/json; charset=utf-8");
 			response.setHeader("Cache-Control", "private");
 			PrintWriter out = response.getWriter();
 
 			try {
+				int user_id = (int) session.getAttribute("user_id");
 				userbean.setUser_id(user_id);
 				userbean.friend_accept();
 				Message = "フレンド申請拒否設定にしました。";

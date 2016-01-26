@@ -34,6 +34,7 @@ function lock() {
 
 	var cookieName = 'visited=';
 	var allcookies = document.cookie;
+	var result2 = null;
 
 	var position = allcookies.indexOf(cookieName);
 	if (position != -1) {
@@ -50,7 +51,7 @@ function lock() {
 	var cnt = Number(result2);
 	console.log(cnt);
 
-	if (cnt == null) {
+	if (result2 == null) {
 		$userList = "";
 		console.log("失敗してない");
 	} else if (cnt < 5) {

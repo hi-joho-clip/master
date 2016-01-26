@@ -18,6 +18,7 @@ public class UserAuth {
 	private int friend_flag;
 	private Date created;
 	private Date modified;
+	private String birth;
 
 	private HashMap<String, String> ErrorMessages = new HashMap<String, String>();
 
@@ -36,6 +37,7 @@ public class UserAuth {
 		this.userDTO.setFriend_flag(this.friend_flag);
 		this.userDTO.setCreated(this.created);
 		this.userDTO.setModified(this.modified);
+		this.userDTO.setBirth(this.birth);
 	}
 
 /**
@@ -190,5 +192,15 @@ public class UserAuth {
 	public void setUserDTO(UserDTO userDTO) {
 		this.userDTO = userDTO;
 	}
+
+	public String getBirth() {
+		return birth;
+	}
+
+	public void setBirth(String birth) {
+		this.birth = birth;
+	}
+
+
 
 }

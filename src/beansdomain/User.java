@@ -16,6 +16,7 @@ public class User {
 	private int friend_flag;
 	private Date created;
 	private Date modified;
+	private String birth;
 
 	private HashMap<String, String> ErrorMessages = new HashMap<String, String>();
 
@@ -43,6 +44,7 @@ public class User {
 			this.friend_flag = userDTO.getFriend_flag();
 			this.created = userDTO.getCreated();
 			this.modified = userDTO.getModified();
+			this.birth = userDTO.getBirth();
 		} catch (Exception e) {
 			ErrorMessages.put("Error", "constract error");
 		}
@@ -104,7 +106,7 @@ public class User {
 		return validate_flag;
 
 	}
-	
+
 	/**
 	 * パスワード検索
 	 */
@@ -112,11 +114,11 @@ public class User {
 		this.userDAO = new UserDAO();
 		setUserDTO();
 		userDTO = userDAO.searchPassword(this.user_name , this.mailaddress);
-		
-		
+
+
 	}
-	
-	
+
+
 
 	/**
 	 * フレンド申請の許可設定
@@ -214,6 +216,32 @@ public class User {
 	}
 
 	/**
+	 * パスワード再発行(ユーザ名、メールアドレス、生年月日で検索)
+	 */
+	public boolean searchPass() throws Exception{
+		boolean flag = false;
+		this.userDAO = new UserDAO();
+		setUserDTO();
+		userDTO = userDAO.PasswordSearch(this.userDTO.getMailaddress(), this.userDTO.getUser_name(), this.userDTO.getBirth());
+		 if(userDTO != null){
+			 flag = true;
+			 setUserDTO();
+		 }
+		 return flag;
+	}
+
+
+	/**
+	 * パスワード再発行(パスワードを更新)
+	 */
+	public void reissuePass() throws Exception{
+		this.userDAO = new UserDAO();
+		setUserDTO();
+
+		userDAO.updatePassword(this.userDTO.getUser_id(), this.userDTO.getUser_name(), this.userDTO.getPassword());
+	}
+
+	/**
 	 * ユーザーの削除（未完成）
 	 * @return
 	 * @throws Exception
@@ -234,6 +262,7 @@ public class User {
 		this.userDTO.setFriend_flag(this.friend_flag);
 		this.userDTO.setCreated(this.created);
 		this.userDTO.setModified(this.modified);
+		this.userDTO.setBirth(this.birth);
 	}
 
 	public void setErrorMessages(HashMap<String, String> errorMessages) {
@@ -307,5 +336,15 @@ public class User {
 	public void setModified(Date modified) {
 		this.modified = modified;
 	}
+
+	public String getBirth() {
+		return birth;
+	}
+
+	public void setBirth(String birth) {
+		this.birth = birth;
+	}
+
+
 
 }

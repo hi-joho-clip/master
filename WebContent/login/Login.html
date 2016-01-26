@@ -1,18 +1,20 @@
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
-  <meta charset="UTF-8" />
-  <title>CLIP</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css" />
-  <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-  <!-- remember, jQuery is completely optional -->
+<meta charset="UTF-8" />
+<title>CLIP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/style.css" />
+<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700'
+	rel='stylesheet' type='text/css'>
+<!-- remember, jQuery is completely optional -->
 <script type="text/javascript" src="../js/jquery/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery.cookie.js"></script>
-  <script type='text/javascript' src='../js/jquery/jquery.particleground.js'></script>
+<script type='text/javascript'
+	src='../js/jquery/jquery.particleground.js'></script>
 <script src="../js/user_script.js"></script>
-
-  <script type='text/javascript' src='js/demo.js'></script>
+<script type="text/javascript" src="../js/json-xhr.js"></script>
+<script type='text/javascript' src='js/demo.js'></script>
 
 <link rel="stylesheet" type="text/css" href="css/Login.css">
 
@@ -25,60 +27,70 @@
 	$(function() {
 		$('body *').removeAttr('style');
 	});
--->
+	-->
 </script>
 
 <body>
 
 
-<div id="particles">
-  <div id="intro">
-    <h1>C  L  I  P</h1>
-    <p>Sign In</p>
-    <div class="form-wrapper">
+	<div id="particles">
+		<div id="intro">
+			<h1>C L I P</h1>
+			<p>Sign In</p>
+			<div class="form-wrapper">
 
 
-  <!--　ログイン  -->
-  <form  method="post" action="../login" >
-    <div class="form-item">
-      <!--　メールアドレスまたはユーザネーム  -->
-      <label for="email"></label>
-      <input type="text" name="mail_or_name" required="required" placeholder="Email Address or User Name"></input>
-    </div>
-    <div class="form-item">
-      <!--　パスワード  -->
-      <label for="password"></label>
-      <input type="password" name="password" required="required" placeholder="Password"></input>
-    </div>
+				<!--　ログイン  -->
+				<form method="post" action="../login">
+					<div class="form-item">
+						<!--　メールアドレスまたはユーザネーム  -->
+						<label for="email"></label> <input type="text" name="mail_or_name"
+							required="required" placeholder="Email Address or User Name"></input>
+					</div>
+					<div class="form-item">
+						<!--　パスワード  -->
+						<label for="password"></label> <input type="password"
+							name="password" required="required" placeholder="Password"></input>
+					</div>
 
-    <div id="login"></div>
+					<div id="login"></div>
 
-      <!--　ログインボタン  -->
-    <div class="button-panel">
-      <input type="submit" class="button" title="Sign In" value="Sign In" id="lock"></input>
-    </div>
+					<!--　ログインボタン  -->
+					<div class="button-panel">
+						<input type="submit" class="button" title="Sign In"
+							value="Sign In" id="lock"></input>
+					</div>
 
 
-  </form>
-  <div class="form-footer">
+				</form>
+				<div class="form-footer">
 
-   <!--　アカウント新規作成  -->
-    <p><a href="AccountCreate.html">Create an account</a></p>
+					<!--　アカウント新規作成  -->
+					<p>
+						<a href="AccountCreate.html">Create an account</a>
+					</p>
 
-    <!--　パスワードを忘れた場合  -->
-    <p><a href="ForgotPassword.html">Forgot password?</a></p>
-  </div>
-</div>
+					<!--　パスワードを忘れた場合  -->
+					<p>
+						<a href="ForgotPassword.html">Forgot password?</a>
+					</p>
+				</div>
+			</div>
 
-  </div>
-</div>
+		</div>
+	</div>
 
-<script>
-$(document).ready(function() {
-	$.cookie('viewMode', '0');
-	lock();
-});
-</script>
+	<script>
+		$(document).ready(function() {
+			$.cookie('viewMode', '0');
+			lock();
+			getNonce();
+		});
+		function getNonce() {
+			var URL = hostURL + "/clipMaster/getnonce";
+			getJSON(URL, null, null);
+		}
+	</script>
 
 
 </body>

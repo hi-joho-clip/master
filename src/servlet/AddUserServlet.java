@@ -42,6 +42,7 @@ public class AddUserServlet extends HttpServlet {
 
 		String user_name = request.getParameter("username");
 		String nickname = request.getParameter("nickname");
+		String birth = request.getParameter("birth");
 		String inputmail = request.getParameter("email"); //メールアドレス取得
 		String inputpass = request.getParameter("password"); //パスワードを取得
 
@@ -52,6 +53,7 @@ public class AddUserServlet extends HttpServlet {
 
 		userbean.setUser_name(user_name);
 		userbean.setNickname(nickname);
+		userbean.setBirth(birth);
 		userbean.setMailaddress(inputmail);
 		userbean.setPassword(inputpass);
 

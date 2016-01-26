@@ -5,13 +5,12 @@ function getFriendRequest() {
 	var friendList = " <div class='remodal-bg'> ";
 	var setappend = function(json) {
 		for ( var i = 0; i < json.length; i++) {
-			friendList += json[i].nickname
-			+ "&emsp;"
-					+ "<a href='#' data-remodal-target='kyoka' onclick='document.getElementById(\"user_id\").innerHTML=\""
-					+ json[i].friend_user_id + "\";'>承認</a>"
+			friendList += "<div id='nick_name'>" + json[i].nickname + "</div>"
+					+ "<div id='kyoka'><a href='#' data-remodal-target='kyoka' onclick='document.getElementById(\"user_id\").innerHTML=\""
+					+ json[i].friend_user_id + "\";'>承認</a></div>"
 					+"&emsp;"
-					+ "<a href='#' data-remodal-target='kyohi' onclick='document.getElementById(\"user_id\").innerHTML=\""
-					+ json[i].friend_user_id + "\";'>拒否</a><br>" ;
+					+ "<div id='kyohi'><a href='#' data-remodal-target='kyohi' onclick='document.getElementById(\"user_id\").innerHTML=\""
+					+ json[i].friend_user_id + "\";'>拒否</a></div><br>" ;
 		}
 		document.getElementById('info').innerHTML = friendList + "</div>";
 	};
@@ -27,13 +26,10 @@ function getFriendSearch(nickname) {
 	var setappend = function(json) {
 		if (json.length != 0) {
 			for ( var i = 0; i < json.length; i++) {
-				friendList += json[i].nickname
-				+ "&emsp;"
-						+ "<a href='#' data-remodal-target='add' onclick='document.getElementById(\"user_id\").innerHTML=\""
-						+ json[i].user_id + "\";'>追加</a>" + "&emsp;&emsp;&emsp;";
-				if(i%2 == 1){
-					friendList += "<br>";
-				}
+				friendList +="<div id='nick_name'>" + json[i].nickname + "</div>"
+						+ "<div id='add'><a href='#' data-remodal-target='add' onclick='document.getElementById(\"user_id\").innerHTML=\""
+						+ json[i].user_id + "\";'>追加</a></div>";
+
 			}
 		} else {
 			friendList += "空入力 または、検索結果が1件もない場合は、表示しません";
