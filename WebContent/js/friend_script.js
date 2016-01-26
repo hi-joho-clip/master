@@ -5,12 +5,12 @@ function getFriendRequest() {
 	var friendList = " <div class='remodal-bg'> ";
 	var setappend = function(json) {
 		for ( var i = 0; i < json.length; i++) {
-			friendList += "<div id='nick_name'>" + json[i].nickname + "</div>"
-					+ "<div id='kyoka'><a href='#' data-remodal-target='kyoka' onclick='document.getElementById(\"user_id\").innerHTML=\""
-					+ json[i].friend_user_id + "\";'>承認</a></div>"
+			friendList += "<div id='nick_name'>" + json[i].nickname
+					+ "<a href='#' data-remodal-target='kyoka' onclick='document.getElementById(\"user_id\").innerHTML=\""
+					+ json[i].friend_user_id + "\";'>承認</a>"
 					+"&emsp;"
-					+ "<div id='kyohi'><a href='#' data-remodal-target='kyohi' onclick='document.getElementById(\"user_id\").innerHTML=\""
-					+ json[i].friend_user_id + "\";'>拒否</a></div><br>" ;
+					+ "<a href='#' data-remodal-target='kyohi' onclick='document.getElementById(\"user_id\").innerHTML=\""
+					+ json[i].friend_user_id + "\";'>拒否</a></div>" ;
 		}
 		document.getElementById('info').innerHTML = friendList + "</div>";
 	};
@@ -26,8 +26,8 @@ function getFriendSearch(nickname) {
 	var setappend = function(json) {
 		if (json.length != 0) {
 			for ( var i = 0; i < json.length; i++) {
-				friendList +="<div id='nick_name'>" + json[i].nickname + "</div>"
-						+ "<div id='add'><a href='#' data-remodal-target='add' onclick='document.getElementById(\"user_id\").innerHTML=\""
+				friendList +="<div id='nick_name'>" + json[i].nickname
+						+ "<a href='#' data-remodal-target='add' onclick='document.getElementById(\"user_id\").innerHTML=\""
 						+ json[i].user_id + "\";'>追加</a></div>";
 
 			}
