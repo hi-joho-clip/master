@@ -22,7 +22,7 @@ public class UserDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int insert_user_id = -1;
-		String sql = "INSERT INTO users values(0,?,?,?,?,?,now(),now());";
+		String sql = "INSERT INTO users values(0,?,?,?,?,?,now(),now(),?);";
 		String mylist_sql ="INSERT into mylists values(0,?,false)";
 		String tag_sql = "insert into tags values(0,?,now(),now(),null,?)";
 		String last_insert_sql = "SELECT LAST_INSERT_ID() AS LAST;";
@@ -35,6 +35,7 @@ public class UserDAO {
 				pstmt.setString(3, ToSHA2.getDigest(userDTO.getUser_name() + userDTO.getPassword()));
 				pstmt.setString(4, userDTO.getMailaddress());
 				pstmt.setInt(5, userDTO.getFriend_flag());
+				pstmt.setString(6, userDTO.getBirth());
 				pstmt.executeUpdate();
 
 				// 自動採番されたIDを取得
@@ -90,6 +91,7 @@ public class UserDAO {
 				userDTO.setFriend_flag(rs.getInt("friend_flag"));
 				userDTO.setCreated(DateEncode.toDate(rs.getString("created")));
 				userDTO.setModified(DateEncode.toDate(rs.getString("modified")));
+				userDTO.setBirth(rs.getString("birth"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -125,6 +127,7 @@ public class UserDAO {
 				userDTO.setFriend_flag(rs.getInt("friend_flag"));
 				userDTO.setCreated(DateEncode.toDate(rs.getString("created")));
 				userDTO.setModified(DateEncode.toDate(rs.getString("modified")));
+				userDTO.setBirth(rs.getString("birth"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -245,7 +248,7 @@ public class UserDAO {
 		PreparedStatement pstmt = null;
 		String sql = "update users set user_name = ?, nickname = ?," +
 				" password = ?, mailaddress = ?, " +
-				" friend_flag = ?, modified = now()" +
+				" friend_flag = ?, modified = now(), birth = ?" +
 				" where user_id = ?";
 
 		int state = 0;
@@ -257,8 +260,9 @@ public class UserDAO {
 			pstmt.setString(3, ToSHA2.getDigest(userDTO.getUser_name() + userDTO.getPassword()));
 			pstmt.setString(4, userDTO.getMailaddress());
 			pstmt.setInt(5, userDTO.getFriend_flag());
+			pstmt.setString(6,userDTO.getBirth());
 			// ユーザID
-			pstmt.setInt(6, userDTO.getUser_id());
+			pstmt.setInt(7, userDTO.getUser_id());
 			state = pstmt.executeUpdate();
 
 		} catch (Exception e) {
@@ -301,6 +305,7 @@ public class UserDAO {
 				userDTO.setFriend_flag(rs.getInt("friend_flag"));
 				userDTO.setCreated(DateEncode.toDate(rs.getString("created")));
 				userDTO.setModified(DateEncode.toDate(rs.getString("modified")));
+				userDTO.setBirth(rs.getString("birth"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -338,6 +343,7 @@ public class UserDAO {
 				userDTO.setFriend_flag(rs.getInt("friend_flag"));
 				userDTO.setCreated(DateEncode.toDate(rs.getString("created")));
 				userDTO.setModified(DateEncode.toDate(rs.getString("modified")));
+				userDTO.setBirth(rs.getString("birth"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -350,7 +356,7 @@ public class UserDAO {
 	}
 
 	/**
-	 * ユーザ名とパスワードから検索
+	 * メールアドレスとパスワードから検索
 	 * @param user_name
 	 * @param password
 	 * @return
@@ -377,6 +383,7 @@ public class UserDAO {
 				userDTO.setFriend_flag(rs.getInt("friend_flag"));
 				userDTO.setCreated(DateEncode.toDate(rs.getString("created")));
 				userDTO.setModified(DateEncode.toDate(rs.getString("modified")));
+				userDTO.setBirth(rs.getString("birth"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -414,6 +421,7 @@ public class UserDAO {
 				userDTO.setFriend_flag(rs.getInt("friend_flag"));
 				userDTO.setCreated(DateEncode.toDate(rs.getString("created")));
 				userDTO.setModified(DateEncode.toDate(rs.getString("modified")));
+				userDTO.setBirth(rs.getString("birth"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -427,22 +435,23 @@ public class UserDAO {
 
 
 	/**
-	 * ユーザ名とメールアドレスからパスワード検索
+	 * ユーザ名とメールアドレスと生年月日から(パスワード再発行で利用)
 	 * @param user_name
 	 * @param password
 	 * @return
 	 * @throws Exception
 	 */
-	public UserDTO PasswordSearch(String mailaddress, String username) throws Exception {
+	public UserDTO PasswordSearch(String mailaddress, String username, String birth) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		UserDTO userDTO = new UserDTO();
-		String sql = "select * from users where mailaddress = ? and username = ?";
+		String sql = "select * from users where mailaddress = ? and username = ? and birth = ?";
 
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, mailaddress);
 			pstmt.setString(2, username);
+			pstmt.setString(3, birth);
 			System.out.println(pstmt);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -454,6 +463,7 @@ public class UserDAO {
 				userDTO.setFriend_flag(rs.getInt("friend_flag"));
 				userDTO.setCreated(DateEncode.toDate(rs.getString("created")));
 				userDTO.setModified(DateEncode.toDate(rs.getString("modified")));
+				userDTO.setBirth(rs.getString("birth"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -528,12 +538,17 @@ public class UserDAO {
 
 
 
-
-	public boolean updatePassword(String User_name, String mailaddress) throws Exception {
+	/**
+	 * パスワード再発行
+	 * @param User_id
+	 * @param Password
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean updatePassword(int User_id,String User_name, String Password) throws Exception {
 		PreparedStatement pstmt = null;
-		UserDTO userDTO = new UserDTO();
-		String sql = " users set password = ?, modified = now()" +
-				" where user_name = ?, mailaddress = ?";
+		String sql = "update users set password = ?, modified = now()" +
+				" where user_id = ?";
 
 		int state = 0;
 		try {
@@ -541,8 +556,7 @@ public class UserDAO {
 			// パスワードはユーザ名＋パスワードでハッシュ化
 			pstmt.setString(1, ToSHA2.getDigest(User_name + Password));
 			// ユーザID
-			pstmt.setString(2, User_name);
-			pstmt.setString(3, mailaddress);
+			pstmt.setInt(2, User_id);
 			state = pstmt.executeUpdate();
 
 		} catch (Exception e) {

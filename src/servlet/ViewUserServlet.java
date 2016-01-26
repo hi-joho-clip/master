@@ -18,41 +18,42 @@ import beansdomain.User;
 public class ViewUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public ViewUserServlet() {
-        super();
-    }
+	public ViewUserServlet() {
+		super();
+	}
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		perform(request, response);
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		perform(request, response);
 	}
 
-	private void perform(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void perform(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 
 		User userbeans = null;
 
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession(true);
 
 		if (session != null) {
 
-			int user_id = (int) session.getAttribute("user_id");
+			response.setContentType("application/json; charset=utf-8");
+			response.setHeader("Cache-Control", "private");
+			PrintWriter out = response.getWriter();
 
-		response.setContentType("application/json; charset=utf-8");
-		response.setHeader("Cache-Control", "private");
-		PrintWriter out = response.getWriter();
-
-		try{
-		userbeans = new User(user_id);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-
-		out.println(JSON.encode(userbeans, true).toString());
+			try {
+				int user_id = (int) session.getAttribute("user_id");
+				userbeans = new User(user_id);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			out.println(JSON.encode(userbeans, true).toString());
 		}
 	}
 

@@ -41,23 +41,24 @@ public class UpdateMailAddressServlet extends HttpServlet {
 		User userbean = null;
 		UserAuth userauth = new UserAuth();
 		boolean hantei = false;
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession(true);
 
 		String URL = "/clipMaster/login";
 
 		System.out.println("updatemailaddress");
 
 		if (session != null) {
-			int user_id = (int) session.getAttribute("user_id");
-
-			String inputmail = request.getParameter("newemail");
-			String inputpass = request.getParameter("password");
 
 			response.setContentType("application/json; charset=utf-8");
 			response.setHeader("Cache-Control", "private");
 			PrintWriter out = response.getWriter();
 
 			try {
+				int user_id = (int) session.getAttribute("user_id");
+
+				String inputmail = request.getParameter("newemail");
+				String inputpass = request.getParameter("password");
+
 				userbean = new User(user_id);
 				hantei = userauth.loginUserName(userbean.getUser_name(),
 						inputpass);

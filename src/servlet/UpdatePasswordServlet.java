@@ -41,7 +41,7 @@ public class UpdatePasswordServlet extends HttpServlet {
 		User userbean = null;
 		UserAuth userauth = new UserAuth();
 		boolean hantei = false;
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession(true);
 
 		String URL = "/clipMaster/login";
 
@@ -49,16 +49,17 @@ public class UpdatePasswordServlet extends HttpServlet {
 
 		if (session != null) {
 
-			int user_id = (int) session.getAttribute("user_id");
 
-			String inputpass = request.getParameter("password");
-			String newpass = request.getParameter("newpassword");
 
 			response.setContentType("application/json; charset=utf-8");
 			response.setHeader("Cache-Control", "private");
 			PrintWriter out = response.getWriter();
 
 			try {
+				int user_id = (int) session.getAttribute("user_id");
+
+				String inputpass = request.getParameter("password");
+				String newpass = request.getParameter("newpassword");
 				userbean = new User(user_id);
 				hantei = userauth.loginUserName(userbean.getUser_name(),
 						inputpass);

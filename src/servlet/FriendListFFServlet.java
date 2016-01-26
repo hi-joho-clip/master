@@ -42,16 +42,17 @@ public class FriendListFFServlet extends HttpServlet {
 		Friend friendbeans = new Friend();
 		ArrayList<Friend> friend_list = new ArrayList<Friend>();
 		ArrayList<Friend> request_friend_list = new ArrayList<Friend>();
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession(true);
 
 		if (session != null) {
-			int own_user_id = (int) session.getAttribute("user_id");
+
 
 			response.setContentType("application/json; charset=utf-8");
 			response.setHeader("Cache-Control", "private");
 			PrintWriter out = response.getWriter();
 
 			try {
+				int own_user_id = (int) session.getAttribute("user_id");
 				friend_list = friendbeans.getFriend(own_user_id);
 
 				for (int i = 0; i < friend_list.size(); i++) {

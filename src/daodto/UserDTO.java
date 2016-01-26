@@ -13,6 +13,7 @@ public class UserDTO {
 	private int friend_flag;
 	private Date created;
 	private Date modified;
+	private String birth;
 
 
 	public UserDTO() {
@@ -105,4 +106,17 @@ public class UserDTO {
 	public void setUser_name(String user_name) {
 		this.user_name = user_name;
 	}
+
+
+	public String getBirth() {
+		return birth;
+	}
+
+
+	public void setBirth(String birth) {
+		this.birth = birth;
+	}
+
+
+
 }
