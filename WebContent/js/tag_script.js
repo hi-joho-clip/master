@@ -65,6 +65,7 @@ function getTagArticleList(tag_list,tag_id) {
 		taglists = "tag_list="+tag_id;
 		document.getElementById('title').innerHTML='<h1>'+tag_id+'</h1>';
 	}
+	$('#viewmode').val('2');
 	var URL = hostURL + "/clipMaster/tagarticlelist";
 	getJSON(URL, taglists, get_mylists);
 }
