@@ -26,7 +26,7 @@ import de.l3s.boilerpipe.sax.ImageExtractor;
 public class SaveArticle {
 
 
-	static final byte[] bytes = new byte[31457280];
+	static byte[] bytes = new byte[31457280];
 	/**
 	 * 処理
 	 * 記事本体のみを保存（戻り値：Article_id）
@@ -199,7 +199,7 @@ public class SaveArticle {
 		try {
 			// 30MBまで
 			System.out.println("conURL:" + str_url);
-			byte[] bytes = new byte[31457280];
+			//byte[] bytes = new byte[31457280];
 
 			URL url = new URL(str_url);
 			HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();

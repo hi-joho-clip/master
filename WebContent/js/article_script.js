@@ -64,7 +64,7 @@ function getViewArticle(article_id) {
 			data = 'data:image/' + con_type + ';base64,'
 					+ json.imageListDTO[image].blob_image;
 			$("div.images").append(
-					'<img id="icon_here" width ="400px" src = ' + data + '>');
+					'<img id="icon_here"  style="max-width:auto; max-height:200px;padding :10px" src = ' + data + '>');
 		}
 
 		// document.getElementById('viewArticle').innerHTML = viewArticle;
