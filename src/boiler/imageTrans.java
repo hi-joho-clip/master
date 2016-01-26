@@ -90,6 +90,8 @@ public class imageTrans extends Thread {
 			art.updateThum();
 			// 画像の保存
 			artBean.addImage(this.article_id, this.imageDTO);
+			thumDTO = null;
+			imageDTO = null;
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
@@ -161,6 +163,7 @@ public class imageTrans extends Thread {
 					//				e.printStackTrace();
 					//			} catch (IOException e) {
 					//				e.printStackTrace();
+					buf_img = null;
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
