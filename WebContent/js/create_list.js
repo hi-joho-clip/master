@@ -83,10 +83,9 @@ function getTag_id(tag_id){
 //"<a href='../login/article.html?"+json[i].article_id+"'target='_blank'>
 
 
-//記事一覧を作成
-
+//記事一覧を作成（タイル表示）
 var get_mylists = function(json) {
-	$('#mode').val('tile');
+	$('#mode').val("tile");
 	var random =Math.floor(Math.random()*3);
 	$myList = $("<div class='grid-sizer'></div>");
 	$grid.append($myList).isotope('appended', $myList).trigger('create');
@@ -163,8 +162,9 @@ function addViewNext(json) {
 }
 
 
-//シェア記事一覧を作成
+//シェア記事一覧を作成（タイル表示）
 var get_sharelists = function(json) {
+	$('#mode').val("tile");
 	var random =Math.floor(Math.random()*3);
 	$myList = $("<div class='grid-sizer'></div>");
 	$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
@@ -199,10 +199,9 @@ var get_sharelists = function(json) {
 		});
     });
 };
-//記事一覧を作成（リスト）
+//記事一覧を作成（リスト表示）
 var get_mylists_list = function(json) {
-	$('#mode').val('list');
-	var random =Math.floor(Math.random()*3);
+	$('#mode').val("list");
 	$myList = $("<div class='grid-sizer' ></div>");
 	$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
 	for ( var i = 0; i < json.length ; i++) {
@@ -257,6 +256,48 @@ var get_mylists_list = function(json) {
 			console.log('#favtitle'+json[i].article_id);
 			$('#favtitle'+json[i].article_id).attr('style', 'color:#FFEB3B');
 		}
+	}
+
+	addViewNext(json);
+	jQuery(function($){
+		$('.bar').mosaic({
+			animation	:	'slide'		//fade or slide
+		});
+    });
+};
+//シェア記事一覧を作成（リスト表示）
+var get_sharelists_list = function(json) {
+	$('#mode').val("list");
+	$myList = $("<div class='grid-sizer' ></div>");
+	$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
+	for ( var i = 0; i < json.length ; i++) {
+		$myList = $("<ol>"+
+						"<a href='../login/article.html?"+json[i].article_id+"'><li class='first'>"+
+							"<div class='dan'>"+
+								thumView(json[i], "100px", "100px")+
+							"</div>"+
+							"<div class='mawari'>"+
+								"<div class='dan2'id='favtitle"+json[i].article_id+"'>"+
+								""+flag+""+
+								"</div>"+
+								"<div class='dan3'>"+
+								"<a href='"+json[i].url+"' target='_blank'>"+json[i].url+"</a>"+
+								"</div>"+
+
+							"</div>"+
+							"<div class='firstbuttons'>"+
+									"<div id='menu2'>"+
+										"<div class='remodal-bg'>"+
+										"<a href='#' data-remodal-target='deletemodal'onclick='javascript:getArticle_id("+json[i].article_id+");return false;'>" +
+										"<img src='img/trash1.png' align='right'width='30'height='30'></img>" +
+										"</a>"+
+										"</div>"+
+									"</div>"+
+
+							"</div>"+
+						"</li></a>"+
+					"</ol>");
+		$grid.append($myList).isotope('insert', $myList).trigger('create');
 	}
 
 	addViewNext(json);

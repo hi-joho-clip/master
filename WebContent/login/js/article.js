@@ -84,7 +84,11 @@ $(document).ready(function() {
 				$('#art-page').val(page);
 				switch ($.cookie("viewMode")) {
 				case "0":
-					getMyList(page);
+					if($.cookie("Style")==="tile"){
+						getMyList(page);
+					}else if($.cookie("Style")==="list"){
+						getMyListList(page);
+					}
 					break;
 				case "2":
 
@@ -109,7 +113,12 @@ $(document).ready(function() {
 		$('#art-page').val(page);
 		switch ($.cookie("viewMode")) {
 		case "0":
-			getMyList(page);
+
+			if($.cookie("Style")==="tile"){
+				getMyList(page);
+			}else if($.cookie("Style")==="list"){
+				getMyListList(page);
+			}
 			break;
 		case "2":
 
@@ -129,6 +138,25 @@ $(document).ready(function() {
 		// 今のページ番号を取得
 		addArticle();
 	});
+	//タイル表示リスト表示用のリスナー
+	$(document).on('click', '#stylechange', function() {
+		if($('#mode').val()==="tile"){
+			$('#mode').val("list");
+			$.cookie('Style','list');
+			$('#art-page').val("1");
+			$('#art-add').val("true");
+			$('div.grid').css({'height': '0px'});
+			console.log("今の状態："+$('#mode').val());
+			styleListChange();
+		}else if($('#mode').val()==="list"){
+			$('#mode').val("tile");
+			$.cookie('Style','tile');
+			$('#art-page').val("1");
+			$('#art-add').val("true");
+			console.log("今の状態："+$('#mode').val());
+			styleListChange();
+		}
+	});
 
 	switch ($.cookie("viewMode")) {
 	case "0":// マイリスト画面を表示しているとき
@@ -136,7 +164,12 @@ $(document).ready(function() {
 
 		if (isSettinOnLine() === true) {
 			// ページング処理
-			initPagingMylist(getMyList);
+
+			if($.cookie("Style")==="tile"){
+				initPagingMylist(getMyList);
+			}else if($.cookie("Style")==="list"){
+				initPagingMylist(getMyListList);
+			}
 			initTopPage();
 			toastr.warning("オンライン状態なり");
 
@@ -235,5 +268,93 @@ function isSettinOnLine() {
 		return false;
 	} else {
 		toastr.warning('再ログインしてくだaさい');
+	}
+}
+
+//タイルリスト表示を押したときに走るメソッド
+function styleListChange(){
+	switch ($.cookie("viewMode")) {
+	case "0":// マイリスト画面を表示しているとき
+		$('.grid').empty();
+
+		if (isSettinOnLine() === true) {
+			// ページング処理
+			if($.cookie("Style")==="tile"){
+				initPagingMylist(getMyList);
+			}else if($.cookie("Style")==="list"){
+				initPagingMylist(getMyListList);
+			}
+			initTopPage();
+			toastr.warning("オンライン状態なり");
+
+		} else if (isSettinOnLine() === false) {
+
+			$('.head-bar').css({
+				'background' : '#31708f'
+			});
+			toastr.warning("オフラインなんだなーこれ");
+			var username = docCookies.getItem('username');
+
+			// テスト用修正必要
+			page = 1;
+			getIDEArticleList(username, page, 0, '').then(function(json) {
+				// 純粋なリストが必要
+				$('#title').append('<h1>マイリスト</h1>');
+				get_mylists(json);
+			})['catch'](function(error) {
+				console.log(error);
+			});
+
+		}
+
+		break;
+	case "1":// お気に入り画面を表示しているとき
+		$('.grid').empty();
+
+		if (isSettinOnLine() === true) {
+			// オフライン判断
+			getFavList();
+		} else {
+
+		}
+
+		break;
+	case "2":// 特定のタグ画面を表示しているとき
+		$('.grid').empty();
+		// オフライン判断
+		if (isSettinOnLine() === true) {
+			console.log($.cookie("tagLists"));
+			getTagArticleList(0, $.cookie("tagLists"));
+		}
+		break;
+	case "3":// シェア画面を表示しているとき
+		$('.grid').empty();
+
+		if (isSettinOnLine() === true) {
+			// オフライン判断
+			initPagingSharelist(getShareList, $.cookie("shareLists"));
+			initTopPage();
+			toastr.warning("オンライン");
+
+		} else if (isSettinOnLine() === false) {
+
+		} else {
+
+		}
+		break;
+	case "4":// シェア画面を表示しているとき
+		$('.grid').empty();
+
+		if (isSettinOnLine() === true) {
+			// オフライン判断
+			initPagingMylist(getMyListList);
+			toastr.warning("オンライン");
+
+		} else if (isSettinOnLine() === false) {
+
+		} else {
+
+		}
+		break;
 	}
 }
