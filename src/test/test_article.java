@@ -11,14 +11,14 @@ public class test_article {
 	public static void main(String[] args) {
 		//100% aaa  aaaaaaa        ffff　　　ああ_あ  　　  fshgjsrhgsdg
 		ArrayList<String> text_list = new ArrayList<String>();
-		text_list = escapekai("");
+		text_list = escapekai("Wiki");
 		//test_add(1);//記事の追加○
 		//test_delete(54);//記事の削除○
 		//test_view_article_list(1,2);//記事一覧表示○
 		//test_view_mylist_search(1,text_list,1);//マイリスト検索の記事一覧表示
 		//test_view_fav_list(1);//お気に入りの記事一覧表示○
 		//test_view_favlist_search(1,text_list,1);//お気に入り検索の記事一覧表示
-		//test_view_tag_search(1,text_list,"aaa",1);//タグ検索の記事一覧表示
+		//est_view_tag_search(1,text_list,"aaa",1);//タグ検索の記事一覧表示
 		test_view_sharelist_search(1,text_list,2,1);//シェア検索の記事一覧表示
 		//test_tag_fav_list(1);//タグ内でお気に入りした記事一覧○
 		//test_update_article(1);//記事の更新○

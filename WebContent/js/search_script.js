@@ -1,50 +1,62 @@
 var hostURL = "http://localhost:8080";
 
 //どこの検索なのか判断する
-function judge(judge_flag,text){
-	switch(judge_flag){
-	case 0:
+$(document).on('click', '#titlesearch', function() {
+	var text = document.getElementById('searchbox').value;
+	console.log(text);
+	console.log($.cookie("viewMode"));
+	switch($.cookie("viewMode")){
+	case "0":
 		//マイリストの検索
-		myListSearch(text);
+		$('.grid').empty();
+		myListSearch();
 		break;
-	case 1:
+	case "1":
 		//お気に入りの検索
-		favListSearch(text);
+		$('.grid').empty();
+		favListSearch();
 		break;
-	case 2:
+	case "2":
 		//タグの検索
-		tagSearch(text);
+		$('.grid').empty();
+		tagSearch();
 		break;
-	case 3:
+	case "3":
 		//シェアの検索
-		shareListSearch(text);
+		$('.grid').empty();
+		shareListSearch();
 		break;
 	}
-}
+});
+
 //マイリスト内のタイトル検索
-function myListSearch(text) {
-	var jsonParam = "text="+text;// 送りたいデータ
+function myListSearch() {
+	console.log("mylist");
+	var jsonParam = "text="+document.getElementById('searchbox').value;// 送りたいデータ
 	var URL = "/clipMaster/mylistsearch";
 	document.getElementById('title').innerHTML = '<h1>検索結果</h1>';
 	getJSON(URL, jsonParam, get_mylists);
 }
 //お気に入りのタイトル検索
-function favListSearch(text) {
-	var jsonParam = "text="+text;// 送りたいデータ
+function favListSearch() {
+	console.log("favlist");
+	var jsonParam = "text="+document.getElementById('searchbox').value;// 送りたいデータ
 	var URL = "/clipMaster/favlistsearch";
 	document.getElementById('title').innerHTML = '<h1>検索結果</h1>';
 	getJSON(URL, jsonParam, get_mylists);
 }
 //タグのタイトル検索
-function tagSearch(text) {
-	var jsonParam = "tag="+$.cookie("tagLists")+"&text="+text;// 送りたいデータ
+function tagSearch() {
+	console.log("taglist");
+	var jsonParam = "tag="+$.cookie("tagLists")+"&text="+document.getElementById('searchbox').value;// 送りたいデータ
 	var URL = "/clipMaster/tagsearch";
 	getJSON(URL, jsonParam, get_mylists);
 }
 //シェアのタイトル検索
-function shareListSearch(text) {
-	var jsonParam = "friend_user_id="+$.cookie("shareLists")+"&text="text;// 送りたいデータ
+function shareListSearch() {
+	console.log("sharelist");
+	var jsonParam = "friend_user_id="+$.cookie("shareLists")+"&text="+document.getElementById('searchbox').value;// 送りたいデータ
 	var URL = "/clipMaster/sharelistsearch";
 	document.getElementById('title').innerHTML = '<h1>検索結果</h1>';
 	getJSON(URL, jsonParam, get_mylists);
-}
+};
