@@ -14,7 +14,7 @@ function initPromise() {
 		operative.Promise = ES6Promise.Promise;
 	}
 }
-var hostURL = "http://localhost:8080";
+var hostURL = "http://clip-sc.com"; //"http://localhost:8080/clipMaster";
 
 
 /**
@@ -81,17 +81,17 @@ function getRequest() {
 	var request = {
 		articlelist : function getArticleLists() {
 
-			return getURL(hostURL + "/clipMaster/mylist", null)
+			return getURL(hostURL + "/mylist", null)
 					.then(JSON.parse);
 		},
 		article : function getArticle(param) {
 
 			// JSONをテキストからオブジェクトへパースする必要がある。
-			return getURL(hostURL + "/clipMaster/viewarticle", param)
+			return getURL(hostURL + "/viewarticle", param)
 					.then(JSON.parse);
 		},
 		updatelist : function getArticleLists(param) {
-			return getURL(hostURL + "/clipMaster/getupdatearticle",
+			return getURL(hostURL + "/getupdatearticle",
 					param);
 		}
 
@@ -155,7 +155,7 @@ function addArticle() {
 	// Nonceを載せる
 	jsonParam = jsonParam + "&nonce=" + $('#nonce').val();
 	console.log("log:" + encodeURIComponent($("#search-1e").html()));
-	var URL = hostURL + "/clipMaster/addarticle";
+	var URL = hostURL + "/addarticle";
 	var update_article = function(json) {
 
 		if(json.flag==0){
@@ -173,7 +173,7 @@ function thumView(json, width, height) {
 		return "<img src='data:image/jpeg;base64," + json.thum +  "' width='" + width + "' height='" + height + "'alt='"+json.title+"'/>";
 	} else {
 		console.log("notttt null");
-		return "<img src='" + hostURL + "/clipMaster/img/sm2.png" +
+		return "<img src='" + hostURL + "/img/sm2.png" +
 				"' width='" + width + "' height='" + height + "'alt='"+json.title+"'/>";
 	}
 }

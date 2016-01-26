@@ -6,7 +6,7 @@ var nowSortKey = "Name"; // 現在ソートキー
 // フレンド登録者一覧画面
 function getFriendList() {
 	var jsonParam = null;// 送りたいデータ
-	var URL = hostURL + "/clipMaster/friendlist";
+	var URL = hostURL + "/friendlist";
 	var setappend = function(json) {
 		var cnt = 0;
 
@@ -192,7 +192,7 @@ if (window.addEventListener) { // for W3C DOM
 // リクエストを削除後の画面
 function deleteRequest(user_id) {
 	var jsonParam = "friend_user_id=" + user_id;// 送りたいデータ
-	var URL = hostURL + "/clipMaster/deleterequest";
+	var URL = hostURL + "/deleterequest";
 	var friendList = "";
 	var setappend = function(json) {
 		for ( var i = 0; i < json.length; i++) {
@@ -208,7 +208,7 @@ function deleteRequest(user_id) {
 function deleteFriend(user_id) {
 
 	var jsonParam = "friend_user_id=" + user_id;// 送りたいデータ
-	var URL = hostURL + "/clipMaster/deletefriend";
+	var URL = hostURL + "/deletefriend";
 	var friendList = "";
 	var setappend = function(json) {
 		for ( var i = 0; i < json.length; i++) {
@@ -223,14 +223,14 @@ function deleteFriend(user_id) {
 // フレンド登録者のリストをもらう処理
 function getFriends() {
 	var jsonParam = null;// 送りたいデータ
-	var URL = hostURL + "/clipMaster/friendlistff";
+	var URL = hostURL + "/friendlistff";
 	getJSON(URL, jsonParam, get_friends);
 }
 
 // フレンド申請があると、申請通知が来る
 function notice() {
 	var jsonParam = null;// 送りたいデータ
-	var URL = hostURL + "/clipMaster/friendrequest";
+	var URL = hostURL + "/friendrequest";
 	var setappend = function(json) {
 		if (json.length > 0) {
 			console.log("申請あるよ");
