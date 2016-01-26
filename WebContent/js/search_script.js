@@ -1,4 +1,4 @@
-var hostURL = "http://localhost:8080";
+//var hostURL = "http://localhost:8080";
 
 // どこの検索なのか判断する
 $(document).on('click', '#titlesearch', function() {
@@ -54,7 +54,7 @@ $(document).on('click', '#titlesearch', function() {
 function myListSearch(word) {
 	console.log("mylist");
 	var jsonParam = "text=" + word;// 送りたいデータ
-	var URL = "/clipMaster/mylistsearch";
+	var URL = "/mylistsearch";
 	document.getElementById('title').innerHTML = '<h1>検索結果</h1>';
 	getJSON(URL, jsonParam, get_mylists);
 }
@@ -62,7 +62,7 @@ function myListSearch(word) {
 function favListSearch(word) {
 	console.log("favlist");
 	var jsonParam = "text=" + word;// 送りたいデータ
-	var URL = "/clipMaster/favlistsearch";
+	var URL = "/favlistsearch";
 	document.getElementById('title').innerHTML = '<h1>検索結果</h1>';
 	getJSON(URL, jsonParam, get_mylists);
 }
@@ -70,14 +70,14 @@ function favListSearch(word) {
 function tagSearch(word) {
 	console.log("taglist");
 	var jsonParam = "tag=" + $.cookie("tagLists") + "&text=" + word;
-	var URL = "/clipMaster/tagsearch";
+	var URL = "/tagsearch";
 	getJSON(URL, jsonParam, get_mylists);
 }
 // シェアのタイトル検索
 function shareListSearch(word) {
 	console.log("sharelist");
 	var jsonParam = "friend_user_id=" + $.cookie("shareLists") + "&text=" + word;
-	var URL = "/clipMaster/sharelistsearch";
+	var URL = "/sharelistsearch";
 	document.getElementById('title').innerHTML = '<h1>検索結果</h1>';
 	getJSON(URL, jsonParam, get_mylists);
 };

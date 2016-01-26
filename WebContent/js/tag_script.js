@@ -8,7 +8,7 @@ function addTagArticle(tag_list,article_id) {
 	}
 	var tag_list = "tag_list="+JSON.parse(JSON.stringify(arr));
 
-	var URL = hostURL + "/clipMaster/addtagarticle";
+	var URL = hostURL + "/addtagarticle";
 
 	getJSON(URL, tag_list, null);
 	toastr.success('タグを保存しました');
@@ -17,7 +17,7 @@ function addTagArticle(tag_list,article_id) {
 function getTagArticle(article_id) {
 	getArticle_id(article_id);//html内の<div id='article_id'>にhiddenでarticle_idを持たせる
 	var jsonParam = "article_id="+article_id;
-	var URL = hostURL + "/clipMaster/gettag";
+	var URL = hostURL + "/gettag";
 	//記事に付与されているタグをテキストフィールドに表示
 	var get_tag_article_lists = function(json){
 		$('#tag-it').tagit('removeAll');
@@ -31,20 +31,20 @@ function getTagArticle(article_id) {
 //タグ一覧表示
 function getTagList() {
 	var jsonParam = null;// 送りたいデータ
-	var URL = hostURL + "/clipMaster/taglist";
+	var URL = hostURL + "/taglist";
 	getJSON(URL, jsonParam, get_taglists);
 }
 //更新日時が新しいタグ20件を表示
 function getUsingTags(){
 	var jsonParam = null;// 送りたいデータ
-	var URL = hostURL + "/clipMaster/getusingtags";
+	var URL = hostURL + "/getusingtags";
 	getJSON(URL, jsonParam, get_using_tags);
 }
 //タグを削除
 function deleteTag(tag_id){
 
 	var jsonParam = "tag_id="+tag_id.item(0).value;// 送りたいデータ
-	var URL = hostURL + "/clipMaster/deletetag";
+	var URL = hostURL + "/deletetag";
 	var setappend=function(){
 
 	};
@@ -66,7 +66,7 @@ function getTagArticleList(tag_list,tag_id) {
 		document.getElementById('title').innerHTML='<h1>'+tag_id+'</h1>';
 	}
 	$('#viewmode').val('2');
-	var URL = hostURL + "/clipMaster/tagarticlelist";
+	var URL = hostURL + "/tagarticlelist";
 	getJSON(URL, taglists, get_mylists);
 }
 //特定のタグの記事一覧（リスト表示）
@@ -82,7 +82,7 @@ function getTagArticleList(tag_list,tag_id) {
 		document.getElementById('title').innerHTML='<h1>'+tag_id+'</h1>';
 	}
 	$('#viewmode').val('2');
-	var URL = hostURL + "/clipMaster/tagarticlelist";
+	var URL = hostURL + "/tagarticlelist";
 	getJSON(URL, taglists, get_mylists_list);
 }
 

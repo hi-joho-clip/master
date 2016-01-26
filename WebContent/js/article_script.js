@@ -1,7 +1,7 @@
 // マイリスト（タイル表示）
 function getMyList(page) {
 	var jsonParam = 'page=' + page;// 送りたいデータ(ページ番号）
-	var URL = hostURL + "/clipMaster/mylist";
+	var URL = hostURL + "/mylist";
 	document.getElementById('title').innerHTML = '<h1>マイリスト</h1>'+'<input type="button" id="stylechange"value="AAA">';
 	$('#viewmode').val('0');
 	getJSON(URL, jsonParam, get_mylists);
@@ -9,7 +9,7 @@ function getMyList(page) {
 //マイリスト（リスト表示）
 function getMyListList(page) {
 	var jsonParam = 'page=' + page;// 送りたいデータ(ページ番号）
-	var URL = hostURL + "/clipMaster/mylist";
+	var URL = hostURL + "/mylist";
 	document.getElementById('title').innerHTML = '<h1>マイリスト</h1>'+'<input type="button" id="stylechange"value="AAA">';
 	$('#viewmode').val('0');
 	getJSON(URL, jsonParam, get_mylists_list);
@@ -18,7 +18,7 @@ function getMyListList(page) {
 // お気に入り（タイル表示）
 function getFavList(page) {
 	var jsonParam = 'page=' + page;// 送りたいデータ
-	var URL = hostURL + "/clipMaster/favlist";
+	var URL = hostURL + "/favlist";
 	document.getElementById('title').innerHTML = '<h1>お気に入り</h1>'+'<input type="button" id="stylechange"value="AAA">';
 	$('#viewmode').val("1");
 	getJSON(URL, jsonParam, get_mylists);
@@ -26,7 +26,7 @@ function getFavList(page) {
 //お気に入り（リスト表示）
 function getFavListList(page) {
 	var jsonParam = 'page=' + page;// 送りたいデータ
-	var URL = hostURL + "/clipMaster/favlist";
+	var URL = hostURL + "/favlist";
 	document.getElementById('title').innerHTML = '<h1>お気に入り</h1>'+'<input type="button" id="stylechange"value="AAA">';
 	$('#viewmode').val("1");
 	getJSON(URL, jsonParam, get_mylists_list);
@@ -35,7 +35,7 @@ function getFavListList(page) {
 // シェア記事一覧（タイル表示）
 function getShareList(friend_user_id, page) {
 	var jsonParam = "friend_user_id=" + friend_user_id + '&page=' + page;// 送りたいデータ
-	var URL = hostURL + "/clipMaster/sharelist";
+	var URL = hostURL + "/sharelist";
 	document.getElementById('title').innerHTML = '<h1>シェア記事</h1>'+'<input type="button" id="stylechange"value="AAA">';
 	$('#viewmode').val('3');
 	getJSON(URL, jsonParam, get_sharelists);
@@ -43,7 +43,7 @@ function getShareList(friend_user_id, page) {
 //シェア記事一覧（リスト表示）
 function getShareList(friend_user_id, page) {
 	var jsonParam = "friend_user_id=" + friend_user_id + '&page=' + page;// 送りたいデータ
-	var URL = hostURL + "/clipMaster/sharelist";
+	var URL = hostURL + "/sharelist";
 	document.getElementById('title').innerHTML = '<h1>シェア記事</h1>'+'<input type="button" id="stylechange"value="AAA">';
 	$('#viewmode').val('3');
 	getJSON(URL, jsonParam, get_sharelists_list);
@@ -56,7 +56,7 @@ function getShareList(friend_user_id, page) {
 function getViewArticle(article_id) {
 
 	var jsonParam = "article_id=" + article_id;// 送りたいデータ
-	var URL = hostURL + "/clipMaster/viewarticle";
+	var URL = hostURL + "/viewarticle";
 	var setappend = function(json) {
 
 
@@ -92,7 +92,7 @@ function deleteArticle(article_id) {
 	// getArticle_id(article_id);//html内の<div
 	// id='article_id'>にhiddenでarticle_idを持たせる
 	var jsonParam = "article_id=" + article_id.item(0).value;// 送りたいデータ
-	var URL = hostURL + "/clipMaster/deletearticle";
+	var URL = hostURL + "/deletearticle";
 	var delete_article = function() {
 
 	};
@@ -114,7 +114,7 @@ function addFavArticle(article_id) {
 	if (flag == "false") {
 
 		// 追加の処理
-		var URL = hostURL + "/clipMaster/addfav";
+		var URL = hostURL + "/addfav";
 
 		// タイトルの横に★マークをつける
 
@@ -146,7 +146,7 @@ function addFavArticle(article_id) {
 
 	} else if (flag == "true") {
 		// 削除の処理
-		var URL = hostURL + "/clipMaster/deletefav";
+		var URL = hostURL + "/deletefav";
 
 		// タイトルの横の★マークを削除
 		var failed = null;
@@ -195,7 +195,7 @@ function updateArticle() {
 	jsonParam = jsonParam + "&nonce=" + $('#nonce').val();
 	jsonParam = jsonParam + '&body='
 			+ encodeURIComponent($("div#editable").html());
-	var URL = hostURL + "/clipMaster/updatearticle";
+	var URL = hostURL + "/updatearticle";
 	var update_article = function(json) {
 
 		if (json.flag == 0) {
@@ -212,7 +212,7 @@ function shareArticle(friend_user_id, article_id) {
 	var param = "article_id=" + article_id.item(0).value + "&friend_id="
 			+ friend_user_id + "";
 
-	var URL = hostURL + "/clipMaster/addshare";
+	var URL = hostURL + "/addshare";
 
 	var cal = function(json) {
 		if (json.flag == 0) {

@@ -25,8 +25,8 @@ import de.l3s.boilerpipe.sax.ImageExtractor;
 
 public class SaveArticle {
 
-
 	static byte[] bytes = new byte[31457280];
+
 	/**
 	 * 処理
 	 * 記事本体のみを保存（戻り値：Article_id）
@@ -63,12 +63,12 @@ public class SaveArticle {
 	public boolean def_extractor(int user_id, String str_url) {
 		boolean flag = false;
 		try {
-			if (isConAndTimeOut(str_url)) {
-				BoilerpipeExtractor extractor = CommonExtractors.ARTICLE_EXTRACTOR;
-				if (article_extractor(user_id, str_url, extractor) >= 1) {
-					flag = true;
-				}
+			//if (isConAndTimeOut(str_url)) {
+			BoilerpipeExtractor extractor = CommonExtractors.ARTICLE_EXTRACTOR;
+			if (article_extractor(user_id, str_url, extractor) >= 1) {
+				flag = true;
 			}
+			//}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -84,12 +84,12 @@ public class SaveArticle {
 		boolean flag = false;
 
 		try {
-			if (isConAndTimeOut(str_url)) {
-				BoilerpipeExtractor extractor = CommonExtractors.KEEP_EVERYTHING_EXTRACTOR;
-				if (article_extractor(user_id, str_url, extractor) >= 1) {
-					flag = true;
-				}
+			//if (isConAndTimeOut(str_url)) {
+			BoilerpipeExtractor extractor = CommonExtractors.KEEP_EVERYTHING_EXTRACTOR;
+			if (article_extractor(user_id, str_url, extractor) >= 1) {
+				flag = true;
 			}
+			//}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -108,27 +108,26 @@ public class SaveArticle {
 
 		String text = CommonExtractors.KEEP_EVERYTHING_EXTRACTOR.getText(url);
 		List<Image> image = imageExtr.process(url, extractor);
-//
-//		// title 処理
-//		DOMParser parser = new DOMParser();
-//		parser.setFeature("http://xml.org/sax/features/namespaces", false);
-//		System.out.println("SOURCE URL: " + str_url); //urlStrを表示
+		//
+		//		// title 処理
+		//		DOMParser parser = new DOMParser();
+		//		parser.setFeature("http://xml.org/sax/features/namespaces", false);
+		//		System.out.println("SOURCE URL: " + str_url); //urlStrを表示
 
-//		parser.parse(str_url);
+		//		parser.parse(str_url);
 		System.out.println("タイトル：" + getTitle(str_url));
-//		Document document = parser.getDocument();
-//		NodeList nodeList = document.getElementsByTagName("title");
+		//		Document document = parser.getDocument();
+		//		NodeList nodeList = document.getElementsByTagName("title");
 
-
-//		String title = url.getHost();
-//		for (int i = 0; i < nodeList.getLength(); i++) {
-//			Element element = (Element) nodeList.item(i);
-//			System.out.println(element.getTextContent());
-//			System.out.println("utf8:" + isUTF8(element.getTextContent().toString().getBytes()));
-//			System.out.println("sjis:" + isSJIS(element.getTextContent().toString().getBytes()));
-			String title = new String(getTitle(str_url));
-//			System.out.println(title);
-//		}
+		//		String title = url.getHost();
+		//		for (int i = 0; i < nodeList.getLength(); i++) {
+		//			Element element = (Element) nodeList.item(i);
+		//			System.out.println(element.getTextContent());
+		//			System.out.println("utf8:" + isUTF8(element.getTextContent().toString().getBytes()));
+		//			System.out.println("sjis:" + isSJIS(element.getTextContent().toString().getBytes()));
+		String title = new String(getTitle(str_url));
+		//			System.out.println(title);
+		//		}
 
 		ArticleBean artBean = new ArticleBean();
 		artBean.setUrl(str_url);
@@ -194,7 +193,6 @@ public class SaveArticle {
 	 */
 	public static boolean isConAndTimeOut(String str_url) {
 
-
 		boolean flag = false;
 		try {
 			// 30MBまで
@@ -208,18 +206,22 @@ public class SaveArticle {
 			urlConnection.setReadTimeout(10 * 1000); // 追加
 			System.out.println(urlConnection.getContentType());
 
-			if (urlConnection.getContentType().indexOf("text/html") != -1) {
-				flag = true;
+			if (urlConnection.getContentType() != null) {
+				if (urlConnection.getContentType().indexOf("text/html") != -1) {
+					flag = true;
+				}
 			}
 
 			InputStream in = urlConnection.getInputStream();
 
 			int readBytes = 0;
-			while ((readBytes = in.read(bytes, 0, bytes.length)) > 0) {
-				// BOF対策
-				if (readBytes > 600000) {
-					flag = false;
-					break;
+			if (in != null) {
+				while ((readBytes = in.read(bytes, 0, bytes.length)) > 0) {
+					// BOF対策
+					if (readBytes > 600000) {
+						flag = false;
+						break;
+					}
 				}
 			}
 
@@ -262,27 +264,42 @@ public class SaveArticle {
 		}
 	}
 
-	 public static String getTitle(String page_url) throws Exception {
-		    //アクセスしたいページpage_url
-		    URL url = new URL(page_url);
-		    URLConnection conn = url.openConnection();
+	public static String getTitle(String page_url) throws Exception {
+		//アクセスしたいページpage_url
+		URL url = new URL(page_url);
+		URLConnection conn = url.openConnection();
 
-		    String charset = Arrays.asList(conn.getContentType().split(";") ).get(1);
-		    String encoding = Arrays.asList(charset.split("=") ).get(1);
+		System.out.println(isSJIS(conn.getInputStream().toString().getBytes()));
 
-		    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), encoding ));
-		    StringBuffer response = new StringBuffer();
-		    String line;
-		    while ((line= in.readLine()) != null)
-		            response.append(line+"\n");
-		    in.close();
+		String charset = "charset=UTF-8";
+		System.out.println("getCon:" + conn.getContentType());
+		if (conn.getContentType() != null) {
+			// スプリット後の配列が1（2個目）以上ある場合
+			if (conn.getContentType().split(";").length > 1) {
+				charset = Arrays.asList(conn.getContentType().split(";")).get(1);
+			} else if (isSJIS(conn.getInputStream().toString().getBytes())) {
+				charset = "charset=Shift_JIS";
+			}
+		} else if (isSJIS(conn.getInputStream().toString().getBytes())) {
+			charset = "charset=Shift_JIS";
+		}
 
-		    Pattern title_pattern1 = Pattern.compile("<title>([^<]+)</title>",Pattern.CASE_INSENSITIVE);
-		    Matcher matcher1 = title_pattern1.matcher(response.toString());
-		    if(matcher1.find() ) {
-		      return matcher1.group(1);
-		    }
-		    return null;
-		  }
+		String encoding = Arrays.asList(charset.split("=")).get(1);
+		System.out.println("splength:" + conn.getContentType().split(";").length);
+
+		BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), encoding));
+		StringBuffer response = new StringBuffer();
+		String line;
+		while ((line = in.readLine()) != null)
+			response.append(line + "\n");
+		in.close();
+
+		Pattern title_pattern1 = Pattern.compile("<title>([^<]+)</title>", Pattern.CASE_INSENSITIVE);
+		Matcher matcher1 = title_pattern1.matcher(response.toString());
+		if (matcher1.find()) {
+			return matcher1.group(1);
+		}
+		return null;
+	}
 
 }

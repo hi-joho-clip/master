@@ -8,7 +8,7 @@ function addArticle() {
 	// Nonceを載せる
 	jsonParam = jsonParam + "&nonce=" + $('#nonce').val();
 	console.log("log:" + encodeURIComponent($("#search-1e").html()));
-	var URL = hostURL + "/clipMaster/addarticle";
+	var URL = hostURL + "/addarticle";
 	var update_article = function(json) {
 
 		if(json.flag==0){

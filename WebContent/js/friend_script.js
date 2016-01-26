@@ -1,7 +1,7 @@
 // フレンドボックス画面
 function getFriendRequest() {
 	var jsonParam = null;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/friendrequest";
+	var URL = hostURL + "/friendrequest";
 	var friendList = " <div class='remodal-bg'> ";
 	var setappend = function(json) {
 		for ( var i = 0; i < json.length; i++) {
@@ -21,7 +21,7 @@ function getFriendRequest() {
 // フレンド検索画面
 function getFriendSearch(nickname) {
 	var jsonParam = "nickname=" + nickname.item(0).value;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/searchfriend";
+	var URL = hostURL + "/searchfriend";
 	var friendList = "<div class='remodal-bg'>";
 	var setappend = function(json) {
 		if (json.length != 0) {
@@ -42,7 +42,7 @@ function getFriendSearch(nickname) {
 // リクエストを申請後の画面
 function addRequest(user_id) {
 	var jsonParam = "friend_user_id=" + user_id;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/addrequest";
+	var URL = hostURL + "/addrequest";
 	var friendList = "";
 	var setappend = function(json) {
 		for ( var i = 0; i < json.length; i++) {
@@ -57,7 +57,7 @@ function addRequest(user_id) {
 function acceptRequest(user_id) {
 
 	var jsonParam = "friend_user_id=" + user_id;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/acceptrequest";
+	var URL = hostURL + "/acceptrequest";
 	var friendList = "";
 	var setappend = function(json) {
 		for ( var i = 0; i < json.length; i++) {
@@ -74,7 +74,7 @@ function acceptRequest(user_id) {
 function denyRequest(user_id) {
 
 	var jsonParam = "friend_user_id=" + user_id;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/denyrequest";
+	var URL = hostURL + "/denyrequest";
 	var friendList = "";
 	var setappend = function(json) {
 		for ( var i = 0; i < jsonResult.length; i++) {
@@ -90,7 +90,7 @@ function denyRequest(user_id) {
 function limit() {
 
 	var jsonParam = "";// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/friendlist";
+	var URL = hostURL + "/friendlist";
 	var $remodal = "";
 	var setappend = function(json) {
 		var CON = 0; // 申請人数
@@ -124,7 +124,7 @@ function limit() {
 function limitBox() {
 
 	var jsonParam = null;// 送りたいデータ
-	var URL = "http://localhost:8080/clipMaster/friendlist";
+	var URL = hostURL + "/friendlist";
 	var $remodal = "";
 	var setappend = function(json) {
 		console.log("来てる");
@@ -150,14 +150,14 @@ function limitBox() {
 //フレンド登録者のリストをもらう処理
 function getFriends() {
 	var jsonParam = null;// 送りたいデータ
-	var URL = hostURL + "/clipMaster/friendlistff";
+	var URL = hostURL + "/friendlistff";
 	getJSON(URL, jsonParam, get_friends);
 }
 
 //フレンド申請があると、申請通知が来る
 function notice() {
 	var jsonParam = null;// 送りたいデータ
-	var URL = hostURL + "/clipMaster/friendrequest";
+	var URL = hostURL + "/friendrequest";
 	var setappend = function(json) {
 		if (json.length > 0) {
 			console.log("申請あるよ");
