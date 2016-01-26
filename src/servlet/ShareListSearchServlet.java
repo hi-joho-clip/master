@@ -56,8 +56,19 @@ public class ShareListSearchServlet extends HttpServlet {
 		ArrayList<String> text_list = new ArrayList<String>();
 		String text = "";
 		int friend_user_id=0;
-		try {
-			user_id = (int) session.getAttribute("user_id");
+		if (request.getParameter("friend_user_id") != null) {
+			try {
+				user_id = (int) session.getAttribute("user_id");
+				friend_user_id = Integer.parseInt(request.getParameter("friend_user_id"));
+				if (request.getParameter("page") != null) {
+					page = Integer.parseInt(request.getParameter("page"));
+					System.out.println("nakafrienduser:"+friend_user_id);
+				}
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			text = request.getParameter("text");
 			// _ %が含まれる文字列のエスケープ
 			//全角の空白文字をひとつの半角空白に置換
@@ -74,28 +85,23 @@ public class ShareListSearchServlet extends HttpServlet {
 				text_list.add(0," ");//空白が送られてきた場合
 			}
 			System.out.println("user_id" + user_id);
-			if (request.getParameter("page") != null) {
-				friend_user_id = Integer.parseInt(request.getParameter("friend_user_id"));
-				page = Integer.parseInt(request.getParameter("page"));
-			}
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			System.out.println("frienduser:"+friend_user_id);
 
-		ArticleBean articlebean = new ArticleBean();
-		ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
-		try {
-			article_list = articlebean.viewShareListSearch(user_id,text_list,friend_user_id, page);
-		} catch (Exception e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
+
+			ArticleBean articlebean = new ArticleBean();
+			ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
+			try {
+				article_list = articlebean.viewShareListSearch(user_id,text_list,friend_user_id, page);
+			} catch (Exception e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
+			System.out.println(article_list.size());
+			response.setContentType("application/json;charset=UTF-8");
+			response.setHeader("Cache-Control", "private");
+			PrintWriter out = response.getWriter();
+			out.println(JSON.encode(article_list, true).toString());
 		}
-		response.setContentType("application/json;charset=UTF-8");
-		response.setHeader("Cache-Control", "private");
-		PrintWriter out = response.getWriter();
-		out.println(JSON.encode(article_list, true).toString());
 	}
 
 }

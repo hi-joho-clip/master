@@ -1,21 +1,21 @@
 package boiler;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
-
-import org.cyberneko.html.parsers.DOMParser;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 import beansdomain.ArticleBean;
 import de.l3s.boilerpipe.BoilerpipeExtractor;
@@ -25,6 +25,8 @@ import de.l3s.boilerpipe.sax.ImageExtractor;
 
 public class SaveArticle {
 
+
+	static byte[] bytes = new byte[31457280];
 	/**
 	 * 処理
 	 * 記事本体のみを保存（戻り値：Article_id）
@@ -106,22 +108,27 @@ public class SaveArticle {
 
 		String text = CommonExtractors.KEEP_EVERYTHING_EXTRACTOR.getText(url);
 		List<Image> image = imageExtr.process(url, extractor);
+//
+//		// title 処理
+//		DOMParser parser = new DOMParser();
+//		parser.setFeature("http://xml.org/sax/features/namespaces", false);
+//		System.out.println("SOURCE URL: " + str_url); //urlStrを表示
 
-		// title 処理
-		DOMParser parser = new DOMParser();
-		parser.setFeature("http://xml.org/sax/features/namespaces", false);
-		System.out.println("SOURCE URL: " + str_url); //urlStrを表示
+//		parser.parse(str_url);
+		System.out.println("タイトル：" + getTitle(str_url));
+//		Document document = parser.getDocument();
+//		NodeList nodeList = document.getElementsByTagName("title");
 
-		parser.parse(str_url);
-		Document document = parser.getDocument();
-		NodeList nodeList = document.getElementsByTagName("title");
 
-		String title = url.getHost();
-		for (int i = 0; i < nodeList.getLength(); i++) {
-			Element element = (Element) nodeList.item(i);
-			title = new String(element.getTextContent().toString());//.getBytes("UTF-8"), "UTF-8");
-			System.out.println(title);
-		}
+//		String title = url.getHost();
+//		for (int i = 0; i < nodeList.getLength(); i++) {
+//			Element element = (Element) nodeList.item(i);
+//			System.out.println(element.getTextContent());
+//			System.out.println("utf8:" + isUTF8(element.getTextContent().toString().getBytes()));
+//			System.out.println("sjis:" + isSJIS(element.getTextContent().toString().getBytes()));
+			String title = new String(getTitle(str_url));
+//			System.out.println(title);
+//		}
 
 		ArticleBean artBean = new ArticleBean();
 		artBean.setUrl(str_url);
@@ -187,11 +194,12 @@ public class SaveArticle {
 	 */
 	public static boolean isConAndTimeOut(String str_url) {
 
+
 		boolean flag = false;
 		try {
 			// 30MBまで
 			System.out.println("conURL:" + str_url);
-			byte[] bytes = new byte[31457280];
+			//byte[] bytes = new byte[31457280];
 
 			URL url = new URL(str_url);
 			HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -219,6 +227,8 @@ public class SaveArticle {
 			if (readBytes > 0 && isUTF8(bytes)) {
 				flag = true;
 			}
+			// bytesを解放
+			bytes = null;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return flag;
@@ -251,4 +261,28 @@ public class SaveArticle {
 			return false;
 		}
 	}
+
+	 public static String getTitle(String page_url) throws Exception {
+		    //アクセスしたいページpage_url
+		    URL url = new URL(page_url);
+		    URLConnection conn = url.openConnection();
+
+		    String charset = Arrays.asList(conn.getContentType().split(";") ).get(1);
+		    String encoding = Arrays.asList(charset.split("=") ).get(1);
+
+		    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), encoding ));
+		    StringBuffer response = new StringBuffer();
+		    String line;
+		    while ((line= in.readLine()) != null)
+		            response.append(line+"\n");
+		    in.close();
+
+		    Pattern title_pattern1 = Pattern.compile("<title>([^<]+)</title>",Pattern.CASE_INSENSITIVE);
+		    Matcher matcher1 = title_pattern1.matcher(response.toString());
+		    if(matcher1.find() ) {
+		      return matcher1.group(1);
+		    }
+		    return null;
+		  }
+
 }

@@ -3,6 +3,7 @@ function getMyList(page) {
 	var jsonParam = 'page=' + page;// 送りたいデータ(ページ番号）
 	var URL = hostURL + "/clipMaster/mylist";
 	document.getElementById('title').innerHTML = '<h1>マイリスト</h1>';
+	$('#viewmode').val('0');
 	getJSON(URL, jsonParam, get_mylists);
 }
 
@@ -10,6 +11,7 @@ function getMyListList(page) {
 	var jsonParam = 'page=' + page;// 送りたいデータ(ページ番号）
 	var URL = hostURL + "/clipMaster/mylist";
 	document.getElementById('title').innerHTML = '<h1>マイリスト</h1>';
+	$('#viewmode').val('0');
 	getJSON(URL, jsonParam, get_mylists_list);
 }
 
@@ -18,6 +20,7 @@ function getFavList() {
 	var jsonParam = null;// 送りたいデータ
 	var URL = hostURL + "/clipMaster/favlist";
 	document.getElementById('title').innerHTML = '<h1>お気に入り</h1>';
+	$('#viewmode').val("1");
 	getJSON(URL, jsonParam, get_mylists);
 }
 
@@ -26,6 +29,7 @@ function getShareList(friend_user_id, page) {
 	var jsonParam = "friend_user_id=" + friend_user_id + '&page=' + page;// 送りたいデータ
 	var URL = hostURL + "/clipMaster/sharelist";
 	document.getElementById('title').innerHTML = '<h1>シェア記事</h1>';
+	$('#viewmode').val('3');
 	getJSON(URL, jsonParam, get_sharelists);
 }
 
@@ -60,7 +64,7 @@ function getViewArticle(article_id) {
 			data = 'data:image/' + con_type + ';base64,'
 					+ json.imageListDTO[image].blob_image;
 			$("div.images").append(
-					'<img id="icon_here" width ="400px" src = ' + data + '>');
+					'<img id="icon_here"  style="max-width:auto; max-height:200px;padding :10px" src = ' + data + '>');
 		}
 
 		// document.getElementById('viewArticle').innerHTML = viewArticle;

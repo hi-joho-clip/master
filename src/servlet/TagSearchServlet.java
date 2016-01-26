@@ -30,72 +30,83 @@ public class TagSearchServlet extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		perform(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-			IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		perform(request, response);
 	}
 
-	protected void perform(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-			IOException {
+	protected void perform(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(true);
 
-		//記事一覧表示
-		int user_id = 0;//sessionからuser_idを取得
+		// 記事一覧表示
+		int user_id = 0;// sessionからuser_idを取得
 		int page = 1; // パラメータからページ番号取得(デフォルト1）
 		ArrayList<String> text_list = new ArrayList<String>();
 		String text = "";
 		String tag = "";
-		try {
-			user_id = (int) session.getAttribute("user_id");
+
+		if (request.getParameter("tag") != null) {
+			try {
+				user_id = (int) session.getAttribute("user_id");
+				tag = request.getParameter("tag");
+				if (request.getParameter("page") != null) {
+					page = Integer.parseInt(request.getParameter("page"));
+					System.out.println("nakatag:" + tag);
+				}
+
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 			text = request.getParameter("text");
 			// _ %が含まれる文字列のエスケープ
-			//全角の空白文字をひとつの半角空白に置換
-			text=text.replaceAll("_","\\\\_").replaceAll("%", "\\\\%").replaceAll("　"," ");
+			// 全角の空白文字をひとつの半角空白に置換
+			text = text.replaceAll("_", "\\\\_").replaceAll("%", "\\\\%")
+					.replaceAll("　", " ");
 
-			//連続した空白も含め分割する
+			// 連続した空白も含め分割する
 			String[] text_body = text.split("[\\s]+");
-			if(text_body.length!=0){
-				for(int i=0;i<text_body.length;i++){
+			if (text_body.length != 0) {
+				for (int i = 0; i < text_body.length; i++) {
 					text_list.add(i, text_body[i]);
 					System.out.println(text_list.get(i));
 				}
-			}else{
-				text_list.add(0," ");//空白が送られてきた場合
+			} else {
+				text_list.add(0, " ");// 空白が送られてきた場合
 			}
 			System.out.println("user_id" + user_id);
-			if (request.getParameter("page") != null) {
-				tag = request.getParameter("tag");
-				page = Integer.parseInt(request.getParameter("page"));
+			System.out.println("sototag:" + request.getParameter("tag"));
+
+			ArticleBean articlebean = new ArticleBean();
+			ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
+			try {
+				article_list = articlebean.viewTagSearch(user_id, text_list,
+						tag, page);
+			} catch (Exception e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
 			}
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
+			response.setContentType("application/json;charset=UTF-8");
+			response.setHeader("Cache-Control", "private");
+			PrintWriter out = response.getWriter();
+			out.println(JSON.encode(article_list, true).toString());
 		}
-
-		ArticleBean articlebean = new ArticleBean();
-		ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
-		try {
-			article_list = articlebean.viewTagSearch(user_id,text_list,tag, page);
-		} catch (Exception e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-		response.setContentType("application/json;charset=UTF-8");
-		response.setHeader("Cache-Control", "private");
-		PrintWriter out = response.getWriter();
-		out.println(JSON.encode(article_list, true).toString());
 	}
-
 }

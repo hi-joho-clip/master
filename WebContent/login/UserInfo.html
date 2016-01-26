@@ -27,7 +27,7 @@
 <script type="text/javascript" src="../js/jquery/jquery.cookie.js"></script>
 <script type="text/javascript" src="../js/json-xhr.js"></script>
 <script type="text/javascript" src="../js/lib/cookie.js"></script>
-<script type="text/javascript" src="/js/toastr.min.js"></script>
+<script type="text/javascript" src="js/toastr.min.js"></script>
 
 <link rel="stylesheet" href="css/pure-drawer.css">
 
@@ -52,12 +52,12 @@
 				data-toggle-label="right"><span class="pure-toggle-icon"></span></label>
 
 
-			<nav class="pure-drawer" data-position="left">
+            <nav class="pure-drawer" data-position="left">
 
 
 
-				<p style="padding: 50px 20px; margin: 0;">
-				 <div id="bg-link">
+                 <p>
+	              <div id="bg-link">
 					<a href="UserInfo.html"><h4>ユーザ情報</h4></a>
 				 </div>
 				 <div id="bg-link">
@@ -67,7 +67,7 @@
 					<a href="index.html" onclick="javascript:$.cookie('viewMode','1');"><h4>お気に入り</h4></a>
 				 </div>
 				 <div id="bg-link">
-                    <a href="taglist.html" ><h4>タグ</h4></a>
+					<a href="taglist.html" ><h4>タグ</h4></a>
 				 </div>
 				 <div id="bg-link">
 					<a href="Friend.html"><h4>フレンド一覧</h4></a>
@@ -78,28 +78,33 @@
 				 <div id="bg-link">
 					<a href="FriendSeach.html"><h4>フレンド検索</h4></a>
 				 </div>
+				 <div id="bg-link">
+					<a href="index.html" onclick="javascript:$.cookie('viewMode','4');"><h4>LISTTEST</h4></a>
+				 </div>
 				</p>
-			</nav>
+            </nav>
 
-			<nav class="pure-drawer" data-position="right">
-				<p style="padding: 100px 5px; margin: 0;">
-					<a>Search Input</a><br>      <input type="search"
-						name="search-1" id="search-1" value=""><br> <a>
-						URL</a><br>      <input type="search" name="search-1"
-						id="search-1" value="">
-				</p>
-			</nav>
-			<label class="pure-overlay" for="pure-toggle-left"
-				data-overlay="left"></label> <label class="pure-overlay"
-				for="pure-toggle-right" data-overlay="right"></label>
-		</div>
+            <nav class="pure-drawer" data-position="right">
+					 <p2><p><a>Search Input</a><br>
+   					 <input type="search" name="search-1" id="searchbox" value=""><br>
+						<input type="button" id="titlesearch" value="検索" ><BR>
+					 	      <a> URL</a><br>
+   					   <input type="search" name="search-2" id="search-2" value="" class="validate[required,custom[url]] text-input"><br>
+
+					<input type="button" id="add-article" value="記事追加">
+
+					</p></p2>
+            </nav>
+            <label class="pure-overlay" for="pure-toggle-left" data-overlay="left"></label>
+            <label class="pure-overlay" for="pure-toggle-right" data-overlay="right"></label>
+        </div>
 		<div class="container">
 			<div style="margin: 100px auto;">
 				<h1>ユーザー情報</h1>
 				<div class="form-wrapper"style="max-width: 400px;">
 
 					<div align="center">
-						<p>
+
 						<div id="info"></div>
 					</div>
 					<div class="form-footer">

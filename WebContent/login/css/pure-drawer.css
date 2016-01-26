@@ -239,8 +239,10 @@ body {
           transition-duration: 250ms;
   -webkit-transition-timing-function: ease-out;
           transition-timing-function: ease-out;
-  width: 100%;
+  width: 300px;
 }
+
+
 
 
 
@@ -255,6 +257,8 @@ body {
     width: 300px;
   }
 }
+
+
 
 .pure-drawer[data-position='right'] {
   left: auto;
@@ -331,7 +335,7 @@ body {
 
 
 .pure-toggle[data-toggle='left']:checked ~ .pure-overlay[data-overlay='left'] {
-  left: 100%;
+  left: 300px;
 }
 
 @media only screen and (min-width: 40.063em) {
@@ -347,8 +351,9 @@ body {
 }
 
 .pure-toggle[data-toggle='right']:checked ~ .pure-overlay[data-overlay='right'] {
-  right: 100%;
+  right: 300px;
 }
+
 
 @media only screen and (min-width: 40.063em) {
   .pure-toggle[data-toggle='right']:checked ~ .pure-overlay[data-overlay='right'] {

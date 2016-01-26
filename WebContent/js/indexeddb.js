@@ -168,7 +168,7 @@ function updateIDBArticleList(values) {
  * @param guid
  * @param page
  */
-function getIDEArticleList(username, page) {
+function getIDEArticleList(username, page, share_id, title) {
 
 	return new Promise(function(resolve, reject) {
 
@@ -176,12 +176,14 @@ function getIDEArticleList(username, page) {
 
 		var offset_filter = {
 			filter : guid_filter,
+			filter : share_filter,
+			filter : title_filter,
 			// 20件ずつ表示
 			offset : page * 20 - 20,
-			limit : 20
+			limit : 20,
 		};
 
-		console.log(offset_filter);
+		//console.log(offset_filter);
 		var tutorial = getArticleInstance();
 		tutorial.onerror = function(event) {
 			// エラーの詳細をコンソールに出力する
@@ -208,6 +210,19 @@ function getIDEArticleList(username, page) {
 
 		function guid_filter(record) {
 			return record.username === username;
+		}
+		function share_filter(record) {
+			return record.share_id === share_id;
+		}
+		function title_filter(record) {
+			flag = false;
+			if ( record.article.title.indexOf(title) != -1) {
+				//strにhogeを含む場合の処理
+				flag = true;
+
+				}
+			return flag;
+			//record.article.title === title;
 		}
 	});
 };
