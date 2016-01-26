@@ -124,7 +124,7 @@ var get_mylists = function(json) {
 						"</div>"+
 						"<div class='mosaic-backdrop relative'>" + thumView(json[i], "100%", "100%")
 							+
-							"<p class='absolute'id='favtitle"+json[i].article_id+"'>"+flag+"<BR><a href='"+json[i].url+"'target='_blank'>"+json[i].url+"</a></p>" +
+							"<div class='absolute'id='favtitle"+json[i].article_id+"'>"+flag+"<BR><a href='"+json[i].url+"'target='_blank'>"+json[i].url+"</a></div>" +
 							"<input type='hidden' value='"+json[i].title+"' id='title"+json[i].article_id+"'>"+
 							"<input type='hidden' value='"+json[i].url+"' id='url"+json[i].article_id+"'>"+
 						"</div>"+

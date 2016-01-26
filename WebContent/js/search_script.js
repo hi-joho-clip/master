@@ -2,10 +2,11 @@ var hostURL = "http://localhost:8080";
 
 //どこの検索なのか判断する
 $(document).on('click', '#titlesearch', function() {
-	var text = document.getElementById('searchbox').value;
-	console.log(text);
-	console.log($.cookie("viewMode"));
-	switch($.cookie("viewMode")){
+	console.log("hidden:"+$('#viewmode').val());
+
+	console.log("cookie:"+$.cookie("viewMode"));
+
+	switch($('#viewmode').val()){
 	case "0":
 		//マイリストの検索
 		$('.grid').empty();
