@@ -11,9 +11,13 @@ $(document).on('click', '#titlesearch', function() {
 	case "0":
 		// マイリストの検索
 		if (isSettinOnLine()) {
+
 			$('.grid').empty();
 			myListSearch(word);
 		} else {
+
+
+
 			$('.grid').empty();
 			var username = docCookies.getItem('username');
 
@@ -30,20 +34,21 @@ $(document).on('click', '#titlesearch', function() {
 	case "1":
 		// お気に入りの検索
 		$('.grid').empty();
-		favListSearch();
+		favListSearch(word);
 		break;
 	case "2":
 		// タグの検索
 		$('.grid').empty();
-		tagSearch();
+		tagSearch(word);
 		break;
 	case "3":
 		// シェアの検索
 		$('.grid').empty();
-		shareListSearch();
+		shareListSearch(word);
 		break;
 	}
 });
+
 
 // マイリスト内のタイトル検索
 function myListSearch(word) {

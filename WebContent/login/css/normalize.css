@@ -334,7 +334,13 @@ input::-moz-focus-inner {
 
 input {
   line-height: normal;
-  color:#000
+  color:rgba(0, 0, 0, 0.5);
+  width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+input#titlesearch {
+	font-size:0.5em
 }
 
 /**
@@ -349,6 +355,7 @@ input[type="checkbox"],
 input[type="radio"] {
   box-sizing: border-box; /* 1 */
   padding: 0; /* 2 */
+
 }
 
 /**
