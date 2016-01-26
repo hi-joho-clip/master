@@ -298,8 +298,14 @@ button,
 html input[type="button"], /* 1 */
 input[type="reset"],
 input[type="submit"] {
-  -webkit-appearance: button; /* 2 */
-  cursor: pointer; /* 3 */
+    -webkit-appearance: button;
+    cursor: pointer;
+    padding: 10px 20px;
+    font-size: 0.5em;
+    background-color: #31708f;
+    color: #fff;
+    border-radius: 15px;
+    border-style: double;
 }
 
 /**
