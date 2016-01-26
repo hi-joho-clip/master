@@ -2,29 +2,28 @@
  * Index.htmlの最初に行う処理
  * */
 
-$(document).ready(function() {
-	$('.isotope').isotope({
-		itemSelector : '.item',
-		masonry : {
-			columnWidth : 100
-		}
-	});
-});
 
-$(document).ready(function() {
-	$('#tag-it').tagit({
-		fieldName : "tags[]",
-		tagLimit : 15,
-		autocomplete : {}
-	});
-});
-
+$(window).bind("unload",function(){});
 $(document).ready(
 		function() {
+			$('.isotope').isotope({
+				itemSelector : '.item',
+				masonry : {
+					columnWidth : 100
+				}
+			});
+			$('#tag-it').tagit({
+				fieldName : "tags[]",
+				tagLimit : 15,
+				autocomplete : {}
+			});
+
 			$("div.hiddenarea").append(
 					'<input type="hidden" id="nonce" value="'
 							+ docCookies.getItem("nonce") + '">');
+
 		});
+
 
 function initPagingMylist(callback) {
 	// var page = parseInt($('#art-page').val());
@@ -148,8 +147,10 @@ $(document).ready(function() {
 			});
 			toastr.warning("オフラインなんだなーこれ");
 			var username = docCookies.getItem('username');
+
+			// テスト用修正必要
 			page = 1;
-			getIDEArticleList(username, page).then(function(json) {
+			getIDEArticleList(username, page, 0, '').then(function(json) {
 				// 純粋なリストが必要
 				$('#title').append('<h1>マイリスト</h1>');
 				get_mylists(json);

@@ -806,11 +806,13 @@ public class ArticleDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
-		String sql = "SELECT * FROM articles WHERE id = ANY (SELECT id FROM mylists WHERE user_id = ?)";
+		String sql = "SELECT * FROM articles WHERE id = ANY (SELECT id FROM mylists WHERE user_id = ?) " +
+				"or id = ANY (select id from friends where own_user_id = ?) ";
 
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, user_id);
+			pstmt.setInt(2, user_id);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				ArticleDTO article = new ArticleDTO();
