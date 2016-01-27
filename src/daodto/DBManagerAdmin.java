@@ -7,6 +7,7 @@ public class DBManagerAdmin {
 	private static String dbDriver = "com.mysql.jdbc.Driver";
 	private static String dbUrl = "jdbc:mysql://imac-14-14.mr.hi-joho.ac.jp/clip";
 	//private static String dbUrl = "jdbc:mysql://localhost/clip";
+	//private static String dbUrl = "jdbc:mysql://clip-sc.com/clip";
 	private Connection con = null;
 	//final static String USER="root";
 	final static String USER = "manager";
