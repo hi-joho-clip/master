@@ -2,6 +2,8 @@
 
 // どこの検索なのか判断する
 $(document).on('click', '#titlesearch', function() {
+
+	document.getElementById('pure-toggle-right').checked=false;
 	console.log("hidden:" + $('#viewmode').val());
 
 	console.log("cookie:" + $.cookie("viewMode"));

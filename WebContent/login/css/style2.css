@@ -81,62 +81,7 @@ body {
   text-align: center;
 }
 
-@media only screen and (max-width: 768px) {
-#intro {
-  position: absolute;
-  left: 0;
-  top: 40%;
-  padding: 0 0;
-  width: 100%;
-  text-align: center;
-}
-}
-
-@media only screen and (max-width: 736px) {
-#intro {
-  position: absolute;
-  left: 0;
-  top: 90%;
-  padding: 0 0;
-  width: 100%;
-  text-align: center;
-}
-}
-
-@media only screen and (max-width: 568px) {
-#intro {
-  position: absolute;
-  left: 0;
-  top: 120%;
-  padding: 0 0;
-  width: 100%;
-  text-align: center;
-}
-}
-
-@media only screen and (max-width: 414px) {
-#intro {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  padding: 0 0;
-  width: 100%;
-  text-align: center;
-}
-}
-
-@media only screen and (max-width: 375px) {
-#intro {
-  position: absolute;
-  left: 0;
-  top: 60%;
-  padding: 0 0;
-  width: 100%;
-  text-align: center;
-}
-}
-
-@media only screen and (max-width: 320px) {
+@media only screen and (max-height: 768px) {
 #intro {
   position: absolute;
   left: 0;
@@ -146,6 +91,85 @@ body {
   text-align: center;
 }
 }
+
+@media only screen and (max-height: 627px) {
+#intro {
+  position: absolute;
+  left: 0;
+  top: 75%;
+  padding: 0 0;
+  width: 100%;
+  text-align: center;
+}
+}
+
+@media only screen and (max-height: 620px) {
+#intro {
+  position: absolute;
+  left: 0;
+  top: 80%;
+  padding: 0 0;
+  width: 100%;
+  text-align: center;
+}
+}
+
+@media only screen and (max-height: 568px) {
+#intro {
+  position: absolute;
+  left: 0;
+  top: 80%;
+  padding: 0 0;
+  width: 100%;
+  text-align: center;
+}
+}
+
+@media only screen and (max-height: 480px) {
+#intro {
+  position: absolute;
+  left: 0;
+  top: 95%;
+  padding: 0 0;
+  width: 100%;
+  text-align: center;
+}
+}
+
+
+@media only screen and (max-height: 414px) {
+#intro {
+  position: absolute;
+  left: 0;
+  top: 115%;
+  padding: 0 0;
+  width: 100%;
+  text-align: center;
+}
+}
+
+@media only screen and (max-height: 375px) {
+#intro {
+    position: absolute;
+    left: 0;
+    top: 120%;
+    padding: 0 0;
+    width: 100%;
+    text-align: center;
+}
+}
+
+@media only screen and (max-height: 320px) {
+#intro {
+  position: absolute;
+  left: 0;
+  top: 140%;
+  padding: 0 0;
+  width: 100%;
+  text-align: center;
+}
+}
+
 
 h1 {
   text-transform: uppercase;
