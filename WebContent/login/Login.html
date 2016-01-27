@@ -15,6 +15,11 @@
 <script src="../js/user_script.js"></script>
 <script type="text/javascript" src="../js/json-xhr.js"></script>
 <script type='text/javascript' src='js/demo.js'></script>
+<script src="../js/lib/jquery.validationEngine.js"></script>
+<script src="../js/lib/jquery.validationEngine-ja.js"></script>
+
+<link href="../css/validationEngine.jquery.css" rel="stylesheet"
+	type="text/css" />
 
 <link rel="stylesheet" type="text/css" href="css/Login.css">
 
@@ -41,10 +46,10 @@
 
 
 				<!--　ログイン  -->
-				<form method="post" action="../login">
+				<form id="form" method="post" action="../login">
 					<div class="form-item">
 						<!--　メールアドレスまたはユーザネーム  -->
-						<label for="email"></label> <input type="text" name="mail_or_name"
+						<label for="email"></label> <input class="validate[custom[onlyLetterNumber]] text-input" type="text" name="mail_or_name"
 							required="required" placeholder="Email Address or User Name"></input>
 					</div>
 					<div class="form-item">
@@ -74,6 +79,11 @@
 					<p>
 						<a href="ForgotPassword.html">Forgot password?</a>
 					</p>
+
+					<!--　ユーザID確認  -->
+					<p>
+						<a href="UserID.html">Confirmation userID</a>
+					</p>
 				</div>
 			</div>
 
@@ -88,9 +98,13 @@
 			getNonce();
 		});
 		function getNonce() {
-			var URL = hostURL + "/clipMaster/getnonce";
+			var URL = hostURL + "/getnonce";
 			getJSON(URL, null, null);
 		}
+
+		jQuery(document).ready(function() {
+			jQuery("#form").validationEngine();
+		});
 	</script>
 
 

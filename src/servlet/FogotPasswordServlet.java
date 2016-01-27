@@ -51,7 +51,8 @@ public class FogotPasswordServlet extends HttpServlet {
 			String inputuser_name = request.getParameter("username");
 			String inputbirth = request.getParameter("birth");
 
-			String pass = nonce.toString().substring(8);
+			/* String pass = nonce.toString().substring(8); */
+			String pass = "password123";
 			System.out.println(pass);
 
 			response.setContentType("application/json; charset=utf-8");
@@ -66,6 +67,7 @@ public class FogotPasswordServlet extends HttpServlet {
 				hantei = userbean.searchPass();
 
 				if (hantei) {
+					System.out.println(userbean.getUser_id());
 					userbean.setPassword(pass);
 					userbean.reissuePass();
 				} else {

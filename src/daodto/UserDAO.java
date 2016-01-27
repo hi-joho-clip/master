@@ -99,7 +99,9 @@ public class UserDAO {
 		} finally {
 			pstmt.close();
 		}
+		System.out.println(userDTO.getUser_id());
 		return userDTO;
+
 	}
 
 	/**
@@ -445,14 +447,13 @@ public class UserDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		UserDTO userDTO = new UserDTO();
-		String sql = "select * from users where mailaddress = ? and username = ? and birth = ?";
+		String sql = "select * from users where mailaddress = ? and user_name = ? and birth = ?";
 
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, mailaddress);
 			pstmt.setString(2, username);
 			pstmt.setString(3, birth);
-			System.out.println(pstmt);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				userDTO.setUser_id(rs.getInt("user_id"));

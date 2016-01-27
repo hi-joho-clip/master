@@ -225,7 +225,7 @@ public class User {
 		userDTO = userDAO.PasswordSearch(this.userDTO.getMailaddress(), this.userDTO.getUser_name(), this.userDTO.getBirth());
 		 if(userDTO != null){
 			 flag = true;
-			 setUserDTO();
+			 this.user_id = userDAO.PasswordSearch(this.userDTO.getMailaddress(), this.userDTO.getUser_name(), this.userDTO.getBirth()).getUser_id();
 		 }
 		 return flag;
 	}
@@ -240,6 +240,26 @@ public class User {
 
 		userDAO.updatePassword(this.userDTO.getUser_id(), this.userDTO.getUser_name(), this.userDTO.getPassword());
 	}
+
+
+	/**
+	 * ユーザID確認
+	 * @throws Exception
+	 */
+	public boolean UserID() throws Exception{
+		boolean flag = false;
+		this.userDAO = new UserDAO();
+		setUserDTO();
+
+		userDAO.searchUserName(this.userDTO.getMailaddress(), this.userDTO.getPassword());
+
+		if(userDTO != null){
+			flag = true;
+			 this.user_id = userDAO.searchUserName(this.userDTO.getMailaddress(), this.userDTO.getPassword()).getUser_id();
+		}
+		return flag;
+	}
+
 
 	/**
 	 * ユーザーの削除（未完成）

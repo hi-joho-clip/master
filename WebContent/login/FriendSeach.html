@@ -117,14 +117,15 @@
 						<div align="center">
 
 						<div class="form-item">
+						<form action="#" id="addr">
 							<!-- フレンドのニックネーム -->
 							<label for="friend_name or mail"></label> <input type="text"
 								name="nickname" required="required"
 								placeholder="Friend Nick Name"></input>
+						</form>
 						</div>
 
-							<input type="submit" class="button"
-								value="検索"onclick="javascript:getFriendSearch(document.getElementsByName('nickname'));"></input>
+
 
 						<div id="info"></div>
 
@@ -156,6 +157,15 @@
 		$(document).ready(function() {
 			notice();
 			limit();
+			$( '#addr' ).keypress( function ( e ) {
+				if ( e.which == 13 ) {
+					// ここに処理を記述
+
+					getFriendSearch(document.getElementsByName('nickname'));
+
+					return false;
+				}
+			} );
 		});
 	</script>
 
