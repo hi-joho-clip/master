@@ -41,7 +41,7 @@ public class LoginServlet extends HttpServlet {
 		String inputid = request.getParameter("mail_or_name");
 		String inputpass = request.getParameter("password");
 
-		String URL = "/login";
+		String URL = "/clipMaster/login";
 
 		UserAuth userauth = new UserAuth();
 		User userbeans = null;
@@ -115,6 +115,7 @@ public class LoginServlet extends HttpServlet {
 			// URLは絶対パスで書かない。
 			// 本番環境でURL=nullにすれば簡単に動く
 			// マイリスト画面に移動
+			System.out.println("ログインできた");
 			response.sendRedirect(URL + "/index.html");
 		} else {
 
