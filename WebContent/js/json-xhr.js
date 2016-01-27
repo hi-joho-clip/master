@@ -14,8 +14,7 @@ function initPromise() {
 		operative.Promise = ES6Promise.Promise;
 	}
 }
-var hostURL = "http://localhost:8080/clipMaster";
-
+var hostURL = "http://localhost:8080/clipMaster"; // http://clip-sc.com
 
 /**
  * URLからJSONオブジェクトを取得する
@@ -31,7 +30,7 @@ function getURL(URL, param) {
 
 		// サーバからアーティクルリストを取得する
 
-		//console.log('parameter:' + param);
+		// console.log('parameter:' + param);
 		if (URL === "") {
 			reject(new Error("url is null"));
 		}
@@ -48,7 +47,7 @@ function getURL(URL, param) {
 			if (req.readyState == 4) {
 				if (req.status == 200) {
 
-					//console.log(req.responseText);
+					// console.log(req.responseText);
 					resolve(req.responseText);
 				} else {
 					// 正常に取得できない
@@ -81,18 +80,15 @@ function getRequest() {
 	var request = {
 		articlelist : function getArticleLists() {
 
-			return getURL(hostURL + "/mylist", null)
-					.then(JSON.parse);
+			return getURL(hostURL + "/mylist", null).then(JSON.parse);
 		},
 		article : function getArticle(param) {
 
 			// JSONをテキストからオブジェクトへパースする必要がある。
-			return getURL(hostURL + "/viewarticle", param)
-					.then(JSON.parse);
+			return getURL(hostURL + "/viewarticle", param).then(JSON.parse);
 		},
 		updatelist : function getArticleLists(param) {
-			return getURL(hostURL + "/getupdatearticle",
-					param);
+			return getURL(hostURL + "/getupdatearticle", param);
 		}
 
 	};
@@ -118,7 +114,7 @@ function getArticleListAsync(param) {
 	var request = getRequest();
 	// 文字列で送ります。
 	param = 'json=' + JSON.stringify(param);
-	//console.log('param' + JSON.stringify(param));
+	// console.log('param' + JSON.stringify(param));
 
 	// Promiseで実行順序を決定したまとめたメソッド(今回は取得のみ）
 	return request.updatelist(param);
@@ -129,19 +125,21 @@ function getArticleListAsync(param) {
  */
 function getJSON(URL, param, callback) {
 
-	console.log("getJSON" + param);
-	getURL(URL, param).then(JSON.parse).then(function(json) {
-		//console.log(json);
-		callback(json);
-	})['catch'](function(error) {
-		console.log(error);
+	// console.log("getJSON" + param);
+	return new Promise(function(resolve, reject) {
+		getURL(URL, param).then(JSON.parse).then(callback).then(function () {
+			console.log("通信がﾘｿﾞﾙﾌﾞした");
+			resolve();
+		})['catch'](function(error) {
+			console.log(error);
+			reject();
+		});
 	});
 
 	/*
 	 * .then(function(value) { return JSON.stringify(value, null, ' '); })
 	 */
 }
-
 
 /**
  * 記事追加用リンク
@@ -158,9 +156,9 @@ function addArticle() {
 	var URL = hostURL + "/addarticle";
 	var update_article = function(json) {
 
-		if(json.flag==0){
+		if (json.flag == 0) {
 			toastr.error(json.state);
-		}else{
+		} else {
 			toastr.success(json.state);
 		}
 	};
@@ -169,11 +167,12 @@ function addArticle() {
 
 function thumView(json, width, height) {
 	if (json.thum != null) {
-		console.log("now null");
-		return "<img src='data:image/jpeg;base64," + json.thum +  "' width='" + width + "' height='" + height + "'alt='"+json.title+"'/>";
+		// console.log("now null");
+		return "<img src='data:image/jpeg;base64," + json.thum + "' width='"
+				+ width + "' height='" + height + "'alt='" + json.title + "'/>";
 	} else {
-		console.log("notttt null");
-		return "<img src='" + hostURL + "/img/sm2.png" +
-				"' width='" + width + "' height='" + height + "'alt='"+json.title+"'/>";
+		// console.log("notttt null");
+		return "<img src='" + hostURL + "/img/sm2.png" + "' width='" + width
+				+ "' height='" + height + "'alt='" + json.title + "'/>";
 	}
 }

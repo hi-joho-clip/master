@@ -68,22 +68,22 @@ var item3 =	[ 	 "grid-item grid-item--3",
 
 var item = [item1, item2, item3];
 
-//タグを編集するときにArticle_idも送りたいので実装
+// タグを編集するときにArticle_idも送りたいので実装
 function getArticle_id(article_id){
 	var articleid = "<input type='hidden' value='"+article_id+"' name='article_id'>";
 	document.getElementById('article_id').innerHTML = articleid;
 }
-//タグを削除するときにtag_idも送りたいので実装
+// タグを削除するときにtag_idも送りたいので実装
 function getTag_id(tag_id){
 	var tagid = "<input type='hidden' value='"+tag_id+"' name='tag_id'>";
 	document.getElementById('tag_id').innerHTML = tagid;
 }
 
 
-//"<a href='../login/article.html?"+json[i].article_id+"'target='_blank'>
+// "<a href='../login/article.html?"+json[i].article_id+"'target='_blank'>
 
 
-//記事一覧を作成（タイル表示）
+// 記事一覧を作成（タイル表示）
 var get_mylists = function(json) {
 	$('#mode').val("tile");
 	var random =Math.floor(Math.random()*3);
@@ -143,7 +143,7 @@ var get_mylists = function(json) {
 	addViewNext(json);
 	jQuery(function($){
 		$('.bar').mosaic({
-			animation	:	'slide'		//fade or slide
+			animation	:	'slide'		// fade or slide
 		});
     });
 };
@@ -152,17 +152,18 @@ var get_mylists = function(json) {
 function addViewNext(json) {
 
 	// 20件以上の場合はValueを加算し、20件未満の場合はボタンを削除する。
-	if (json.length >= 19) {
-		console.log($('#art-page').val());
-		//$('#art-page').val(page + 1);
-	} else if (json.length < 19){
+	if (json.length > 19) {
+		console.log('number:' + $('#art-page').val());
+		// $('#art-page').val(parseInt($('#art-page').val()) - 1);
+	} else if (json.length <= 19){
 		console.log("under 19");
+		// 無限読み込み停止用
 		$('#art-add').val('false');
 	}
 }
 
 
-//シェア記事一覧を作成（タイル表示）
+// シェア記事一覧を作成（タイル表示）
 var get_sharelists = function(json) {
 	$('#mode').val("tile");
 	var random =Math.floor(Math.random()*3);
@@ -195,77 +196,80 @@ var get_sharelists = function(json) {
 	addViewNext(json);
 	jQuery(function($){
 		$('.bar').mosaic({
-			animation	:	'slide'		//fade or slide
+			animation	:	'slide'		// fade or slide
 		});
     });
 };
-//記事一覧を作成（リスト表示）
+// 記事一覧を作成（リスト表示）
 var get_mylists_list = function(json) {
-	$('#mode').val("list");
-	$myList = $("<div class='grid-sizer' ></div>");
-	$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
-	for ( var i = 0; i < json.length ; i++) {
-		var flag="";
-		if(json[i].favflag==true){
-			flag="★"+json[i].title;
-		}else if(json[i].favflag==false){
-			flag=json[i].title;
-		}
-		$myList = $("<ol>"+
-						"<a href='../login/article.html?"+json[i].article_id+"'><li class='first'>"+
-							"<div class='dan'>"+
-								thumView(json[i], "100px", "100px")+
-							"</div>"+
-							"<div class='mawari'>"+
-								"<div class='dan2'id='favtitle"+json[i].article_id+"'>"+
-								""+flag+""+
-								"</div>"+
-								"<div class='dan3'>"+
-								"<a href='"+json[i].url+"' target='_blank'>"+json[i].url+"</a>"+
-								"</div>"+
-								"<input type='hidden' value='"+json[i].title+"' id='title"+json[i].article_id+"'>"+
-								"<input type='hidden' value='"+json[i].url+"' id='url"+json[i].article_id+"'>"+
-							"</div>"+
-							"<div class='firstbuttons'>"+
-
-
-									"<div id='menu2'>"+
-										"<div class='remodal-bg'>"+
-										"<input type='hidden' value='"+json[i].favflag+"' id='grobalflag"+json[i].article_id+"'>"+
-
-										"<a href='#' data-remodal-target='deletemodal'onclick='javascript:getArticle_id("+json[i].article_id+");return false;'>" +
-										"<img src='img/trash1.png' align='right'width='30'height='30'></img>" +
-										"</a>"+
-
-										"<a href='#' data-remodal-target='sharemodal'onclick='javascript:getFriends();getArticle_id("+json[i].article_id+");return false;'><img src='img/share1.png' align='right'width='30'height='30'></img></a>"+
-
-										 "<a href='#' data-remodal-target='tagmodal' onclick='javascript:getTagArticle("+json[i].article_id+");getUsingTags();return false;'>"+
-										  "<img src='img/tag1.png'align='right' width='30'height='30'></img>" +
-										  "</a>"+
-
-										"<a href='#'onclick='javascript:addFavArticle("+json[i].article_id+");return false;'><img src='img/star1.png' align='right'width='30'height='30'></img></a>"+
-
-										"</div>"+
-									"</div>"+
-
-							"</div>"+
-						"</li></a>"+
-					"</ol>");
+	return new Promise(function(resolve, reject) {
+		$('#mode').val("list");
+		$myList = $("<div class='grid-sizer' ></div>");
 		$grid.append($myList).isotope('insert', $myList).trigger('create');
-		if(json[i].favflag==true){
-			console.log('#favtitle'+json[i].article_id);
-			$('#favtitle'+json[i].article_id).attr('style', 'color:#FFEB3B');
-		}
-	}
+		for ( var i = 0; i < json.length ; i++) {
+			var flag="";
+			if(json[i].favflag==true){
+				flag="★"+json[i].title;
+			}else if(json[i].favflag==false){
+				flag=json[i].title;
+			}
+			$myList = $("<ol>"+
+							"<a href='../login/article.html?"+json[i].article_id+"'><li class='first'>"+
+								"<div class='dan'>"+
+									thumView(json[i], "100px", "100px")+
+								"</div>"+
+								"<div class='mawari'>"+
+									"<div class='dan2'id='favtitle"+json[i].article_id+"'>"+
+									""+flag+""+
+									"</div>"+
+									"<div class='dan3'>"+
+									"<a href='"+json[i].url+"' target='_blank'>"+json[i].url+"</a>"+
+									"</div>"+
+									"<input type='hidden' value='"+json[i].title+"' id='title"+json[i].article_id+"'>"+
+									"<input type='hidden' value='"+json[i].url+"' id='url"+json[i].article_id+"'>"+
+								"</div>"+
+								"<div class='firstbuttons'>"+
 
-	addViewNext(json);
-	jQuery(function($){
-		$('.bar').mosaic({
-			animation	:	'slide'		//fade or slide
-		});
-    });
+
+										"<div id='menu2'>"+
+											"<div class='remodal-bg'>"+
+											"<input type='hidden' value='"+json[i].favflag+"' id='grobalflag"+json[i].article_id+"'>"+
+
+											"<a href='#' data-remodal-target='deletemodal'onclick='javascript:getArticle_id("+json[i].article_id+");return false;'>" +
+											"<img src='img/trash1.png' align='right'width='30'height='30'></img>" +
+											"</a>"+
+
+											"<a href='#' data-remodal-target='sharemodal'onclick='javascript:getFriends();getArticle_id("+json[i].article_id+");return false;'><img src='img/share1.png' align='right'width='30'height='30'></img></a>"+
+
+											 "<a href='#' data-remodal-target='tagmodal' onclick='javascript:getTagArticle("+json[i].article_id+");getUsingTags();return false;'>"+
+											  "<img src='img/tag1.png'align='right' width='30'height='30'></img>" +
+											  "</a>"+
+
+											"<a href='#'onclick='javascript:addFavArticle("+json[i].article_id+");return false;'><img src='img/star1.png' align='right'width='30'height='30'></img></a>"+
+
+											"</div>"+
+										"</div>"+
+
+								"</div>"+
+							"</li></a>"+
+						"</ol>");
+			$grid.append($myList).isotope('insert', $myList).trigger('create');
+			if(json[i].favflag==true){
+				console.log('#favtitle'+json[i].article_id);
+				$('#favtitle'+json[i].article_id).attr('style', 'color:#FFEB3B');
+			}
+		}
+
+		addViewNext(json);
+		jQuery(function($){
+			$('.bar').mosaic({
+				animation	:	'slide'		// fade or slide
+			});
+	    });
+		resolve();
+	});
 };
-//シェア記事一覧を作成（リスト表示）
+// シェア記事一覧を作成（リスト表示）
 var get_sharelists_list = function(json) {
 	$('#mode').val("list");
 	$myList = $("<div class='grid-sizer' ></div>");
@@ -278,7 +282,7 @@ var get_sharelists_list = function(json) {
 							"</div>"+
 							"<div class='mawari'>"+
 								"<div class='dan2'id='favtitle"+json[i].article_id+"'>"+
-								""+flag+""+
+								""+json[i].title+""+
 								"</div>"+
 								"<div class='dan3'>"+
 								"<a href='"+json[i].url+"' target='_blank'>"+json[i].url+"</a>"+
@@ -303,13 +307,13 @@ var get_sharelists_list = function(json) {
 	addViewNext(json);
 	jQuery(function($){
 		$('.bar').mosaic({
-			animation	:	'slide'		//fade or slide
+			animation	:	'slide'		// fade or slide
 		});
     });
 };
-//タグ一覧を作成
+// タグ一覧を作成
 var get_taglists = function(json) {
-	//$.cookie('viewMode','2');$.cookie('tagLists',json[i].tag_body);
+	// $.cookie('viewMode','2');$.cookie('tagLists',json[i].tag_body);
 
 	var tagList = "";
 	tagList = "<table>";
@@ -326,30 +330,30 @@ var get_taglists = function(json) {
 	document.getElementById('taglist').innerHTML = tagList;
 };
 
-//登録しているフレンドが入ったセレクトボックスを作成
+// 登録しているフレンドが入ったセレクトボックスを作成
 var get_friends = function(json){
-	$('.selectbox').empty();//削除しないとフレンドがセレクトボックス内にたまるから削除する
+	$('.selectbox').empty();// 削除しないとフレンドがセレクトボックス内にたまるから削除する
 	var option = "";
 
 	for(var i=0; i<json.length; i++){
 		option=document.createElement('option');
 		option.value = json[i].friend_user_id;
-		//画面に表示されるテキスト部分は createTextNode で作って、optionの子要素として追加
+		// 画面に表示されるテキスト部分は createTextNode で作って、optionの子要素として追加
 		option.appendChild(document.createTextNode(''+json[i].nickname+''));
-		//プルダウンに追加
+		// プルダウンに追加
 		$('.selectbox').append(option).trigger('create');
 		option="";
 	}
-	//ここでセレクトボックスを生成
+	// ここでセレクトボックスを生成
 	$('.selectbox').select2({width:"50%"}).trigger('create');
 
 
 };
 
-//更新日時が新しいタグが入ったセレクトボックスを作成
+// 更新日時が新しいタグが入ったセレクトボックスを作成
 var get_using_tags = function(json){
-	$('.tagselect').empty();//削除しないとタグがセレクトボックス内にたまるから削除する
-	$('.tagselect').off();//イベントハンドラがたまるから解除する
+	$('.tagselect').empty();// 削除しないとタグがセレクトボックス内にたまるから削除する
+	$('.tagselect').off();// イベントハンドラがたまるから解除する
 	var option = "";
 	var dummy = "";
 	dummy = document.createElement('option');
@@ -359,16 +363,16 @@ var get_using_tags = function(json){
 	for(var i=0; i<json.length; i++){
 		option=document.createElement('option');
 		option.value = json[i].tag_body;
-		//画面に表示されるテキスト部分は createTextNode で作って、optionの子要素として追加
+		// 画面に表示されるテキスト部分は createTextNode で作って、optionの子要素として追加
 		option.appendChild(document.createTextNode(''+json[i].tag_body+''));
-		//プルダウンに追加
+		// プルダウンに追加
 		$(".tagselect").append(option).trigger('create');
 
 		option="";
 	}
-	//ここでセレクトボックスを生成
+	// ここでセレクトボックスを生成
 	$('.tagselect').select2({width:"50%",minimumResultsForSearch: Infinity}).trigger('create');
-	//セレクトボックスを選択した際に発火するイベント
+	// セレクトボックスを選択した際に発火するイベント
 	$(".tagselect").change(function () {
 			$('#tag-it').tagit('createTag',$(".tagselect").val());
 	});
