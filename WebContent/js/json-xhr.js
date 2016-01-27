@@ -14,7 +14,7 @@ function initPromise() {
 		operative.Promise = ES6Promise.Promise;
 	}
 }
-var hostURL = "http://clip-sc.com"; //"http://localhost:8080/clipMaster";
+var hostURL = "http://localhost:8080/clipMaster";
 
 
 /**
