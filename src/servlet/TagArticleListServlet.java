@@ -55,39 +55,40 @@ public class TagArticleListServlet extends HttpServlet {
 		****タグを検索欄に入力して検索した際****
 		****************************************/
 		//特定のタグの記事一覧表示
-		String tag_list = request.getParameter("tag_list");
-		System.out.println(tag_list);
-		String[] tag_body = tag_list.split(",", 0);
+		String tag_list = "";
 		ArrayList<String> tag_body_list = new ArrayList<String>();
-		int user_id =1;//sessionからuser_idを取得
+		int user_id =0;//sessionからuser_idを取得
 		int page = 1; // パラメータからページ番号取得初期値1
-
-		if (request.getParameter("page") != null) {
+		if(request.getParameter("tag_list") != null){
 			try {
-				page = Integer.parseInt(request.getParameter("page"));
+				tag_list = request.getParameter("tag_list");
+				user_id = (int) session.getAttribute("user_id");
+				if (request.getParameter("page") != null) {
+					page = Integer.parseInt(request.getParameter("page"));
+				}
+
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			String[] tag_body = tag_list.split(",", 0);
+			for(int i=0; i<tag_body.length; i++){
+			    tag_body_list.add(i,tag_body[i]);
+			   System.out.println("tagbody:"+tag_body_list.get(i));
+			}
+			ArticleBean articlebean = new ArticleBean();
+			ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
+			try {
+				article_list=articlebean.viewTag(tag_body_list,user_id, page);
+			} catch (Exception e) {
+				e.getStackTrace();
+			}
+			response.setContentType("application/json;charset=UTF-8");
+			response.setHeader("Cache-Control", "private");
+			PrintWriter out = response.getWriter();
+			out.println(JSON.encode(article_list, true).toString());
 		}
-
-		for(int i=0; i<tag_body.length; i++){
-		    tag_body_list.add(i,tag_body[i]);
-		   System.out.println("tagbody:"+tag_body_list.get(i));
-		}
-
-		ArticleBean articlebean = new ArticleBean();
-		ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
-		try {
-			article_list=articlebean.viewTag(tag_body_list,user_id, page);
-		} catch (Exception e) {
-			e.getStackTrace();
-		}
-		response.setContentType("application/json;charset=UTF-8");
-		response.setHeader("Cache-Control", "private");
-		PrintWriter out = response.getWriter();
-		out.println(JSON.encode(article_list, true).toString());
 	}
 
 }
