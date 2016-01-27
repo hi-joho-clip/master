@@ -27,10 +27,10 @@ function getArticle(username, article_id) {
 				todo.fetch({
 					filter : article_filter
 				}, function(values) {
-//					console.log("values = " + JSON.stringify(values));
-//					console.log("done.");
+					// console.log("values = " + JSON.stringify(values));
+					// console.log("done.");
 					resolve(values);
-					//console.log(values.body.created);
+					// console.log(values.body.created);
 				});
 			});
 		} else {
@@ -40,14 +40,12 @@ function getArticle(username, article_id) {
 		}
 		function article_filter(record) {
 			// GUIDが自身であり、アーティクルIDが同一
-			return record.username == username && record.article_id == article_id;
+			return record.username == username
+					&& record.article_id == article_id;
 		}
 		;
 	});
 };
-
-
-
 
 /**
  * 記事の件数分ループさせて更新する
@@ -67,10 +65,9 @@ function updateArticle(json_article) {
 
 		// ユーザ名でDB識別
 
-
 		var article = json_article;
 
-		//console.log('jsonarticle:' + article['article_id']);
+		// console.log('jsonarticle:' + article['article_id']);
 		// スキーマのインスタンス取得
 		var tutorial = getArticleInstance();
 		tutorial.onerror = function(event) {
@@ -107,7 +104,7 @@ function updateIDBUser(prop) {
 
 	return new Promise(function(resolve, reject) {
 
-		//console.log(prop);
+		// console.log(prop);
 		// スキーマのインスタンス取得
 		var tutorial = getUserInstance();
 		tutorial.onerror = function(event) {
@@ -128,9 +125,7 @@ function updateIDBUser(prop) {
 		});
 	});
 
-
 };
-
 
 /**
  * 取得したArticleリストから取得する記事毎にプロミス作成
@@ -150,7 +145,7 @@ function updateIDBArticleList(values) {
 	 */
 	for ( var art_json in jsons) {
 		param = "article_id=" + jsons[art_json].article_id;
-		//console.log(param);
+		// console.log(param);
 		pro_list.push(getRequest().article(param).then(updateArticle));
 	}
 	if (pro_list) {
@@ -163,27 +158,43 @@ function updateIDBArticleList(values) {
 }
 
 /**
- * データベース内の記事一覧のJSONを取得 なお画像は関係ない模様 (Promise)
- * 純粋なリストを作ろう
+ * データベース内の記事一覧のJSONを取得 なお画像は関係ない模様 (Promise) 純粋なリストを作ろう
+ *
  * @param guid
  * @param page
  */
-function getIDEArticleList(username, page, share_id, title) {
+function getIDEArticleList(username, page, share_id, title, fav_state) {
 
 	return new Promise(function(resolve, reject) {
 
-		//console.log(guid + page);
+		// console.log(guid + page);
 
-		var offset_filter = {
-			filter : guid_filter,
-			filter : share_filter,
-			filter : title_filter,
-			// 20件ずつ表示
-			offset : page * 20 - 20,
-			limit : 20,
-		};
+		var offset_filter;
 
-		//console.log(offset_filter);
+		if (fav_state) {
+			//
+			offset_filter = {
+				filter : guid_filter,
+				filter : share_filter,
+				filter : title_filter,
+				// 20件ずつ表示
+				offset : page * 20 - 20,
+				limit : 20,
+			};
+		} else {
+			// 絶対お気に入り
+			offset_filter = {
+				filter : guid_filter,
+				filter : share_filter,
+				filter : title_filter,
+				filter : fav_filter,
+				// 20件ずつ表示
+				offset : page * 20 - 20,
+				limit : 20,
+			};
+		}
+
+		// console.log(offset_filter);
 		var tutorial = getArticleInstance();
 		tutorial.onerror = function(event) {
 			// エラーの詳細をコンソールに出力する
@@ -193,7 +204,7 @@ function getIDEArticleList(username, page, share_id, title) {
 		tutorial.tx([ "article" ], function(tx, todo) {
 			todo.fetch(offset_filter, function(values) {
 				if (values) {
-					//console.log("values = " + JSON.stringify(values));
+					// console.log("values = " + JSON.stringify(values));
 					var val = [];
 					for ( var i in values) {
 						val.push(values[i]["article"]);
@@ -216,13 +227,23 @@ function getIDEArticleList(username, page, share_id, title) {
 		}
 		function title_filter(record) {
 			flag = false;
-			if ( record.article.title.indexOf(title) != -1) {
-				//strにhogeを含む場合の処理
+			if (record.article.title.indexOf(title) != -1) {
+				// strにhogeを含む場合の処理
 				flag = true;
 
-				}
+			}
 			return flag;
-			//record.article.title === title;
+			// record.article.title === title;
+		}
+
+		function fav_filter(record) {
+			flag = false;
+			if (record.article.favflag === 'true') {
+				// strにhogeを含む場合の処理
+				flag = true;
+			}
+			return flag;
+			// record.article.title === title;
 		}
 	});
 };
@@ -253,9 +274,9 @@ function getIDBAllArticleList(username) {
 					// やっぱりループで一つ一つ削除するしかなさそう
 					for ( var i in values) {
 						delete values[i]["article"];
-						//console.log("art:" + val);
+						// console.log("art:" + val);
 					}
-					//values = JSON.stringify(values);
+					// values = JSON.stringify(values);
 
 					resolve(values);
 				} else {

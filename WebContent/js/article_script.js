@@ -1,56 +1,103 @@
 // マイリスト（タイル表示）
-function getMyList(page) {
-	var jsonParam = 'page=' + page;// 送りたいデータ(ページ番号）
-	var URL = hostURL + "/mylist";
-	document.getElementById('title').innerHTML = '<h1>マイリスト</h1>'+'<input type="button" id="stylechange"value="AAA">';
-	$('#viewmode').val('0');
-	getJSON(URL, jsonParam, get_mylists);
+//function getMyList(page) {
+//	return new Promise(function(resolve, reject) {
+//		var jsonParam = 'page=' + page;// 送りたいデータ(ページ番号）
+//		var URL = hostURL + "/mylist";
+//		document.getElementById('title').innerHTML = '<h1>マイリスト</h1>'
+//				+ '<input type="button" id="stylechange"value="AAA">';
+//		$('#viewmode').val('0');
+//		getJSON(URL, jsonParam, get_mylists);
+//		resolve();
+//	});
+//}
+function tileView() {
+	if ($.cookie("Style") === "tile") {
+		return true;
+	} else if ($.cookie("Style") === "list") {
+		return false;
+	}
 }
-//マイリスト（リスト表示）
-function getMyListList(page) {
-	var jsonParam = 'page=' + page;// 送りたいデータ(ページ番号）
-	var URL = hostURL + "/mylist";
-	document.getElementById('title').innerHTML = '<h1>マイリスト</h1>'+'<input type="button" id="stylechange"value="AAA">';
-	$('#viewmode').val('0');
-	getJSON(URL, jsonParam, get_mylists_list);
+
+
+// マイリスト（リスト表示）
+function getMyList(page) {
+	return new Promise(function(resolve, reject) {
+
+		var func = get_mylists;
+		if (tileView()) {
+			func = get_mylists;
+		} else {
+			func = get_mylists_list;
+		}
+		var jsonParam = 'page=' + page;// 送りたいデータ(ページ番号）
+		var URL = hostURL + "/mylist";
+		document.getElementById('title').innerHTML = '<h1>マイリスト</h1>'
+				+ '<input type="button" id="stylechange"value="AAA">';
+		$('#viewmode').val('0');
+		console.log(page + 'ゲットおおお');
+		getJSON(URL, jsonParam, func).then(function() {
+			return resolve();
+		}['catch'](function (error) {
+			return reject();
+		}));
+	});
 }
 
 // お気に入り（タイル表示）
 function getFavList(page) {
-	var jsonParam = 'page=' + page;// 送りたいデータ
-	var URL = hostURL + "/favlist";
-	document.getElementById('title').innerHTML = '<h1>お気に入り</h1>'+'<input type="button" id="stylechange"value="AAA">';
-	$('#viewmode').val("1");
-	getJSON(URL, jsonParam, get_mylists);
+	return new Promise(function(resolve, reject) {
+
+		var func = get_mylists;
+		if (tileView()) {
+			func = get_mylists;
+		} else {
+			func = get_mylists_list;
+		}
+
+		var jsonParam = 'page=' + page;// 送りたいデータ
+		var URL = hostURL + "/favlist";
+		document.getElementById('title').innerHTML = '<h1>お気に入り</h1>'
+				+ '<input type="button" id="stylechange"value="AAA">';
+		$('#viewmode').val("1");
+		getJSON(URL, jsonParam, func);
+	});
 }
-//お気に入り（リスト表示）
-function getFavListList(page) {
-	var jsonParam = 'page=' + page;// 送りたいデータ
-	var URL = hostURL + "/favlist";
-	document.getElementById('title').innerHTML = '<h1>お気に入り</h1>'+'<input type="button" id="stylechange"value="AAA">';
-	$('#viewmode').val("1");
-	getJSON(URL, jsonParam, get_mylists_list);
-}
+// お気に入り（リスト表示）
+//function getFavListList(page) {
+//	var jsonParam = 'page=' + page;// 送りたいデータ
+//	var URL = hostURL + "/favlist";
+//	document.getElementById('title').innerHTML = '<h1>お気に入り</h1>'
+//			+ '<input type="button" id="stylechange"value="AAA">';
+//	$('#viewmode').val("1");
+//	getJSON(URL, jsonParam, get_mylists_list);
+//}
 
 // シェア記事一覧（タイル表示）
 function getShareList(friend_user_id, page) {
+
+	var func = get_sharelists;
+	if (tileView()) {
+		func = get_sharelists;
+	} else {
+		func = get_sharelists_list;
+	}
+
 	var jsonParam = "friend_user_id=" + friend_user_id + '&page=' + page;// 送りたいデータ
 	var URL = hostURL + "/sharelist";
-	document.getElementById('title').innerHTML = '<h1>シェア記事</h1>'+'<input type="button" id="stylechange"value="AAA">';
+	document.getElementById('title').innerHTML = '<h1>シェア記事</h1>'
+			+ '<input type="button" id="stylechange"value="AAA">';
 	$('#viewmode').val('3');
-	getJSON(URL, jsonParam, get_sharelists);
+	getJSON(URL, jsonParam, func);
 }
-//シェア記事一覧（リスト表示）
-function getShareList(friend_user_id, page) {
-	var jsonParam = "friend_user_id=" + friend_user_id + '&page=' + page;// 送りたいデータ
-	var URL = hostURL + "/sharelist";
-	document.getElementById('title').innerHTML = '<h1>シェア記事</h1>'+'<input type="button" id="stylechange"value="AAA">';
-	$('#viewmode').val('3');
-	getJSON(URL, jsonParam, get_sharelists_list);
-}
-
-
-
+// シェア記事一覧（リスト表示）
+//function getShareList(friend_user_id, page) {
+//	var jsonParam = "friend_user_id=" + friend_user_id + '&page=' + page;// 送りたいデータ
+//	var URL = hostURL + "/sharelist";
+//	document.getElementById('title').innerHTML = '<h1>シェア記事</h1>'
+//			+ '<input type="button" id="stylechange"value="AAA">';
+//	$('#viewmode').val('3');
+//	getJSON(URL, jsonParam, get_sharelists_list);
+//}
 
 // 記事の表示
 function getViewArticle(article_id) {
@@ -59,8 +106,7 @@ function getViewArticle(article_id) {
 	var URL = hostURL + "/viewarticle";
 	var setappend = function(json) {
 
-
-		$('#image').append(thumView(json,"300px","100%"));
+		$('#image').append(thumView(json, "300px", "100%"));
 
 		// nonceとArticleID設定
 		$("div.hiddenarea").append(
@@ -79,8 +125,10 @@ function getViewArticle(article_id) {
 		for ( var image in json.imageListDTO) {
 			data = 'data:image/' + con_type + ';base64,'
 					+ json.imageListDTO[image].blob_image;
-			$("div.images").append(
-					'<img id="icon_here"  style="max-width:auto; max-height:200px;padding :10px" src = ' + data + '>');
+			$("div.images")
+					.append(
+							'<img id="icon_here"  style="max-width:auto; max-height:200px;padding :10px" src = '
+									+ data + '>');
 		}
 
 		// document.getElementById('viewArticle').innerHTML = viewArticle;
