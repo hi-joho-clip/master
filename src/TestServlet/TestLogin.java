@@ -44,6 +44,7 @@ public class TestLogin extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 
 
+
 		User userbeans = new User(1);
 
 		UUID guid = UUID.randomUUID();
@@ -69,6 +70,8 @@ public class TestLogin extends HttpServlet {
 		response.addCookie(c_start_time);
 		response.addCookie(username);
 		loginsession.setAttribute("guid", guid.toString());
+
+		response.sendRedirect(request.getContextPath() + "/login/index.html");
 
 
 

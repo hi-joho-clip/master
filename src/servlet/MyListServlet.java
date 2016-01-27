@@ -60,9 +60,9 @@ public class MyListServlet extends HttpServlet {
 				page = Integer.parseInt(request.getParameter("page"));
 			}
 		} catch (NumberFormatException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 
 		ArticleBean articlebean = new ArticleBean();
