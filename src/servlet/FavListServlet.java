@@ -55,18 +55,21 @@ public class FavListServlet extends HttpServlet {
 		*サイドメニューのお気に入りを押したとき*
 		****************************************/
 		//お気に入りの記事一覧表示
-		int user_id =1;//sessionからuser_idを取得
+		int user_id =0;//sessionからuser_idを取得
 		int page = 1; // パラメータからページ番号取得初期値1
 
-		if (request.getParameter("page") != null) {
-			try {
-				page = Integer.parseInt(request.getParameter("page"));
-			} catch (NumberFormatException e) {
-				e.printStackTrace();
-			} catch (Exception e) {
-				e.printStackTrace();
+
+		try {
+			user_id = (int) session.getAttribute("user_id");
+			if (request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page"));
 			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+
 
 
 		ArticleBean articlebean = new ArticleBean();
