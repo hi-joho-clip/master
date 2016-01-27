@@ -51,13 +51,8 @@ jQuery(document).ready(function() {
 
 
 
-				<!--　パスワード再発行  -->
-				<form id="form" method="post" action="../fogotpassword">
-					<div class="form-item">
-						<!--　ユーザネーム  -->
-						<label for="username"></label> <input class="validate[custom[onlyLetterNumber]] text-input" type="text" name="username"
-							required="required" placeholder="User Name"></input>
-					</div>
+				<!--　ユーザID確認  -->
+				<form id="form" method="post" action="../viewuserid">
 
 					<div class="form-item">
 						<!--　メールアドレス  -->
@@ -66,12 +61,12 @@ jQuery(document).ready(function() {
 					</div>
 
 					<div class="form-item">
-						<!--　生年月日  -->
-						<label for="birth"></label> <input type="date" name="birth"
-							required="required" placeholder="birth"></input>
+						<!--　パスワード  -->
+						<label for="password"></label> <input type="password" name="password"
+							required="required" placeholder="password"></input>
 					</div>
 
-					<!--　再発行申請ボタン  -->
+					<!--　ユーザ確認ボタン  -->
 					<div class="button-panel">
 						<input type="submit" class="button" title="SEND" value="SEND"></input>
 					</div>
@@ -88,20 +83,7 @@ jQuery(document).ready(function() {
 			</div>
 
 		</div>
-		<div class="hiddenarea"></div>
 	</div>
-
-	<script>
-		$(document).ready(function() {
-			hidden();
-		});
-		function hidden() {
-			$("div.hiddenarea").append(
-					'<input type="hidden" id="nonce" value="'
-							+ docCookies.getItem("nonce") + '">');
-		}
-	</script>
 
 </body>
 </html>
-
