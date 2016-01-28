@@ -46,39 +46,46 @@ public class AddFavServlet extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");
 		response.setHeader("Cache-Control", "private");
 
+		// nonceの検証が必要です。
+
 		Nonce nonce = new Nonce(request);
 
-		//if (nonce.isNonce())
 		//記事にお気に入りとして追加
 		int user_id = 0;//sessionからuser_idを取得
 		int article_id = 0;
+		if(nonce.isNonce()){
+			if (request.getParameter("article_id") != null) {
 
-		if (request.getParameter("article_id") != null) {
-
-			try {
-				article_id = Integer.parseInt(request.getParameter("article_id"));
-				user_id = (int) session.getAttribute("user_id");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			ArticleBean articlebean = new ArticleBean();
-			articlebean.setArticle_id(article_id);
-			try {
-				if (articlebean.addFavorite(user_id)) {
-					//成功したポップアップを表示
-					resp = "{\"state\": \"追加しました\", \"flag\": 1}";
-				} else {
-					//失敗したポップアップを表示
-					resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
+				try {
+					article_id = Integer.parseInt(request.getParameter("article_id"));
+					user_id = (int) session.getAttribute("user_id");
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-			} catch (Exception e) {
-				// TODO 自動生成された catch ブロック
-				e.printStackTrace();
-			}
+				ArticleBean articlebean = new ArticleBean();
+				articlebean.setArticle_id(article_id);
+				try {
+					if (articlebean.addFavorite(user_id)) {
+						//成功したポップアップを表示
+						resp = "{\"state\": \"追加しました\", \"flag\": 1}";
+					} else {
+						//失敗したポップアップを表示
+						resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
+					}
+				} catch (Exception e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
 
-			PrintWriter out = response.getWriter();
-			out.println(resp);
-		} else {
+				PrintWriter out = response.getWriter();
+				out.println(resp);
+			} else {
+				PrintWriter out = response.getWriter();
+				out.println(resp);
+			}
+		}else{
+			// 不正アクセス
+			resp = "{\"state\": \"不正なアクセス\",  \"flag\": 0}";
 			PrintWriter out = response.getWriter();
 			out.println(resp);
 		}

@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,35 +41,46 @@ public class DeleteArticleServlet extends HttpServlet {
 			IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(true);
-
+		response.setContentType("application/json;charset=UTF-8");
+		response.setHeader("Cache-Control", "private");
+		String resp = "{\"state\": \"unknownError\",  \"flag\": 0}";
+		Nonce nonce = new Nonce(request);
 		int article_id = 0;
 		int user_id = 0;
 
-
-		if (request.getParameter("article_id") != null) {
-			try {
-				article_id = Integer.parseInt(request.getParameter("article_id"));
-				user_id = (int)session.getAttribute("user_id");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			ArticleBean articlebean = new ArticleBean();
-			articlebean.setArticle_id(article_id);
-			System.out.println("delete:");
-
-			try {
-				if (articlebean.deleteArticle(user_id, article_id)) {
-					//成功したポップアップを表示
-				} else {
-					//失敗したポップアップを表示
+		if(nonce.isNonce()){
+			if (request.getParameter("article_id") != null) {
+				try {
+					article_id = Integer.parseInt(request.getParameter("article_id"));
+					user_id = (int)session.getAttribute("user_id");
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-			} catch (Exception e) {
-				// TODO 自動生成された catch ブロック
-				e.printStackTrace();
+
+				ArticleBean articlebean = new ArticleBean();
+				articlebean.setArticle_id(article_id);
+				System.out.println("delete:");
+
+				try {
+					if (articlebean.deleteArticle(user_id, article_id)) {
+						//成功したポップアップを表示
+						resp = "{\"state\": \"削除しました\", \"flag\": 1}";
+					} else {
+						//失敗したポップアップを表示
+						resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
+					}
+				} catch (Exception e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+			} else {
+				// article_IDのエラー
 			}
-		} else {
-			// article_IDのエラー
+		}else{
+			// 不正アクセス
+			resp = "{\"state\": \"不正なアクセス\",  \"flag\": 0}";
+			PrintWriter out = response.getWriter();
+			out.println(resp);
 		}
 	}
 

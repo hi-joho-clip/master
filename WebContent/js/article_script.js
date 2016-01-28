@@ -142,21 +142,24 @@ function getViewArticle(article_id) {
 function deleteArticle(article_id) {
 	// getArticle_id(article_id);//html内の<div
 	// id='article_id'>にhiddenでarticle_idを持たせる
-	var jsonParam = "article_id=" + article_id.item(0).value;// 送りたいデータ
+	var jsonParam = "article_id=" + article_id.item(0).value+"&nonce="+$('#nonce').val();// 送りたいデータ
 	var URL = hostURL + "/deletearticle";
 	var delete_article = function() {
-
+		if(json.flag=="0"){
+			toastr.error(json.state);
+		}else{
+			toastr.success(json.state);
+		}
 	};
 	getJSON(URL, jsonParam, delete_article);
 	location.reload();
-	toastr.success('記事を削除しました');
 }
 // お気に入りの追加削除
 function addFavArticle(article_id) {
 	// グローバルFlagを用意する。記事リストを作成時にグローバルFlagはtrue
 	// true=追加可、false=削除可
 
-	var jsonParam = "article_id=" + article_id;// 送りたいデータ
+	var jsonParam = "article_id=" + article_id+"&nonce="+$('#nonce').val();// 送りたいデータ
 	var grobalflag = "grobalflag" + article_id;// グローバルflagの名前付け
 	var favtitle = "favtitle" + article_id;// タイトルの★マークの名前
 	var title = "title" + article_id;
@@ -173,23 +176,31 @@ function addFavArticle(article_id) {
 
 		if ($('#mode').val() === "tile") {
 			success = function(json) {
-				$('#' + favtitle).attr('style', 'color:#FFEB3B');
-				document.getElementById(favtitle).innerHTML = "★"
-						+ document.getElementById(title).value
-						+ "<BR><a href='" + document.getElementById(url).value
-						+ "'>" + document.getElementById(url).value + "</a>";
-				// グローバルflagをfalseにする
-				document.getElementById(grobalflag).value = true;
-				toastr.success(json.state);
+				if(json.flag=="0"){
+					toastr.error(json.state);
+				}else{
+					$('#' + favtitle).attr('style', 'color:#FFEB3B');
+					document.getElementById(favtitle).innerHTML = "★"
+							+ document.getElementById(title).value
+							+ "<BR><a href='" + document.getElementById(url).value
+							+ "'>" + document.getElementById(url).value + "</a>";
+					// グローバルflagをfalseにする
+					document.getElementById(grobalflag).value = true;
+					toastr.success(json.state);
+				}
 			};
 		} else if ($('#mode').val() === 'list') {
 			success = function(json) {
-				$('#' + favtitle).attr('style', 'color:#FFEB3B');
-				document.getElementById(favtitle).innerHTML = "★"
-						+ document.getElementById(title).value;
-				// グローバルflagをfalseにする
-				document.getElementById(grobalflag).value = true;
-				toastr.success(json.state);
+				if(json.flag=="0"){
+					toastr.error(json.state);
+				}else{
+					$('#' + favtitle).attr('style', 'color:#FFEB3B');
+					document.getElementById(favtitle).innerHTML = "★"
+							+ document.getElementById(title).value;
+					// グローバルflagをfalseにする
+					document.getElementById(grobalflag).value = true;
+					toastr.success(json.state);
+				}
 			};
 		}
 
@@ -204,28 +215,37 @@ function addFavArticle(article_id) {
 
 		if ($('#mode').val() === "tile") {
 			failed = function(json) {
-				$('#' + favtitle).removeAttr('style', 'color:#FFEB3B');
+				if(json.flag=="0"){
+					toastr.error(json.state);
+				}else{
+					$('#' + favtitle).removeAttr('style', 'color:#FFEB3B');
 
-				getJSON(URL, jsonParam, null);
-				document.getElementById(favtitle).innerHTML = document
-						.getElementById(title).value
-						+ "<BR><a href='"
-						+ document.getElementById(url).value
-						+ "'>" + document.getElementById(url).value + "</a>";
-				// グローバルflagをtrueにする
-				document.getElementById(grobalflag).value = false;
-				toastr.success(json.state);
+					document.getElementById(favtitle).innerHTML = document
+							.getElementById(title).value
+							+ "<BR><a href='"
+							+ document.getElementById(url).value
+							+ "'>" + document.getElementById(url).value + "</a>";
+					// グローバルflagをtrueにする
+					document.getElementById(grobalflag).value = false;
+					toastr.success(json.state);
+				}
 			};
+
 		} else if ($('#mode').val() === "list") {
 			failed = function(json) {
-				$('#' + favtitle).removeAttr('style', 'color:#FFEB3B');
+				if(json.flag=="0"){
+					toastr.error(json.state);
+				}else{
+					$('#' + favtitle).removeAttr('style', 'color:#FFEB3B');
 
-				getJSON(URL, jsonParam, null);
-				document.getElementById(favtitle).innerHTML = document
-						.getElementById(title).value;
-				// グローバルflagをtrueにする
-				document.getElementById(grobalflag).value = false;
-				toastr.success(json.state);
+
+					document.getElementById(favtitle).innerHTML = document
+							.getElementById(title).value;
+					// グローバルflagをtrueにする
+					document.getElementById(grobalflag).value = false;
+					toastr.success(json.state);
+				}
+
 			};
 
 		}
@@ -261,7 +281,7 @@ function updateArticle() {
 // シェア記事の追加
 function shareArticle(friend_user_id, article_id) {
 	var param = "article_id=" + article_id.item(0).value + "&friend_id="
-			+ friend_user_id + "";
+			+ friend_user_id + "&nonce="+$('#nonce').val();
 
 	var URL = hostURL + "/addshare";
 
