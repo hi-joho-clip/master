@@ -70,6 +70,8 @@ public class DeleteTagServlet extends HttpServlet {
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
 				}
+				PrintWriter out = response.getWriter();
+				out.println(resp);
 			}
 		}else{
 			// 不正アクセス

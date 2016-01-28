@@ -49,6 +49,7 @@ function getUsingTags(){
 function deleteTag(tag_id){
 
 	var jsonParam = "tag_id="+tag_id.item(0).value+"&nonce="+$('#nonce').val();;// 送りたいデータ
+	console.log(tag_id.item(0).value);
 	var URL = hostURL + "/deletetag";
 	var setappend=function(){
 		if(json.flag=="0"){

@@ -22,7 +22,7 @@
 <script type="text/javascript" src="../js/create_list.js"></script>
 <script type="text/javascript" src="../js/tag_script.js"></script>
 <script type="text/javascript" src="../js/friend_script.js"></script>
-
+<script src="../js/lib/cookie.js"></script>
 <link rel="stylesheet" href="css/pure-drawer.css">
 
 <!-- toastr -->
@@ -63,11 +63,6 @@
   </div>
 </div>
 <div id="wrap">
-
-<script>
-getTagList();
-</script>
-
 
 <div id="tag_id"></div>
 <div class="remodal" data-remodal-id="tagdeletemodal" data-remodal-options="hashTracking: false">
@@ -151,13 +146,19 @@ getTagList();
 					</div>
 				</section>
 			</div>
+			<div class="hiddenarea"></div>
 
 
 	</section>
 	</div>
 	<script>
 		$(document).ready(function() {
+
+				$("div.hiddenarea").append('<input type="hidden" id="nonce" value="'+ docCookies.getItem("nonce") + '">');
+
 			notice();
+			getTagList();
+
 		});
 	</script>
 
