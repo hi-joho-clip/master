@@ -24,7 +24,7 @@ public class ArticleDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int mylist_id = 0;
-		String id_sql = "SELECT id FROM mylists,users WHERE mylists.user_id = users.user_id AND users.user_id = ? and share_flag = false";
+		String id_sql = "SELECT id FROM mylists,users WHERE mylists.user_id = users.user_id AND users.user_id = ? and share_flag = 0";
 
 		try {
 			pstmt = con.prepareStatement(id_sql);
@@ -769,7 +769,7 @@ public class ArticleDAO {
 		int def_page = 20 * (page - 1);
 		//System.out.println(def_page);
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
-		String sql = "SELECT * FROM articles WHERE id = ANY (SELECT id FROM mylists WHERE user_id = ?) order by modified desc limit 20 offset ?";
+		String sql = "SELECT * FROM articles WHERE id = ANY (SELECT id FROM mylists WHERE user_id = ? and share_flag = 0 ) order by modified desc limit 20 offset ?";
 
 		try {
 			pstmt = con.prepareStatement(sql);

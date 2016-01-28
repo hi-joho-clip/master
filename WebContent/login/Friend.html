@@ -145,13 +145,15 @@
 					<br>
 					<div id="info"></div>
 
+					<input type="button" id ="Naaaame">
+
 
 					<table border="1" style="border:1px solid #FFF">
 						<thead id="thead_header">
 							<tr id="tr_header">
-								<th><span id="Name" onclick="javascript:createTable(this);">ニックネーム</span></th>
-								<th><span id="Time" onclick="javascript:createTable(this);">登録日時</span></th>
-								<th><span id="Submit" onclick="javascript:createTable(this);">#</span></th>
+								<th><span  id="Name" onclick="javascript:createTable(this);">#</span></th>
+								<th><span style="display:none" id="Time" onclick="javascript:createTable(this);">#</span></th>
+								<th><span style="display:none" id="Submit" onclick="javascript:createTable(this);">#</span></th>
 							</tr>
 						</thead>
 						<tbody id="tbody_detail">
@@ -177,6 +179,7 @@
 
 	<script>
 		$(document).ready(function() {
+			createTable(this);
 			notice();
 		});
 	</script>

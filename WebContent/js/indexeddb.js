@@ -95,6 +95,48 @@ function updateArticle(json_article) {
 };
 
 /**
+ * 記事の削除
+ *
+ * @param article
+ *            記事本体のデータ(JSON:1件分)
+ * @param guid
+ *            一時的なトークンID
+ */
+function updateArticleDelete(json_article) {
+
+	return new Promise(function(resolve, reject) {
+
+		// ユーザ名でDB識別
+		var article_id = json_article['article_id'];
+
+		// console.log('jsonarticle:' + article['article_id']);
+		// スキーマのインスタンス取得
+		var tutorial = getArticleInstance();
+		tutorial.onerror = function(event) {
+			// エラーの詳細をコンソールに出力する
+			reject(event.kage_message);
+		};
+
+		// 更新処理
+		tutorial.tx([ "article" ], "readwrite", function(tx, todo) {
+			todo.del({
+				filter : article_filter
+			}, function(key) {
+				console.log("done. key = " + key);
+				// 成功時はキーを渡す
+				resolve(key);
+			});
+		});
+
+		function article_filter(record) {
+			// GUIDが自身であり、アーティクルIDが同一
+			return record.article_id === article_id;
+		};
+	});
+
+};
+
+/**
  * ログイン後、クッキーにセットされたユーザIDとguidをIDBへ書き込む
  *
  * @param prop
@@ -158,20 +200,50 @@ function updateIDBArticleList(values) {
 }
 
 /**
+ * 取得したArticleリストから取得する記事毎にプロミス作成
+ *
+ * @param articles
+ */
+function updateIDBArticleListDeletes(values) {
+
+	// GUIDはセッションから持ってくると値を渡すことがないので良い。
+	var jsons = JSON.parse(values);
+
+	var pro_list = [];
+
+	/*
+	 * PromiseAll（promiseサーバ通信→promise書き込み）これをリスト分回す（全部完了したら成功にする） param :
+	 * "article_id="?
+	 */
+	for ( var art_json in jsons) {
+		// console.log(param);
+		pro_list.push(updateArticleDelete(art_json));
+	}
+	if (pro_list) {
+		return Promise.all(pro_list).then('success')['catch'](function(error) {
+			return (error);
+		});
+	} else {
+		return Promise.reject("no update");
+	}
+}
+
+/**
  * データベース内の記事一覧のJSONを取得 なお画像は関係ない模様 (Promise) 純粋なリストを作ろう
  *
  * @param guid
  * @param page
  */
-function getIDEArticleList(username, page, share_id, title, fav_state) {
+function getIDEArticleList(username, page, share_id, title, fav_state, direct) {
 
 	return new Promise(function(resolve, reject) {
-
 		// console.log(guid + page);
 
 		var offset_filter;
 
-		if (fav_state) {
+		var direct = "prev";
+
+		if (!fav_state) {
 			//
 			offset_filter = {
 				filter : guid_filter,
@@ -180,6 +252,7 @@ function getIDEArticleList(username, page, share_id, title, fav_state) {
 				// 20件ずつ表示
 				offset : page * 20 - 20,
 				limit : 20,
+				direction : direct
 			};
 		} else {
 			// 絶対お気に入り
@@ -191,6 +264,7 @@ function getIDEArticleList(username, page, share_id, title, fav_state) {
 				// 20件ずつ表示
 				offset : page * 20 - 20,
 				limit : 20,
+				direction : direct
 			};
 		}
 
@@ -202,7 +276,7 @@ function getIDEArticleList(username, page, share_id, title, fav_state) {
 		};
 
 		tutorial.tx([ "article" ], function(tx, todo) {
-			todo.fetch(offset_filter, function(values) {
+			todo.index("modified").fetch(offset_filter, function(values) {
 				if (values) {
 					// console.log("values = " + JSON.stringify(values));
 					var val = [];
@@ -301,7 +375,7 @@ function getIDBAllArticleList(username) {
 function getArticleInstance() {
 	var tutorial = new KageDB({
 		name : "clip",
-		version : 3,
+		version : 1,
 		migration : {
 			1 : function(ctx, next) {
 				var db = ctx.db;
@@ -311,6 +385,10 @@ function getArticleInstance() {
 				});
 				todo.createIndex("article", "article_id", {
 					unique : true
+				});
+				todo.createIndex("modified", "modified", {
+					keyPath : "modified",
+					unique : false
 				});
 				next();
 			}

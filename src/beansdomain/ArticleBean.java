@@ -45,7 +45,7 @@ public class ArticleBean {
 
 		if (mylist_id != 0) {
 			System.out.println("MYLISTID:" + mylist_id);
-			return this.articleDAO.add(this.articleDTO, user_id);
+			return this.articleDAO.add(this.articleDTO, mylist_id);
 		}
 
 		// user_idからマイリストIDを引っ張ってくる
@@ -343,16 +343,15 @@ public class ArticleBean {
 			// 記事のマイリストIDは正しい。
 			mylist_id = this.articleDAO.getShareMylistIDArt(user_id, article_id);
 			share_id = mylist_id;
-
 		} else {
 			mylist_id = this.articleDAO.getMylistIDArt(user_id, article_id);
 		}
 
-		System.out.println(mylist_id);
+		System.out.println("mylist_id:" + mylist_id);
+		System.out.println("share_id:" + share_id);
 
 		if (mylist_id != 0) {
 			articleDTO = articleDAO.view(this.articleDTO.getArticle_id(), mylist_id);
-
 			// 記事共通部分
 			articleBean.setArticle_id(articleDTO.getArticle_id());
 			articleBean.setBody(articleDTO.getBody());
