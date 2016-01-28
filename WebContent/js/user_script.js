@@ -64,6 +64,142 @@ function lock() {
 	$("#login").append($userList).trigger("create");
 }
 
+
+
+//パスワード再発行ロック
+function ForgotPass_lock() {
+
+	var result = null;
+	console.log("ロックスクリプト使われてるよ");
+	var cookieName = 'lock_pass=';
+	var allcookies = document.cookie;
+
+	var position = allcookies.indexOf(cookieName);
+	if (position != -1) {
+		var startIndex = position + cookieName.length;
+
+		var endIndex = allcookies.indexOf(';', startIndex);
+		if (endIndex == -1) {
+			endIndex = allcookies.length;
+		}
+		result = decodeURIComponent(allcookies.substring(startIndex, endIndex));
+		console.log(result);
+	}
+
+	// console.log("あとは、判定だわ");
+	if (result != null) {
+		if (result == "true") {
+			console.log("パスワード再発行_ロック判定：ロック");
+			$('#lock').attr('disabled', 'disabled');
+		} else {
+			console.log("パスワード再発行_ロック判定：ロック解除");
+			$('#lock').removeAttr('disabled');
+		}
+	} else {
+		console.log("パスワード再発行_ロック判定：ロック解除");
+		$('#lock').removeAttr('disabled');
+	}
+
+	var cookieName = 'ForgotPASS=';
+	var allcookies = document.cookie;
+	var result2 = null;
+
+	var position = allcookies.indexOf(cookieName);
+	if (position != -1) {
+		var startIndex = position + cookieName.length;
+
+		var endIndex = allcookies.indexOf(';', startIndex);
+		if (endIndex == -1) {
+			endIndex = allcookies.length;
+		}
+		result2 = decodeURIComponent(allcookies.substring(startIndex, endIndex));
+		console.log(result2);
+	}
+
+	var cnt = Number(result2);
+	console.log(cnt);
+
+	if (result2 == null) {
+		$userList = "";
+		console.log("失敗してない");
+	} else if (cnt < 5) {
+		console.log("1回以上失敗してる");
+		$userList = $("<h4>" + cnt + "回パスワード再発行失敗しました<br>5回失敗すると、5分間ロックされます</h4>");
+	} else {
+		$userList = $("<h4>5分間ロックしました</h4>");
+		console.log("ロックされちゃった");
+	}
+	$("#forgotpass").append($userList).trigger("create");
+}
+
+
+
+//ユーザID確認ロック
+function userID_lock() {
+
+	var result = null;
+	console.log("ロックスクリプト使われてるよ");
+	var cookieName = 'lock_user=';
+	var allcookies = document.cookie;
+
+	var position = allcookies.indexOf(cookieName);
+	if (position != -1) {
+		var startIndex = position + cookieName.length;
+
+		var endIndex = allcookies.indexOf(';', startIndex);
+		if (endIndex == -1) {
+			endIndex = allcookies.length;
+		}
+		result = decodeURIComponent(allcookies.substring(startIndex, endIndex));
+		console.log(result);
+	}
+
+	// console.log("あとは、判定だわ");
+	if (result != null) {
+		if (result == "true") {
+			console.log("ユーザID_ロック判定：ロック");
+			$('#lock').attr('disabled', 'disabled');
+		} else {
+			console.log("ユーザID_ロック判定：ロック解除");
+			$('#lock').removeAttr('disabled');
+		}
+	} else {
+		console.log("ユーザID_ロック判定：ロック解除");
+		$('#lock').removeAttr('disabled');
+	}
+
+	var cookieName = 'LOCK_USERID=';
+	var allcookies = document.cookie;
+	var result2 = null;
+
+	var position = allcookies.indexOf(cookieName);
+	if (position != -1) {
+		var startIndex = position + cookieName.length;
+
+		var endIndex = allcookies.indexOf(';', startIndex);
+		if (endIndex == -1) {
+			endIndex = allcookies.length;
+		}
+		result2 = decodeURIComponent(allcookies.substring(startIndex, endIndex));
+		console.log(result2);
+	}
+
+	var cnt = Number(result2);
+	console.log(cnt);
+
+	if (result2 == null) {
+		$userList = "";
+		console.log("失敗してない");
+	} else if (cnt < 5) {
+		console.log("1回以上失敗してる");
+		$userList = $("<h4>" + cnt + "回ユーザID確認失敗しました<br>5回失敗すると、5分間ロックされます</h4>");
+	} else {
+		$userList = $("<h4>5分間ロックしました</h4>");
+		console.log("ロックされちゃった");
+	}
+	$("#IDLock").append($userList).trigger("create");
+}
+
 // ログアウト
 function logout() {
 	var jsonParam = null;// 送りたいデータ

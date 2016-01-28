@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,6 +41,9 @@ public class FogotPasswordServlet extends HttpServlet {
 
 		HttpSession session = request.getSession(true);
 
+		Cookie cookie[] = request.getCookies();
+		Cookie visitedCookie = null;
+
 		System.out.println(session.getAttribute("nonce").toString());
 		System.out.println(request.getParameter("nonce").toString());
 		// nonceの検証が必要です。
@@ -72,7 +76,59 @@ public class FogotPasswordServlet extends HttpServlet {
 				if (hantei) {
 					userbean.setPassword(pass);
 					userbean.reissuePass();
+
+
+					// 成功した場合、クッキー情報、削除
+					for (int i = 0; i < cookie.length; i++) {
+						if (cookie[i].getName().equals("ForgotPASS")) {
+							visitedCookie = cookie[i];
+							visitedCookie.setPath("/");
+							visitedCookie.setMaxAge(0);
+							response.addCookie(visitedCookie);
+						}
+					}
+
+
 				} else {
+
+
+					if (cookie != null) {
+						for (int i = 0; i < cookie.length; i++) {
+							if (cookie[i].getName().equals("ForgotPASS")) {
+								visitedCookie = cookie[i];
+							}
+						}
+						if (visitedCookie == null) {
+							Cookie newCookie = new Cookie("ForgotPASS", "1");
+							newCookie.setPath("/");
+							newCookie.setMaxAge(300);
+							response.addCookie(newCookie);
+						} else if (Integer.parseInt(visitedCookie.getValue()) < 4) {
+							visitedCookie.setPath("/");
+							int visited = Integer.parseInt(visitedCookie.getValue()) + 1;
+							visitedCookie.setValue(Integer.toString(visited));
+							visitedCookie.setMaxAge(300);
+							response.addCookie(visitedCookie);
+						} else {
+							visitedCookie.setPath("/");
+							int visited = Integer.parseInt(visitedCookie.getValue()) + 1;
+							visitedCookie.setValue(Integer.toString(visited));
+							visitedCookie.setMaxAge(300);
+							response.addCookie(visitedCookie);
+
+							Cookie c_lock = new Cookie("lock_pass", "true");
+							c_lock.setMaxAge(300);
+							response.addCookie(c_lock);
+						}
+					} else {
+						Cookie newCookie = new Cookie("ForgotPASS", "1");
+						newCookie.setPath("/");
+						newCookie.setMaxAge(300);
+						response.addCookie(newCookie);
+					}
+
+
+
 					// 一致しなかった処理
 					response.sendRedirect(URL + "/ForgotPassword.html");
 					return;

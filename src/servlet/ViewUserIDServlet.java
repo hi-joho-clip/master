@@ -43,6 +43,9 @@ public class ViewUserIDServlet extends HttpServlet {
 		String URL = request.getContextPath() + "/login";
 		int user_id = 0;
 
+		Cookie cookie[] = request.getCookies();
+		Cookie visitedCookie = null;
+
 		response.setContentType("application/json; charset=utf-8");
 		response.setHeader("Cache-Control", "private");
 		PrintWriter out = response.getWriter();
@@ -63,7 +66,56 @@ public class ViewUserIDServlet extends HttpServlet {
 
 			if (hantei) {
 				// メールを送る処理を書く
+
+
+				// 成功した場合、クッキー情報、削除
+				for (int i = 0; i < cookie.length; i++) {
+					if (cookie[i].getName().equals("LOCK_USERID")) {
+						visitedCookie = cookie[i];
+						visitedCookie.setPath("/");
+						visitedCookie.setMaxAge(0);
+						response.addCookie(visitedCookie);
+					}
+				}
+
 			} else {
+
+				if (cookie != null) {
+					for (int i = 0; i < cookie.length; i++) {
+						if (cookie[i].getName().equals("LOCK_USERID")) {
+							visitedCookie = cookie[i];
+						}
+					}
+					if (visitedCookie == null) {
+						Cookie newCookie = new Cookie("LOCK_USERID", "1");
+						newCookie.setPath("/");
+						newCookie.setMaxAge(300);
+						response.addCookie(newCookie);
+					} else if (Integer.parseInt(visitedCookie.getValue()) < 4) {
+						visitedCookie.setPath("/");
+						int visited = Integer.parseInt(visitedCookie.getValue()) + 1;
+						visitedCookie.setValue(Integer.toString(visited));
+						visitedCookie.setMaxAge(300);
+						response.addCookie(visitedCookie);
+					} else {
+						visitedCookie.setPath("/");
+						int visited = Integer.parseInt(visitedCookie.getValue()) + 1;
+						visitedCookie.setValue(Integer.toString(visited));
+						visitedCookie.setMaxAge(300);
+						response.addCookie(visitedCookie);
+
+						Cookie c_lock = new Cookie("lock_user", "true");
+						c_lock.setMaxAge(300);
+						response.addCookie(c_lock);
+					}
+				} else {
+					Cookie newCookie = new Cookie("LOCK_USERID", "1");
+					newCookie.setPath("/");
+					newCookie.setMaxAge(300);
+					response.addCookie(newCookie);
+				}
+
+
 				// 一致しなかった処理
 				response.sendRedirect(URL + "/UserID.html");
 				return;
