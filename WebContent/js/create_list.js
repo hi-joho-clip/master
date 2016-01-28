@@ -121,8 +121,7 @@ var get_mylists = function(json) {
 								"</div>"+
 							"</div>"+
 						"</div>"+
-						"<div class='mosaic-backdrop relative'>" + thumView(json[i], "100%", "100%")
-							+
+						"<div class='mosaic-backdrop relative'>" + thumView(json[i], "100%", "100%")+
 							"<div class='absolute'id='favtitle"+json[i].article_id+"'>"+flag+"<BR><a href='"+json[i].url+"'target='_blank'>"+json[i].url+"</a></div>" +
 							"<input type='hidden' value='"+json[i].title+"' id='title"+json[i].article_id+"'>"+
 							"<input type='hidden' value='"+json[i].url+"' id='url"+json[i].article_id+"'>"+
@@ -185,9 +184,9 @@ var get_sharelists = function(json) {
 								"</div>"+
 							"</div>"+
 						"</div>"+
-						"<div class='mosaic-backdrop relative'>" +
-							"<img src='http://www.kk1up.jp/wp-content/uploads/2015/07/201507290001-17.jpg'width='100%'height='100%'alt='"+json[i].title+"'/>" +
-							"<p class='absolute'>"+json[i].title+"<BR><a href='"+json[i].url+"' target='_blank'>"+json[i].url+"</a></p>" +
+						"<div class='mosaic-backdrop relative'>" + thumView(json[i], "100%", "100%")+
+
+							"<div class='absolute'>"+json[i].title+"<BR><a href='"+json[i].url+"' target='_blank'>"+json[i].url+"</a></div>" +
 						"</div>"+
 					"</div>");
 		$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
