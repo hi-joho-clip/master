@@ -6,8 +6,8 @@ function addTagArticle(tag_list,article_id) {
 	for(var i=0;i<tag_list.length;i++){
 		arr[i+1]=tag_list.item(i).value;//1番目からタグが入る
 	}
-	var tag_list = "tag_list="+JSON.parse(JSON.stringify(arr))+"&nonce="+$('#nonce').val();;
-
+	var tag_list = "nonce="+$('#nonce').val()+"&tag_list="+encodeURIComponent( JSON.parse(JSON.stringify(arr)));
+	console.log("たぐ："+tag_list);
 	var URL = hostURL + "/addtagarticle";
 	var tagAdd=function(json){
 		if(json.flag=="0"){

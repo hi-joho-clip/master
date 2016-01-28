@@ -30,7 +30,7 @@ function getURL(URL, param) {
 
 		// サーバからアーティクルリストを取得する
 
-		// console.log('parameter:' + param);
+		 console.log('parameter:' + param);
 		if (URL === "") {
 			reject(new Error("url is null"));
 		}

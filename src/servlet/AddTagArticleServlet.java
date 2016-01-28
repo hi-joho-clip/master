@@ -51,14 +51,17 @@ public class AddTagArticleServlet extends HttpServlet {
 		Nonce nonce = new Nonce(request);
 
 		// ***&nonce=nonnsutati
-		String tag_list = request.getParameter("tag_list");
-		String[] tag_body = tag_list.split(",", 0);
-		ArrayList<String> tag_body_list = new ArrayList<String>();
 
 		int user_id = 0;//sessionからuser_idを取得
 		int article_id = 0;
 		if(nonce.isNonce()){
+
 			if (request.getParameter("tag_list") != null) {
+				String tag_list = request.getParameter("tag_list");
+				tag_list = new String(tag_list.getBytes("UTF-8"), "UTF-8");
+				System.out.println(tag_list);
+				String[] tag_body = tag_list.split(",", 0);
+				ArrayList<String> tag_body_list = new ArrayList<String>();
 				try {
 					user_id = (int)session.getAttribute("user_id");
 					article_id = Integer.parseInt(tag_body[0]);
