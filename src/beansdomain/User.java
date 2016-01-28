@@ -252,11 +252,13 @@ public class User {
 		this.userDAO = new UserDAO();
 		setUserDTO();
 
-		userDAO.searchUserName(this.userDTO.getMailaddress(), this.userDTO.getPassword());
+		String user_name = userDAO.viewMail(this.userDTO.getMailaddress()).getUser_name();
 
-		if(userDTO != null){
+		userDTO =  userDAO.searchUserName(this.userDTO.getMailaddress(), user_name,this.userDTO.getPassword());
+
+		if(userDTO.getUser_id() != 0){
 			flag = true;
-			 this.user_id = userDAO.searchUserName(this.userDTO.getMailaddress(), this.userDTO.getPassword()).getUser_id();
+			 this.user_id = userDTO.getUser_id();
 		}
 		return flag;
 	}
