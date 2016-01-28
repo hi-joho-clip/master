@@ -300,7 +300,6 @@ input[type="reset"],
 input[type="submit"] {
     -webkit-appearance: button;
     cursor: pointer;
-    padding: 10px 20px;
     font-size: 0.5em;
     background-color: #31708f;
     color: #fff;
@@ -339,6 +338,28 @@ input {
     padding: 10px;
     margin-bottom: 10px;
 }
+
+
+@media only screen and (max-width: 767px) {
+input {
+  line-height: normal;
+  color:rgba(0, 0, 0, 0.5);
+  width: 100%;
+  padding: 0px;
+  margin-bottom: 1px;
+}
+}
+
+@media only screen and (max-width: 414px) {
+input {
+  line-height: normal;
+  color:rgba(0, 0, 0, 0.5);
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+}
+
 input#titlesearch {
 	font-size:0.5em
 }
