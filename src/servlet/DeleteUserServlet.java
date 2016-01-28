@@ -38,6 +38,7 @@ public class DeleteUserServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		User userbean = new User();
 		String ErrorMessage = null;
+		String URL = request.getContextPath() + "/login";
 
 		HttpSession session = request.getSession(true);
 
@@ -56,6 +57,7 @@ public class DeleteUserServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			out.println(JSON.encode(ErrorMessage, true).toString());
+			response.sendRedirect(URL + "/Login.html");
 		}
 	}
 }
