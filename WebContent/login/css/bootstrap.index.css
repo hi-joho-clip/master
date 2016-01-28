@@ -107,6 +107,26 @@ h4,.h4 {
 }
 }
 
+h8,.h8 {
+    font-size: 30px;
+
+}
+
+@media only screen and (max-width: 736px) {
+	h8,.h8 {
+    font-size: 20px;
+
+}
+}
+
+
+@media only screen and (max-width: 414px) {
+	h8,.h8 {
+    font-size: 18.5px;
+
+}
+}
+
 
 
 h5,.h5 {
