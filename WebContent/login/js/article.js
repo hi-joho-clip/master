@@ -46,16 +46,14 @@ function initPagingMylist(callback) {
 	// var page = parseInt($('#art-page').val());
 	// ページング用番号の初期化
 
-	console.log('aaaaaaaaaaaaaaaaaaaaaaaaa:' + $('#art-page').val());
-
 	var count = 1;
 	var proMylist = function() {
 		return new Promise(function(resolve, reject) {
 
-			 setTimeout(function() {
-				 callback(count++);
-					resolve();
-			    }, 800);
+			setTimeout(function() {
+				callback(count++);
+				resolve();
+			}, 800);
 		});
 	};
 	// モードがタイルの場合
@@ -114,11 +112,11 @@ $(document).ready(function() {
 				$('#art-page').val(page);
 				switch ($.cookie("viewMode")) {
 				case "0":
-					//if ($.cookie("Style") === "tile") {
+					if (isSettinOnLine === true) {
 						getMyList(page);
-					//} else if ($.cookie("Style") === "list") {
-						//getMyList(page);
-					//}
+					} else {
+						getMyList(page);
+					}
 					break;
 				case "2":
 
@@ -203,12 +201,12 @@ function styleListChange() {
 
 		if (isSettinOnLine() === true) {
 			// ページング処理
-			//if ($.cookie("Style") === "tile") {
-				initPagingMylist(getMyList);
-			//} else if ($.cookie("Style") === "list") {
-			//	console.log('マイリスト');
-			//	initPagingMylist(getMyListList);
-			//}
+			// if ($.cookie("Style") === "tile") {
+			initPagingMylist(getMyList);
+			// } else if ($.cookie("Style") === "list") {
+			// console.log('マイリスト');
+			// initPagingMylist(getMyListList);
+			// }
 			// toastr.warning("オンライン状態なり");
 
 		} else if (isSettinOnLine() === false) {
@@ -216,19 +214,22 @@ function styleListChange() {
 			$('.head-bar').css({
 				'background' : '#31708f'
 			});
-			// toastr.warning("オフラインなんだなーこれ");
+			toastr.warning("オフラインなんだなーこれ");
 			var username = docCookies.getItem('username');
 
 			// テスト用修正必要
-			var i_page = 1;
-			getIDEArticleList(username, i_page, 0, '', false).then(
-					function(json) {
-						// 純粋なリストが必要
-						$('#title').append('<h1>マイリスト</h1>');
-						get_mylists(json);
-					})['catch'](function(error) {
-				console.log(error);
-			});
+			//var i_page = 1;
+			var offlineMyList = function(page) {
+				getIDEArticleList(username, page, '0', '', false).then(
+				function(json) {
+					// 純粋なリストが必要
+					$('#title').append('<h1>マイリスト</h1>');
+					get_mylists(json);
+				})['catch'](function(error) {
+					console.log(error);
+				});
+			};
+			initPagingMylist(offlineMyList);
 
 		}
 

@@ -58,10 +58,10 @@ function startUpdate(username) {
 		var worker = new Worker('../js/worker.js');
 		worker.addEventListener('message', function(e) {
 			// ここではconsoleでJSONデータを表示する
-			toastr.success('更新が完了しました');
+			//toastr.warning(e.data);
 
 			// testDataなら書き込める
-			//console.log('JSON data: ', e.data);
+			console.erroe('JSON data: ', e.data);
 		}, true);
 
 		worker.postMessage({

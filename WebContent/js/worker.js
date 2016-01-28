@@ -60,13 +60,32 @@ self.addEventListener('message', function(e) {
 		 */
 		var username = data.username;
 
-
+		// 更新処理
 		getIDBAllArticleList(username).then(getArticleListAsync).then(
-				updateIDBArticleList).then(function(values) {
-			self.postMessage(values);
+				updateIDBArticleList)['catch'](function(error) {
+			//self.postMessage('更新失敗');
+		});
+
+		getIDBAllArticleList(username).then(deleteArticle).then(updateIDBArticleListDeletes).then(function(value){
+			self.postMessage('更新完了');
 		})['catch'](function(error) {
 			self.postMessage(error);
 		});
+
+
+		// 削除処理（サーバになくて、ローカルにあるものを消す
+		function deleteArticle(json) {
+			return new Promise(function(resolve, reject) {
+				// 更新用リストを取ってきて、
+				var ret = function (json) {
+					return resolve(json);
+				};
+				json = JSON.stringify(json);
+				getJSON(hostURL + "/getdeletearticle", "json=" + json, ret);
+
+			});
+		}
+
 		break;
 	}
 }, false);

@@ -61,6 +61,7 @@ public class GetDeleteArticle extends HttpServlet {
 
 		// ブラウザからのリスト
 		String strJson = (String) request.getParameter("json");
+		System.out.println(strJson);
 
 		//記事IDと日付を格納
 		HashMap<Integer, JsonArticle> server_article_map = new HashMap<Integer, JsonArticle>();
@@ -118,6 +119,7 @@ public class GetDeleteArticle extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");
 		response.setHeader("Cache-Control", "private");
 		PrintWriter out = response.getWriter();
+		System.out.println("deleteList:" + JSON.encode(update_list, true).toString());
 		out.println(JSON.encode(update_list, true).toString());
 	}
 
