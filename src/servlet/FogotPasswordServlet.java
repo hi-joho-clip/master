@@ -38,6 +38,12 @@ public class FogotPasswordServlet extends HttpServlet {
 	private void perform(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
+
+		HttpSession session = request.getSession(true);
+		Boolean ses_flag = false;
+
+		System.out.println(session.getAttribute("nonce").toString());
+		System.out.println(request.getParameter("nonce").toString());
 		// nonceの検証が必要です。
 		Nonce nonce = new Nonce(request);
 		// url =
@@ -45,14 +51,13 @@ public class FogotPasswordServlet extends HttpServlet {
 		if (nonce.isNonce()) {
 			User userbean = new User();
 			boolean hantei = false;
-			String URL = "/clipMaster/login";
+			String URL = request.getContextPath() + "/login";
 
 			String inputmail = request.getParameter("email");
 			String inputuser_name = request.getParameter("username");
 			String inputbirth = request.getParameter("birth");
 
-			/* String pass = nonce.toString().substring(8); */
-			String pass = "password123";
+			String pass = session.getAttribute("nonce").toString().substring(8);
 			System.out.println(pass);
 
 			response.setContentType("application/json; charset=utf-8");

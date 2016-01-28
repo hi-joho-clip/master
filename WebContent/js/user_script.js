@@ -77,19 +77,6 @@ function logout() {
 	getJSON(URL, jsonParam, setappend);
 }
 
-//ログアウト
-function deleteuser() {
-	var jsonParam = null;// 送りたいデータ
-	var URL = hostURL + "/deleteuser";
-	var userList = "";
-	var setappend = function(json) {
-		userList = "";
-		document.getElementById('deleteuser').innerHTML = userList;
-	};
-	getJSON(URL, jsonParam, setappend);
-}
-
-
 // 新規登録後
 function addUser() {
 
@@ -104,15 +91,14 @@ function addUser() {
 }
 
 // ユーザ削除
-function deleteUser() {
+function deleteuser() {
 
 	var jsonParam = null;// 送りたいデータ
 	var URL = hostURL + "/deleteuser";
 	var userList = "";
 	var setappend = function(json) {
-		userList = "ニックネーム:" + json.nickname + "<br>" + "メールアドレス:"
-				+ json.mailaddress + "<br>";
-		document.getElementById('info').innerHTML = userList;
+		userList = "";
+		document.getElementById('deleteUser').innerHTML = userList;
 	};
 	getJSON(URL, jsonParam, setappend);
 }

@@ -18,16 +18,18 @@ public class Nonce {
 
 		HttpSession session = request.getSession(true);
 		Boolean ses_flag = false;
-		//nonceの検証を行う
-		String s_nonce = (String) session.getAttribute("nonce");
-		String nonce = request.getParameter("nonce");
+		// nonceの検証を行う
+		if (request.getParameter("nonce") != null) {
+			String s_nonce = (String) session.getAttribute("nonce");
+			String nonce = request.getParameter("nonce");
 
-		// Nullでもなく空でもない
-		if (nonce != null && s_nonce != null) {
-			// nonceがない
-			if (s_nonce.equals(nonce)) {
-				// nonceが同一の場合
-				ses_flag = true;
+			// Nullでもなく空でもない
+			if (nonce != null && s_nonce != null) {
+				// nonceがない
+				if (s_nonce.equals(nonce)) {
+					// nonceが同一の場合
+					ses_flag = true;
+				}
 			}
 		}
 
