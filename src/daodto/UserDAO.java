@@ -71,7 +71,7 @@ public class UserDAO {
 	 * @param userDTO
 	 * @return
 	 */
-	public UserDTO searchUserName(String mailaddress, String password) throws Exception {
+	public UserDTO searchUserName(String mailaddress,String user_name, String password) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		UserDTO userDTO = new UserDTO();
@@ -80,7 +80,7 @@ public class UserDAO {
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, mailaddress);
-			pstmt.setString(2, password);
+			pstmt.setString(2, ToSHA2.getDigest(user_name + password));
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				userDTO.setUser_id(rs.getInt("user_id"));

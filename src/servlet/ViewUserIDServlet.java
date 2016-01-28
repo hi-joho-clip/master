@@ -65,7 +65,8 @@ public class ViewUserIDServlet extends HttpServlet {
 				// メールを送る処理を書く
 			} else {
 				// 一致しなかった処理
-				/* response.sendRedirect(URL + "/PassChange.html"); */
+				response.sendRedirect(URL + "/UserID.html");
+				return;
 			}
 
 		} catch (Exception e) {
@@ -73,6 +74,6 @@ public class ViewUserIDServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		out.println(JSON.encode(user_id, true).toString());
-		/* response.sendRedirect(URL + "/UserInfo.html"); */
+		response.sendRedirect(URL + "/Login.html");
 	}
 }
