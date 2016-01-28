@@ -17,6 +17,7 @@
 <script type="text/javascript" src="../js/json-xhr.js"></script>
 <link rel="stylesheet" type="text/css" href="css/Login.css">
 <script src="../js/lib/cookie.js"></script>
+<script src="../js/user_script.js"></script>
 
 <script src="../js/lib/jquery.validationEngine.js"></script>
 <script src="../js/lib/jquery.validationEngine-ja.js"></script>
@@ -66,9 +67,11 @@ jQuery(document).ready(function() {
 							required="required" placeholder="password"></input>
 					</div>
 
+					<div id="IDLock"></div>
+
 					<!--　ユーザ確認ボタン  -->
 					<div class="button-panel">
-						<input type="submit" class="button" title="SEND" value="SEND"></input>
+						<input type="submit" class="button" title="SEND" value="SEND" id="lock"></input>
 					</div>
 
 				</form>
@@ -84,6 +87,12 @@ jQuery(document).ready(function() {
 
 		</div>
 	</div>
+
+	<script>
+		$(document).ready(function() {
+			userID_lock();
+		});
+	</script>
 
 </body>
 </html>

@@ -109,6 +109,34 @@ public class LoginServlet extends HttpServlet {
 					visitedCookie.setMaxAge(0);
 					response.addCookie(visitedCookie);
 				}
+
+				if (cookie[i].getName().equals("LOCK_USERID")) {
+					visitedCookie = cookie[i];
+					visitedCookie.setPath("/");
+					visitedCookie.setMaxAge(0);
+					response.addCookie(visitedCookie);
+				}
+
+				if (cookie[i].getName().equals("ForgotPASS")) {
+					visitedCookie = cookie[i];
+					visitedCookie.setPath("/");
+					visitedCookie.setMaxAge(0);
+					response.addCookie(visitedCookie);
+				}
+
+				if (cookie[i].getName().equals("lock_pass")) {
+					visitedCookie = cookie[i];
+					visitedCookie.setPath("/");
+					visitedCookie.setMaxAge(0);
+					response.addCookie(visitedCookie);
+				}
+
+				if (cookie[i].getName().equals("lock_user")) {
+					visitedCookie = cookie[i];
+					visitedCookie.setPath("/");
+					visitedCookie.setMaxAge(0);
+					response.addCookie(visitedCookie);
+				}
 			}
 
 
