@@ -35,7 +35,7 @@ public class AddUserServlet extends HttpServlet {
 	private void perform(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User userbean = new User();
 		String ErrorMessage = null;
-		String URL = "/clipMaster/login";
+		String URL = request.getContextPath() + "/login";
 
 		System.out.println("アカウント新規作成");
 

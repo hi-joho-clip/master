@@ -222,9 +222,8 @@ public class User {
 		boolean flag = false;
 		this.userDAO = new UserDAO();
 		setUserDTO();
-		System.out.println("user_idを取得する前："+ userDTO.getUser_id());
+
 		userDTO = userDAO.PasswordSearch(this.userDTO.getMailaddress(), this.userDTO.getUser_name(), this.userDTO.getBirth());
-		System.out.println("user_idを取得した後："+ userDTO.getUser_id());
 		 if(userDTO.getUser_id() != 0){
 			 flag = true;
 			 this.user_id = userDTO.getUser_id();

@@ -40,7 +40,7 @@ public class ViewUserIDServlet extends HttpServlet {
 
 		User userbean = new User();
 		boolean hantei = false;
-		String URL = "/clipMaster/login";
+		String URL = request.getContextPath() + "/login";
 		int user_id = 0;
 
 		response.setContentType("application/json; charset=utf-8");
