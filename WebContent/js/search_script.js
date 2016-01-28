@@ -4,7 +4,7 @@
 $(document).on('click', '#titlesearch', function() {
 
 	document.getElementById('pure-toggle-right').checked=false;
-	console.log("hidden:" + $('#viewmode').val());
+	console.log("viewmodehidden:" + $('#viewmode').val());
 
 	console.log("cookie:" + $.cookie("viewMode"));
 	var word = document.getElementById('searchbox').value;
@@ -54,32 +54,58 @@ $(document).on('click', '#titlesearch', function() {
 
 // マイリスト内のタイトル検索
 function myListSearch(word) {
-	console.log("mylist");
+	var func = get_mylists;
+	if (tileView()) {
+		func = get_mylists;
+		document.getElementById('title').innerHTML = '<h1>検索結果</h1><div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
+	} else {
+		func = get_mylists_list;
+		document.getElementById('title').innerHTML =  '<h1>検索結果</h1><div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
+	}
 	var jsonParam = "text=" + word;// 送りたいデータ
-	var URL = "/mylistsearch";
-	document.getElementById('title').innerHTML = '<h1>検索結果</h1>';
-	getJSON(URL, jsonParam, get_mylists);
+	var URL = hostURL + "/mylistsearch";
+	getJSON(URL, jsonParam, func);
 }
 // お気に入りのタイトル検索
 function favListSearch(word) {
-	console.log("favlist");
+	var func = get_mylists;
+	if (tileView()) {
+		func = get_mylists;
+		document.getElementById('title').innerHTML = '<h1>検索結果</h1><div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
+	} else {
+		func = get_mylists_list;
+		document.getElementById('title').innerHTML =  '<h1>検索結果</h1><div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
+	}
 	var jsonParam = "text=" + word;// 送りたいデータ
-	var URL = "/favlistsearch";
-	document.getElementById('title').innerHTML = '<h1>検索結果</h1>';
-	getJSON(URL, jsonParam, get_mylists);
+	var URL = hostURL + "/favlistsearch";
+
+	getJSON(URL, jsonParam, func);
 }
 // タグのタイトル検索
 function tagSearch(word) {
-	console.log("taglist");
+	var func = get_mylists;
+	if (tileView()) {
+		func = get_mylists;
+		document.getElementById('title').innerHTML = '<h1>検索結果</h1><div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
+	} else {
+		func = get_mylists_list;
+		document.getElementById('title').innerHTML =  '<h1>検索結果</h1><div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
+	}
 	var jsonParam = "tag=" + $.cookie("tagLists") + "&text=" + word;
-	var URL = "/tagsearch";
-	getJSON(URL, jsonParam, get_mylists);
+	var URL = hostURL + "/tagsearch";
+	getJSON(URL, jsonParam, func);
 }
 // シェアのタイトル検索
 function shareListSearch(word) {
-	console.log("sharelist");
+	var func = get_sharelists;
+	if (tileView()) {
+		func = get_sharelists;
+		document.getElementById('title').innerHTML = '<h1>検索結果</h1><div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
+	} else {
+		func = get_sharelists_list;
+		document.getElementById('title').innerHTML =  '<h1>検索結果</h1><div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
+	}
 	var jsonParam = "friend_user_id=" + $.cookie("shareLists") + "&text=" + word;
-	var URL = "/sharelistsearch";
-	document.getElementById('title').innerHTML = '<h1>検索結果</h1>';
-	getJSON(URL, jsonParam, get_mylists);
+	var URL = hostURL +  "/sharelistsearch";
+	getJSON(URL, jsonParam, func);
 };
