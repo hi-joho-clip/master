@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -41,6 +42,8 @@ public class AddShareServlet extends HttpServlet {
 			IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(true);
+		String resp = "{\"state\": \"unknown\", \"flag\": 0}";
+		Nonce nonce = new Nonce(request);
 		/*if(セッション情報があるなら){
 			//何もしない
 		}else if(セッション情報がないなら){
@@ -54,30 +57,46 @@ public class AddShareServlet extends HttpServlet {
 		ArticleBean artbean = new ArticleBean();
 		ArticleBean newbean = new ArticleBean();
 
-		int user_id = 2;
+		int user_id = 0;
+		int article_id = 0;
+		int friend_id = 0;
+		if(nonce.isNonce()){
+			if (request.getParameter("article_id") != null && request.getParameter("friend_id") != null) {
+				try {
 
-		int article_id = 63;
-		int friend_id = 1;
-		if (request.getParameter("article_id") != null && request.getParameter("friend_id") != null) {
-			try {
+					user_id = (int)session.getAttribute("user_id");
+					article_id = Integer.parseInt(request.getParameter("article_id"));
+					friend_id = Integer.parseInt(request.getParameter("friend_id"));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 
-				user_id = (int)session.getAttribute("user_id");
-				article_id = Integer.parseInt(request.getParameter("article_id"));
-				friend_id = Integer.parseInt(request.getParameter("friend_id"));
-			} catch (Exception e) {
-				e.printStackTrace();
+				try {
+					System.out.println("aaaa" + article_id);
+					System.out.println(article_id + friend_id);
+					artbean.setArticle_id(article_id);
+					newbean = artbean.viewArticle(user_id, article_id);
+					System.out.println(newbean.getTitle());
+					newbean.setArticle_id(0);
+					if(newbean.addShareArticle(user_id, friend_id)!=0){
+						resp = "{\"state\": \"シェア追加しました\", \"flag\": 1}";
+					}else{
+						resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
+					}
+				} catch (Exception e) {
+
+				}
+				PrintWriter out = response.getWriter();
+				out.println(resp);
+			}else{
+				PrintWriter out = response.getWriter();
+				out.println(resp);
 			}
-		}
-		try {
-			System.out.println("aaaa" + article_id);
-			System.out.println(article_id + friend_id);
-			artbean.setArticle_id(article_id);
-			newbean = artbean.viewArticle(user_id, article_id);
-			System.out.println(newbean.getTitle());
-			newbean.setArticle_id(0);
-			newbean.addShareArticle(user_id, friend_id);
-		} catch (Exception e) {
-
+		}else{
+			// 不正アクセス
+			resp = "{\"state\": \"不正なアクセス\",  \"flag\": 0}";
+			PrintWriter out = response.getWriter();
+			out.println(resp);
 		}
 
 	}

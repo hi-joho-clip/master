@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -46,7 +47,7 @@ public class AddTagArticleServlet extends HttpServlet {
 		}else if(セッション情報がないなら){
 			//ログイン画面に戻る
 		}*/
-
+		String resp = "{\"state\": \"unknown\", \"flag\": 0}";
 		Nonce nonce = new Nonce(request);
 
 		// ***&nonce=nonnsutati
@@ -56,33 +57,45 @@ public class AddTagArticleServlet extends HttpServlet {
 
 		int user_id = 0;//sessionからuser_idを取得
 		int article_id = 0;
+		if(nonce.isNonce()){
+			if (request.getParameter("tag_list") != null) {
+				try {
+					user_id = (int)session.getAttribute("user_id");
+					article_id = Integer.parseInt(tag_body[0]);
+				} catch (Exception e) {
 
-		//if (nonce.isNonce()) {
-		if (request.getParameter("tag_list") != null) {
-			try {
-				user_id = (int)session.getAttribute("user_id");
-				article_id = Integer.parseInt(tag_body[0]);
-			} catch (Exception e) {
-
-			}
-			System.out.println("article_id:" + article_id);
-			for (int i = 0; i < tag_body.length - 1; i++) {
-				tag_body_list.add(i, tag_body[i + 1]);
-				System.out.println("tagbody:" + tag_body_list.get(i) + "&user_id:" + user_id);
-			}
-
-			try {
-				ArticleBean articlebean = new ArticleBean();
-
-				if (articlebean.addArticleTag(user_id, tag_body_list, article_id)) {
-					//成功したポップアップを表示
-				} else {
-					//失敗したポップアップを表示
 				}
-			} catch (Exception e) {
-				// TODO 自動生成された catch ブロック
-				e.printStackTrace();
+				System.out.println("article_id:" + article_id);
+				for (int i = 0; i < tag_body.length - 1; i++) {
+					tag_body_list.add(i, tag_body[i + 1]);
+					System.out.println("tagbody:" + tag_body_list.get(i) + "&user_id:" + user_id);
+				}
+
+				try {
+					ArticleBean articlebean = new ArticleBean();
+
+					if (articlebean.addArticleTag(user_id, tag_body_list, article_id)) {
+						//成功したポップアップを表示
+						resp = "{\"state\": \"タグを更新しました\", \"flag\": 1}";
+					} else {
+						//失敗したポップアップを表示
+						resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
+					}
+				} catch (Exception e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+				PrintWriter out = response.getWriter();
+				out.println(resp);
+			}else{
+				PrintWriter out = response.getWriter();
+				out.println(resp);
 			}
+		}else{
+			// 不正アクセス
+			resp = "{\"state\": \"不正なアクセス\",  \"flag\": 0}";
+			PrintWriter out = response.getWriter();
+			out.println(resp);
 		}
 
 	}

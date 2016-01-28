@@ -6,12 +6,17 @@ function addTagArticle(tag_list,article_id) {
 	for(var i=0;i<tag_list.length;i++){
 		arr[i+1]=tag_list.item(i).value;//1番目からタグが入る
 	}
-	var tag_list = "tag_list="+JSON.parse(JSON.stringify(arr));
+	var tag_list = "tag_list="+JSON.parse(JSON.stringify(arr))+"&nonce="+$('#nonce').val();;
 
 	var URL = hostURL + "/addtagarticle";
-
-	getJSON(URL, tag_list, null);
-	toastr.success('タグを保存しました');
+	var tagAdd=function(json){
+		if(json.flag=="0"){
+			toastr.error(json.state);
+		}else{
+			toastr.success(json.state);
+		}
+	};
+	getJSON(URL, tag_list, tagAdd);
 }
 //タグを取得
 function getTagArticle(article_id) {
@@ -43,15 +48,17 @@ function getUsingTags(){
 //タグを削除
 function deleteTag(tag_id){
 
-	var jsonParam = "tag_id="+tag_id.item(0).value;// 送りたいデータ
+	var jsonParam = "tag_id="+tag_id.item(0).value+"&nonce="+$('#nonce').val();;// 送りたいデータ
 	var URL = hostURL + "/deletetag";
 	var setappend=function(){
-
+		if(json.flag=="0"){
+			toastr.error(json.state);
+		}else{
+			toastr.success(json.state);
+		}
 	};
 	getJSON(URL, jsonParam, setappend);
 	location.reload();
-	toastr.success('タグを削除しました');
-
 }
 //特定のタグの記事一覧（タイル表示）
 function getTagArticleList(tag_list,tag_id) {
