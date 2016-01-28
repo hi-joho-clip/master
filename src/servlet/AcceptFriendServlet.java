@@ -40,7 +40,7 @@ public class AcceptFriendServlet extends HttpServlet {
 		User userbean = new User();
 		String Message = null;
 		HttpSession session = request.getSession(true);
-		String URL = "/clipMaster/login";
+		String URL = request.getContextPath() + "/login";
 
 		if (session != null) {
 

@@ -43,7 +43,7 @@ public class UpdateMailAddressServlet extends HttpServlet {
 		boolean hantei = false;
 		HttpSession session = request.getSession(true);
 
-		String URL = "/clipMaster/login";
+		String URL = request.getContextPath() + "/login";
 
 		System.out.println("updatemailaddress");
 

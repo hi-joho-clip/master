@@ -41,7 +41,7 @@ public class LoginServlet extends HttpServlet {
 		String inputid = request.getParameter("mail_or_name");
 		String inputpass = request.getParameter("password");
 
-		String URL = "/clipMaster/login";
+		String URL = request.getContextPath() + "/login";
 
 		UserAuth userauth = new UserAuth();
 		User userbeans = null;

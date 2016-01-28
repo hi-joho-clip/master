@@ -43,7 +43,7 @@ public class UpdateNicknameServlet extends HttpServlet {
 		boolean hantei = false;
 		HttpSession session = request.getSession(true);
 
-		String URL = "/clipMaster/login";
+		String URL = request.getContextPath() + "/login";
 
 		if (session != null) {
 

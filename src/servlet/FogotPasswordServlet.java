@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,7 +39,6 @@ public class FogotPasswordServlet extends HttpServlet {
 
 
 		HttpSession session = request.getSession(true);
-		Boolean ses_flag = false;
 
 		System.out.println(session.getAttribute("nonce").toString());
 		System.out.println(request.getParameter("nonce").toString());
@@ -57,7 +55,7 @@ public class FogotPasswordServlet extends HttpServlet {
 			String inputuser_name = request.getParameter("username");
 			String inputbirth = request.getParameter("birth");
 
-			String pass = session.getAttribute("nonce").toString().substring(8);
+			String pass = session.getAttribute("nonce").toString().substring(0,8);
 			System.out.println(pass);
 
 			response.setContentType("application/json; charset=utf-8");
@@ -72,12 +70,12 @@ public class FogotPasswordServlet extends HttpServlet {
 				hantei = userbean.searchPass();
 
 				if (hantei) {
-					System.out.println(userbean.getUser_id());
 					userbean.setPassword(pass);
 					userbean.reissuePass();
 				} else {
 					// 一致しなかった処理
-					/* response.sendRedirect(URL + "/PassChange.html"); */
+					response.sendRedirect(URL + "/ForgotPassword.html");
+					return;
 				}
 
 			} catch (Exception e) {
@@ -85,7 +83,7 @@ public class FogotPasswordServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			out.println(JSON.encode(pass, true).toString());
-			/* response.sendRedirect(URL + "/UserInfo.html"); */
+			response.sendRedirect(URL + "/Login.html");
 		}
 	}
 }
