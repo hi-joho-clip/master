@@ -26,13 +26,15 @@ function getMyList(page) {
 		var func = get_mylists;
 		if (tileView()) {
 			func = get_mylists;
+			document.getElementById('title').innerHTML = '<h1>マイリスト</h1><div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
 		} else {
 			func = get_mylists_list;
+			document.getElementById('title').innerHTML =  '<h1>マイリスト</h1><div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
 		}
 		var jsonParam = 'page=' + page;// 送りたいデータ(ページ番号）
 		var URL = hostURL + "/mylist";
-		document.getElementById('title').innerHTML = '<h1>マイリスト</h1>'
-				+ '<input type="button" id="stylechange"value="AAA">';
+
+
 		$('#viewmode').val('0');
 		console.log(page + 'ゲットおおお');
 		getJSON(URL, jsonParam, func).then(function() {
@@ -47,17 +49,17 @@ function getMyList(page) {
 function getFavList(page) {
 	return new Promise(function(resolve, reject) {
 
-		var func = get_mylists;
 		if (tileView()) {
 			func = get_mylists;
+			document.getElementById('title').innerHTML = '<h1>お気に入り</h1><div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
 		} else {
 			func = get_mylists_list;
+			document.getElementById('title').innerHTML =  '<h1>お気に入り</h1><div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
 		}
 
 		var jsonParam = 'page=' + page;// 送りたいデータ
 		var URL = hostURL + "/favlist";
-		document.getElementById('title').innerHTML = '<h1>お気に入り</h1>'
-				+ '<input type="button" id="stylechange"value="AAA">';
+
 		$('#viewmode').val("1");
 		getJSON(URL, jsonParam, func);
 	});
@@ -78,14 +80,15 @@ function getShareList(friend_user_id, page) {
 	var func = get_sharelists;
 	if (tileView()) {
 		func = get_sharelists;
+		document.getElementById('title').innerHTML = '<h1>シェア記事</h1><div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
 	} else {
 		func = get_sharelists_list;
+		document.getElementById('title').innerHTML =  '<h1>シェア記事</h1><div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
 	}
 
 	var jsonParam = "friend_user_id=" + friend_user_id + '&page=' + page;// 送りたいデータ
 	var URL = hostURL + "/sharelist";
-	document.getElementById('title').innerHTML = '<h1>シェア記事</h1>'
-			+ '<input type="button" id="stylechange"value="AAA">';
+
 	$('#viewmode').val('3');
 	getJSON(URL, jsonParam, func);
 }

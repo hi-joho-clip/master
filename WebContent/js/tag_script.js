@@ -68,10 +68,10 @@ function getTagArticleList(tag_list,tag_id) {
 			arr[i]=tag_list.item(i).value;//1番目からタグが入る
 		}
 		taglists = "tag_list="+JSON.parse(JSON.stringify(arr));
-		document.getElementById('title').innerHTML='<h1>'+JSON.parse(JSON.stringify(arr))+'</h1>'+'<input type="button" id="stylechange"value="AAA">';
+		document.getElementById('title').innerHTML = '<h1>'+JSON.parse(JSON.stringify(arr))+'</h1>'+'<div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
 	}else if(tag_list==0 && tag_id!=0){//tag_listが0なら、特定のタグをクリックして一覧表示させる処理
 		taglists = "tag_list="+tag_id;
-		document.getElementById('title').innerHTML='<h1>'+tag_id+'</h1>';
+		document.getElementById('title').innerHTML =  '<h1>'+tag_id+'</h1>'+'<div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
 	}
 	$('#viewmode').val('2');
 	var URL = hostURL + "/tagarticlelist";
