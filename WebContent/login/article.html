@@ -37,7 +37,7 @@
 div#footerArea {
 	position: fixed !important;
 	position: absolute;
-	bottom: 0;
+	top: 100px;
 	left: 0;
 	width: 100%;
 	height: 43px;
@@ -47,14 +47,14 @@ div#footerArea {
 
 }
 
-@media only screen and (max-width: 425px) {
+@media only screen and (max-width: 667px) {
 div#footerArea {
 	position: fixed !important;
 	position: absolute;
-	bottom: 0;
+	top: 50px;
 	left: 0;
 	width: 100%;
-	height: 80px;
+	height: 40px;
 	background-color: #4E9ABE;
 	color: #fff;
 	z-index: 2;
@@ -353,16 +353,7 @@ div[data-wysihtml5-dialog="createTable"] td {
 				 </div>
 				</p>
             </nav>
-            <nav class="pure-drawer" data-position="right">
-					 <p2><p>
-   					 <input type="search" name="search-1" id="searchbox" value=""  placeholder="検索ワード"><br>
-						<input type="button" id="titlesearch" value="検索" ><BR>
-   					   <input type="search" name="search-2" id="search-2" value="" placeholder="http://..." class="validate[required,custom[url]] text-input"><br>
-					<input type="button" id="add-article" value="記事追加">
-					</p></p2>
-            </nav>
             <label class="pure-overlay" for="pure-toggle-left" data-overlay="left"></label>
-            <label class="pure-overlay" for="pure-toggle-right" data-overlay="right"></label>
         </div>
 
 			<div class="container">

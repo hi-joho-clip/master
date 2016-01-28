@@ -320,10 +320,10 @@ var get_taglists = function(json) {
 	for ( var i = 0; i < json.length; i++) {
 		tagList +=
 
-				"<tr align='left' valign='top'><td>"+
-				"<h4><a href='index.html'onclick='javascript:$.cookie(\"viewMode\",\"2\");$.cookie(\"tagLists\",\""+json[i].tag_body+"\");'>"+json[i].tag_body + "</a></h4><br>" +
+				"<tr align='left' valign='top'><td style='border-bottom:1px solid #d3381c;'>"+
+				"<h8><a href='index.html'onclick='javascript:$.cookie(\"viewMode\",\"2\");$.cookie(\"tagLists\",\""+json[i].tag_body+"\");'>"+json[i].tag_body + "</a></h8><br>" +
 				"<input type='hidden' value='"+json[i].lastest+"' name='lastest"+i+"'>"+
-				"</td><td><h4><a href='/' data-remodal-target='tagdeletemodal' onclick='javascript:getTag_id("+json[i].tag_id+");return false;'>削除</a></h4></td></tr>";
+				"</td><td style='border-bottom:1px solid #d3381c;'><h8><a href='/' data-remodal-target='tagdeletemodal' onclick='javascript:getTag_id("+json[i].tag_id+");return false;'>削除</a></h8></td></tr>";
 
 	}
 	tagList += "</table>";
