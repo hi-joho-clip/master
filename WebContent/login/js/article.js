@@ -195,6 +195,7 @@ function isSettinOnLine() {
 
 // タイルリスト表示を押したときに走るメソッド
 function styleListChange() {
+	startload();
 	switch ($.cookie("viewMode")) {
 	case "0":// マイリスト画面を表示しているとき
 		$('.grid').empty();

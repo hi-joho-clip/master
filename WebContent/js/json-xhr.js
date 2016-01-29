@@ -30,7 +30,7 @@ function getURL(URL, param) {
 
 		// サーバからアーティクルリストを取得する
 
-		 console.log('parameter:' + param);
+		// console.log('parameter:' + param);
 		if (URL === "") {
 			reject(new Error("url is null"));
 		}
@@ -59,7 +59,7 @@ function getURL(URL, param) {
 			reject(new Error(req.statusText));
 		};
 		// タイムアウトは7000ms
-		req.timeout = 7000;
+		req.timeout = 20000;
 		req.ontimeout = function() {
 			reject(new Error("time out"));
 		};
