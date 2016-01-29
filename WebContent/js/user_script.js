@@ -348,14 +348,21 @@ function MailAddress() {
 	getJSON(URL, jsonParam, setappend);
 }
 
-function MailAddress() {
-
-	var jsonParam = null;// 送りたいデータ
-	var URL = hostURL + "/viewuser";
+function nick() {
+	var jsonParam = "newnickname=" + nickname.value + '&password=' + passwd.value+"&nonce="+ nonce.value ;// 送りたいデータ
+	console.log(jsonParam);
+	var URL = hostURL + "/updatenickname";
 	var userList = "";
 	var setappend = function(json) {
-		userList = "メールアドレス:" + "<br>" + json.mailaddress + "<br>";
-		document.getElementById('info').innerHTML = userList;
+		if(json.flag==0){
+			toastr.error(json.state);
+		}else if(json.flag==1){
+			toastr.success(json.state);
+		}else if(json.flag==2){
+			userList += json.ErrorMessage;
+		}
+
+		document.getElementById('nick').innerHTML = userList;
 	};
 	getJSON(URL, jsonParam, setappend);
 }
