@@ -125,7 +125,6 @@ public class ViewUserIDServlet extends HttpServlet {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-		out.println(JSON.encode(user_id, true).toString());
 		response.sendRedirect(URL + "/Login.html");
 	}
 }
