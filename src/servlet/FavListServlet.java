@@ -65,9 +65,9 @@ public class FavListServlet extends HttpServlet {
 			page = Integer.parseInt(request.getParameter("page"));
 			}
 		} catch (NumberFormatException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 
 

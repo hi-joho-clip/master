@@ -85,6 +85,7 @@ function getTag_id(tag_id){
 
 // 記事一覧を作成（タイル表示）
 var get_mylists = function(json) {
+	stopload();
 	$('#mode').val("tile");
 	var random =Math.floor(Math.random()*3);
 	$myList = $("<div class='grid-sizer'></div>");
@@ -145,6 +146,7 @@ var get_mylists = function(json) {
 			animation	:	'slide'		// fade or slide
 		});
     });
+
 };
 
 
@@ -164,6 +166,7 @@ function addViewNext(json) {
 
 // シェア記事一覧を作成（タイル表示）
 var get_sharelists = function(json) {
+	stopload();
 	$('#mode').val("tile");
 	var random =Math.floor(Math.random()*3);
 	$myList = $("<div class='grid-sizer'></div>");
@@ -198,6 +201,7 @@ var get_sharelists = function(json) {
 			animation	:	'slide'		// fade or slide
 		});
     });
+
 };
 // 記事一覧を作成（リスト表示）
 var get_mylists_list = function(json) {
@@ -265,6 +269,7 @@ var get_mylists_list = function(json) {
 				animation	:	'slide'		// fade or slide
 			});
 	    });
+		stopload();
 		resolve();
 	});
 };
@@ -309,6 +314,7 @@ var get_sharelists_list = function(json) {
 			animation	:	'slide'		// fade or slide
 		});
     });
+	stopload();
 };
 // タグ一覧を作成
 var get_taglists = function(json) {
@@ -327,6 +333,7 @@ var get_taglists = function(json) {
 	}
 	tagList += "</table>";
 	document.getElementById('taglist').innerHTML = tagList;
+	stopload();
 };
 
 // 登録しているフレンドが入ったセレクトボックスを作成
@@ -350,7 +357,7 @@ var get_friends = function(json){
 	}
 	// ここでセレクトボックスを生成
 	$('.selectbox').select2({width:"50%"}).trigger('create');
-
+	stopload();
 
 };
 
@@ -380,5 +387,6 @@ var get_using_tags = function(json){
 	$(".tagselect").change(function () {
 			$('#tag-it').tagit('createTag',$(".tagselect").val());
 	});
+	stopload();
 
 };

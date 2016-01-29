@@ -48,6 +48,45 @@ function getArticle(username, article_id) {
 };
 
 /**
+ * JSON形式でArticleIDの記事を取得する 画像も取得して返す(Promiseなのね）
+ *
+ * @param article_id
+ * @param guid
+ */
+function getArticleID(article_id) {
+	return new Promise(function(resolve, reject) {
+		if (KageDB.isAvailable()) {
+			// 成功の場合
+			var tutorial = getArticleInstance();
+
+			tutorial.tx([ "article" ], function(tx, todo) {
+				todo.fetch({
+					filter : article_filter
+				}, function(values) {
+					// console.log("values = " + JSON.stringify(values));
+					// console.log("done.");
+					//console.log(values[0]['id']);
+					resolve(values[0]['id']);
+					// console.log(values.body.created);
+				});
+			});
+		} else {
+			// エラー処理のコールバック
+			rejece(new Error());
+
+		}
+		function article_filter(record) {
+			// GUIDが自身であり、アーティクルIDが同一
+			return record.article_id === article_id;
+		}
+		;
+	});
+};
+
+
+
+
+/**
  * 記事の件数分ループさせて更新する
  *
  * 記事の更新考察：PromiseALLで配列にして渡すので 取得と更新が1セットになるべき。
@@ -102,12 +141,11 @@ function updateArticle(json_article) {
  * @param guid
  *            一時的なトークンID
  */
-function updateArticleDelete(json_article) {
+function updateArticleDelete(id) {
 
 	return new Promise(function(resolve, reject) {
-
 		// ユーザ名でDB識別
-		var article_id = json_article['article_id'];
+		console.log("hhhhhhh"+article_id);
 
 		// console.log('jsonarticle:' + article['article_id']);
 		// スキーマのインスタンス取得
@@ -119,19 +157,13 @@ function updateArticleDelete(json_article) {
 
 		// 更新処理
 		tutorial.tx([ "article" ], "readwrite", function(tx, todo) {
-			todo.del({
-				filter : article_filter
-			}, function(key) {
-				console.log("done. key = " + key);
+			todo.del( {filter : article_del_filter}
+					, function() {
+				console.log("done. key = ");
 				// 成功時はキーを渡す
-				resolve(key);
+				resolve();
 			});
 		});
-
-		function article_filter(record) {
-			// GUIDが自身であり、アーティクルIDが同一
-			return record.article_id === article_id;
-		};
 	});
 
 };
@@ -204,22 +236,26 @@ function updateIDBArticleList(values) {
  *
  * @param articles
  */
-function updateIDBArticleListDeletes(values) {
+function updateIDBArticleListDelete(values) {
 
 	// GUIDはセッションから持ってくると値を渡すことがないので良い。
-	var jsons = JSON.parse(values);
+	var jsons = values;
 
 	var pro_list = [];
+
+	console.log("きているうううううううう");
 
 	/*
 	 * PromiseAll（promiseサーバ通信→promise書き込み）これをリスト分回す（全部完了したら成功にする） param :
 	 * "article_id="?
 	 */
 	for ( var art_json in jsons) {
-		// console.log(param);
-		pro_list.push(updateArticleDelete(art_json));
+		param = jsons[art_json].article_id;
+		console.log("パラメータ:" + param);
+		pro_list.push(getArticleID(param).then(updateArticleDelete));
 	}
 	if (pro_list) {
+		console.log(pro_list);
 		return Promise.all(pro_list).then('success')['catch'](function(error) {
 			return (error);
 		});

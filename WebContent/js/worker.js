@@ -66,7 +66,9 @@ self.addEventListener('message', function(e) {
 			//self.postMessage('更新失敗');
 		});
 
-		getIDBAllArticleList(username).then(deleteArticle).then(updateIDBArticleListDeletes).then(function(value){
+		//console.log('kitakore');
+
+		getIDBAllArticleList(username).then(deleteWorkerArticle).then(function(value){
 			self.postMessage('更新完了');
 		})['catch'](function(error) {
 			self.postMessage(error);
@@ -74,11 +76,11 @@ self.addEventListener('message', function(e) {
 
 
 		// 削除処理（サーバになくて、ローカルにあるものを消す
-		function deleteArticle(json) {
+		function deleteWorkerArticle(json) {
 			return new Promise(function(resolve, reject) {
 				// 更新用リストを取ってきて、
 				var ret = function (json) {
-					return resolve(json);
+					updateIDBArticleListDelete(json);
 				};
 				json = JSON.stringify(json);
 				getJSON(hostURL + "/getdeletearticle", "json=" + json, ret);
