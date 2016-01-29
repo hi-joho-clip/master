@@ -1124,7 +1124,7 @@ public class ArticleDAO {
 			count++;
 		System.out.println(like);
 
-		sql = "SELECT * FROM articles WHERE "+like+" AND id = ANY (SELECT id FROM mylists WHERE user_id = ?) limit 20 offset ?";
+		sql = "SELECT * FROM articles WHERE "+like+" AND id = ANY (SELECT id FROM mylists WHERE user_id = ? and share_flag = 0) limit 20 offset ?";
 
 
 		try {
