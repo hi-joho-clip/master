@@ -291,11 +291,6 @@ var get_mylists_list = function(json) {
 		}
 
 		addViewNext(json);
-		jQuery(function($){
-			$('.bar').mosaic({
-				animation	:	'slide'		// fade or slide
-			});
-	    });
 		stopload();
 		resolve();
 	});
@@ -336,11 +331,6 @@ var get_sharelists_list = function(json) {
 	}
 
 	addViewNext(json);
-	jQuery(function($){
-		$('.bar').mosaic({
-			animation	:	'slide'		// fade or slide
-		});
-    });
 	stopload();
 };
 // タグ一覧を作成

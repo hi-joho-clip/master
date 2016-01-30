@@ -264,8 +264,8 @@ function updateArticle() {
 }
 
 // シェア記事の追加
-function shareArticle(friend_user_id, article_id) {
-	var param = "article_id=" + article_id.item(0).value + "&friend_id="
+function shareArticle(friend_user_id) {
+	var param = "article_id=" + $('article_id').val() + "&friend_id="
 			+ friend_user_id + "&nonce="+$('#nonce').val();
 
 	var URL = hostURL + "/addshare";
