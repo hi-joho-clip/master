@@ -139,9 +139,12 @@ dfn {
  * contexts in Firefox 4+, Safari 5, and Chrome.
  */
 
-h1 {
-  font-size: 2em;
-  margin: 0.67em 0;
+h1.title {
+  /*ページタイトル用*/
+
+font-size:5.5em;
+margin:0.1em;
+
 }
 
 /**

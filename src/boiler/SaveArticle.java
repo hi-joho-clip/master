@@ -60,19 +60,17 @@ public class SaveArticle {
 	 * @param user_id
 	 * @param str_url
 	 */
-	public boolean def_extractor(int user_id, String str_url) {
-		boolean flag = false;
+	public int def_extractor(int user_id, String str_url) {
+		int art_id = 0;
 		try {
 			//if (isConAndTimeOut(str_url)) {
 			BoilerpipeExtractor extractor = CommonExtractors.ARTICLE_EXTRACTOR;
-			if (article_extractor(user_id, str_url, extractor) >= 1) {
-				flag = true;
-			}
+			art_id = article_extractor(user_id, str_url, extractor);
 			//}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return flag;
+		return art_id;
 	}
 
 	/**
@@ -80,20 +78,18 @@ public class SaveArticle {
 	 * @param user_id
 	 * @param str_url
 	 */
-	public boolean keep_extractor(int user_id, String str_url) {
-		boolean flag = false;
+	public int keep_extractor(int user_id, String str_url) {
+		int art_id = 0;
 
 		try {
 			//if (isConAndTimeOut(str_url)) {
 			BoilerpipeExtractor extractor = CommonExtractors.KEEP_EVERYTHING_EXTRACTOR;
-			if (article_extractor(user_id, str_url, extractor) >= 1) {
-				flag = true;
-			}
+			art_id = article_extractor(user_id, str_url, extractor);
 			//}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return flag;
+		return art_id;
 	}
 
 	private int article_extractor(int user_id, String str_url, BoilerpipeExtractor extra) throws Exception {

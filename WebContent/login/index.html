@@ -33,7 +33,7 @@
 <link href="css/Yomikomi.css" rel="stylesheet">
 <link rel='stylesheet' href='css/list.css' />
 
-
+<link id="viewcolor" href="css/articlemenu_black.css" rel="stylesheet">
 
 
 <script src="../js/1.11.1_jquery.min.js"></script>
@@ -155,9 +155,9 @@
 				 <div id="bg-link">
 					<a href="FriendSeach.html"><h4>フレンド検索</h4></a>
 				 </div>
-				 <div id="bg-link">
+				 <!-- <div id="bg-link">
 					<a href="index.html" onclick="javascript:$.cookie('viewMode','4');"><h4>LISTTEST</h4></a>
-				 </div>
+				 </div>-->
 				</p>
             </nav>
             <nav class="pure-drawer" data-position="right">
@@ -174,6 +174,8 @@
         <div class="container" >
 			<div style="margin: 100px auto;">
 				<div id="title" >
+				<h1 class="title"></h1>
+				<div class="stylebutton" style="text-align: right;"></div>
 				</div>
 				<div id="container-body" align="center" >
 					<div class="grid" align="left"></div>
@@ -204,8 +206,8 @@
 	<script>
 		$(document).ready(function() {
 			notice();
-			//
-			//startload();
+			colorMode();
+
 		});
 	</script>
 

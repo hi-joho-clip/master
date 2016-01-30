@@ -24,12 +24,13 @@ function getMyList(page) {
 	return new Promise(function(resolve, reject) {
 
 		var func = get_mylists;
+		$('h1.title').html('マイリスト');
 		if (tileView()) {
 			func = get_mylists;
-			document.getElementById('title').innerHTML = '<h1>マイリスト</h1><div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
+			$('div.stylebutton').html('<button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button>');
 		} else {
 			func = get_mylists_list;
-			document.getElementById('title').innerHTML =  '<h1>マイリスト</h1><div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
+			$('div.stylebutton').html('<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
 		}
 		var jsonParam = 'page=' + page;// 送りたいデータ(ページ番号）
 		var URL = hostURL + "/mylist";
@@ -49,12 +50,13 @@ function getMyList(page) {
 function getFavList(page) {
 	return new Promise(function(resolve, reject) {
 
+		$('h1.title').html('お気に入り');
 		if (tileView()) {
 			func = get_mylists;
-			document.getElementById('title').innerHTML = '<h1>お気に入り</h1><div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
+			$('div.stylebutton').html('<button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button>');
 		} else {
 			func = get_mylists_list;
-			document.getElementById('title').innerHTML =  '<h1>お気に入り</h1><div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
+			$('div.stylebutton').html('<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
 		}
 
 		var jsonParam = 'page=' + page;// 送りたいデータ
@@ -144,16 +146,21 @@ function deleteArticle(article_id) {
 	// id='article_id'>にhiddenでarticle_idを持たせる
 	var jsonParam = "article_id=" + article_id.item(0).value+"&nonce="+$('#nonce').val();// 送りたいデータ
 	var URL = hostURL + "/deletearticle";
-	var delete_article = function() {
+	var delete_article = function(json) {
 		if(json.flag=="0"){
+			// 失敗
 			toastr.error(json.state);
 		}else{
+			// 成功したらその要素を削除する
+			//console.log(json.article_id);
+			$('#' + json.article_id).remove();
 			toastr.success(json.state);
 		}
 	};
 	getJSON(URL, jsonParam, delete_article);
-	location.reload();
+	//location.reload();
 }
+
 // お気に入りの追加削除
 function addFavArticle(article_id) {
 	// グローバルFlagを用意する。記事リストを作成時にグローバルFlagはtrue
@@ -296,3 +303,5 @@ function shareArticle(friend_user_id, article_id) {
 	getJSON(URL, param, cal);
 
 }
+
+

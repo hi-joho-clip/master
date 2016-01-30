@@ -1,0 +1,24 @@
+@CHARSET "UTF-8";
+
+
+body {
+	color:#313131;
+	background:#f4f4f6;
+}
+li.first {
+    border: 1px solid #ccc;
+    background-color: #FFF;
+}
+
+a.art-title {
+	color:#313131;
+}
+
+.absolute {
+	color:#313131;
+	background:rgba(255,255,255,0.9);
+}
+
+#menu-block {
+	background: #FFF;
+}
