@@ -53,11 +53,15 @@ public class MyListServlet extends HttpServlet {
 		//記事一覧表示
 		int user_id = 0;//sessionからuser_idを取得
 		int page = 1; // パラメータからページ番号取得(デフォルト1）
+		int start_article_id = 0;
 
 		try {
 			user_id = (int) session.getAttribute("user_id");
 			if (request.getParameter("page") != null) {
 				page = Integer.parseInt(request.getParameter("page"));
+			}
+			if (request.getParameter("article_id") != null) {
+				page = Integer.parseInt(request.getParameter("article_id"));
 			}
 		} catch (NumberFormatException e) {
 			//e.printStackTrace();
@@ -68,7 +72,7 @@ public class MyListServlet extends HttpServlet {
 		ArticleBean articlebean = new ArticleBean();
 		ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
 		try {
-			article_list = articlebean.viewArticleList(user_id, page);
+			article_list = articlebean.viewArticleList(user_id, page,start_article_id);
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();

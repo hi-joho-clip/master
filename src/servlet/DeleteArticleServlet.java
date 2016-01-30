@@ -44,6 +44,7 @@ public class DeleteArticleServlet extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");
 		response.setHeader("Cache-Control", "private");
 		String resp = "{\"state\": \"unknownError\",  \"flag\": 0}";
+		PrintWriter out = response.getWriter();
 		Nonce nonce = new Nonce(request);
 		int article_id = 0;
 		int user_id = 0;
@@ -64,22 +65,24 @@ public class DeleteArticleServlet extends HttpServlet {
 				try {
 					if (articlebean.deleteArticle(user_id, article_id)) {
 						//成功したポップアップを表示
-						resp = "{\"state\": \"削除しました\", \"flag\": 1}";
+						resp = "{\"state\": \"削除しました\", \"flag\": 1, \"article_id\" : " + article_id + "}";
 					} else {
 						//失敗したポップアップを表示
 						resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
 					}
+
 				} catch (Exception e) {
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
 				}
 			} else {
 				// article_IDのエラー
+				resp = "{\"state\": \"記事がありません\", \"flag\": 0}";
 			}
+			out.println(resp);
 		}else{
 			// 不正アクセス
 			resp = "{\"state\": \"不正なアクセス\",  \"flag\": 0}";
-			PrintWriter out = response.getWriter();
 			out.println(resp);
 		}
 	}

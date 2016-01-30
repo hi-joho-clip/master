@@ -71,21 +71,22 @@ public class AddArticleServlet extends HttpServlet {
 				}
 				mode = ("FULL");
 
-				System.out.println("URL:" + url);
+				//System.out.println("URL:" + url);
 
 				// http://か,https://以外はダメ
 				if (url.startsWith("http://") || url.startsWith("https://")) {
 					SaveArticle save = new SaveArticle();
 					if (mode.equals("FULL")) {
-						if (save.keep_extractor(user_id, url)) {
-
-							resp = "{\"state\": \"追加しました\", \"flag\": 1}";
+						int art_id = save.keep_extractor(user_id, url);
+						if (art_id >= 1) {
+							resp = "{\"state\": \"追加しました\", \"flag\": 1, \"article_id\":" + art_id + "}";
 						} else {
 							resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
 						}
 					} else if (mode.equals("NORMAL")) {
-						if (save.def_extractor(user_id, url)) {
-							resp = "{\"state\": \"追加しました\", \"flag\": 1}";
+						int art_id = save.def_extractor(user_id, url);
+						if (art_id >= 1) {
+							resp = "{\"state\": \"追加しました\", \"flag\": 1,\"article_id\":" + art_id + "}";
 						} else {
 							resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
 						}

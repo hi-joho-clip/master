@@ -368,7 +368,6 @@ public class ArticleDAO {
 		return flag;
 	}
 
-
 	/**
 	 * 記事IDからシェア記事かを判定する
 	 * @param article_id
@@ -404,7 +403,6 @@ public class ArticleDAO {
 			throw new Exception();
 		}
 		return hantei_flag;
-
 
 	}
 
@@ -759,22 +757,44 @@ public class ArticleDAO {
 	/**
 	 * 記事一覧表示
 	 * paginator(OK)
-	 *
+	 * article_idを設定するとその番号から取ってくるなりよ
+	 * 1ページ目→page = 1 article_id = 0
+	 * とあるN番目の記事以降→page = 0 article_id = N
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleDTO> lists(int user_id, int page) throws Exception {
+	public ArrayList<ArticleDTO> lists(int user_id, int page, int article_id) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		int def_page = 20 * (page - 1);
+		int def_page = 0;
+		if (page != 0) {
+			def_page = 20 * (page - 1);
+		} else {
+			def_page = 0;
+		}
 		//System.out.println(def_page);
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
-		String sql = "SELECT * FROM articles WHERE id = ANY (SELECT id FROM mylists WHERE user_id = ? and share_flag = 0 ) order by modified desc limit 20 offset ?";
+		String sql = " select * from articles where id = any (SELECT id FROM mylists WHERE user_id = ? and share_flag = 0 ) "
+				+" order by modified desc limit 20 offset ?;";
 
+		String art_sql = " select * from articles where id = any (SELECT id FROM mylists WHERE user_id = ? and share_flag = 0 ) and "
+				+
+				"modified <= (select modified from articles where article_id = ?) " +
+				" order by modified desc limit 20 offset ?;";
 		try {
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, user_id);
-			pstmt.setInt(2, def_page);
+			if (article_id == 0) {
+				// artID=0 1ページ目
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, user_id);
+				pstmt.setInt(2, def_page);
+
+			} else {
+				// artID=N番目から
+				pstmt = con.prepareStatement(art_sql);
+				pstmt.setInt(1, user_id);
+				pstmt.setInt(2, article_id);
+				pstmt.setInt(3, def_page);
+			}
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				ArticleDTO article = new ArticleDTO();
@@ -894,7 +914,6 @@ public class ArticleDAO {
 		}
 		return articleDTO;
 	}
-
 
 	/**
 	 * Thum
@@ -1104,37 +1123,37 @@ public class ArticleDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleDTO> mylist_search(int user_id,ArrayList<String> text_list,int page) throws Exception {
+	public ArrayList<ArticleDTO> mylist_search(int user_id, ArrayList<String> text_list, int page) throws Exception {
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int def_page = 20 * (page - 1);
-		System.out.println("page:"+def_page);
+		System.out.println("page:" + def_page);
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
 		String sql = "";
 		String like = "";
 		int count = 0;//値をセットするために必要なカウント変数
 
 		//text_list.size()-1なのは最後のANDを取り除きたいから
-		for(int i=0;i<text_list.size()-1;i++){
+		for (int i = 0; i < text_list.size() - 1; i++) {
 			like += "title LIKE ? AND ";
 			count++;
 		}
-			like += "title LIKE ?";
-			count++;
+		like += "title LIKE ?";
+		count++;
 		System.out.println(like);
 
-		sql = "SELECT * FROM articles WHERE "+like+" AND id = ANY (SELECT id FROM mylists WHERE user_id = ? and share_flag = 0) limit 20 offset ?";
-
+		sql = "SELECT * FROM articles WHERE " + like
+				+ " AND id = ANY (SELECT id FROM mylists WHERE user_id = ? and share_flag = 0) limit 20 offset ?";
 
 		try {
 			pstmt = con.prepareStatement(sql);
 
-			for(int i=1; i<=count;i++){
-				pstmt.setString(i, "%"+text_list.get(i-1)+"%");
+			for (int i = 1; i <= count; i++) {
+				pstmt.setString(i, "%" + text_list.get(i - 1) + "%");
 			}
-			pstmt.setInt(count+1, user_id);
-			pstmt.setInt(count+2, def_page);
+			pstmt.setInt(count + 1, user_id);
+			pstmt.setInt(count + 2, def_page);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				ArticleDTO article = new ArticleDTO();
@@ -1155,6 +1174,7 @@ public class ArticleDAO {
 		}
 		return articleList;
 	}
+
 	/**
 	 * お気に入り内検索
 	 * * paginator(OK)
@@ -1162,40 +1182,39 @@ public class ArticleDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleDTO> favlist_search(int user_id,ArrayList<String> text_list,int page) throws Exception {
+	public ArrayList<ArticleDTO> favlist_search(int user_id, ArrayList<String> text_list, int page) throws Exception {
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int def_page = 20 * (page - 1);
-		System.out.println("page:"+def_page);
+		System.out.println("page:" + def_page);
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
 		String sql = "";
 		String like = "";
 		int count = 0;//値をセットするために必要なカウント変数
 
 		//text_list.size()-1なのは最後のANDを取り除きたいから
-		for(int i=0;i<text_list.size()-1;i++){//2
+		for (int i = 0; i < text_list.size() - 1; i++) {//2
 			like += "title LIKE ? AND ";
 			count++;
 		}
-			like += "title LIKE ?";
-			count++;
+		like += "title LIKE ?";
+		count++;
 
 		System.out.println(like);
 
-		sql = "SELECT * FROM articles WHERE "+like+" AND article_id IN"
+		sql = "SELECT * FROM articles WHERE " + like + " AND article_id IN"
 				+ " (SELECT article_id FROM article_tag WHERE tag_id ="
 				+ " (SELECT tag_id FROM tags WHERE tag_body = 'お気に入り' AND user_id = ?)) limit 20 offset ?";
-
 
 		try {
 			pstmt = con.prepareStatement(sql);
 
-			for(int i=1; i<=count;i++){
-				pstmt.setString(i, "%"+text_list.get(i-1)+"%");
+			for (int i = 1; i <= count; i++) {
+				pstmt.setString(i, "%" + text_list.get(i - 1) + "%");
 			}
-			pstmt.setInt(count+1, user_id);
-			pstmt.setInt(count+2, def_page);
+			pstmt.setInt(count + 1, user_id);
+			pstmt.setInt(count + 2, def_page);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				ArticleDTO article = new ArticleDTO();
@@ -1216,6 +1235,7 @@ public class ArticleDAO {
 		}
 		return articleList;
 	}
+
 	/**
 	 * タグ内検索
 	 * * paginator(OK)
@@ -1223,12 +1243,13 @@ public class ArticleDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleDTO> tag_search(int user_id,ArrayList<String> text_list,String tag,int page) throws Exception {
+	public ArrayList<ArticleDTO> tag_search(int user_id, ArrayList<String> text_list, String tag, int page)
+			throws Exception {
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int def_page = 20 * (page - 1);
-		System.out.println("page:"+def_page);
+		System.out.println("page:" + def_page);
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
 		String sql = "";
 		int tag_id = 0;
@@ -1237,38 +1258,37 @@ public class ArticleDAO {
 		int count = 0;//値をセットするために必要なカウント変数
 
 		//text_list.size()-1なのは最後のANDを取り除きたいから
-		for(int i=0;i<text_list.size()-1;i++){//2
+		for (int i = 0; i < text_list.size() - 1; i++) {//2
 			like += "title LIKE ? AND ";
 			count++;
 		}
-			like += "title LIKE ?";
-			count++;
+		like += "title LIKE ?";
+		count++;
 
 		System.out.println(like);
 
-		String get_tagid="SELECT tag_id FROM tags WHERE tag_body = ? AND user_id = ?";
-		sql="SELECT * FROM articles WHERE "+like+" AND id = ? AND " +
+		String get_tagid = "SELECT tag_id FROM tags WHERE tag_body = ? AND user_id = ?";
+		sql = "SELECT * FROM articles WHERE " + like + " AND id = ? AND " +
 				"article_id IN (SELECT article_id FROM article_tag WHERE tag_id = ?) limit 20 offset ?";
 
-		mylist_id=getMylistID(user_id);
-
+		mylist_id = getMylistID(user_id);
 
 		try {
-			pstmt=con.prepareStatement(get_tagid);
-			pstmt.setString(1,tag);
+			pstmt = con.prepareStatement(get_tagid);
+			pstmt.setString(1, tag);
 			pstmt.setInt(2, user_id);
 			rs = pstmt.executeQuery();
-			if(rs.next()){
-				tag_id=rs.getInt("tag_id");
+			if (rs.next()) {
+				tag_id = rs.getInt("tag_id");
 			}
 			pstmt = con.prepareStatement(sql);
 
-			for(int i=1; i<=count;i++){
-				pstmt.setString(i, "%"+text_list.get(i-1)+"%");
+			for (int i = 1; i <= count; i++) {
+				pstmt.setString(i, "%" + text_list.get(i - 1) + "%");
 			}
-			pstmt.setInt(count+1, mylist_id);
-			pstmt.setInt(count+2, tag_id);
-			pstmt.setInt(count+3, def_page);
+			pstmt.setInt(count + 1, mylist_id);
+			pstmt.setInt(count + 2, tag_id);
+			pstmt.setInt(count + 3, def_page);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				ArticleDTO article = new ArticleDTO();
@@ -1289,6 +1309,7 @@ public class ArticleDAO {
 		}
 		return articleList;
 	}
+
 	/**
 	 * シェア内検索
 	 * * paginator(OK)
@@ -1296,40 +1317,41 @@ public class ArticleDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleDTO> sharelist_search(int user_id,ArrayList<String> text_list,int friend_user_id,int page) throws Exception {
+	public ArrayList<ArticleDTO> sharelist_search(int user_id, ArrayList<String> text_list, int friend_user_id, int page)
+			throws Exception {
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int def_page = 20 * (page - 1);
-		System.out.println("page:"+def_page);
+		System.out.println("page:" + def_page);
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
 		String sql = "";
 		String like = "";
 		int count = 0;//値をセットするために必要なカウント変数
 
 		//text_list.size()-1なのは最後のANDを取り除きたいから
-		for(int i=0;i<text_list.size()-1;i++){//2
+		for (int i = 0; i < text_list.size() - 1; i++) {//2
 			like += "title LIKE ? AND ";
 			count++;
 		}
-			like += "title LIKE ?";
-			count++;
+		like += "title LIKE ?";
+		count++;
 
 		System.out.println(like);
 
-		sql = "SELECT * FROM articles WHERE "+like+" AND articles.id = " +
+		sql = "SELECT * FROM articles WHERE " + like + " AND articles.id = " +
 				"(SELECT M.id FROM friends F,mylists M WHERE F.own_user_id = ? AND F.friend_user_id = ? " +
 				"AND M.id = F.id AND M.share_flag=1) limit 20 offset ?";
 
 		try {
 			pstmt = con.prepareStatement(sql);
 
-			for(int i=1; i<=count;i++){
-				pstmt.setString(i, "%"+text_list.get(i-1)+"%");
+			for (int i = 1; i <= count; i++) {
+				pstmt.setString(i, "%" + text_list.get(i - 1) + "%");
 			}
-			pstmt.setInt(count+1, user_id);
-			pstmt.setInt(count+2, friend_user_id);
-			pstmt.setInt(count+3, def_page);
+			pstmt.setInt(count + 1, user_id);
+			pstmt.setInt(count + 2, friend_user_id);
+			pstmt.setInt(count + 3, def_page);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				ArticleDTO article = new ArticleDTO();

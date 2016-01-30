@@ -44,7 +44,7 @@ var item2 = [ "grid-item",
 
 		];
 
-var item3 =	[ 	 "grid-item grid-item--3",
+var item3 =	[ 	 "grid-item grid-item--3 ",
                     "grid-item grid-item--width2",
            		"grid-item",
            	 "grid-item",
@@ -60,13 +60,36 @@ var item3 =	[ 	 "grid-item grid-item--3",
            		"grid-item",
                    "grid-item",
                    "grid-item",
-           		"grid-item2",
+           		"grid-item",
            		"grid-item ",
                     "grid-item grid-item--width2",
            		"grid-item"
 		];
 
-var item = [item1, item2, item3];
+
+var item4 =	[ 	 "grid-item",
+                    "grid-item",
+           		"grid-item",
+           	 "grid-item",
+           		"grid-item",
+           		"grid-item",
+                   "grid-item",
+                   "grid-item",
+                    "grid-item",
+                    "grid-item",
+                   "grid-item",
+           		"grid-item",
+                 "grid-item",
+           		"grid-item",
+                   "grid-item",
+                   "grid-item",
+           		"grid-item",
+           		"grid-item ",
+                    "grid-item ",
+           		"grid-item"
+		];
+
+var item = [item1, item2, item3,item4];
 
 // タグを編集するときにArticle_idも送りたいので実装
 function getArticle_id(article_id){
@@ -123,7 +146,7 @@ var get_mylists = function(json) {
 							"</div>"+
 						"</div>"+
 						"<div class='mosaic-backdrop relative'>" + thumView(json[i], "100%", "100%")+
-							"<div class='absolute'id='favtitle"+json[i].article_id+"'>"+flag+"<BR><a href='"+json[i].url+"'target='_blank'>"+json[i].url+"</a></div>" +
+							"<div class='absolute'id='favtitle"+json[i].article_id+"'>"+flag+"<BR><a class='art-title' href='"+json[i].url+"'target='_blank'>"+json[i].url+"</a></div>" +
 							"<input type='hidden' value='"+json[i].title+"' id='title"+json[i].article_id+"'>"+
 							"<input type='hidden' value='"+json[i].url+"' id='url"+json[i].article_id+"'>"+
 						"</div>"+
@@ -135,7 +158,7 @@ var get_mylists = function(json) {
 		$grid.prepend($myList).isotope('insert', $myList).trigger('create');
 		if(json[i].favflag==true){
 			console.log('#favtitle'+json[i].article_id);
-			$('#favtitle'+json[i].article_id).attr('style', 'color:#FFEB3B');
+			$('#favtitle'+json[i].article_id).attr('style', 'color:#FDB91B');
 		}
 	}
 
@@ -189,7 +212,7 @@ var get_sharelists = function(json) {
 						"</div>"+
 						"<div class='mosaic-backdrop relative'>" + thumView(json[i], "100%", "100%")+
 
-							"<div class='absolute'>"+json[i].title+"<BR><a href='"+json[i].url+"' target='_blank'>"+json[i].url+"</a></div>" +
+							"<div class='absolute'>"+json[i].title+"<BR><a class='art-title' href='"+json[i].url+"' target='_blank'>"+json[i].url+"</a></div>" +
 						"</div>"+
 					"</div>");
 		$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
@@ -216,8 +239,8 @@ var get_mylists_list = function(json) {
 			}else if(json[i].favflag==false){
 				flag=json[i].title;
 			}
-			$myList = $("<ol>"+
-							"<a href='../login/article.html?"+json[i].article_id+"'><li class='first'>"+
+			$myList = $("<ol id='" + json[i].article_id+ "'>"+
+							"<a class='art-title' href='../login/article.html?"+json[i].article_id+"'><li class='first'>"+
 								"<div class='dan'>"+
 									thumView(json[i], "100px", "100px")+
 								"</div>"+
@@ -226,7 +249,7 @@ var get_mylists_list = function(json) {
 									""+flag+""+
 									"</div>"+
 									"<div class='dan3'>"+
-									"<a href='"+json[i].url+"' target='_blank'>"+json[i].url+"</a>"+
+									"<a class='art-title' href='"+json[i].url+"' target='_blank'>"+json[i].url+"</a>"+
 									"</div>"+
 									"<input type='hidden' value='"+json[i].title+"' id='title"+json[i].article_id+"'>"+
 									"<input type='hidden' value='"+json[i].url+"' id='url"+json[i].article_id+"'>"+
@@ -259,8 +282,8 @@ var get_mylists_list = function(json) {
 			$grid.append($myList).isotope('insert', $myList).trigger('create');
 			if(json[i].favflag==true){
 				console.log('#favtitle'+json[i].article_id);
-				$('#favtitle'+json[i].article_id).attr('style', 'color:#FFEB3B');
-			}
+				$('#favtitle'+json[i].article_id).attr('style', 'color:#FDB91B');
+			}//#FFEB3B
 		}
 
 		addViewNext(json);
@@ -280,7 +303,7 @@ var get_sharelists_list = function(json) {
 	$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
 	for ( var i = 0; i < json.length ; i++) {
 		$myList = $("<ol>"+
-						"<a href='../login/article.html?"+json[i].article_id+"'><li class='first'>"+
+						"<a class='art-title' href='../login/article.html?"+json[i].article_id+"'><li class='first'>"+
 							"<div class='dan'>"+
 								thumView(json[i], "100px", "100px")+
 							"</div>"+
@@ -289,7 +312,7 @@ var get_sharelists_list = function(json) {
 								""+json[i].title+""+
 								"</div>"+
 								"<div class='dan3'>"+
-								"<a href='"+json[i].url+"' target='_blank'>"+json[i].url+"</a>"+
+								"<a class='art-title' href='"+json[i].url+"' target='_blank'>"+json[i].url+"</a>"+
 								"</div>"+
 
 							"</div>"+
@@ -326,9 +349,9 @@ var get_taglists = function(json) {
 		tagList +=
 
 				"<tr align='left' valign='top'><td style='border-bottom:1px solid #d3381c;'>"+
-				"<h8><a href='index.html'onclick='javascript:$.cookie(\"viewMode\",\"2\");$.cookie(\"tagLists\",\""+json[i].tag_body+"\");'>"+json[i].tag_body + "</a></h8><br>" +
+				"<h8><a class='art-title' href='index.html'onclick='javascript:$.cookie(\"viewMode\",\"2\");$.cookie(\"tagLists\",\""+json[i].tag_body+"\");'>"+json[i].tag_body + "</a></h8><br>" +
 				"<input type='hidden' value='"+json[i].lastest+"' name='lastest"+i+"'>"+
-				"</td><td style='border-bottom:1px solid #d3381c;'><h8><a href='/' data-remodal-target='tagdeletemodal' onclick='javascript:getTag_id("+json[i].tag_id+");return false;'>削除</a></h8></td></tr>";
+				"</td><td style='border-bottom:1px solid #d3381c;'><h8><a class='art-title' href='/' data-remodal-target='tagdeletemodal' onclick='javascript:getTag_id("+json[i].tag_id+");return false;'>削除</a></h8></td></tr>";
 
 	}
 	tagList += "</table>";

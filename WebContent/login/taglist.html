@@ -24,6 +24,7 @@
 <script type="text/javascript" src="../js/friend_script.js"></script>
 <script src="../js/lib/cookie.js"></script>
 <link rel="stylesheet" href="css/pure-drawer.css">
+<link id="viewcolor" href="css/articlemenu_black.css" rel="stylesheet">
 
 <!-- toastr -->
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css' />
@@ -128,7 +129,7 @@
         </div>
         <div class="container" >
 			<div style="margin: 100px auto;">
-			<h1>タグリスト</h1>
+			<h1 class="title">タグリスト</h1>
 				<div align="center">
 					<div id="taglist"></div>
 				</div>
@@ -153,11 +154,13 @@
 	</div>
 	<script>
 		$(document).ready(function() {
+			colorMode();
 
 				$("div.hiddenarea").append('<input type="hidden" id="nonce" value="'+ docCookies.getItem("nonce") + '">');
 
 			notice();
 			getTagList();
+
 
 		});
 	</script>

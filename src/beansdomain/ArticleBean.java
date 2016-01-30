@@ -130,10 +130,10 @@ public class ArticleBean {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleBean> viewArticleList(int user_id, int page) throws Exception {
+	public ArrayList<ArticleBean> viewArticleList(int user_id, int page, int start_article_id) throws Exception {
 		ArrayList<ArticleBean> articleList = new ArrayList<ArticleBean>();
 		this.articleDAO = new ArticleDAO();
-		article = articleDAO.lists(user_id, page);
+		article = articleDAO.lists(user_id, page,article_id);
 		for (int i = 0; i < article.size(); i++) {
 			ArticleBean articleBean = new ArticleBean();
 			articleBean.setArticle_id(article.get(i).getArticle_id());

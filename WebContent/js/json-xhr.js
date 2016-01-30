@@ -127,7 +127,7 @@ function getJSON(URL, param, callback) {
 
 	// console.log("getJSON" + param);
 	return new Promise(function(resolve, reject) {
-		getURL(URL, param).then(JSON.parse).then(callback).then(function () {
+		getURL(URL, param).then(JSON.parse).then(callback).then(function() {
 			console.log("通信がﾘｿﾞﾙﾌﾞした");
 			resolve();
 		})['catch'](function(error) {
@@ -175,4 +175,17 @@ function thumView(json, width, height) {
 		return "<img src='" + hostURL + "/img/sm2.png" + "' width='" + width
 				+ "' height='" + height + "'alt='" + json.title + "'/>";
 	}
+}
+
+function colorMode() {
+
+	var color = docCookies.getItem('color');
+
+	if (!color) {
+		color = 'white';
+		docCookies.setItem('color', color);
+	}
+
+	document.getElementById("viewcolor").href ="css/articlemenu_" + color+ ".css";
+
 }

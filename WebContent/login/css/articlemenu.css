@@ -6,14 +6,11 @@ body {
 position:relative;
 margin-left:auto; margin-right:auto; width:auto; height:auto;
 background:#333;
-color:#FFF;
 font-family:Avenir , "Open Sans" , "Helvetica Neue" , Helvetica , Arial , Verdana , Roboto ,"游ゴシック" ,  "ヒラギノ角ゴ Pro W3"  , "メイリオ"  , "ＭＳ Ｐゴシック"  ,  sans-serif;
 font-weight:100;
 -webkit-text-size-adjust: 100%;
 }
-section {
-background:#333;
-}
+
 a, a:hover {
 text-decoration:none;
 }
@@ -21,14 +18,13 @@ text-decoration:none;
 b, b:hover {
 text-decoration:none;
 }
-h1 {
-font-size:70px;
+/*テキストヘッダ用*/
+h1.text-center {
+font-size:6.5em;
 -webkit-margin-before: 0.1em;
 -webkit-margin-after: 0.1em;
-margin:0.1em;
-
-
 }
+
 p {
 font-size:39px;
 font-weight:700;
@@ -231,9 +227,13 @@ filter: blur(5px);
 }
 
 @media (max-width:767px){
-h1 {
-font-size:32px;
+h1.text-center {
+font-size:4em;
 line-height:50px;
+}
+/*ページタイトル*/
+h1.title {
+font-size:4em;
 }
 p {
 font-size:24px;
