@@ -120,7 +120,7 @@ var get_mylists = function(json) {
 		}else if(json[i].favflag==false){
 			flag=json[i].title;
 		}
-		$myList = $("<div class='"+item[random][i] + " mosaic-block bar' title='" + json[i].title +"'>" +
+		$myList = $("<div id='" + json[i].article_id+ "' class='"+item[random][i] + " mosaic-block bar' title='" + json[i].title +"'>" +
 						"<div class='mosaic-overlay'>"+
 
 						 "<div id='link-body'><a href='../login/article.html?"+json[i].article_id+"'></a></div>" +
@@ -195,7 +195,7 @@ var get_sharelists = function(json) {
 	$myList = $("<div class='grid-sizer'></div>");
 	$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
 	for ( var i = 0; i < json.length ; i++) {
-		$myList = $("<div class='"+item[random][i] + " mosaic-block bar'>" +
+		$myList = $("<div id='" + json[i].article_id+ "' class='"+item[random][i] + " mosaic-block bar'>" +
 						"<div class='mosaic-overlay'>"+
 						 "<div id='link-body'><a href='../login/article.html?"+json[i].article_id+"'></a></div>" +
 							"<div id='menu-block'>" +
@@ -302,7 +302,7 @@ var get_sharelists_list = function(json) {
 	$myList = $("<div class='grid-sizer' ></div>");
 	$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
 	for ( var i = 0; i < json.length ; i++) {
-		$myList = $("<ol>"+
+		$myList = $("<ol id='" + json[i].article_id+ "'>"+
 						"<a class='art-title' href='../login/article.html?"+json[i].article_id+"'><li class='first'>"+
 							"<div class='dan'>"+
 								thumView(json[i], "100px", "100px")+
@@ -348,7 +348,7 @@ var get_taglists = function(json) {
 	for ( var i = 0; i < json.length; i++) {
 		tagList +=
 
-				"<tr align='left' valign='top'><td style='border-bottom:1px solid #d3381c;'>"+
+				"<tr id='tagtable"+json[i].tag_id+"' align='left' valign='top'><td style='border-bottom:1px solid #d3381c;'>"+
 				"<h8><a class='art-title' href='index.html'onclick='javascript:$.cookie(\"viewMode\",\"2\");$.cookie(\"tagLists\",\""+json[i].tag_body+"\");'>"+json[i].tag_body + "</a></h8><br>" +
 				"<input type='hidden' value='"+json[i].lastest+"' name='lastest"+i+"'>"+
 				"</td><td style='border-bottom:1px solid #d3381c;'><h8><a class='art-title' href='/' data-remodal-target='tagdeletemodal' onclick='javascript:getTag_id("+json[i].tag_id+");return false;'>削除</a></h8></td></tr>";
@@ -358,6 +358,8 @@ var get_taglists = function(json) {
 	document.getElementById('taglist').innerHTML = tagList;
 	stopload();
 };
+
+
 
 // 登録しているフレンドが入ったセレクトボックスを作成
 var get_friends = function(json){

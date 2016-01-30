@@ -154,7 +154,13 @@ function deleteArticle(article_id) {
 			// 成功したらその要素を削除する
 			//console.log(json.article_id);
 			$('#' + json.article_id).remove();
+			if(tileView()){
+				//タイル表示の場合、削除した後レイアウトを整えるため必要なメソッド
+				$grid.isotope('layout');
+			}
+
 			toastr.success(json.state);
+
 		}
 	};
 	getJSON(URL, jsonParam, delete_article);
