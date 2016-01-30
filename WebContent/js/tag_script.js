@@ -1,8 +1,8 @@
 
 //タグを追加
-function addTagArticle(tag_list,article_id) {
+function addTagArticle(tag_list) {
 	var arr = [];
-	arr[0]=article_id.item(0).value;//0番目にArticle_idを入れる。
+	arr[0]=$('#article_id').val();//0番目にArticle_idを入れる。
 	for(var i=0;i<tag_list.length;i++){
 		arr[i+1]=tag_list.item(i).value;//1番目からタグが入る
 	}
@@ -46,10 +46,10 @@ function getUsingTags(){
 	getJSON(URL, jsonParam, get_using_tags);
 }
 //タグを削除
-function deleteTag(tag_id){
+function deleteTag(){
 
-	var jsonParam = "tag_id="+tag_id.item(0).value+"&nonce="+$('#nonce').val();;// 送りたいデータ
-	console.log(tag_id.item(0).value);
+	var jsonParam = "tag_id="+$('#tag_id').val()+"&nonce="+$('#nonce').val();;// 送りたいデータ
+	console.log($('#tag_id').val());
 	var URL = hostURL + "/deletetag";
 	var setappend=function(json){
 		if(json.flag=="0"){
@@ -60,7 +60,7 @@ function deleteTag(tag_id){
 	};
 	getJSON(URL, jsonParam, setappend);
 
-	tr = document.getElementById('tagtable'+tag_id.item(0).value);
+	tr = document.getElementById('tagtable'+$('#tag_id').val());
 
     tr.remove();
 

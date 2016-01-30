@@ -89,7 +89,8 @@
   </div>
 </div>
 <div id="wrap">
-<div id="article_id"></div>
+
+<!-- <div id="article_id"></div> -->
 	<section>
 <div class="remodal" data-remodal-id="tagmodal" data-remodal-options="hashTracking: false,closeOnOutsideClick:false">
   <a data-remodal-action="close" class="remodal-close" ></a>
@@ -97,7 +98,7 @@
   <ol id="tag-it"></ol>
 	<h2>既存タグ</h2>
 	<select class="tagselect" id="tagselect" ></select><BR><BR>
-	<a data-remodal-action="confirm" class="remodal-confirm" href="#"onclick="javascript:addTagArticle(document.getElementsByName('tags[]'),document.getElementsByName('article_id'));return false;">保存</a>
+	<a data-remodal-action="confirm" class="remodal-confirm" href="#"onclick="javascript:addTagArticle(document.getElementsByName('tags[]'));return false;">保存</a>
 	<a data-remodal-action="cancel" class="remodal-cancel" href="#"onclick="javascript:return false;">キャンセル</a>
 </div>
 
@@ -106,7 +107,7 @@
   <a data-remodal-action="close" class="remodal-close" ></a>
   <h2>削除しますか</h2><BR>
 
-	<a data-remodal-action="confirm" class="remodal-confirm" href="#"onclick="javascript:deleteArticle(document.getElementsByName('article_id'));return false;">削除</a>
+	<a data-remodal-action="confirm" class="remodal-confirm" href="#"onclick="javascript:deleteArticle();return false;">削除</a>
 	<a data-remodal-action="cancel" class="remodal-cancel" href="#"onclick="javascript:return false;">キャンセル</a>
 </div>
 <div class="remodal" data-remodal-id="sharemodal" data-remodal-options="hashTracking: false,closeOnOutsideClick:false"">
@@ -183,6 +184,7 @@
 					<input type="hidden" id="art-add" value="true">
 					<input type="hidden" id="mode" value="tile">
 					<input type="hidden" id="viewmode" value="0">
+					<input type="hidden" id="article_id" value="">
 				</div>
 				<section class="section">
 					<div class="head-bar">

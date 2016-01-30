@@ -1,15 +1,4 @@
-// マイリスト（タイル表示）
-//function getMyList(page) {
-//	return new Promise(function(resolve, reject) {
-//		var jsonParam = 'page=' + page;// 送りたいデータ(ページ番号）
-//		var URL = hostURL + "/mylist";
-//		document.getElementById('title').innerHTML = '<h1>マイリスト</h1>'
-//				+ '<input type="button" id="stylechange"value="AAA">';
-//		$('#viewmode').val('0');
-//		getJSON(URL, jsonParam, get_mylists);
-//		resolve();
-//	});
-//}
+//現在の状態がタイル表示かリスト表示かの判断
 function tileView() {
 	if ($.cookie("Style") === "tile") {
 		return true;
@@ -19,7 +8,7 @@ function tileView() {
 }
 
 
-// マイリスト（リスト表示）
+// マイリスト
 function getMyList(page) {
 	return new Promise(function(resolve, reject) {
 
@@ -46,7 +35,7 @@ function getMyList(page) {
 	});
 }
 
-// お気に入り（タイル表示）
+// お気に入り
 function getFavList(page) {
 	return new Promise(function(resolve, reject) {
 
@@ -66,26 +55,19 @@ function getFavList(page) {
 		getJSON(URL, jsonParam, func);
 	});
 }
-// お気に入り（リスト表示）
-//function getFavListList(page) {
-//	var jsonParam = 'page=' + page;// 送りたいデータ
-//	var URL = hostURL + "/favlist";
-//	document.getElementById('title').innerHTML = '<h1>お気に入り</h1>'
-//			+ '<input type="button" id="stylechange"value="AAA">';
-//	$('#viewmode').val("1");
-//	getJSON(URL, jsonParam, get_mylists_list);
-//}
 
-// シェア記事一覧（タイル表示）
+// シェア記事一覧
 function getShareList(friend_user_id, page) {
-
+	$('h1.title').html('シェア記事');
 	var func = get_sharelists;
 	if (tileView()) {
 		func = get_sharelists;
-		document.getElementById('title').innerHTML = '<h1>シェア記事</h1><div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
+		$('div.stylebutton').html('<button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button>');
+		//document.getElementById('title').innerHTML = '<h1>シェア記事</h1><div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
 	} else {
 		func = get_sharelists_list;
-		document.getElementById('title').innerHTML =  '<h1>シェア記事</h1><div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
+		$('div.stylebutton').html('<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
+		//document.getElementById('title').innerHTML =  '<h1>シェア記事</h1><div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
 	}
 
 	var jsonParam = "friend_user_id=" + friend_user_id + '&page=' + page;// 送りたいデータ
@@ -94,15 +76,6 @@ function getShareList(friend_user_id, page) {
 	$('#viewmode').val('3');
 	getJSON(URL, jsonParam, func);
 }
-// シェア記事一覧（リスト表示）
-//function getShareList(friend_user_id, page) {
-//	var jsonParam = "friend_user_id=" + friend_user_id + '&page=' + page;// 送りたいデータ
-//	var URL = hostURL + "/sharelist";
-//	document.getElementById('title').innerHTML = '<h1>シェア記事</h1>'
-//			+ '<input type="button" id="stylechange"value="AAA">';
-//	$('#viewmode').val('3');
-//	getJSON(URL, jsonParam, get_sharelists_list);
-//}
 
 // 記事の表示
 function getViewArticle(article_id) {
@@ -141,10 +114,9 @@ function getViewArticle(article_id) {
 	getJSON(URL, jsonParam, setappend);
 }
 // 記事の削除
-function deleteArticle(article_id) {
-	// getArticle_id(article_id);//html内の<div
-	// id='article_id'>にhiddenでarticle_idを持たせる
-	var jsonParam = "article_id=" + article_id.item(0).value+"&nonce="+$('#nonce').val();// 送りたいデータ
+function deleteArticle() {
+	console.log("article_idkun:"+$('#article_id').val());
+	var jsonParam = "article_id=" + $('#article_id').val()+"&nonce="+$('#nonce').val();// 送りたいデータ
 	var URL = hostURL + "/deletearticle";
 	var delete_article = function(json) {
 		if(json.flag=="0"){
