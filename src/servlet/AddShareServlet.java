@@ -42,7 +42,7 @@ public class AddShareServlet extends HttpServlet {
 			IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(true);
-		String resp = "{\"state\": \"unknown\", \"flag\": 0}";
+		String resp = "{\"state\": \"unknownError\", \"flag\": 0}";
 		Nonce nonce = new Nonce(request);
 		/*if(セッション情報があるなら){
 			//何もしない
@@ -89,6 +89,7 @@ public class AddShareServlet extends HttpServlet {
 				PrintWriter out = response.getWriter();
 				out.println(resp);
 			}else{
+				//article_idかfriend_idがnullな場合
 				PrintWriter out = response.getWriter();
 				out.println(resp);
 			}

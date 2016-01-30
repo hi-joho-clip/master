@@ -51,7 +51,7 @@ function deleteTag(tag_id){
 	var jsonParam = "tag_id="+tag_id.item(0).value+"&nonce="+$('#nonce').val();;// 送りたいデータ
 	console.log(tag_id.item(0).value);
 	var URL = hostURL + "/deletetag";
-	var setappend=function(){
+	var setappend=function(json){
 		if(json.flag=="0"){
 			toastr.error(json.state);
 		}else{
@@ -59,7 +59,11 @@ function deleteTag(tag_id){
 		}
 	};
 	getJSON(URL, jsonParam, setappend);
-	location.reload();
+
+	tr = document.getElementById('tagtable'+tag_id.item(0).value);
+
+    tr.remove();
+
 }
 //特定のタグの記事一覧（タイル表示）
 function getTagArticleList(tag_list,tag_id) {

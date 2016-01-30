@@ -41,7 +41,7 @@ public class DeleteFavServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(true);
 
-		String resp = "{\"state\": \"unknown\", \"flag\": 0}";
+		String resp = "{\"state\": \"unknownError\", \"flag\": 0}";
 		response.setContentType("application/json;charset=UTF-8");
 		response.setHeader("Cache-Control", "private");
 
@@ -78,6 +78,7 @@ public class DeleteFavServlet extends HttpServlet {
 				PrintWriter out = response.getWriter();
 				out.println(resp);
 			} else {
+				//article_idがnullな場合
 				PrintWriter out = response.getWriter();
 				out.println(resp);
 			}

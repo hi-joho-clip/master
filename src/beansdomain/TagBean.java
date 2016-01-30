@@ -31,9 +31,9 @@ public class TagBean {
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean deleteTag(int tag_id) throws Exception{
+	public boolean deleteTag(int tag_id,int user_id) throws Exception{
 		this.tagDAO = new TagDAO();
-		return this.tagDAO.delete(tag_id);
+		return this.tagDAO.delete(tag_id,user_id);
 
 	}
 	/**
