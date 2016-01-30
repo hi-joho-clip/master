@@ -91,7 +91,7 @@
 <div id="wrap">
 <div id="article_id"></div>
 	<section>
-<div class="remodal" data-remodal-id="tagmodal" data-remodal-options="hashTracking: false">
+<div class="remodal" data-remodal-id="tagmodal" data-remodal-options="hashTracking: false,closeOnOutsideClick:false">
   <a data-remodal-action="close" class="remodal-close" ></a>
   <h2>タグの編集</h2><BR>
   <ol id="tag-it"></ol>
@@ -101,7 +101,7 @@
 	<a data-remodal-action="cancel" class="remodal-cancel" href="#"onclick="javascript:return false;">キャンセル</a>
 </div>
 
-<div class="remodal" data-remodal-id="deletemodal"data-remodal-options="hashTracking: false" >
+<div class="remodal" data-remodal-id="deletemodal"data-remodal-options="hashTracking: false,closeOnOutsideClick:false"" >
 
   <a data-remodal-action="close" class="remodal-close" ></a>
   <h2>削除しますか</h2><BR>
@@ -109,7 +109,7 @@
 	<a data-remodal-action="confirm" class="remodal-confirm" href="#"onclick="javascript:deleteArticle(document.getElementsByName('article_id'));return false;">削除</a>
 	<a data-remodal-action="cancel" class="remodal-cancel" href="#"onclick="javascript:return false;">キャンセル</a>
 </div>
-<div class="remodal" data-remodal-id="sharemodal" data-remodal-options="hashTracking: false">
+<div class="remodal" data-remodal-id="sharemodal" data-remodal-options="hashTracking: false,closeOnOutsideClick:false"">
   <a data-remodal-action="close" class="remodal-close" ></a>
   <h2>この記事を共有する</h2><BR>
 	<select class="selectbox" id="selectbox" ></select>
