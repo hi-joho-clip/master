@@ -61,7 +61,7 @@ public class MyListServlet extends HttpServlet {
 				page = Integer.parseInt(request.getParameter("page"));
 			}
 			if (request.getParameter("article_id") != null) {
-				page = Integer.parseInt(request.getParameter("article_id"));
+				start_article_id = Integer.parseInt(request.getParameter("article_id"));
 			}
 		} catch (NumberFormatException e) {
 			//e.printStackTrace();

@@ -61,7 +61,7 @@ function startUpdate(username) {
 			//toastr.warning(e.data);
 
 			// testDataなら書き込める
-			console.erroe('JSON data: ', e.data);
+			console.error('JSON data: ', e.data);
 		}, true);
 
 		worker.postMessage({

@@ -178,14 +178,29 @@ function thumView(json, width, height) {
 }
 
 function colorMode() {
-
 	var color = docCookies.getItem('color');
-
 	if (!color) {
 		color = 'white';
 		docCookies.setItem('color', color);
 	}
-
 	document.getElementById("viewcolor").href ="css/articlemenu_" + color+ ".css";
+}
+
+function changeColor() {
+	var color = docCookies.getItem('color');
+	if (!color) {
+		color = 'black';
+		docCookies.setItem('color', color);
+	} else {
+		if (color === 'white') {
+			color = 'black';
+			docCookies.setItem('color', color);
+			document.getElementById("viewcolor").href ="css/articlemenu_" + color+ ".css";
+		} else {
+			color = 'white';
+			docCookies.setItem('color', color);
+			document.getElementById("viewcolor").href ="css/articlemenu_" + color+ ".css";
+		}
+	}
 
 }

@@ -42,11 +42,16 @@ function TESTinitPagingMylist(callback) {
 	}
 }
 
+/**
+ *
+ * @param callback
+ */
 function initPagingMylist(callback) {
 	// var page = parseInt($('#art-page').val());
 	// ページング用番号の初期化
 
 	var count = 1;
+
 	var proMylist = function() {
 		return new Promise(function(resolve, reject) {
 
@@ -58,11 +63,13 @@ function initPagingMylist(callback) {
 	};
 	// モードがタイルの場合
 	if ($('#art-page').val() === '1') {
-		// getMyListList(1);
+		$('#lastid').val('0');
 		var last_promise = proMylist();
 		last_promise.then();
 	} else {
 		// 1でないときはその分までループする
+		// 最後のIDは初期化しておく
+		$('#lastid').val('0');
 		var last_promise = proMylist();
 		for ( var i = 2; i <= parseInt($('#art-page').val()); i++) {
 			last_promise = last_promise.then(proMylist);
@@ -108,11 +115,14 @@ $(document).ready(function() {
 			if ($('#art-add').val() === 'true') {
 				// 今のページ番号を取得
 				console.log("ｹﾂ");
+
 				var page = parseInt($('#art-page').val()) + 1;
 				$('#art-page').val(page);
 				switch ($.cookie("viewMode")) {
 				case "0":
+					console.log("netstat" + isSettinOnLine());
 					if (isSettinOnLine === true) {
+						console.log("マイリスト");
 						getMyList(page);
 					} else {
 						getMyList(page);
@@ -121,6 +131,11 @@ $(document).ready(function() {
 				case "2":
 
 					// お気に入り
+					if (isSettinOnLine === true) {
+						//getFavList(page);
+					} else {
+						//getFavList(page);
+					}
 					break;
 				case "3":
 					getShareList($.cookie("shareLists"), page);
@@ -145,6 +160,7 @@ $(document).ready(function() {
 			$.cookie('Style', 'list');
 			$('#art-page').val("1");
 			$('#art-add').val("true");
+			$('#lastid').val('0');
 			$('div.grid').css({
 				'height' : '0px'
 			});
@@ -154,16 +170,17 @@ $(document).ready(function() {
 			$('#mode').val("tile");
 			$.cookie('Style', 'tile');
 			$('#art-page').val("1");
+			$('#lastid').val('0');
 			$('#art-add').val("true");
 			console.log("今の状態：" + $('#mode').val());
 			styleListChange();
 		}
 	});
 
+	styleListChange();
 	if (isSettinOnLine()) {
 		initTopPage();
 	}
-	styleListChange();
 
 });
 
@@ -196,6 +213,8 @@ function isSettinOnLine() {
 // タイルリスト表示を押したときに走るメソッド
 function styleListChange() {
 	startload();
+
+	// 1ページ目へ戻すよ
 	switch ($.cookie("viewMode")) {
 	case "0":// マイリスト画面を表示しているとき
 		$('.grid').empty();

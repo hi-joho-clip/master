@@ -65,7 +65,7 @@ function getArticleID(article_id) {
 				}, function(values) {
 					// console.log("values = " + JSON.stringify(values));
 					// console.log("done.");
-					//console.log(values[0]['id']);
+					console.log(values[0]['id']);
 					resolve(values[0]['id']);
 					// console.log(values.body.created);
 				});
@@ -157,7 +157,7 @@ function updateArticleDelete(id) {
 
 		// 更新処理
 		tutorial.tx([ "article" ], "readwrite", function(tx, todo) {
-			todo.del( {filter : article_del_filter}
+			todo.del( id
 					, function() {
 				console.log("done. key = ");
 				// 成功時はキーを渡す
@@ -411,7 +411,7 @@ function getIDBAllArticleList(username) {
 function getArticleInstance() {
 	var tutorial = new KageDB({
 		name : "clip",
-		version : 1,
+		version : 4,
 		migration : {
 			1 : function(ctx, next) {
 				var db = ctx.db;

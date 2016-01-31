@@ -12,6 +12,10 @@ li.first {
 a.art-title {
 	color:#FFF;
 }
+a.art-title:hover {
+	color:#CD0A0A;
+}
+
 
 .absolute {
 	color:#FFF;
@@ -20,4 +24,8 @@ a.art-title {
 
 #menu-block {
 	background: #333;
+}
+
+.first:hover {
+	background: #444;
 }

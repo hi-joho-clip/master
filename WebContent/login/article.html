@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="../css/stylesheet.css" type="text/css"
 	media="screen" title="no title" charset="utf-8">
 
+
 	<link id="viewcolor" href="css/articlemenu_black.css" rel="stylesheet">
 
 <script src="../js/jquery/jquery-2.1.4.min.js" type="text/javascript"
@@ -285,6 +286,11 @@ div[data-wysihtml5-dialog="createTable"] td {
 	margin-right: 2em;
 	margin-bottom: 1em;
 }
+
+.view-title  {
+	font-size:4em;
+}
+
 </style>
 
 
@@ -356,8 +362,9 @@ div[data-wysihtml5-dialog="createTable"] td {
 
 			<div class="container">
 				<div style="margin: 100px auto;">
-					<h7>
-					<div class="title"></div>
+
+					<div class="view-title"></div>
+					<div class="changecolor"><input type="button" onclick="javascript:changeColor()"></div>
 					<div id="image" style="padding-top:20px"></div>
 					</h7>
 
