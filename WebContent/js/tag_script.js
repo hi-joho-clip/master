@@ -82,10 +82,10 @@ function getTagArticleList(tag_list,tag_id) {
 	var func = get_mylists;
 	if (tileView()) {
 		func = get_mylists;
-		document.getElementById('title').innerHTML = '<h1>'+title+'</h1>'+'<div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
+		document.getElementById('title').innerHTML = '<h1 class="title">'+title+'</h1>'+'<div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
 	} else {
 		func = get_mylists_list;
-		document.getElementById('title').innerHTML =  '<h1>'+title+'</h1>'+'<div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
+		document.getElementById('title').innerHTML =  '<h1 class="title">'+title+'</h1>'+'<div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
 	}
 	$('#viewmode').val('2');
 	var URL = hostURL + "/tagarticlelist";

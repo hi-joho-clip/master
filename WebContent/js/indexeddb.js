@@ -145,7 +145,7 @@ function updateArticleDelete(id) {
 
 	return new Promise(function(resolve, reject) {
 		// ユーザ名でDB識別
-		console.log("hhhhhhh"+article_id);
+		//console.log("hhhhhhh"+id);
 
 		// console.log('jsonarticle:' + article['article_id']);
 		// スキーマのインスタンス取得
@@ -159,7 +159,7 @@ function updateArticleDelete(id) {
 		tutorial.tx([ "article" ], "readwrite", function(tx, todo) {
 			todo.del( id
 					, function() {
-				console.log("done. key = ");
+				//console.log("done. key = ");
 				// 成功時はキーを渡す
 				resolve();
 			});
@@ -243,7 +243,7 @@ function updateIDBArticleListDelete(values) {
 
 	var pro_list = [];
 
-	console.log("きているうううううううう");
+	//console.log("きているうううううううう");
 
 	/*
 	 * PromiseAll（promiseサーバ通信→promise書き込み）これをリスト分回す（全部完了したら成功にする） param :
@@ -251,7 +251,7 @@ function updateIDBArticleListDelete(values) {
 	 */
 	for ( var art_json in jsons) {
 		param = jsons[art_json].article_id;
-		console.log("パラメータ:" + param);
+		//console.log("パラメータ:" + param);
 		pro_list.push(getArticleID(param).then(updateArticleDelete));
 	}
 	if (pro_list) {
