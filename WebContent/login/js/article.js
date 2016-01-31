@@ -4,25 +4,10 @@
 
 $(window).bind("unload", function() {
 });
-$(document).ready(
-		function() {
-			$('.isotope').isotope({
-				itemSelector : '.item',
-				masonry : {
-					columnWidth : 100
-				}
-			});
-			$('#tag-it').tagit({
-				fieldName : "tags[]",
-				tagLimit : 15,
-				autocomplete : {}
-			});
-
-			$("div.hiddenarea").append(
-					'<input type="hidden" id="nonce" value="'
-							+ docCookies.getItem("nonce") + '">');
-
-		});
+//$(document).ready(
+//		function() {
+//
+//		});
 
 function TESTinitPagingMylist(callback) {
 	// var page = parseInt($('#art-page').val());
@@ -105,6 +90,23 @@ $(document).ready(function() {
 			columnWidth : '.grid-sizer'
 		},
 	});
+
+	$('.isotope').isotope({
+		itemSelector : '.item',
+		masonry : {
+			columnWidth : 100
+		}
+	});
+	$('#tag-it').tagit({
+		fieldName : "tags[]",
+		tagLimit : 15,
+		autocomplete : {}
+	});
+
+	$("div.hiddenarea").append(
+			'<input type="hidden" id="nonce" value="'
+					+ docCookies.getItem("nonce") + '">');
+
 
 	$(window).on("scroll", function() {
 		var scrollHeight = $(document).height();
