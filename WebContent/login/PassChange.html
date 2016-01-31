@@ -20,12 +20,13 @@
 
 <script src="../js/1.11.1_jquery.min.js"></script>
 <script src="js/articlemenu.js"></script>
+<script src="../js/lib/cookie.js"></script>
 <script src="../js/user_script.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="../js/jquery/isotope.pkgd.min.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery.cookie.js"></script>
 <script type="text/javascript" src="../js/json-xhr.js"></script>
-
+<script src='js/toastr.min.js'></script>
 <link rel="stylesheet" href="css/pure-drawer.css">
 
 <!-- 読み込み中 -->
@@ -110,7 +111,7 @@
 
 
 	<!--　変更  -->
-	<form id="form" method="post" action="../updatepassword">
+	<form id="form" method="post" >
 		<div class="form-item">
 			<!--　新しいパスワード  -->
 			<label for="newpassword"></label> <input type="password"
@@ -126,12 +127,16 @@
 		<div class="form-item">
 			<!--　現在のパスワード  -->
 			<label for="password"></label> <input type="password" name="password"
-				required="required" placeholder="Password(現在)" ></input>
+				required="required" placeholder="Password(現在)"  id="now_pass"></input>
 		</div>
+
+		<div id="pass"></div>
+
 		<!--　変更ボタン  -->
 		<div class="button-panel">
-			<input type="submit" class="button" title="Change" value="Change"></input>
+			<input type="button" class="button" title="Change" value="Change" onclick="javascript:pass();"></input>
 		</div>
+		<input type="hidden" id="nonce" value="" name="nonce" >
 	</form>
 	<div class="form-footer">
 
@@ -157,6 +162,9 @@
 <script>
 	jQuery(document).ready(function() {
 		jQuery("#form").validationEngine();
+	});
+	$(document).ready(function() {
+		$('#nonce').val(docCookies.getItem("nonce"));
 	});
 </script>
 </div>
