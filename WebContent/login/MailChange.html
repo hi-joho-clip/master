@@ -20,12 +20,13 @@
 
 <script src="../js/1.11.1_jquery.min.js"></script>
 <script src="js/articlemenu.js"></script>
+<script src="../js/lib/cookie.js"></script>
 <script src="../js/user_script.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="../js/jquery/isotope.pkgd.min.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery.cookie.js"></script>
 <script type="text/javascript" src="../js/json-xhr.js"></script>
-
+<script src='js/toastr.min.js'></script>
 <link rel="stylesheet" href="css/pure-drawer.css">
 
 <!-- 読み込み中 -->
@@ -109,7 +110,7 @@
   <h6><div id="info"></div></h6>
 
   <!--　変更  -->
-  <form id="form" method="post" action="../updatemailaddress">
+  <form id="form" method="post" >
     <div class="form-item">
       <!--　メールアドレス  -->
       <label for="newemail"></label>
@@ -123,12 +124,16 @@
     <div class="form-item">
       <!--　パスワード  -->
       <label for="password"></label>
-      <input type="password" name="password" required="required" placeholder="Password"></input>
+      <input type="password" name="password" required="required" placeholder="Password" id="passwd"></input>
     </div>
+
+    <div id="mail"></div>
+
       <!--　変更ボタン  -->
     <div class="button-panel">
-      <input type="submit" class="button" title="Change" value="Change"></input>
+      <input type="button" class="button" title="Change" value="Change" onclick="javascript:mail();"></input>
     </div>
+    <input type="hidden" id="nonce" value="" name="nonce" >
   </form>
   <div class="form-footer">
 
@@ -154,6 +159,7 @@
 <script>
 	$(document).ready(function() {
 		MailAddress();
+		$('#nonce').val(docCookies.getItem("nonce"));
 	});
 
 	jQuery(document).ready(function() {
