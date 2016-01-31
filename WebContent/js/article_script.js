@@ -265,7 +265,8 @@ function updateArticle() {
 
 // シェア記事の追加
 function shareArticle(friend_user_id) {
-	var param = "article_id=" + $('article_id').val() + "&friend_id="
+	console.log("Share:"+$('#article_id').val());
+	var param = "article_id=" + $('#article_id').val() + "&friend_id="
 			+ friend_user_id + "&nonce="+$('#nonce').val();
 
 	var URL = hostURL + "/addshare";
