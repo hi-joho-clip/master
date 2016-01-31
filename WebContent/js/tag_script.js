@@ -1,8 +1,8 @@
 
 //タグを追加
-function addTagArticle(tag_list,article_id) {
+function addTagArticle(tag_list) {
 	var arr = [];
-	arr[0]=article_id.item(0).value;//0番目にArticle_idを入れる。
+	arr[0]=$('#article_id').val();//0番目にArticle_idを入れる。
 	for(var i=0;i<tag_list.length;i++){
 		arr[i+1]=tag_list.item(i).value;//1番目からタグが入る
 	}
@@ -46,12 +46,12 @@ function getUsingTags(){
 	getJSON(URL, jsonParam, get_using_tags);
 }
 //タグを削除
-function deleteTag(tag_id){
+function deleteTag(){
 
-	var jsonParam = "tag_id="+tag_id.item(0).value+"&nonce="+$('#nonce').val();;// 送りたいデータ
-	console.log(tag_id.item(0).value);
+	var jsonParam = "tag_id="+$('#tag_id').val()+"&nonce="+$('#nonce').val();;// 送りたいデータ
+	console.log($('#tag_id').val());
 	var URL = hostURL + "/deletetag";
-	var setappend=function(){
+	var setappend=function(json){
 		if(json.flag=="0"){
 			toastr.error(json.state);
 		}else{
@@ -59,27 +59,33 @@ function deleteTag(tag_id){
 		}
 	};
 	getJSON(URL, jsonParam, setappend);
-	location.reload();
+
+	document.getElementById('tagtable'+$('#tag_id').val()).remove();
+
+
 }
 //特定のタグの記事一覧（タイル表示）
 function getTagArticleList(tag_list,tag_id) {
 
-	var func = get_mylists;
-	if (tileView()) {
-		func = get_mylists;
-	} else {
-		func = get_mylists_list;
-	}
-
+	var title = "";
 	if(tag_id==0 && tag_list!=0){//tag_idが0なら、タグが複数あるリストをもとに検索をして一覧表示させる処理
 		for(var i=0;i<tag_list.length;i++){
 			arr[i]=tag_list.item(i).value;//1番目からタグが入る
 		}
 		taglists = "tag_list="+JSON.parse(JSON.stringify(arr));
-		document.getElementById('title').innerHTML = '<h1>'+JSON.parse(JSON.stringify(arr))+'</h1>'+'<div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
+		title = JSON.parse(JSON.stringify(arr));
+
 	}else if(tag_list==0 && tag_id!=0){//tag_listが0なら、特定のタグをクリックして一覧表示させる処理
 		taglists = "tag_list="+tag_id;
-		document.getElementById('title').innerHTML =  '<h1>'+tag_id+'</h1>'+'<div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
+		title = tag_id;
+	}
+	var func = get_mylists;
+	if (tileView()) {
+		func = get_mylists;
+		document.getElementById('title').innerHTML = '<h1>'+title+'</h1>'+'<div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
+	} else {
+		func = get_mylists_list;
+		document.getElementById('title').innerHTML =  '<h1>'+title+'</h1>'+'<div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
 	}
 	$('#viewmode').val('2');
 	var URL = hostURL + "/tagarticlelist";

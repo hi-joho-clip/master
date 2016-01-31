@@ -42,7 +42,7 @@ public class AddFavServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(true);
 
-		String resp = "{\"state\": \"unknown\", \"flag\": 0}";
+		String resp = "{\"state\": \"unknownError\", \"flag\": 0}";
 		response.setContentType("application/json;charset=UTF-8");
 		response.setHeader("Cache-Control", "private");
 

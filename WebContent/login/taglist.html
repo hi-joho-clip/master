@@ -65,24 +65,24 @@
 </div>
 <div id="wrap">
 
-<div id="tag_id"></div>
-<div class="remodal" data-remodal-id="tagdeletemodal" data-remodal-options="hashTracking: false">
+<!-- <div id="tag_id"></div> -->
+<div class="remodal" data-remodal-id="tagdeletemodal" data-remodal-options="hashTracking: false,closeOnOutsideClick:false"">
 
   <a data-remodal-action="close" class="remodal-close" ></a>
   <h2>削除しますか</h2><BR><BR>
 
-	<a data-remodal-action="confirm" class="remodal-confirm" href="#"onclick="javascript:deleteTag(document.getElementsByName('tag_id'));return false;">削除</a>
+	<a data-remodal-action="confirm" class="remodal-confirm" href="#"onclick="javascript:deleteTag();return false;">削除</a>
 	<a data-remodal-action="cancel" class="remodal-cancel" href="#"onclick="javascript:return false;">キャンセル</a>
 </div>
 
 	<section>
 		  <div class="pure-container" data-effect="pure-effect-slide">
             <input type="checkbox" id="pure-toggle-left" class="pure-toggle" data-toggle="left"/>
-            <input type="checkbox" id="pure-toggle-right" class="pure-toggle" data-toggle="right"/>
+
 
 
             <label class="pure-toggle-label" for="pure-toggle-left" data-toggle-label="left"><span class="pure-toggle-icon"></span></label>
-            <label class="pure-toggle-label" for="pure-toggle-right" data-toggle-label="right"><span class="pure-toggle-icon"></span></label>
+
 
 
             <nav class="pure-drawer" data-position="left">
@@ -111,27 +111,17 @@
 				 <div id="bg-link">
 					<a href="FriendSeach.html"><h4>フレンド検索</h4></a>
 				 </div>
-				 <div id="bg-link">
-					<a href="index.html" onclick="javascript:$.cookie('viewMode','4');"><h4>LISTTEST</h4></a>
-				 </div>
 				</p>
             </nav>
-            <nav class="pure-drawer" data-position="right">
-					 <p2><p><br>
-					 <input type="search" name="search-1" id="searchbox" value=""  placeholder="検索ワード">
-					 <input type="button" id="titlesearch" value="検索">
-					 <input type="search" name="search-2" id="search-2" value="" placeholder="http://..." class="validate[required,custom[url]] text-input">
-					 <input type="button" id="add-article" value="記事追加">
-					</p></p2>
-            </nav>
+
             <label class="pure-overlay" for="pure-toggle-left" data-overlay="left"></label>
-            <label class="pure-overlay" for="pure-toggle-right" data-overlay="right"></label>
         </div>
         <div class="container" >
 			<div style="margin: 100px auto;">
 			<h1 class="title">タグリスト</h1>
 				<div align="center">
 					<div id="taglist"></div>
+					<input type="hidden" id="tag_id" value="">
 				</div>
 				</div>
 				<section class="section">

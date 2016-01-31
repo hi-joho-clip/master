@@ -44,22 +44,26 @@ public class DeleteTagServlet extends HttpServlet {
 		response.setHeader("Cache-Control", "private");
 		String resp = "{\"state\": \"unknownError\",  \"flag\": 0}";
 		Nonce nonce = new Nonce(request);
-		/*if(セッション情報があるなら){
-			//何もしない
-		}else if(セッション情報がないなら){
-			//ログイン画面に戻る
-		}*/
+
 		/*************************************
 		****タグ画面からタグを削除したとき****
 		**************************************/
+		int user_id=0;
+		int tag_id=0;
 		// タグの削除
 		if(nonce.isNonce()){
 			if (request.getParameter("tag_id")!=null){
-				int tag_id = Integer.parseInt(request.getParameter("tag_id"));
+				try {
+					tag_id = Integer.parseInt(request.getParameter("tag_id"));
+					user_id = (int) session.getAttribute("user_id");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				TagBean tagbean = new TagBean();
 				tagbean.setTag_id(tag_id);
+
 				try {
-					if(tagbean.deleteTag(tag_id)){
+					if(tagbean.deleteTag(tag_id,user_id)){
 						//成功したポップアップを表示
 						resp = "{\"state\": \"削除しました\", \"flag\": 1}";
 					}else{
@@ -70,6 +74,10 @@ public class DeleteTagServlet extends HttpServlet {
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
 				}
+				PrintWriter out = response.getWriter();
+				out.println(resp);
+			}else{
+				//tag_idがnullな場合
 				PrintWriter out = response.getWriter();
 				out.println(resp);
 			}

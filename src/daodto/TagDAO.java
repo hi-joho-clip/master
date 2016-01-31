@@ -82,13 +82,14 @@ public class TagDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean delete(int tag_id) throws Exception {
+	public boolean delete(int tag_id,int user_id) throws Exception {
 		PreparedStatement pstmt = null;
 		boolean flag = false;
-		String sql = "DELETE FROM tags WHERE tag_id =?";
+		String sql = "DELETE FROM tags WHERE tag_id =? AND user_id=?";
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, tag_id);
+			pstmt.setInt(2, user_id);
 			pstmt.executeUpdate();
 			flag = true;
 		} catch (Exception e) {

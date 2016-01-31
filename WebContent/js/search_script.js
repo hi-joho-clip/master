@@ -6,7 +6,6 @@ $(document).on('click', '#titlesearch', function() {
 	document.getElementById('pure-toggle-right').checked=false;
 	console.log("viewmodehidden:" + $('#viewmode').val());
 
-	console.log("cookie:" + $.cookie("viewMode"));
 	var word = document.getElementById('searchbox').value;
 
 	switch ($('#viewmode').val()) {

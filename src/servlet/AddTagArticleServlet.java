@@ -47,7 +47,7 @@ public class AddTagArticleServlet extends HttpServlet {
 		}else if(セッション情報がないなら){
 			//ログイン画面に戻る
 		}*/
-		String resp = "{\"state\": \"unknown\", \"flag\": 0}";
+		String resp = "{\"state\": \"unknownError\", \"flag\": 0}";
 		Nonce nonce = new Nonce(request);
 
 		// ***&nonce=nonnsutati
@@ -91,6 +91,7 @@ public class AddTagArticleServlet extends HttpServlet {
 				PrintWriter out = response.getWriter();
 				out.println(resp);
 			}else{
+				//タグリストがnullな場合
 				PrintWriter out = response.getWriter();
 				out.println(resp);
 			}

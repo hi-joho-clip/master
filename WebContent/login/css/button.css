@@ -90,7 +90,7 @@
 .absolute {
     position: absolute;
     font-family:Avenir , "Open Sans" , "Helvetica Neue" , Helvetica , Arial , Verdana , Roboto ,"ŸàƒSƒVƒbƒN" ,  "ƒqƒ‰ƒMƒmŠpƒS Pro W3"  , "ƒƒCƒŠƒI"  , "‚l‚r ‚oƒSƒVƒbƒN"  ,  sans-serif;
-    top: 1px;
+    top: 0px;
     /*color: #fff;*/
      font-size: 22px;
     /*background: rgba(0,0,0,0.8);*/
@@ -107,7 +107,7 @@
 .absolute {
     position: absolute;
     font-family:Avenir , "Open Sans" , "Helvetica Neue" , Helvetica , Arial , Verdana , Roboto ,"ŸàƒSƒVƒbƒN" ,  "ƒqƒ‰ƒMƒmŠpƒS Pro W3"  , "ƒƒCƒŠƒI"  , "‚l‚r ‚oƒSƒVƒbƒN"  ,  sans-serif;
-    top: 1px;
+    top: 0px;
     /*color: #fff;*/
      font-size: 18px;
     /*background: rgba(0,0,0,0.8);*/
