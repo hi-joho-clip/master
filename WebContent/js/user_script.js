@@ -348,6 +348,7 @@ function MailAddress() {
 	getJSON(URL, jsonParam, setappend);
 }
 
+//ニックネーム変更時
 function nick() {
 	var jsonParam = "newnickname=" + nickname.value + '&password=' + passwd.value+"&nonce="+ nonce.value ;// 送りたいデータ
 	console.log(jsonParam);
@@ -363,6 +364,46 @@ function nick() {
 		}
 
 		document.getElementById('nick').innerHTML = userList;
+	};
+	getJSON(URL, jsonParam, setappend);
+}
+
+//メールアドレス変更時
+function mail() {
+	var jsonParam = "newemail=" + email.value + '&password=' + passwd.value+"&nonce="+ nonce.value ;// 送りたいデータ
+	console.log(jsonParam);
+	var URL = hostURL + "/updatemailaddress";
+	var userList = "";
+	var setappend = function(json) {
+		if(json.flag==0){
+			toastr.error(json.state);
+		}else if(json.flag==1){
+			toastr.success(json.state);
+		}else if(json.flag==2){
+			userList += json.ErrorMessage;
+		}
+
+		document.getElementById('mail').innerHTML = userList;
+	};
+	getJSON(URL, jsonParam, setappend);
+}
+
+//パスワード変更時
+function pass() {
+	var jsonParam = "newpassword=" + passwd.value + '&password=' + now_pass.value+"&nonce="+ nonce.value ;// 送りたいデータ
+	console.log(jsonParam);
+	var URL = hostURL + "/updatepassword";
+	var userList = "";
+	var setappend = function(json) {
+		if(json.flag==0){
+			toastr.error(json.state);
+		}else if(json.flag==1){
+			toastr.success(json.state);
+		}else if(json.flag==2){
+			userList += json.ErrorMessage;
+		}
+
+		document.getElementById('pass').innerHTML = userList;
 	};
 	getJSON(URL, jsonParam, setappend);
 }
