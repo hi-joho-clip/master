@@ -80,7 +80,7 @@
 </style>
 </head>
 
-<body>
+<body id="body" value="auto">
 
 <div id="loader-bg">
   <div id="loader">
@@ -158,7 +158,7 @@
 				 <!-- <div id="bg-link">
 					<a href="index.html" onclick="javascript:$.cookie('viewMode','4');"><h4>LISTTEST</h4></a>
 				 </div>-->
-				</p>
+
             </nav>
             <nav class="pure-drawer" data-position="right">
 					 <p2><p><br>
@@ -182,6 +182,7 @@
 					<input type="hidden" id="art-page" value="1">
 					<input type="hidden" id="art-add" value="true">
 					<input type="hidden" id="mode" value="tile">
+					<input type="hidden" id="lastid" value="0">
 					<input type="hidden" id="viewmode" value="0">
 				</div>
 				<section class="section">
@@ -207,6 +208,16 @@
 		$(document).ready(function() {
 			notice();
 			colorMode();
+
+
+			$(document).on('click', '.pure-toggle-label', function() {
+				// 今のページ番号を取得
+				/**if ($('#body').val() === 'auto') {
+					$('#body').attr('style', 'overflow: auto;')
+				} else {
+					$('#body').attr('style', 'overflow: hidden;')
+				}*/
+			});
 
 		});
 	</script>

@@ -178,7 +178,8 @@ function addViewNext(json) {
 	// 20件以上の場合はValueを加算し、20件未満の場合はボタンを削除する。
 	if (json.length > 19) {
 		console.log('number:' + $('#art-page').val());
-		// $('#art-page').val(parseInt($('#art-page').val()) - 1);
+		// 最後に読み込んだArticleIDを残す
+		$('#lastid').val(json[json.length-1].article_id);
 	} else if (json.length <= 19){
 		console.log("under 19");
 		// 無限読み込み停止用

@@ -32,9 +32,10 @@ function getMyList(page) {
 			func = get_mylists_list;
 			$('div.stylebutton').html('<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
 		}
-		var jsonParam = 'page=' + page;// 送りたいデータ(ページ番号）
+		var jsonParam = 'page=' + page + '&article_id=' + $('#lastid').val();// 送りたいデータ(ページ番号）
 		var URL = hostURL + "/mylist";
 
+		console.log(jsonParam);
 
 		$('#viewmode').val('0');
 		console.log(page + 'ゲットおおお');
@@ -59,7 +60,7 @@ function getFavList(page) {
 			$('div.stylebutton').html('<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
 		}
 
-		var jsonParam = 'page=' + page;// 送りたいデータ
+		var jsonParam = 'page=' + page + '&article_id=' + $('#lastid').val();// 送りたいデータ
 		var URL = hostURL + "/favlist";
 
 		$('#viewmode').val("1");
@@ -121,7 +122,7 @@ function getViewArticle(article_id) {
 				'<input type="hidden" id="nonce" value="'
 						+ docCookies.getItem("nonce") + '">');
 
-		$("div.title").append(json.title + "<br>");
+		$("div.view-title").append(json.title + "<br>");
 		$("div#editable").append(json.body);
 
 		var con_type = "jpeg";
@@ -186,7 +187,7 @@ function addFavArticle(article_id) {
 				if(json.flag=="0"){
 					toastr.error(json.state);
 				}else{
-					$('#' + favtitle).attr('style', 'color:#FFEB3B');
+					$('#' + favtitle).attr('style', 'color:#FDB91B');
 					document.getElementById(favtitle).innerHTML = "★"
 							+ document.getElementById(title).value
 							+ "<BR><a href='" + document.getElementById(url).value
@@ -201,7 +202,7 @@ function addFavArticle(article_id) {
 				if(json.flag=="0"){
 					toastr.error(json.state);
 				}else{
-					$('#' + favtitle).attr('style', 'color:#FFEB3B');
+					$('#' + favtitle).attr('style', 'color:#FDB91B');
 					document.getElementById(favtitle).innerHTML = "★"
 							+ document.getElementById(title).value;
 					// グローバルflagをfalseにする
@@ -225,7 +226,7 @@ function addFavArticle(article_id) {
 				if(json.flag=="0"){
 					toastr.error(json.state);
 				}else{
-					$('#' + favtitle).removeAttr('style', 'color:#FFEB3B');
+					$('#' + favtitle).removeAttr('style', 'color:#FDB91B');
 
 					document.getElementById(favtitle).innerHTML = document
 							.getElementById(title).value
@@ -243,7 +244,7 @@ function addFavArticle(article_id) {
 				if(json.flag=="0"){
 					toastr.error(json.state);
 				}else{
-					$('#' + favtitle).removeAttr('style', 'color:#FFEB3B');
+					$('#' + favtitle).removeAttr('style', 'color:#FDB91B');
 
 
 					document.getElementById(favtitle).innerHTML = document

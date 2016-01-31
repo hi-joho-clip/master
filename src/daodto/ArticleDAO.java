@@ -766,6 +766,7 @@ public class ArticleDAO {
 	public ArrayList<ArticleDTO> lists(int user_id, int page, int article_id) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		System.out.println(page +":::" + article_id);
 		int def_page = 0;
 		if (page != 0) {
 			def_page = 20 * (page - 1);
@@ -779,7 +780,7 @@ public class ArticleDAO {
 
 		String art_sql = " select * from articles where id = any (SELECT id FROM mylists WHERE user_id = ? and share_flag = 0 ) and "
 				+
-				"modified <= (select modified from articles where article_id = ?) " +
+				"modified < (select modified from articles where article_id = ?) " +
 				" order by modified desc limit 20 offset ?;";
 		try {
 			if (article_id == 0) {
@@ -793,8 +794,9 @@ public class ArticleDAO {
 				pstmt = con.prepareStatement(art_sql);
 				pstmt.setInt(1, user_id);
 				pstmt.setInt(2, article_id);
-				pstmt.setInt(3, def_page);
+				pstmt.setInt(3, 0);
 			}
+			//System.out.println(pstmt);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				ArticleDTO article = new ArticleDTO();

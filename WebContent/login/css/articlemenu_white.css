@@ -13,12 +13,25 @@ li.first {
 a.art-title {
 	color:#313131;
 }
+a.art-title:hover {
+	color:#CD0A0A;
+}
+
 
 .absolute {
 	color:#313131;
-	background:rgba(255,255,255,0.9);
+	background:rgba(255,255,255,1);
 }
+
+.absolute:hover {
+	color:#CD0A0A;
+}
+
 
 #menu-block {
 	background: #FFF;
+}
+
+.first:hover {
+	background: #EEE;
 }
