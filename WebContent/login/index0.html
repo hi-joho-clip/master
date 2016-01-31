@@ -82,6 +82,45 @@
 
 <body id="body" value="auto">
 
+<div id="loader-bg">
+  <div id="loader">
+
+    <p>Now Loading...</p>
+  </div>
+</div>
+<div id="wrap">
+
+<!-- <div id="article_id"></div> -->
+	<!-- <section> -->
+<div class="remodal" data-remodal-id="tagmodal" data-remodal-options="hashTracking: false,closeOnOutsideClick:false">
+  <a data-remodal-action="close" class="remodal-close" ></a>
+  <h2>タグの編集</h2><BR>
+  <ol id="tag-it"></ol>
+	<h2>既存タグ</h2>
+	<select class="tagselect" id="tagselect" ></select><BR><BR>
+	<a data-remodal-action="confirm" class="remodal-confirm" href="#"onclick="javascript:addTagArticle(document.getElementsByName('tags[]'));return false;">保存</a>
+	<a data-remodal-action="cancel" class="remodal-cancel" href="#"onclick="javascript:return false;">キャンセル</a>
+</div>
+
+<div class="remodal" data-remodal-id="deletemodal"data-remodal-options="hashTracking: false,closeOnOutsideClick:false"" >
+
+  <a data-remodal-action="close" class="remodal-close" ></a>
+  <h2>削除しますか</h2><BR>
+
+	<a data-remodal-action="confirm" class="remodal-confirm" href="#"onclick="javascript:deleteArticle();return false;">削除</a>
+	<a data-remodal-action="cancel" class="remodal-cancel" href="#"onclick="javascript:return false;">キャンセル</a>
+</div>
+<div class="remodal" data-remodal-id="sharemodal" data-remodal-options="hashTracking: false,closeOnOutsideClick:false"">
+  <a data-remodal-action="close" class="remodal-close" ></a>
+  <h2>この記事を共有する</h2><BR>
+	<select class="selectbox" id="selectbox" ></select>
+<BR>
+<BR>
+	<a data-remodal-action="confirm" class="remodal-confirm" href="#"onclick="javascript:shareArticle(document.getElementById('selectbox').value);return false;">共有</a>
+	<a data-remodal-action="cancel" class="remodal-cancel" href="#"onclick="javascript:return false;">キャンセル</a>
+</div>
+
+
 		  <div class="pure-container" data-effect="pure-effect-slide">
             <input type="checkbox" id="pure-toggle-left" class="pure-toggle" data-toggle="left"/>
             <input type="checkbox" id="pure-toggle-right" class="pure-toggle" data-toggle="right"/>
@@ -134,46 +173,6 @@
 	        <div class="pure-pusher-container">
 				<div  class="pure-pusher" >
 					<!-- このDIV内にコンテンツをいれるんだぞい -->
-
-					<div id="loader-bg">
-					  <div id="loader">
-
-					    <p>Now Loading...</p>
-					  </div>
-					</div>
-					<div id="wrap">
-
-					<!-- <div id="article_id"></div> -->
-						<!-- <section> -->
-					<div class="remodal" data-remodal-id="tagmodal" data-remodal-options="hashTracking: false,closeOnOutsideClick:false">
-					  <a data-remodal-action="close" class="remodal-close" ></a>
-					  <h2>タグの編集</h2><BR>
-					  <ol id="tag-it"></ol>
-						<h2>既存タグ</h2>
-						<select class="tagselect" id="tagselect" ></select><BR><BR>
-						<a data-remodal-action="confirm" class="remodal-confirm" href="#"onclick="javascript:addTagArticle(document.getElementsByName('tags[]'));return false;">保存</a>
-						<a data-remodal-action="cancel" class="remodal-cancel" href="#"onclick="javascript:return false;">キャンセル</a>
-					</div>
-
-					<div class="remodal" data-remodal-id="deletemodal"data-remodal-options="hashTracking: false,closeOnOutsideClick:false"" >
-
-					  <a data-remodal-action="close" class="remodal-close" ></a>
-					  <h2>削除しますか</h2><BR>
-
-						<a data-remodal-action="confirm" class="remodal-confirm" href="#"onclick="javascript:deleteArticle();return false;">削除</a>
-						<a data-remodal-action="cancel" class="remodal-cancel" href="#"onclick="javascript:return false;">キャンセル</a>
-					</div>
-					<div class="remodal" data-remodal-id="sharemodal" data-remodal-options="hashTracking: false,closeOnOutsideClick:false"">
-					  <a data-remodal-action="close" class="remodal-close" ></a>
-					  <h2>この記事を共有する</h2><BR>
-						<select class="selectbox" id="selectbox" ></select>
-					<BR>
-					<BR>
-						<a data-remodal-action="confirm" class="remodal-confirm" href="#"onclick="javascript:shareArticle(document.getElementById('selectbox').value);return false;">共有</a>
-						<a data-remodal-action="cancel" class="remodal-cancel" href="#"onclick="javascript:return false;">キャンセル</a>
-					</div>
-
-
 					<div class="container"  style="margin: 100px auto;">
 						<div id="title" >
 						<h1 class="title"></h1>
@@ -188,14 +187,15 @@
 							<input type="hidden" id="viewmode" value="0">
 							<input type="hidden" id="article_id" value="">
 						</div>
-						<div class="hiddenarea"></div>
-						</div>
 						<section class="section">
 							<div class="head-bar">
 								<div class="container-fluid">
 									<h1 class="text-center">
+
 							<a href="index.html"  onclick="javascript:$.cookie('viewMode','0');">CLIP</a>
+
 		                 </h1>
+
 								</div>
 							</div>
 						</section>
@@ -204,10 +204,12 @@
 				 <label class="pure-overlay" for="pure-toggle-left" data-overlay="left"></label>
             	<label class="pure-overlay" for="pure-toggle-right" data-overlay="right"></label>
 
-			</div>
+		</div>
+		<div class="hiddenarea"></div>
 		</div>
 
 	<!-- </section> -->
+	</div>
 
 	<script>
 		$(document).ready(function() {
