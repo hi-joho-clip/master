@@ -51,7 +51,7 @@ public class DeleteFriendServlet extends HttpServlet {
 					int friend_user_id = Integer.parseInt(request.getParameter("friend_user_id"));
 					//flag = friendbeans.deleteFriend(own_user_id, friend_user_id);
 					if(friendbeans.deleteFriend(own_user_id, friend_user_id)){
-						resp = "{\"state\": \"削除しました\",  \"flag\": 1}";
+						resp = "{\"state\": \"削除しました\",  \"flag\": 1 ,\"friend_user_id\" : "+ friend_user_id +"}";
 					}else{
 						resp = "{\"state\": \"失敗しました\",  \"flag\": 0}";
 					}

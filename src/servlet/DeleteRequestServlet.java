@@ -60,7 +60,7 @@ public class DeleteRequestServlet extends HttpServlet {
 				if (own_user_id != 0 && friend_user_id != 0) {
 					if (friendbeans.deleteRequest(own_user_id, friend_user_id)) {
 						// 成功
-						resp = "{\"state\": \"削除しました\",  \"flag\": 1, \"friend_id\": " + friend_user_id + "}";
+						resp = "{\"state\": \"削除しました\",  \"flag\": 1, \"friend_user_id\": " + friend_user_id + "}";
 
 					} else {
 						// 失敗

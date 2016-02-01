@@ -15,12 +15,12 @@ function getFriendList() {
 			// リクエスト中の一覧
 			if (json[i].status === 2) {
 			// リクエスト申請したユーザ一覧
-				$('#table-body').append('<tr class="first"><td><h2>' +
+				$('#table-body').append('<tr class="first"><td><h2 id="friend' + json[i].friend_user_id + '" >' +
 					json[i].nickname + '</h2></td><td><a href="#" data-remodal-target="delete_request" class="request art-title" onclick="javascript:remodalCreate(' + json[i].friend_user_id + ');">取消</td></tr>');
 
 			} else if (json[i].status === 3){
 				// フレンドの場合
-				$('#table-body').append('<tr class="first"><td><h2>' + "<a class='art-title' href='index.html'onclick='javascript:$.cookie(\"viewMode\",\"3\");$.cookie(\"shareLists\",\""
+				$('#table-body').append('<tr class="first"><td><h2 id="friend"' + json[i].friend_user_id + '">' + "<a class='art-title' href='index.html'onclick='javascript:$.cookie(\"viewMode\",\"3\");$.cookie(\"shareLists\",\""
 						+ json[i].friend_user_id
 						+ "\");'>" +
 					json[i].nickname + '</h2></td><td><a href="#" data-remodal-target="delete_friend" class="friend art-title" onclick="javascript:remodalCreate(' + json[i].friend_user_id + ');">削除</td></tr>');
@@ -40,6 +40,7 @@ function getFriendList() {
 function remodalCreate(friend_user_id) {
 
 	$('#friend_user_id').val(friend_user_id);
+	//$('#row').val($('#table-body tr').index(this));
 }
 
 
@@ -50,31 +51,40 @@ function deleteRequest(friend_user_id) {
 	var URL = hostURL + "/deleterequest";
 	var setappend = function(json) {
 
-		console.log(json);
+		console.log( $(this).closest('#table-body tr').index());
 
-		console.log('dom:' + $('#nonce').val());
-
-		$('#friend-table').datatable('refresh');
-
+		if (json.flag === 1) {
+			$('#friend' + json.friend_user_id).parent().parent().empty();
+			//console.log('id:' + '#friend' + json.friend_user_id);
+			toastr.success(json.state);
+		} else {
+			toastr.error(json.state);
+		}
 	};
 	getJSON(URL, jsonParam, setappend);
 	//location.reload();
 }
 
 // フレンドを削除後の画面
-function deleteFriend(friend_user_id) {
+function deleteFriend(friend_user_id, row) {
 
 	var jsonParam = "friend_user_id=" + friend_user_id + "&nonce=" + $('#nonce').val();// 送りたいデータ
 	var URL = hostURL + "/deletefriend";
 	var setappend = function(json) {
-		//console.log(json[0].state);
 
-		$('#friend-table').datatable('refresh');
+		//$('#friend-table').datatable('refresh');
+		if (json.flag === 1) {
+			$('#friend' + json.friend_user_id).parent().parent().empty();
+			toastr.success(json.state);
+		} else {
+			toastr.error(json.state);
+		}
 
 
 	};
 	getJSON(URL, jsonParam, setappend);
 }
+
 
 
 //// フレンド申請があると、申請通知が来る
