@@ -107,11 +107,13 @@ $(document).ready(function() {
 			'<input type="hidden" id="nonce" value="'
 					+ docCookies.getItem("nonce") + '">');
 
+	$('.pure-pusher').on("scroll", function() {
+		console.log($('#wrap').height() + ":" +  $('.pure-pusher').height() + ":" + $('.pure-pusher').scrollTop());
 
-	$(window).on("scroll", function() {
-		var scrollHeight = $(document).height();
-		var scrollPosition = $(window).height() + $(window).scrollTop();
-		if ((scrollHeight - scrollPosition) / scrollHeight === 0) {
+
+		var scrollHeight = $('#wrap').height();
+		var scrollPosition = $('.pure-pusher').height() + $('.pure-pusher').scrollTop();
+		if ((scrollHeight - scrollPosition) / scrollHeight < 0) {
 			// when scroll to bottom of the page
 
 			if ($('#art-add').val() === 'true') {
