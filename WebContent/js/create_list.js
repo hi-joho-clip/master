@@ -115,6 +115,7 @@ var get_mylists = function(json) {
 	stopload();
 	$('#mode').val("tile");
 	var random =Math.floor(Math.random()*3);
+	random = 3;
 	$myList = $("<div class='grid-sizer'></div>");
 	$grid.append($myList).isotope('appended', $myList).trigger('create');
 	for ( var i = 0; i < json.length; i++) {

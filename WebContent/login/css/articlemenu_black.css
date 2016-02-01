@@ -12,7 +12,7 @@ li.first {
 a.art-title {
 	color:#FFF;
 }
-a.art-title:hover {
+a.art-title tr:hover {
 	color:#CD0A0A;
 }
 
@@ -28,4 +28,7 @@ a.art-title:hover {
 
 .first:hover {
 	background: #444;
+}
+.mosaic-block {
+border:1px solid #fff;
 }

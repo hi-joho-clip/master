@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.arnx.jsonic.JSON;
-
 import beansdomain.Friend;
 
 @WebServlet("/deletefriend")
@@ -42,9 +41,6 @@ public class DeleteFriendServlet extends HttpServlet {
 		HttpSession session = request.getSession(true);
 
 		if (session != null) {
-
-
-
 			response.setContentType("application/json; charset=utf-8");
 			response.setHeader("Cache-Control", "private");
 			PrintWriter out = response.getWriter();

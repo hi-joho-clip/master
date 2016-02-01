@@ -204,3 +204,10 @@ function changeColor() {
 	}
 
 }
+
+//フレンド登録者のリストをもらう処理
+function getFriends() {
+	var jsonParam = null;// 送りたいデータ
+	var URL = hostURL + "/friendlistff";
+	getJSON(URL, jsonParam, get_friends);
+}
