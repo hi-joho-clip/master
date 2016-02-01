@@ -40,7 +40,7 @@ public class UpdatePasswordServlet extends HttpServlet {
 
 		User userbean = null;
 		UserAuth userauth = new UserAuth();
-		boolean hantei = false;
+		//boolean hantei = false;
 		String resp = "{\"state\": \"unknown\", \"flag\": 0}";
 		Nonce nonce = new Nonce(request);
 
@@ -49,10 +49,8 @@ public class UpdatePasswordServlet extends HttpServlet {
 		response.setHeader("Cache-Control", "private");
 		PrintWriter out = response.getWriter();
 
-		if (session != null) {
-
-			if (nonce.isNonce()) {
-
+		if (nonce.isNonce()) {
+			if(request.getParameter("newpassword")!=null &&request.getParameter("password")!=null){
 				try {
 					int user_id = (int) session.getAttribute("user_id");
 
@@ -62,34 +60,39 @@ public class UpdatePasswordServlet extends HttpServlet {
 					System.out.println("request受け取った新パス:" + newpass);
 
 					userbean = new User(user_id);
-					hantei = userauth.loginUserName(userbean.getUser_name(),
-							inputpass);
+					//hantei = userauth.loginUserName(userbean.getUser_name(),inputpass);
 
-					if (hantei) {
+					if (userauth.loginUserName(userbean.getUser_name(),inputpass)) {
 						userbean.setPassword(newpass);
 						userbean.updatePassword();
 						resp = "{\"state\": \"更新しました\",  \"flag\": 1}";
 					} else {
 						System.out.println("間違ってる");
 						// パスワードが一致しなかった処理
-						resp = "{\"ErrorMessage\": \"パスワードが間違ってます\",  \"flag\": 2}";
-						out.println(resp);
-						return;
+						resp = "{\"state\": \"パスワードが間違ってます\",  \"flag\": 0}";
+						//resp = "{\"ErrorMessage\": \"パスワードが間違ってます\",  \"flag\": 2}";
+						//out.println(resp);
+						//return;
 					}
 
 				} catch (Exception e) {
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
 				}
-			} else {
-				// 不正アクセス
-				resp = "{\"state\": \"不正なアクセス\",  \"flag\": 0}";
-				out = response.getWriter();
+				out.println(resp);
+			}else{
+				//newpassword passwordがnullならunknownerror
 				out.println(resp);
 			}
-			response.sendRedirect(URL + "/UserInfo.html");
-
+		} else {
+			// 不正アクセス
+			resp = "{\"state\": \"不正なアクセス\",  \"flag\": 0}";
+			out = response.getWriter();
+			out.println(resp);
 		}
+		//response.sendRedirect(URL + "/UserInfo.html");
+
+
 	}
 
 }

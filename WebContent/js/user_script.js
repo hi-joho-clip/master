@@ -226,7 +226,7 @@ function addUser() {
 	getJSON(URL, jsonParam, setappend);
 }
 
-// ユーザ削除
+// ユーザ削除（リダイレクトLoginページ）
 function deleteuser() {
 
 	var jsonParam = null;// 送りたいデータ
@@ -280,7 +280,7 @@ function getUserList() {
 		var $onoffkun = $("<input type='checkbox' name='onoffswitch' class='onoffswitch-checkbox' id='myonoffswitch' "
 				+ flag
 				+ ">"
-				+ "<label class='onoffswitch-label' for='myonoffswitch' onclick='test()'>"
+				+ "<label class='onoffswitch-label' for='myonoffswitch' onclick='onoff()'>"
 				+ "<span  class='onoffswitch-inner'"
 				+ kyoka
 				+ "></span>"
@@ -355,15 +355,20 @@ function nick() {
 	var URL = hostURL + "/updatenickname";
 	var userList = "";
 	var setappend = function(json) {
-		if(json.flag==0){
+		/*if(json.flag==0){
 			toastr.error(json.state);
 		}else if(json.flag==1){
 			toastr.success(json.state);
 		}else if(json.flag==2){
-			userList += json.ErrorMessage;
+			userList += json.state;
 		}
-
 		document.getElementById('nick').innerHTML = userList;
+*/
+		if(json.flag==0){
+			toastr.error(json.state);
+		}else{
+			toastr.success(json.state);
+		}
 	};
 	getJSON(URL, jsonParam, setappend);
 }
@@ -375,7 +380,7 @@ function mail() {
 	var URL = hostURL + "/updatemailaddress";
 	var userList = "";
 	var setappend = function(json) {
-		if(json.flag==0){
+		/*if(json.flag==0){
 			toastr.error(json.state);
 		}else if(json.flag==1){
 			toastr.success(json.state);
@@ -383,7 +388,12 @@ function mail() {
 			userList += json.ErrorMessage;
 		}
 
-		document.getElementById('mail').innerHTML = userList;
+		document.getElementById('mail').innerHTML = userList;*/
+		if(json.flag==0){
+			toastr.error(json.state);
+		}else{
+			toastr.success(json.state);
+		}
 	};
 	getJSON(URL, jsonParam, setappend);
 }
@@ -395,7 +405,7 @@ function pass() {
 	var URL = hostURL + "/updatepassword";
 	var userList = "";
 	var setappend = function(json) {
-		if(json.flag==0){
+		/*if(json.flag==0){
 			toastr.error(json.state);
 		}else if(json.flag==1){
 			toastr.success(json.state);
@@ -403,7 +413,12 @@ function pass() {
 			userList += json.ErrorMessage;
 		}
 
-		document.getElementById('pass').innerHTML = userList;
+		document.getElementById('pass').innerHTML = userList;*/
+		if(json.flag==0){
+			toastr.error(json.state);
+		}else{
+			toastr.success(json.state);
+		}
 	};
 	getJSON(URL, jsonParam, setappend);
 }
@@ -415,8 +430,13 @@ function AcceptFriend() {
 	var URL = hostURL + "/acceptfriend";
 	var userList = "";
 	var setappend = function(json) {
-		userList = json.Message;
-		document.getElementById('info').innerHTML = userList;
+		if(json.flag==0){
+			toastr.error(json.state);
+		}else{
+			toastr.success(json.state);
+		}
+		//userList = json.Message;
+		//document.getElementById('info').innerHTML = userList;
 	};
 	getJSON(URL, jsonParam, setappend);
 }
@@ -434,7 +454,7 @@ function DenyFriend() {
 	getJSON(URL, jsonParam, setappend);
 }
 
-function test() {
+function onoff() {
 	var data = document.getElementById('myonoffswitch').checked;
 	// console.log(data);
 
