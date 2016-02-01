@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.arnx.jsonic.JSON;
-
 import beansdomain.Friend;
 
 @WebServlet("/friendlist")
@@ -57,15 +56,15 @@ public class FriendListServlet extends HttpServlet {
 
 				for (int i = 0; i < friend_list.size(); i++) {
 					if (friend_list.get(i).getStatus() != 1) {
-
+						friend_list.get(i).setUser_name("");
 						request_friend_list.add(friend_list.get(i));
-
 					}
 				}
 			} catch (Exception e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			}
+			System.out.println(JSON.encode(request_friend_list, true).toString());
 			out.println(JSON.encode(request_friend_list, true).toString());
 		}
 	}

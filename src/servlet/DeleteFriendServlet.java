@@ -38,6 +38,7 @@ public class DeleteFriendServlet extends HttpServlet {
 		Friend friendbeans = new Friend();
 		//boolean flag = false;
 		HttpSession session = request.getSession(true);
+
 		Nonce nonce = new Nonce(request);
 		String resp = "{\"state\": \"unknownError\", \"flag\": 0}";
 		response.setContentType("application/json; charset=utf-8");

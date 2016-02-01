@@ -13,7 +13,7 @@ li.first {
 a.art-title {
 	color:#313131;
 }
-a.art-title:hover {
+a.art-title tr:hover {
 	color:#CD0A0A;
 }
 
@@ -34,4 +34,8 @@ a.art-title:hover {
 
 .first:hover {
 	background: #EEE;
+}
+
+.mosaic-block {
+border:1px solid #ccc;
 }

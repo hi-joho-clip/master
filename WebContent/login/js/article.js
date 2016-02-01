@@ -108,10 +108,7 @@ $(document).ready(function() {
 					+ docCookies.getItem("nonce") + '">');
 
 	$('.pure-pusher').on("scroll", function() {
-		console.log($('#wrap').height() + ":" +  $('.pure-pusher').height() + ":" + $('.pure-pusher').scrollTop());
-
-
-		var scrollHeight = $('#wrap').height();
+			var scrollHeight = $('#wrap').height();
 		var scrollPosition = $('.pure-pusher').height() + $('.pure-pusher').scrollTop();
 		if ((scrollHeight - scrollPosition) / scrollHeight < 0) {
 			// when scroll to bottom of the page

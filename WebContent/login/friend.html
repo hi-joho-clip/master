@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja"
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="ja"
 	dir="ltr">
 <head>
 <meta charset="UTF-8">
@@ -37,6 +37,7 @@
 
 <link rel="stylesheet" href="../tag-it/src/remodal.css">
 <link rel="stylesheet" href="../tag-it/src/remodal-default-theme.css">
+<link rel="stylesheet" href="./css/normalize.css">
 
 <link rel="stylesheet" href="../css/datatable.css">
 
@@ -138,33 +139,32 @@
 				</form>
 				<div id="user_id"></div>
 				<div class="remodal" data-remodal-id="delete_request"
-					data-remodal-options="hashTracking: false,closeOnOutsideClick:false"" >
+					data-remodal-options="hashTracking: false,closeOnOutsideClick:false" >
 					<a data-remodal-action="close" class="remodal-close"></a>
 					<h2>リクエスト削除</h2>
 					<a data-remodal-action="confirm" class="remodal-confirm" href="#"
-						onclick="javascript:deleteRequest(document.getElementById('user_id').innerHTML);">OK</a>
+						onclick="javascript:deleteRequest($('#friend_user_id').val());">OK</a>
 					<a data-remodal-action="cancel" class="remodal-cancel" href="#">キャンセル</a>
 				</div>
 
 				<div class="remodal" data-remodal-id="delete_friend"
-					data-remodal-options="hashTracking: false,closeOnOutsideClick:false"">
+					data-remodal-options="hashTracking: false,closeOnOutsideClick:false">
 					<a data-remodal-action="close" class="remodal-close"></a>
 					<h2>フレンド削除</h2>
 
 					<a data-remodal-action="confirm" class="remodal-confirm" href="#"
-						onclick="javascript:deleteFriend(document.getElementById('user_id').innerHTML);">OK</a>
+						onclick="javascript:deleteFriend($('#friend_user_id').val());">OK</a>
 					<a data-remodal-action="cancel" class="remodal-cancel" href="#">キャンセル</a>
 				</div>
 				<div class="container">
 					<div style="margin: 100px auto;">
-						<h1>フレンド</h1>
-						<div class="form-wrapper"
-							style="font-size: 20px; max-width: 400px;">
+						<h1 class="title">フレンド</h1>
+						<div class="form-wrapper" style="max-width: 100%;">
 
 
 
 							<!--　フレンド検索  -->
-							<form action="#">
+							<!-- <form action="#">
 								<label for="search" class="ui-hidden-accessible">検索</label> <input
 									type="text" name="search" id="id_search"
 									placeholder="キーワードを入力してください" data-mini="true"
@@ -175,20 +175,21 @@
 							<br>
 							<div id="info"></div>
 
-							<input type="button" id="Naaaame">
+							<input type="button" id="Naaaame">-->
 
-							<div class="paging"></div>
-							<table>
-							    <thead>
-							        <tr>
-							            <th>Firstname</th>
-							            <th>Lastname</th>
-							            <th></th>
-							        </tr>
-							    </thead>
-							    <tbody>
-							    </tbody>
-						</table>
+							<div id="paging"></div>
+
+							<table id="friend-table">
+								<thead>
+									<tr>
+										<th class="art-title"><h2>ニックネーム</h2></th>
+										<th class="art-title"><h2 style="width:70px">申請</h2></th>
+									</tr>
+								</thead>
+								<tbody id="table-body">
+
+								</tbody>
+							</table>
 							<!-- <table border="1" style="border: 1px solid #FFF">
 								<thead id="thead_header">
 									<tr id="tr_header">
@@ -203,9 +204,10 @@
 								<tbody id="tbody_detail">
 								</tbody>
 							</table>-->
+							<div class="hiddenarea">
+							<input type="hidden" id="friend_user_id" value="0">
+							</div>
 
-							<div class="form-footer"></div>
-							<div class="hiddenarea"></div>
 						</div>
 					</div>
 				</div>
@@ -217,16 +219,12 @@
 
 	<script>
 		$(document).ready(function() {
-
-			$('#example-table').datatable({
-			    pageSize: 5,
-			    sort: [true, true, false],
-			    filters: [true, false, 'select'],
-			    filterText: 'Type to filter... '
-			}) ;
-			$("div.hiddenarea").append('<input type="hidden" id="nonce" value="'+ docCookies.getItem("nonce") + '">');
 			getFriendList();
-			notice();
+			//notice();
+
+			$("div.hiddenarea").append(
+			'<input type="hidden" id="nonce" value="'
+					+ docCookies.getItem("nonce") + '">');
 			colorMode();
 		});
 	</script>

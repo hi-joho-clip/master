@@ -110,6 +110,9 @@ body {
 }
 
 .grid-item--width2 { width: 460px; }
+
+
+.grid-item--width4 { width: 360px; }
 .grid-item--3 { width: 460px;  height: 468px; }
 
 }
