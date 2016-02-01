@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.arnx.jsonic.JSON;
 import beansdomain.Friend;
+import beansdomain.User;
 
 @WebServlet("/addrequest")
 public class AddRequestServlet extends HttpServlet {
@@ -37,25 +37,48 @@ public class AddRequestServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 
 		Friend friendbeans = new Friend();
-		boolean flag = false;
+		//boolean flag = false;
 		HttpSession session = request.getSession(true);
-
-		if (session != null) {
-
-			response.setContentType("application/json; charset=utf-8");
-			response.setHeader("Cache-Control", "private");
-			PrintWriter out = response.getWriter();
-
-			try {
-				int own_user_id = (int) session.getAttribute("user_id");
-				int friend_user_id = Integer.parseInt(request
-						.getParameter("friend_user_id"));
-				flag = friendbeans.addRequest(own_user_id, friend_user_id);
-			} catch (Exception e) {
-				// TODO 自動生成された catch ブロック
-				e.printStackTrace();
+		Nonce nonce = new Nonce(request);
+		PrintWriter out = response.getWriter();
+		String resp = "{\"state\": \"unknownError\", \"flag\": 0}";
+		response.setContentType("application/json;charset=UTF-8");
+		response.setHeader("Cache-Control", "private");
+		int friend_user_id=0;
+		int own_user_id=0;
+		if(nonce.isNonce()){
+			if(request.getParameter("friend_user_id")!=null){
+				try {
+					own_user_id = (int) session.getAttribute("user_id");
+					friend_user_id = Integer.parseInt(request.getParameter("friend_user_id"));
+				} catch (Exception e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+				User get_nickname = new User(friend_user_id);
+				String nickname = get_nickname.getNickname();
+				//flag = friendbeans.addRequest(own_user_id, friend_user_id);
+				try {
+					if(friendbeans.addRequest(own_user_id, friend_user_id)){
+						resp = "{\"state\": \"成功しました\", \"flag\": 1,\"nickname\" : \"" + nickname + "\"}";
+					}else{
+						resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
+					}
+				} catch (Exception e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+				out.println(resp);
+			}else{
+				//friend_user_idがない場合のメソッドunknownError
+				out.println(resp);
 			}
-			out.println(JSON.encode(flag, true).toString());
+			//out.println(JSON.encode(flag, true).toString());
+		}else{
+			//nonceがない場合のメソッド
+			// 不正アクセス
+			resp = "{\"state\": \"不正なアクセス\",  \"flag\": 0}";
+			out.println(resp);
 		}
 	}
 }

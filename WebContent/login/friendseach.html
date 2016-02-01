@@ -18,6 +18,8 @@
 <link href="css/userinfo.css" rel="stylesheet">
 <link href="css/Configuration.css" rel="stylesheet">
 <link id="viewcolor" href="css/articlemenu_black.css" rel="stylesheet">
+<link rel='stylesheet' href='css/toastr.css' />
+<script src="../js/lib/cookie.js"></script>
 
 <script src="../js/1.11.1_jquery.min.js"></script>
 <script src="js/articlemenu.js"></script>
@@ -27,10 +29,11 @@
 <script type="text/javascript" src="../js/jquery/jquery.cookie.js"></script>
 <script type="text/javascript" src="../js/json-xhr.js"></script>
 <script type="text/javascript" src="../js/friend_script.js"></script>
+<script src='js/toastr.min.js'></script>
 <link rel="stylesheet" href="../tag-it/src/remodal.css">
 <link rel="stylesheet" href="../tag-it/src/remodal-default-theme.css">
 <script src="../tag-it/src/remodal.js"></script>
-
+<script type="text/javascript" src="../js/jquery/jquery.cookie.js"></script>
 
 <link rel="stylesheet" href="css/pure-drawer.css">
 
@@ -152,6 +155,7 @@
 
 								<div class="form-footer"></div>
 							</div>
+							<div class="hiddenarea"></div>
 						</div>
 					</div>
 				</div>
@@ -164,6 +168,7 @@
 			notice();
 			limit();
 			colorMode();
+			$("div.hiddenarea").append('<input type="hidden" id="nonce" value="'+ docCookies.getItem("nonce") + '">');
 			$('#addr').keypress(function(e) {
 				if (e.which == 13) {
 					// ここに処理を記述

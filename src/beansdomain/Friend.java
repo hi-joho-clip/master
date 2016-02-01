@@ -140,6 +140,7 @@ public class Friend {
 		ArrayList<UserDTO> userListDTO = friendDAO.search(own_user_id, str);
 		for (UserDTO userDTO : userListDTO) {
 			User userbean = new User();
+
 			userbean.setUser_id(userDTO.getUser_id());
 			userbean.setNickname(userDTO.getNickname());
 			this.userList.add(userbean);

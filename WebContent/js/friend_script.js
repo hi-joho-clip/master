@@ -5,7 +5,7 @@ function getFriendRequest() {
 	var friendList = " <div class='remodal-bg'> ";
 	var setappend = function(json) {
 		for ( var i = 0; i < json.length; i++) {
-			friendList += "<div id='nick_name'>" + json[i].nickname
+			friendList += "<div id='"+json[i].nickname+"'>" + json[i].nickname
 					+ "<a href='#' data-remodal-target='kyoka' onclick='document.getElementById(\"user_id\").innerHTML=\""
 					+ json[i].friend_user_id + "\";'>承認</a>"
 					+"&emsp;"
@@ -26,7 +26,7 @@ function getFriendSearch(nickname) {
 	var setappend = function(json) {
 		if (json.length != 0) {
 			for ( var i = 0; i < json.length; i++) {
-				friendList +="<div id='nick_name'>" + json[i].nickname
+				friendList +="<div id='"+json[i].nickname+"'>" + json[i].nickname
 						+ "<a href='#' data-remodal-target='add' onclick='document.getElementById(\"user_id\").innerHTML=\""
 						+ json[i].user_id + "\";'>追加</a></div>";
 
@@ -41,14 +41,22 @@ function getFriendSearch(nickname) {
 
 // リクエストを申請後の画面
 function addRequest(user_id) {
-	var jsonParam = "friend_user_id=" + user_id;// 送りたいデータ
+	console.log($('#nonce').val());
+	var jsonParam = "friend_user_id=" + user_id+"&nonce="+$('#nonce').val();// 送りたいデータ
 	var URL = hostURL + "/addrequest";
 	var friendList = "";
 	var setappend = function(json) {
-		for ( var i = 0; i < json.length; i++) {
+		/*for ( var i = 0; i < json.length; i++) {
 			friendList += "ID:" + jsonResult[i].friend_user_id + "<br>";
 		}
-		document.getElementById('info').innerHTML = friendList;
+		document.getElementById('info').innerHTML = friendList;*/
+		if(json.flag==0){
+			toastr.error(json.state);
+		}else{
+			toastr.success(json.state);
+			$('#' + json.nickname).remove();
+		}
+
 	};
 	getJSON(URL, jsonParam, setappend);
 }
@@ -56,34 +64,46 @@ function addRequest(user_id) {
 // リクエストを承認後の画面
 function acceptRequest(user_id) {
 
-	var jsonParam = "friend_user_id=" + user_id;// 送りたいデータ
+	var jsonParam = "friend_user_id=" + user_id+"&nonce="+$('#nonce').val();// 送りたいデータ
 	var URL = hostURL + "/acceptrequest";
 	var friendList = "";
 	var setappend = function(json) {
-		for ( var i = 0; i < json.length; i++) {
+	/*	for ( var i = 0; i < json.length; i++) {
 			friendList += "ID:" + jsonResult[i].friend_user_id + "<br>";
 		}
 
-		document.getElementById('info').innerHTML = friendList;
+		document.getElementById('info').innerHTML = friendList;*/
+		if(json.flag==0){
+			toastr.error(json.state);
+		}else{
+			toastr.success(json.state);
+			$('#' + json.nickname).remove();
+		}
 	};
 	getJSON(URL, jsonParam, setappend);
-	location.reload();
+	//location.reload();
 }
 
 // リクエストを否認後の画面
 function denyRequest(user_id) {
 
-	var jsonParam = "friend_user_id=" + user_id;// 送りたいデータ
+	var jsonParam = "friend_user_id=" + user_id+"&nonce="+$('#nonce').val();// 送りたいデータ
 	var URL = hostURL + "/denyrequest";
 	var friendList = "";
 	var setappend = function(json) {
-		for ( var i = 0; i < jsonResult.length; i++) {
+		/*for ( var i = 0; i < jsonResult.length; i++) {
 			friendList += "ID:" + jsonResult[i].friend_user_id + "<br>";
 		}
-		document.getElementById('info').innerHTML = friendList;
+		document.getElementById('info').innerHTML = friendList;*/
+		if(json.flag==0){
+			toastr.error(json.state);
+		}else{
+			toastr.success(json.state);
+			$('#' + json.nickname).remove();
+		}
 	};
 	getJSON(URL, jsonParam, setappend);
-	location.reload();
+	//location.reload();
 }
 
 // フレンド検索のフレンド、申請に上限
@@ -112,7 +132,8 @@ function limit() {
 					+ "<a data-remodal-action='confirm' class='remodal-confirm' href='#'>OK</a>";
 		} else if (json.length < 50 && CON < 10) {
 			$remodal += "<h2>リクエスト送信</h2>"
-					+ "<a data-remodal-action='confirm' class='remodal-confirm' href='#' onclick='addRequest(document.getElementById(\"user_id\").innerHTML);location.reload()\'>追加</a>"
+					//+ "<a data-remodal-action='confirm' class='remodal-confirm' href='#' onclick='addRequest(document.getElementById(\"user_id\").innerHTML);location.reload()\'>追加</a>"
+					+ "<a data-remodal-action='confirm' class='remodal-confirm' href='#' onclick='addRequest(document.getElementById(\"user_id\").innerHTML);\'>追加</a>"
 					+ "&emsp;<a class='remodal-cancel' href='#' onclick='javascript:return false;'>キャンセル</a>";
 		}
 		$("#limit").append($remodal).trigger("create");
