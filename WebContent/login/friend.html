@@ -17,17 +17,26 @@
 <link href="css/button.css" rel="stylesheet" />
 <link href="css/userinfo.css" rel="stylesheet">
 
+<link id="viewcolor" href="css/articlemenu_black.css" rel="stylesheet">
+
 <script src="../js/1.11.1_jquery.min.js"></script>
 <script src="js/articlemenu.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="../js/jquery/isotope.pkgd.min.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery.cookie.js"></script>
 <script type="text/javascript" src="../js/json-xhr.js"></script>
+<script type="text/javascript" src="../js/lib/cookie.js"></script>
 <script type="text/javascript" src="../js/friend_sort_script.js"></script>
+
+<!-- テーブル処理 -->
+<script type="text/javascript" src="../js/lib/datatable.js"></script>
+<script type="text/javascript" src="../js/lib/datatable.jquery.js"></script>
 
 
 <link rel="stylesheet" href="../tag-it/src/remodal.css">
 <link rel="stylesheet" href="../tag-it/src/remodal-default-theme.css">
+
+<link rel="stylesheet" href="../css/datatable.css">
 
 <script src="../tag-it/src/remodal.js"></script>
 <script src="../js/lib/jquery.quicksearch.js"></script>
@@ -78,7 +87,7 @@
 
 			<p>
 			<div id="bg-link">
-				<a href="UserInfo.html"><h4>ユーザ情報</h4></a>
+				<a href="info.html"><h4>ユーザ情報</h4></a>
 			</div>
 			<div id="bg-link">
 				<a href="index.html" onclick="javascript:$.cookie('viewMode','0');"><h4>マイリスト</h4></a>
@@ -90,13 +99,13 @@
 				<a href="taglist.html"><h4>タグ</h4></a>
 			</div>
 			<div id="bg-link">
-				<a href="Friend.html"><h4>フレンド一覧</h4></a>
+				<a href="friend.html"><h4>フレンド一覧</h4></a>
 			</div>
 			<div id="bg-link">
-				<a href="FriendBox.html"><div id="notice"></div></a>
+				<a href="friendbox.html"><div id="notice"></div></a>
 			</div>
 			<div id="bg-link">
-				<a href="FriendSeach.html"><h4>フレンド検索</h4></a>
+				<a href="friendseach.html"><h4>フレンド検索</h4></a>
 			</div>
 			<!-- <div id="bg-link">
 					<a href="index.html" onclick="javascript:$.cookie('viewMode','4');"><h4>LISTTEST</h4></a>
@@ -166,8 +175,19 @@
 
 							<input type="button" id="Naaaame">
 
-
-							<table border="1" style="border: 1px solid #FFF">
+							<div class="paging"></div>
+							<table>
+							    <thead>
+							        <tr>
+							            <th>Firstname</th>
+							            <th>Lastname</th>
+							            <th></th>
+							        </tr>
+							    </thead>
+							    <tbody>
+							    </tbody>
+						</table>
+							<!-- <table border="1" style="border: 1px solid #FFF">
 								<thead id="thead_header">
 									<tr id="tr_header">
 										<th><span id="Name"
@@ -180,7 +200,7 @@
 								</thead>
 								<tbody id="tbody_detail">
 								</tbody>
-							</table>
+							</table>-->
 
 							<div class="form-footer"></div>
 						</div>
@@ -194,8 +214,15 @@
 
 	<script>
 		$(document).ready(function() {
-			createTable(this);
+			$('#example-table').datatable({
+			    pageSize: 5,
+			    sort: [true, true, false],
+			    filters: [true, false, 'select'],
+			    filterText: 'Type to filter... '
+			}) ;
+			getFriendList();
 			notice();
+			colorMode();
 		});
 	</script>
 
