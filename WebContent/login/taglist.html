@@ -12,6 +12,7 @@
 <link href="css/articlemenu.css" rel="stylesheet">
 <link href="css/grid.css" rel="stylesheet">
 <link href="css/button.css" rel="stylesheet"/>
+<link rel='stylesheet' href='css/toastr.css' />
 
 <script src="../js/1.11.1_jquery.min.js"></script>
 <script src="js/articlemenu.js"></script>
@@ -78,11 +79,11 @@
 	<section>
 		  <div class="pure-container" data-effect="pure-effect-slide">
             <input type="checkbox" id="pure-toggle-left" class="pure-toggle" data-toggle="left"/>
-
+			 <input type="checkbox" id="pure-toggle-right" class="pure-toggle" data-toggle="right"/>
 
 
             <label class="pure-toggle-label" for="pure-toggle-left" data-toggle-label="left"><span class="pure-toggle-icon"></span></label>
-
+			<label class="pure-toggle-label" for="pure-toggle-right" data-toggle-label="right"><span class="pure-toggle-icon"></span></label>
 
 
             <nav class="pure-drawer" data-position="left">
@@ -113,7 +114,12 @@
 				 </div>
 				</p>
             </nav>
-
+			 <nav class="pure-drawer" data-position="right">
+					 <p2><p>
+					 <input type="search" name="search-2" id="search-2" value="" placeholder="http://..." class="validate[required,custom[url]] text-input">
+					 <input type="button" id="add-article" value="記事追加">
+					</p></p2>
+            </nav>
             <label class="pure-overlay" for="pure-toggle-left" data-overlay="left"></label>
         </div>
         <div class="container" >

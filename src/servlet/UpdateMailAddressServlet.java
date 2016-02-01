@@ -38,22 +38,22 @@ public class UpdateMailAddressServlet extends HttpServlet {
 
 		HttpSession session = request.getSession(true);
 
-		String resp = "{\"state\": \"unknown\", \"flag\": 0}";
+		String resp = "{\"state\": \"unknownError\", \"flag\": 0}";
 		Nonce nonce = new Nonce(request);
 
 		User userbean = null;
 		UserAuth userauth = new UserAuth();
-		boolean hantei = false;
+		//boolean hantei = false;
 
 		String URL = request.getContextPath() + "/login";
 		response.setContentType("application/json; charset=utf-8");
 		response.setHeader("Cache-Control", "private");
 		PrintWriter out = response.getWriter();
 
-		if (session != null) {
 
-			if (nonce.isNonce()) {
 
+		if (nonce.isNonce()) {
+			if(request.getParameter("newemail")!=null &&request.getParameter("password")!=null){
 				try {
 					int user_id = (int) session.getAttribute("user_id");
 
@@ -63,10 +63,9 @@ public class UpdateMailAddressServlet extends HttpServlet {
 					System.out.println("request受け取った" + inputpass);
 
 					userbean = new User(user_id);
-					hantei = userauth.loginUserName(userbean.getUser_name(),
-							inputpass);
+					//hantei = userauth.loginUserName(userbean.getUser_name(),inputpass);
 
-					if (hantei) {
+					if (userauth.loginUserName(userbean.getUser_name(),inputpass)) {
 						userbean.setMailaddress(inputmail);
 						userbean.setPassword(inputpass);
 						userbean.updateMailaddress();
@@ -74,11 +73,12 @@ public class UpdateMailAddressServlet extends HttpServlet {
 					} else {
 						System.out.println("間違ってる");
 						// パスワードが一致しなかった処理
-						resp = "{\"ErrorMessage\": \"パスワードが間違ってます\",  \"flag\": 2}";
-						out.println(resp);
-						return;
+						resp = "{\"state\": \"パスワードが間違ってます\",  \"flag\": 0}";
+						//resp = "{\"state\": \"パスワードが間違ってます\",  \"flag\": 2}";
+						//out.println(resp);
+						//return;
 					}
-
+					out.println(resp);
 					/*
 					 * //メッセージ処理 if
 					 * (userbean.getErrorMessages().containsKey("mailaddress")) {
@@ -91,14 +91,18 @@ public class UpdateMailAddressServlet extends HttpServlet {
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
 				}
-			} else {
-				// 不正アクセス
-				resp = "{\"state\": \"不正なアクセス\",  \"flag\": 0}";
-				out = response.getWriter();
+			}else{
+				//newemail passwordがnullならunknownerror
 				out.println(resp);
-
 			}
-			response.sendRedirect(URL + "/UserInfo.html");
+		} else {
+			// 不正アクセス
+			resp = "{\"state\": \"不正なアクセス\",  \"flag\": 0}";
+			out = response.getWriter();
+			out.println(resp);
+
 		}
+		//response.sendRedirect(URL + "/info.html");
+
 	}
 }

@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.arnx.jsonic.JSON;
-
 import beansdomain.User;
 
 @WebServlet("/deleteuser")
@@ -39,25 +37,35 @@ public class DeleteUserServlet extends HttpServlet {
 		User userbean = new User();
 		String ErrorMessage = null;
 		String URL = request.getContextPath() + "/login";
-
+		String resp = "{\"state\": \"unknownError\", \"flag\": 0}";
+		Nonce nonce = new Nonce(request);
 		HttpSession session = request.getSession(true);
+		response.setContentType("application/json; charset=utf-8");
+		response.setHeader("Cache-Control", "private");
+		PrintWriter out = response.getWriter();
+		if (nonce.isNonce()) {
 
-		if (session != null) {
-
-			response.setContentType("application/json; charset=utf-8");
-			response.setHeader("Cache-Control", "private");
-			PrintWriter out = response.getWriter();
 
 			try {
 				int user_id = (int) session.getAttribute("user_id");
 				userbean.setUser_id(user_id);
-				userbean.deleteUser();
+				if(userbean.deleteUser()){
+					//削除リダイレクト
+				}else{
+					resp = "{\"state\": \"失敗しました\",  \"flag\": 0}";
+				}
 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			out.println(JSON.encode(ErrorMessage, true).toString());
-			response.sendRedirect(URL + "/Login.html");
+			out.println(resp);
+			//out.println(JSON.encode(ErrorMessage, true).toString());
+			//response.sendRedirect(URL + "/Login.html");
+		}else{
+			// 不正アクセス
+			resp = "{\"state\": \"不正なアクセス\",  \"flag\": 0}";
+			out = response.getWriter();
+			out.println(resp);
 		}
 	}
 }

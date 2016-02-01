@@ -5,13 +5,10 @@ import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import net.arnx.jsonic.JSON;
 
 import beansdomain.User;
 import beansdomain.UserAuth;
@@ -42,13 +39,10 @@ public class UpdateNicknameServlet extends HttpServlet {
 
 		HttpSession session = request.getSession(true);
 
-
-
 		User userbean = null;
 		UserAuth userauth = new UserAuth();
-		boolean hantei = false;
-		String ErrorMessage = "{\"ErrorMessage\": 0}";;
-		String resp = "{\"state\": \"unknown\", \"flag\": 0}";
+		//boolean hantei = false;
+		String resp = "{\"state\": \"unknownError\", \"flag\": 0}";
 		Nonce nonce = new Nonce(request);
 
 		String URL = request.getContextPath() + "/login";
@@ -56,15 +50,11 @@ public class UpdateNicknameServlet extends HttpServlet {
 		response.setHeader("Cache-Control", "private");
 		PrintWriter out = response.getWriter();
 
-		System.out.println("加藤");
 
+		System.out.println("かと");
 
-		if (session != null) {
-
-			System.out.println("かと");
-
-			if(nonce.isNonce()){
-
+		if(nonce.isNonce()){
+			if(request.getParameter("newnickname")!=null &&request.getParameter("password")!=null){
 				try {
 					int user_id = (int) session.getAttribute("user_id");
 
@@ -74,19 +64,19 @@ public class UpdateNicknameServlet extends HttpServlet {
 					System.out.println("request受け取った" + inputpass);
 
 					userbean = new User(user_id);
-					hantei = userauth.loginUserName(userbean.getUser_name(),
-							inputpass);
 
-					if (hantei) {
+					if (userauth.loginUserName(userbean.getUser_name(),inputpass)) {
 						userbean.setNickname(inputname);
 						userbean.setPassword(inputpass);
 						userbean.updateNickname();
 						resp = "{\"state\": \"更新しました\",  \"flag\": 1}";
+
 					} else {
 						System.out.println("間違ってる");
 						// パスワードが一致しなかった処理
-						resp = "{\"ErrorMessage\": \"パスワードが間違ってます\",  \"flag\": 2}";
-						out.println(resp);
+						resp = "{\"state\": \"パスワードが間違ってます\",  \"flag\": 0}";
+						//resp = "{\"state\": \"パスワードが間違ってます\",  \"flag\": 2}";
+						//out.println(resp);
 						return;
 					}
 
@@ -94,15 +84,18 @@ public class UpdateNicknameServlet extends HttpServlet {
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
 				}
+				out.println(resp);
 			}else{
-				// 不正アクセス
-				resp = "{\"state\": \"不正なアクセス\",  \"flag\": 0}";
-				out = response.getWriter();
+				//newnickname passwordがnullならunknownerror
 				out.println(resp);
 			}
-
-			response.sendRedirect(URL + "/UserInfo.html");
+		}else{
+			// 不正アクセス
+			resp = "{\"state\": \"不正なアクセス\",  \"flag\": 0}";
+			out = response.getWriter();
+			out.println(resp);
 		}
+		//response.sendRedirect(URL + "/info.html");
 	}
 
 }

@@ -124,16 +124,18 @@ public class User {
 	 * フレンド申請の許可設定
 	 * @throws Exception
 	 */
-	public void friend_accept() throws Exception {
+	public boolean friend_accept() throws Exception {
 
 		this.userDAO = new UserDAO();
 		setUserDTO();
 
 		if (this.userDTO.getUser_id() != 0) {
 			userDAO.friend_accept(this.userDTO.getUser_id());
+			return true;
 		} else {
 			ErrorMessages.put("friend_accept", "invalid user_id");
 		}
+		return false;
 
 	}
 
@@ -141,17 +143,18 @@ public class User {
 	 * フレンド申請の拒否設定
 	 * @throws Exception
 	 */
-	public void friend_deny() throws Exception {
+	public boolean friend_deny() throws Exception {
 
 		this.userDAO = new UserDAO();
 		setUserDTO();
 
 		if (this.userDTO.getUser_id() != 0) {
 			userDAO.friend_deny(this.userDTO.getUser_id());
+			return true;
 		} else {
 			ErrorMessages.put("friend_deny", "invalid user_id");
 		}
-
+		return false;
 	}
 
 	/**
@@ -269,10 +272,13 @@ public class User {
 	 * @return
 	 * @throws Exception
 	 */
-	public void deleteUser() throws Exception {
+	public boolean deleteUser() throws Exception {
 		this.userDAO = new UserDAO();
 		setUserDTO();
-		userDAO.delete(this.userDTO.getUser_id());
+		if(userDAO.delete(this.userDTO.getUser_id())){
+			return true;
+		}
+		return false;
 	}
 
 	public void setUserDTO() {
