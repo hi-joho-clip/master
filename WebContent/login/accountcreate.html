@@ -14,7 +14,7 @@
 <script type='text/javascript' src='js/demo.js'></script>
 <script src="../js/lib/jquery.validationEngine.js"></script>
 <script src="../js/lib/jquery.validationEngine-ja.js"></script>
-
+<script src="../js/lib/cookie.js"></script>
 <link rel="stylesheet" type="text/css" href="css/AccountCreate.css">
 <link href="../css/validationEngine.jquery.css" rel="stylesheet"
 	type="text/css" />
@@ -24,15 +24,15 @@
 </head>
 
 <script type="text/javascript">
-<!--
+
 	$(function() {
 		$('body *').removeAttr('style');
 	});
-
 	jQuery(document).ready(function() {
 		jQuery("#form").validationEngine();
+		$("div.hiddenarea").append('<input type="hidden" name="nonce" id="nonce" value="'+ docCookies.getItem("nonce") + '">');
 	});
-	-->
+
 </script>
 
 <body>
@@ -91,13 +91,13 @@
 					<div class="button-panel">
 						<input type="submit" class="button" title="Create" value="Create"></input>
 					</div>
-
+					<div class="hiddenarea"></div>
 				</form>
 				<div class="form-footer">
 
 					<!--　戻る  -->
 					<p>
-						<a href="Login.html">BACK</a>
+						<a href="login.html">BACK</a>
 					</p>
 
 				</div>

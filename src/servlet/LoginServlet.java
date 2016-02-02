@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
 
 		String inputid = request.getParameter("mail_or_name");
 		String inputpass = request.getParameter("password");
-
+		System.out.println("inputid:"+inputid+"inputpass:"+inputpass);
 		String URL = request.getContextPath() + "/login";
 
 		UserAuth userauth = new UserAuth();
@@ -66,6 +66,7 @@ public class LoginServlet extends HttpServlet {
 		} else { // ユーザ名の場合
 			try {
 				hantei = userauth.loginUserName(inputid, inputpass);
+				System.out.println(userauth.loginUserName(inputid, inputpass));
 				if (hantei) {
 					user_id = userauth.getUser_id();
 					userbeans = new User(user_id);
@@ -77,7 +78,7 @@ public class LoginServlet extends HttpServlet {
 			}
 		}
 		if (hantei) { // ログイン成功
-
+			System.out.println("login sita");
 			UUID guid = UUID.randomUUID();
 			UUID nonce = UUID.randomUUID();
 			Calendar cal = Calendar.getInstance();
@@ -146,7 +147,7 @@ public class LoginServlet extends HttpServlet {
 			System.out.println("ログインできた");
 			response.sendRedirect(URL + "/index.html");
 		} else {
-
+			System.out.println("dame");
 			if (cookie != null) {
 				for (int i = 0; i < cookie.length; i++) {
 					if (cookie[i].getName().equals("visited")) {
@@ -183,7 +184,7 @@ public class LoginServlet extends HttpServlet {
 			}
 
 			// IDとパスワードが一致しなかったので再入力させる。
-			response.sendRedirect(URL + "/Login.html");
+			response.sendRedirect(URL + "/login.html");
 		}
 	}
 }

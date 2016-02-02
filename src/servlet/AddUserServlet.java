@@ -38,9 +38,8 @@ public class AddUserServlet extends HttpServlet {
 		response.setContentType("application/json; charset=utf-8");
 		response.setHeader("Cache-Control", "private");
 		PrintWriter out = response.getWriter();
-
-		System.out.println("アカウント新規作成");
 		Nonce nonce = new Nonce(request);
+
 		if (nonce.isNonce()) {
 			if(request.getParameter("username")!=null&&request.getParameter("nickname")!=null&&request.getParameter("birth")!=null&&request.getParameter("email")!=null&&request.getParameter("password")!=null){
 				String user_name = request.getParameter("username");
@@ -68,12 +67,12 @@ public class AddUserServlet extends HttpServlet {
 						ErrorMessage = userbean.getErrorMessages().get("mailaddress");
 					}
 					if(ErrorMessage == null){
+						System.out.println("登録した");
 						userbean.addUser();
 						ErrorMessage = "登録完了しました。";
 						out.println(JSON.encode(ErrorMessage , true).toString());
-
 						//新規登録完了画面
-						response.sendRedirect(URL + "/Login.html");
+						response.sendRedirect(URL + "/login.html");
 					}
 
 				} catch (Exception e) {
@@ -83,9 +82,12 @@ public class AddUserServlet extends HttpServlet {
 				out.println(JSON.encode(ErrorMessage , true).toString());
 			}else{
 				out.println(JSON.encode("unknownError" , true).toString());
+				System.out.println("unknownerror");
 			}
 		}else{
-
+			// 不正アクセス
+			out.println(JSON.encode("不正なアクセスです" , true).toString());
+			System.out.println("husei");
 		}
 
 	}
