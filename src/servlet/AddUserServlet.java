@@ -39,7 +39,7 @@ public class AddUserServlet extends HttpServlet {
 		response.setHeader("Cache-Control", "private");
 		PrintWriter out = response.getWriter();
 		Nonce nonce = new Nonce(request);
-
+		System.out.println(request.getParameter("nonce"));
 		if (nonce.isNonce()) {
 			if(request.getParameter("username")!=null&&request.getParameter("nickname")!=null&&request.getParameter("birth")!=null&&request.getParameter("email")!=null&&request.getParameter("password")!=null){
 				String user_name = request.getParameter("username");

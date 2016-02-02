@@ -95,7 +95,13 @@
 			$.cookie('viewMode', '0');
 			$.cookie('Style', 'tile');
 			lock();
+			getNonce();
 		});
+
+		function getNonce() {
+			var URL = hostURL + "/getnonce";
+			getJSON(URL, null, null);
+		}
 
 		jQuery(document).ready(function() {
 			jQuery("#form").validationEngine();

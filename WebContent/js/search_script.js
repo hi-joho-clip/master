@@ -105,7 +105,7 @@ function tagSearch(word) {
 		func = get_mylists_list;
 		document.getElementById('title').innerHTML =  '<h1 class="title">検索結果</h1><div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
 	}
-	var jsonParam = "tag=" + $.cookie("tagLists") + "&text=" + word;
+	var jsonParam = "tag=" + getSessionStorage("tagLists") + "&text=" + word;
 	var URL = hostURL + "/tagsearch";
 	getJSON(URL, jsonParam, func);
 }
@@ -119,7 +119,7 @@ function shareListSearch(word) {
 		func = get_sharelists_list;
 		document.getElementById('title').innerHTML =  '<h1 class="title">検索結果</h1><div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
 	}
-	var jsonParam = "friend_user_id=" + $.cookie("shareLists") + "&text=" + word;
+	var jsonParam = "friend_user_id=" + getSessionStorage("shareLists") + "&text=" + word;
 	var URL = hostURL +  "/sharelistsearch";
 	getJSON(URL, jsonParam, func);
 };
