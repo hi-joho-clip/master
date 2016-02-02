@@ -94,16 +94,10 @@ var item = [item1, item2, item3,item4];
 // タグを編集するときにArticle_idも送りたいので実装
 function getArticle_id(article_id){
 	$('#article_id').val(article_id);
-	//$('#article_id').html('<input type="hidden" value="'+article_id+'" name="article_id">');
-	//var articleid = "<input type='hidden' value='"+article_id+"' name='article_id'>";
-	//document.getElementById('article_id').innerHTML = articleid;
 }
 // タグを削除するときにtag_idも送りたいので実装
 function getTag_id(tag_id){
 	$('#tag_id').val(tag_id);
-	//$('#tag_id').html('<input type="hidden" value="'+tag_id+'" name="tag_id">');
-	//var tagid = "<input type='hidden' value='"+tag_id+"' name='tag_id'>";
-	//document.getElementById('tag_id').innerHTML = tagid;
 }
 
 
