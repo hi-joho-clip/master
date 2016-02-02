@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.arnx.jsonic.JSON;
-
-import beansdomain.ArticleBean;
 import beansdomain.TagBean;
 
 /**
@@ -45,19 +43,15 @@ public class GetUsingTagsServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(true);
-		/*if(セッション情報があるなら){
-			//何もしない
-		}else if(セッション情報がないなら){
-			//ログイン画面に戻る
-		}*/
 		/***************************************
 		*********タグボタンを押したとき*********
 		****************************************/
 		//更新日時が新しいタグの20件を取得
-		int user_id =1;//sessionからuser_idを取得
+		int user_id =0;//sessionからuser_idを取得
 		TagBean tagbean = new TagBean();
 		ArrayList<TagBean> tag_list = new ArrayList<TagBean>();
 		try {
+			user_id = (int) session.getAttribute("user_id");
 			tag_list = tagbean.usingTagList(user_id);
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
