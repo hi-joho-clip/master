@@ -116,7 +116,7 @@ function getViewArticle(article_id) {
 				'<input type="hidden" id="nonce" value="'
 						+ docCookies.getItem("nonce") + '">');
 
-		$("div.view-title").append(json.title + "<br>");
+		$("div.view-title").append(json.title + "<br>" + json.url + "<br>");
 		$("div#editable").append(json.body);
 
 		var con_type = "jpeg";
