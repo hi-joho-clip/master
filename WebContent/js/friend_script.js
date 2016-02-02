@@ -56,7 +56,6 @@ function addRequest(user_id) {
 			toastr.success(json.state);
 			$('#' + json.nickname).remove();
 		}
-
 	};
 	getJSON(URL, jsonParam, setappend);
 }

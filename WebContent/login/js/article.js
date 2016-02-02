@@ -109,13 +109,13 @@ $(document).ready(function() {
 
 	$('.pure-pusher').on("scroll", function() {
 			var scrollHeight = $('#wrap').height();
-		var scrollPosition = $('.pure-pusher').height() + Math.floor($('.pure-pusher').scrollTop()) - 200;
+		var scrollPosition = $('.pure-pusher').height() +Math.round($('.pure-pusher').scrollTop()) - 200;
 
-		console.log(scrollPosition + ':' + $('.pure-pusher').height() + ':' + $('.pure-pusher').scrollTop());
+		//console.log(scrollPosition + ':' + $('.pure-pusher').height() + ':' + $('.pure-pusher').scrollTop());
 
-		console.log(scrollHeight + ':' + scrollPosition + ':' + scrollHeight );
-		console.log((scrollHeight - scrollPosition) / scrollHeight );
-		if ((scrollHeight - scrollPosition) / scrollHeight === 0) {
+		//console.log(scrollHeight + ':' + scrollPosition + ':' + scrollHeight );
+		//console.log((scrollHeight - scrollPosition) / scrollHeight );
+		if ((scrollHeight - scrollPosition) / scrollHeight == 0) {
 			// when scroll to bottom of the page
 
 			if ($('#art-add').val() === 'true') {
@@ -147,7 +147,7 @@ $(document).ready(function() {
 					getShareList($.cookie("shareLists"), page);
 					break;
 				case "4":
-					getMyListList(page);
+					//getMyListList(page);
 					break;
 				}
 			}
@@ -278,8 +278,8 @@ function styleListChange() {
 		$('.grid').empty();
 		// オフライン判断
 		if (isSettinOnLine() === true) {
-			console.log($.cookie("tagLists"));
-			getTagArticleList(0, $.cookie("tagLists"));
+			//console.log($.cookie("tagLists"));
+			getTagArticleList(0, getSessionStorage("tagLists"));
 		}
 		break;
 	case "3":// シェア画面を表示しているとき
@@ -287,22 +287,8 @@ function styleListChange() {
 
 		if (isSettinOnLine() === true) {
 			// オフライン判断
-			initPagingSharelist(getShareList, $.cookie("shareLists"));
+			initPagingSharelist(getShareList, getSessionStorage("shareLists"));
 			initTopPage();
-			toastr.warning("オンライン");
-
-		} else if (isSettinOnLine() === false) {
-
-		} else {
-
-		}
-		break;
-	case "4":// シェア画面を表示しているとき
-		$('.grid').empty();
-
-		if (isSettinOnLine() === true) {
-			// オフライン判断
-			initPagingMylist(getMyListList);
 			toastr.warning("オンライン");
 
 		} else if (isSettinOnLine() === false) {
