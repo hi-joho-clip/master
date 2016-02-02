@@ -1,83 +1,71 @@
 //現在の状態がタイル表示かリスト表示かの判断
 function tileView() {
-	if ($.cookie("Style") === "tile") {
+	if (getLocalStorage("Style") === "tile") {
 		return true;
-	} else if ($.cookie("Style") === "list") {
+	} else if (getLocalStorage("Style") === "list") {
 		return false;
 	}
 }
 
-
 // マイリスト
 function getMyList(page) {
-	return new Promise(function(resolve, reject) {
+	return new Promise(
+			function(resolve, reject) {
+				var func = get_mylists;
+				$('h1.title').html('マイリスト');
+				if (tileView()) {
+					func = get_mylists;
+					$('div.stylebutton')
+							.html(
+									'<button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button>');
+				} else {
+					func = get_mylists_list;
+					$('div.stylebutton')
+							.html(
+									'<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
+				}
+				var jsonParam = 'page=' + page + '&article_id='
+						+ $('#lastid').val();// 送りたいデータ(ページ番号）
+				var URL = hostURL + "/mylist";
 
-		var func = get_mylists;
-		$('h1.title').html('マイリスト');
-		if (tileView()) {
-			func = get_mylists;
-			$('div.stylebutton').html('<button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button>');
-		} else {
-			func = get_mylists_list;
-			$('div.stylebutton').html('<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
-		}
-		var jsonParam = 'page=' + page + '&article_id=' + $('#lastid').val();// 送りたいデータ(ページ番号）
-		var URL = hostURL + "/mylist";
+				console.log(jsonParam);
 
-		console.log(jsonParam);
-
-		$('#viewmode').val('0');
-		console.log(page + 'ゲットおおお');
-		getJSON(URL, jsonParam,func).then(function(json) {
-			console.log('保存プロセス');
-			setStorage(json);
-			resolve();
-		}['catch'](function (error) {
-			reject();
-		}));
-	});
+				$('#viewmode').val('0');
+				console.log(page + 'ゲットおおお');
+				getJSON(URL, jsonParam, func).then(function(json) {
+					console.log('保存プロセス');
+					setStorage(json);
+					resolve();
+				}['catch'](function(error) {
+					reject();
+				}));
+			});
 }
-
-function setStorage(json) {
-	var sStrage = sessionStorage;
-	// 配列のまま受け取る
-	var arrayJson = [];
-	arrayJson.push(sStrage.getItem('json'));
-	// 新しい配列を入れ込む(文字列
-	arrayJson.push(JSON.stringify(json));
-	sStrage.setItem('json', arrayJson);
-	console.log(arrayJson);
-}
-
-function getStorage(json, callback) {
-	var arrayJson = [];
-	arrayJson.push(sStrage.getItem('json'));
-
-	for (var i = 0; i < arrayJson.length; i++) {
-		// コールバックにJsonを渡して描画させる(オブジェへ変換
-		callback(JSON.parse(arrayJson[i]));
-	}
-}
-
 // お気に入り
 function getFavList(page) {
-	return new Promise(function(resolve, reject) {
+	return new Promise(
+			function(resolve, reject) {
 
-		$('h1.title').html('お気に入り');
-		if (tileView()) {
-			func = get_mylists;
-			$('div.stylebutton').html('<button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button>');
-		} else {
-			func = get_mylists_list;
-			$('div.stylebutton').html('<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
-		}
+				$('h1.title').html('お気に入り');
+				if (tileView()) {
+					func = get_mylists;
+					$('div.stylebutton')
+							.html(
+									'<button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button>');
+				} else {
+					func = get_mylists_list;
+					$('div.stylebutton')
+							.html(
+									'<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
+				}
 
-		var jsonParam = 'page=' + page + '&article_id=' + $('#lastid').val();// 送りたいデータ
-		var URL = hostURL + "/favlist";
+				var jsonParam = 'page=' + page + '&article_id='
+						+ $('#lastid').val();// 送りたいデータ
+				var URL = hostURL + "/favlist";
 
-		$('#viewmode').val("1");
-		getJSON(URL, jsonParam, func);
-	});
+				$('#viewmode').val("1");
+				getJSON(URL, jsonParam, func);
+			});
 }
 
 // シェア記事一覧
@@ -86,12 +74,22 @@ function getShareList(friend_user_id, page) {
 	var func = get_sharelists;
 	if (tileView()) {
 		func = get_sharelists;
-		$('div.stylebutton').html('<button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button>');
-		//document.getElementById('title').innerHTML = '<h1>シェア記事</h1><div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
+		$('div.stylebutton')
+				.html(
+						'<button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button>');
+		// document.getElementById('title').innerHTML = '<h1>シェア記事</h1><div
+		// style="text-align: right;"><button id="stylechange"
+		// title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png"
+		// style="visibility:visible"></button></div>';
 	} else {
 		func = get_sharelists_list;
-		$('div.stylebutton').html('<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
-		//document.getElementById('title').innerHTML =  '<h1>シェア記事</h1><div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
+		$('div.stylebutton')
+				.html(
+						'<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
+		// document.getElementById('title').innerHTML = '<h1>シェア記事</h1><div
+		// style="text-align: right;"><button id="stylechange"
+		// title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png"
+		// style="visibility:visible"></button></div>';
 	}
 
 	var jsonParam = "friend_user_id=" + friend_user_id + '&page=' + page;// 送りたいデータ
@@ -139,19 +137,20 @@ function getViewArticle(article_id) {
 }
 // 記事の削除
 function deleteArticle() {
-	console.log("article_idkun:"+$('#article_id').val());
-	var jsonParam = "article_id=" + $('#article_id').val()+"&nonce="+$('#nonce').val();// 送りたいデータ
+	console.log("article_idkun:" + $('#article_id').val());
+	var jsonParam = "article_id=" + $('#article_id').val() + "&nonce="
+			+ $('#nonce').val();// 送りたいデータ
 	var URL = hostURL + "/deletearticle";
 	var delete_article = function(json) {
-		if(json.flag=="0"){
+		if (json.flag == "0") {
 			// 失敗
 			toastr.error(json.state);
-		}else{
+		} else {
 			// 成功したらその要素を削除する
-			//console.log(json.article_id);
+			// console.log(json.article_id);
 			$('#' + json.article_id).remove();
-			if(tileView()){
-				//タイル表示の場合、削除した後レイアウトを整えるため必要なメソッド
+			if (tileView()) {
+				// タイル表示の場合、削除した後レイアウトを整えるため必要なメソッド
 				$grid.isotope('layout');
 			}
 
@@ -160,23 +159,23 @@ function deleteArticle() {
 		}
 	};
 	getJSON(URL, jsonParam, delete_article);
-	//location.reload();
+	// location.reload();
 }
 
 // お気に入りの追加削除
 function addFavArticle(article_id) {
-	// グローバルFLAG  true=追加可、false=削除可
+	// グローバルFLAG true=追加可、false=削除可
 
-	var jsonParam = "article_id=" + article_id+"&nonce="+$('#nonce').val();// 送りたいデータ
+	var jsonParam = "article_id=" + article_id + "&nonce=" + $('#nonce').val();// 送りたいデータ
 	var grobalflag = "grobalflag" + article_id;// 今のお気に入りの状態を表すグローバルflagの名前付け
 	var favtitle = "favtitle" + article_id;// タイトルの★マークの名前
 	var title = "title" + article_id;
 	var url = "url" + article_id;
-	console.log("globalflag:"+$("#"+grobalflag).val());
-	console.log("favtitle:"+$("#"+favtitle).html());
-	console.log("title:"+$("#"+title).val());
-	console.log("url:"+$("#"+url).val());
-	if ($("#"+grobalflag).val() === "false") {
+	console.log("globalflag:" + $("#" + grobalflag).val());
+	console.log("favtitle:" + $("#" + favtitle).html());
+	console.log("title:" + $("#" + title).val());
+	console.log("url:" + $("#" + url).val());
+	if ($("#" + grobalflag).val() === "false") {
 
 		// 追加の処理
 		var URL = hostURL + "/addfav";
@@ -187,26 +186,29 @@ function addFavArticle(article_id) {
 
 		if ($('#mode').val() === "tile") {
 			success = function(json) {
-				if(json.flag=="0"){
+				if (json.flag == "0") {
 					toastr.error(json.state);
-				}else{
+				} else {
 					$('#' + favtitle).attr('style', 'color:#FDB91B');
-					$('#'+favtitle).html("★"+$("#"+title).val()+"<BR><a href='"+$("#"+url).val()+"'>"+$("#"+url).val()+"</a>");
+					$('#' + favtitle).html(
+							"★" + $("#" + title).val() + "<BR><a href='"
+									+ $("#" + url).val() + "'>"
+									+ $("#" + url).val() + "</a>");
 					// グローバルflagをfalseにする
-					$("#"+grobalflag).val(true);
+					$("#" + grobalflag).val(true);
 					toastr.success(json.state);
 				}
 			};
 		} else if ($('#mode').val() === 'list') {
 			success = function(json) {
-				if(json.flag=="0"){
+				if (json.flag == "0") {
 					toastr.error(json.state);
-				}else{
+				} else {
 					$('#' + favtitle).attr('style', 'color:#FDB91B');
-					$('#'+favtitle).html("★"+$("#"+title).val());
+					$('#' + favtitle).html("★" + $("#" + title).val());
 
 					// グローバルflagをfalseにする
-					$("#"+grobalflag).val(true);
+					$("#" + grobalflag).val(true);
 					toastr.success(json.state);
 				}
 			};
@@ -214,7 +216,7 @@ function addFavArticle(article_id) {
 
 		getJSON(URL, jsonParam, success);
 
-	} else if ($("#"+grobalflag).val() === "true") {
+	} else if ($("#" + grobalflag).val() === "true") {
 		// 削除の処理
 		var URL = hostURL + "/deletefav";
 
@@ -223,28 +225,31 @@ function addFavArticle(article_id) {
 
 		if ($('#mode').val() === "tile") {
 			failed = function(json) {
-				if(json.flag=="0"){
+				if (json.flag == "0") {
 					toastr.error(json.state);
-				}else{
+				} else {
 					$('#' + favtitle).removeAttr('style', 'color:#FDB91B');
-					$('#'+favtitle).html($("#"+title).val()+"<BR><a href='"+$("#"+url).val()+"'>"+$("#"+url).val()+"</a>");
+					$('#' + favtitle).html(
+							$("#" + title).val() + "<BR><a href='"
+									+ $("#" + url).val() + "'>"
+									+ $("#" + url).val() + "</a>");
 
 					// グローバルflagをtrueにする
-					$("#"+grobalflag).val(false);
+					$("#" + grobalflag).val(false);
 					toastr.success(json.state);
 				}
 			};
 
 		} else if ($('#mode').val() === "list") {
 			failed = function(json) {
-				if(json.flag=="0"){
+				if (json.flag == "0") {
 					toastr.error(json.state);
-				}else{
+				} else {
 					$('#' + favtitle).removeAttr('style', 'color:#FDB91B');
-					$('#'+favtitle).html($("#"+title).val());
+					$('#' + favtitle).html($("#" + title).val());
 
 					// グローバルflagをtrueにする
-					$("#"+grobalflag).val(false);
+					$("#" + grobalflag).val(false);
 
 					toastr.success(json.state);
 				}
@@ -283,9 +288,9 @@ function updateArticle() {
 
 // シェア記事の追加
 function shareArticle(friend_user_id) {
-	console.log("Share:"+$('#article_id').val());
+	console.log("Share:" + $('#article_id').val());
 	var param = "article_id=" + $('#article_id').val() + "&friend_id="
-			+ friend_user_id + "&nonce="+$('#nonce').val();
+			+ friend_user_id + "&nonce=" + $('#nonce').val();
 
 	var URL = hostURL + "/addshare";
 
@@ -300,5 +305,3 @@ function shareArticle(friend_user_id) {
 	getJSON(URL, param, cal);
 
 }
-
-

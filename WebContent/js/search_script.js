@@ -2,11 +2,25 @@
 
 // どこの検索なのか判断する
 $(document).on('click', '#titlesearch', function() {
+	onclickSearch();
+});
 
+
+function enterSearch() {
+	if(window.event.keyCode==13) {
+		onclickSearch();
+	}
+}
+
+function onclickSearch() {
 	document.getElementById('pure-toggle-right').checked=false;
 	console.log("viewmodehidden:" + $('#viewmode').val());
 
 	var word = document.getElementById('searchbox').value;
+
+	var sesStorage = sessionStorage;
+	sesStorage.setItem('search', word);
+	sesStorage.setItem('viewMode', 4);
 
 	switch ($('#viewmode').val()) {
 	case "0":
@@ -48,7 +62,7 @@ $(document).on('click', '#titlesearch', function() {
 		shareListSearch(word);
 		break;
 	}
-});
+}
 
 
 // マイリスト内のタイトル検索

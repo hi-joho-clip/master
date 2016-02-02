@@ -69,6 +69,58 @@ function getURL(URL, param) {
 }
 
 /**
+ * URLからJSONオブジェクトを取得する
+ *
+ * @param URL
+ * @param param
+ *            必要なパラメータ article_idとかね
+ * @returns {Promise}
+ */
+function getURLForRedirect(URL, param) {
+
+	return new Promise(function(resolve, reject) {
+
+		// サーバからアーティクルリストを取得する
+
+		// console.log('parameter:' + param);
+		if (URL === "") {
+			reject(new Error("url is null"));
+		}
+		var req = new XMLHttpRequest();
+
+		req.open("POST", URL, true);
+		req.responseText = "json";
+		// 送る方もJSONにしちゃった
+		req.setRequestHeader("Content-Type",
+				"application/x-www-form-urlencoded");
+		// イベントリスナー
+		req.onreadystatechange = function() {
+			// 正常に取得できていた場合
+			if (req.readyState == 4) {
+				if (req.status == 200) {
+
+					// console.log(req.responseText);
+					resolve(req.response);
+				} else {
+					// 正常に取得できない
+					reject(req.statusText);
+				}
+			}
+		};
+		req.onerror = function() {
+			reject(new Error(req.statusText));
+		};
+		// タイムアウトは7000ms
+		req.timeout = 20000;
+		req.ontimeout = function() {
+			reject(new Error("time out"));
+		};
+		req.send(param);
+	});
+
+}
+
+/**
  * リクエストの準備のため
  *
  * @returns {___anonymous1233_1573}
@@ -127,18 +179,13 @@ function getJSON(URL, param, callback) {
 
 	// console.log("getJSON" + param);
 	return new Promise(function(resolve, reject) {
-		getURL(URL, param).then(JSON.parse).then(callback).then(function(json) {
-			console.log("通信がﾘｿﾞﾙﾌﾞした");
-			resolve(json);
+		getURL(URL, param).then(JSON.parse).then(callback).then(function() {
+			resolve();
 		})['catch'](function(error) {
 			console.log(error);
 			reject();
 		});
 	});
-
-	/*
-	 * .then(function(value) { return JSON.stringify(value, null, ' '); })
-	 */
 }
 
 /**
@@ -211,3 +258,23 @@ function getFriends() {
 	var URL = hostURL + "/friendlistff";
 	getJSON(URL, jsonParam, get_friends);
 }
+
+function setSessionStorage(name, value) {
+	var storage = sessionStorage;
+	storage.setItem(name, value);
+}
+
+function setLocalStorage(name, value) {
+	var storage = localStorage;
+	storage.setItem(name, value);
+}
+function getSessionStorage(name) {
+	var storage = sessionStorage;
+	return storage.getItem(name);
+}
+
+function getLocalStorage(name) {
+	var storage = localStorage;
+	return storage.getItem(name);
+}
+

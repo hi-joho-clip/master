@@ -109,10 +109,10 @@
 					<a href="info.html"><h4>ユーザ情報</h4></a>
 				 </div>
 				 <div id="bg-link">
-					<a href="index.html" onclick="javascript:$.cookie('viewMode','0');"><h4>マイリスト</h4></a>
+					<a href="index.html" onclick="javascript:setSessionStorage('viewMode','0');"><h4>マイリスト</h4></a>
 				 </div>
 				 <div id="bg-link">
-					<a href="index.html" onclick="javascript:$.cookie('viewMode','1');"><h4>お気に入り</h4></a>
+					<a href="index.html" onclick="javascript:setSessionStorage('viewMode','1');"><h4>お気に入り</h4></a>
 				 </div>
 				 <div id="bg-link">
 					<a href="taglist.html" ><h4>タグ</h4></a>
@@ -131,7 +131,7 @@
             </nav>
             <nav class="pure-drawer" data-position="right">
 					 <p2><p>
-					 <input type="search" name="search-1" id="searchbox" value=""  placeholder="検索ワード">
+					 <input type="search" name="search-1" id="searchbox" value=""  placeholder="検索ワード" onkeydown="enterSearch();">
 					 <input type="button" id="titlesearch" value="検索">
 					 <input type="search" name="search-2" id="search-2" value="" placeholder="http://..." class="validate[required,custom[url]] text-input">
 					 <input type="button" id="add-article" value="記事追加">
@@ -214,17 +214,10 @@
 		$(document).ready(function() {
 			notice();
 			colorMode();
-			console.log($(document).height() + ":" +  $(window).height() + ":" + $(window).scrollTop());
 
-
-			$(document).on('click', '.pure-toggle-label', function() {
-				// 今のページ番号を取得
-				/**if ($('#body').val() === 'auto') {
-					$('#body').attr('style', 'overflow: auto;')
-				} else {
-					$('#body').attr('style', 'overflow: hidden;')
-				}*/
-			});
+			if (!getLocalStorage('Style')) {
+				setLocalStorage('Style','tile');
+			}
 
 		});
 	</script>
