@@ -67,12 +67,17 @@ public class AddUserServlet extends HttpServlet {
 						ErrorMessage = userbean.getErrorMessages().get("mailaddress");
 					}
 					if(ErrorMessage == null){
-						System.out.println("登録した");
-						userbean.addUser();
-						ErrorMessage = "登録完了しました。";
-						out.println(JSON.encode(ErrorMessage , true).toString());
-						//新規登録完了画面
-						response.sendRedirect(URL + "/login.html");
+
+						if(userbean.addUser()){
+							//成功処理
+							System.out.println("登録した");
+							ErrorMessage = "登録完了しました。";
+							response.sendRedirect(URL + "/login.html");
+						}else{
+							//失敗処理
+							ErrorMessage = "登録失敗しました。";
+						}
+
 					}
 
 				} catch (Exception e) {
