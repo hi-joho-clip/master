@@ -55,7 +55,7 @@ public class User {
 	 * @return
 	 * @throws Exception
 	 */
-	public void addUser() throws Exception {
+	public boolean addUser() throws Exception {
 		this.userDAO = new UserDAO();
 		setUserDTO();
 		/*
@@ -65,8 +65,9 @@ public class User {
 		 */
 		if (checkUserNameValidation() && checkUserMailaddressValidation()) {
 			userDAO.add(userDTO);
+			return true;
 		} else {
-			return;
+			return false;
 		}
 
 		/*

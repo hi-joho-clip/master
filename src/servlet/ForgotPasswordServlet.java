@@ -130,7 +130,7 @@ public class ForgotPasswordServlet extends HttpServlet {
 
 
 						// 一致しなかった処理
-						response.sendRedirect(URL + "/ForgotPassword.html");
+						response.sendRedirect(URL + "/forgotpassword.html");
 						return;
 					}
 
