@@ -11,6 +11,11 @@ font-weight:100;
 -webkit-text-size-adjust: 100%;
 }
 
+.url {
+	font-size:0.8em;
+	display: block;
+}
+
 a, a:hover {
 text-decoration:none;
 }

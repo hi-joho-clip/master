@@ -104,37 +104,52 @@ function getViewArticle(article_id) {
 
 	var jsonParam = "article_id=" + article_id;// 送りたいデータ
 	var URL = hostURL + "/viewarticle";
-	var setappend = function(json) {
-
-		$('#image').append(thumView(json, "300px", "100%"));
-
-		// nonceとArticleID設定
-		$("div.hiddenarea").append(
-				'<input type="hidden" id="article_id" value="' + article_id
-						+ '">');
-		$("div.hiddenarea").append(
-				'<input type="hidden" id="nonce" value="'
-						+ docCookies.getItem("nonce") + '">');
-
-		$("div.view-title").append(json.title + "<br>" + json.url + "<br>");
-		$("div#editable").append(json.body);
-
-		var con_type = "jpeg";
-		var data;
-
-		for ( var image in json.imageListDTO) {
-			data = 'data:image/' + con_type + ';base64,'
-					+ json.imageListDTO[image].blob_image;
-			$("div.images")
-					.append(
-							'<img id="icon_here"  style="max-width:auto; max-height:200px;padding :10px" src = '
-									+ data + '>');
-		}
-
-		// document.getElementById('viewArticle').innerHTML = viewArticle;
-	};
+	var setappend = setViewArticle;
 	getJSON(URL, jsonParam, setappend);
 }
+
+function getViewArticleOffline(article_id) {
+
+	getArticle(getLocalStorage('username'), article_id).then(function(json) {
+		json = json[0].article;
+		setViewArticle(json);
+	});
+
+}
+
+function setViewArticle(json) {
+
+	//console.log(json);
+
+	$('#image').append(thumView(json, "300px", "100%"));
+
+	// nonceとArticleID設定
+	$("div.hiddenarea").append(
+			'<input type="hidden" id="article_id" value="' + json.article_id
+					+ '">');
+	$("div.hiddenarea").append(
+			'<input type="hidden" id="nonce" value="'
+					+ docCookies.getItem("nonce") + '">');
+
+	$("div.view-title").append(json.title);
+	$('div.view-title').append('<div><a class="url" href=' + json.url + ' target="_blank">' + json.url + '</a></div><br>' );
+	$("div#editable").append(json.body);
+
+	var con_type = "jpeg";
+	var data;
+
+	for ( var image in json.imageListDTO) {
+		data = 'data:image/' + con_type + ';base64,'
+				+ json.imageListDTO[image].blob_image;
+		$("div.images")
+				.append(
+						'<img id="icon_here"  style="max-width:auto; max-height:200px;padding :10px" src = '
+								+ data + '>');
+	}
+
+	// document.getElementById('viewArticle').innerHTML = viewArticle;
+};
+
 // 記事の削除
 function deleteArticle() {
 	console.log("article_idkun:" + $('#article_id').val());
@@ -266,7 +281,7 @@ function addFavArticle(article_id) {
 /**
  * 記事の更新（本文のみバージョン）
  */
-function updateArticle() {
+function updateArticleOnline() {
 	// getArticle_id(article_id);//html内の<div
 	// id='article_id'>にhiddenでarticle_idを持たせる
 	var jsonParam = "article_id=" + $('#article_id').val(); // 送りたいデータ

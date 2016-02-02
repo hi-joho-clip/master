@@ -33,6 +33,8 @@
 <script src="../js/wysihtml/wysihtml-toolbar.min.js"></script>
 <script src="../js/wysihtml/advanced_and_extended.js"></script>
 <script src="../js/lib/cookie.js"></script>
+<script type="text/javascript" src="../js/indexeddb.js"></script>
+<script type="text/javascript" src="../js/lib/kagedb.js"></script>
 
 
 <style>
@@ -328,10 +330,10 @@ div[data-wysihtml5-dialog="createTable"] td {
 				<a href="UserInfo.html"><h4>ユーザ情報</h4></a>
 			</div>
 			<div id="bg-link">
-				<a href="index.html" onclick="javascript:$.cookie('viewMode','0');"><h4>マイリスト</h4></a>
+				<a href="index.html" onclick="javascript:setSessionStorage('viewMode','0');"><h4>マイリスト</h4></a>
 			</div>
 			<div id="bg-link">
-				<a href="index.html" onclick="javascript:$.cookie('viewMode','1');"><h4>お気に入り</h4></a>
+				<a href="index.html" onclick="javascript:setSessionStorage('viewMode','1');"><h4>お気に入り</h4></a>
 			</div>
 			<div id="bg-link">
 				<a href="taglist.html"><h4>タグ</h4></a>
@@ -346,7 +348,7 @@ div[data-wysihtml5-dialog="createTable"] td {
 				<a href="FriendSeach.html"><h4>フレンド検索</h4></a>
 			</div>
 			<div id="bg-link">
-				<a href="index.html" onclick="javascript:$.cookie('viewMode','4');"><h4>LISTTEST</h4></a>
+				<a href="index.html" onclick="javascript:setSessionStorage('viewMode','4');"><h4>LISTTEST</h4></a>
 			</div>
 			</p>
 		</nav>
@@ -464,7 +466,7 @@ div[data-wysihtml5-dialog="createTable"] td {
 											<h1 class="text-center">
 
 												<a href="index.html"
-													onclick="javascript:$.cookie('viewMode','0');">CLIP</a>
+													onclick="javascript:setSessionStorage('viewMode','0');">CLIP</a>
 
 											</h1>
 										</div>
@@ -491,7 +493,7 @@ div[data-wysihtml5-dialog="createTable"] td {
 
 							// 書き込みテスト
 							$('#updatebutton').click(function() {
-								updateArticle();
+								updateArticleOnline();
 							});
 
 							$('#footerArea').attr('style', 'visibility:hidden');
@@ -510,7 +512,7 @@ div[data-wysihtml5-dialog="createTable"] td {
 															.attr('style',
 																	'visibility:hidden');
 													edit_flag = 'false';
-													updateArticle();
+													updateArticleOnline();
 
 													$('#editable').attr(
 															'contenteditable',
@@ -546,8 +548,8 @@ div[data-wysihtml5-dialog="createTable"] td {
 												}
 											});
 
-							var isOnline = navigator.onLine;
-							if (navigator.onLine === true) {
+
+							if (isSettinOnLine() === true) {
 								//alert("current network status is online");
 								// ここはオフライン判定が必要
 								getViewArticle(location.search.substring(1,
@@ -558,9 +560,15 @@ div[data-wysihtml5-dialog="createTable"] td {
 								//});
 								//$('#editable').attr('contenteditable', 'false');
 
-							} else if (navigator.onLine === false) {
-								alert("current network status is offline");
-								$('div.toolbar').css('display', 'none');
+							} else if (isSettinOnLine() === false) {
+								//alert("current network status is offline");
+								$('.head-bar').css({
+									'background' : '#31708f'
+								});
+								$('#footerArea').remove();
+								$('#edit-button').remove();
+								getViewArticleOffline(location.search.substring(1,
+										location.search.length))
 
 							} else {
 								//alert("current network status is unknown");
