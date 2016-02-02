@@ -109,7 +109,7 @@ var get_mylists = function(json) {
 
 	return new Promise(function(resolve, reject) {
 		stopload();
-		$('#mode').val("tile");
+		setLocalStorage("Style","tile");
 		var random =Math.floor(Math.random()*3);
 		random = 3;
 		$myList = $("<div class='grid-sizer'></div>");
@@ -195,7 +195,7 @@ function addViewNext(json) {
 // シェア記事一覧を作成（タイル表示）
 var get_sharelists = function(json) {
 	stopload();
-	$('#mode').val("tile");
+	setLocalStorage("Style","tile");
 	var random =Math.floor(Math.random()*3);
 	$myList = $("<div class='grid-sizer'></div>");
 	$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
@@ -234,7 +234,7 @@ var get_sharelists = function(json) {
 // 記事一覧を作成（リスト表示）
 var get_mylists_list = function(json) {
 	return new Promise(function(resolve, reject) {
-		$('#mode').val("list");
+		setLocalStorage("Style","list");
 		$myList = $("<div class='grid-sizer' ></div>");
 		$grid.append($myList).isotope('insert', $myList).trigger('create');
 		for ( var i = 0; i < json.length ; i++) {
@@ -298,7 +298,7 @@ var get_mylists_list = function(json) {
 };
 // シェア記事一覧を作成（リスト表示）
 var get_sharelists_list = function(json) {
-	$('#mode').val("list");
+	setLocalStorage("Style","list");
 	$myList = $("<div class='grid-sizer' ></div>");
 	$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
 	for ( var i = 0; i < json.length ; i++) {
@@ -344,7 +344,7 @@ var get_taglists = function(json) {
 		tagList +=
 
 				"<tr id='tagtable"+json[i].tag_id+"' align='left' valign='top'><td style='border-bottom:1px solid #d3381c;'>"+
-				"<h8><a class='art-title' href='index.html'onclick='javascript:$.cookie(\"viewMode\",\"2\");$.cookie(\"tagLists\",\""+json[i].tag_body+"\");'>"+json[i].tag_body + "</a></h8><br>" +
+				"<h8><a class='art-title' href='index.html'onclick='javascript:setSessionStorage(\"viewMode\",\"2\");setSessionStorage(\"tagLists\",\""+json[i].tag_body+"\");'>"+json[i].tag_body + "</a></h8><br>" +
 				"<input type='hidden' value='"+json[i].lastest+"' name='lastest"+i+"'>"+
 				"</td><td style='border-bottom:1px solid #d3381c;'><h8><a class='art-title' href='/' data-remodal-target='tagdeletemodal' onclick='javascript:getTag_id("+json[i].tag_id+");return false;'>削除</a></h8></td></tr>";
 

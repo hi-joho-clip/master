@@ -124,7 +124,7 @@ $(document).ready(function() {
 
 				var page = parseInt($('#art-page').val()) + 1;
 				$('#art-page').val(page);
-				switch ($.cookie("viewMode")) {
+				switch (getSessionStorage("viewMode")) {
 				case "0":
 					console.log("netstat" + isSettinOnLine());
 					if (isSettinOnLine === true) {
@@ -161,26 +161,25 @@ $(document).ready(function() {
 	});
 	// タイル表示リスト表示用のリスナー
 	$(document).on('click', '#stylechange', function() {
-		if ($('#mode').val() === "tile") {
-			$('#mode').val("list");
-			$.cookie('Style', 'list');
-			//$('#art-page').val("1");
-			//$('#art-add').val("true");
-			//$('#lastid').val('0');
+		if (getLocalStorage('Style') === "tile") {
+
+			setLocalStorage('Style', 'list');
+			$('#art-page').val("1");
+			$('#art-add').val("true");
+			$('#lastid').val('0');
 			$('div.grid').css({
 				'height' : '0px'
 			});
-			console.log("今の状態：" + $('#mode').val());
+			console.log("今の状態：" + getLocalStorage('Style'));
 
 			// こいつがリロードじゃなくなる
 			styleListChange();
-		} else if ($('#mode').val() === "list") {
-			$('#mode').val("tile");
-			$.cookie('Style', 'tile');
-			//$('#art-page').val("1");
-			//$('#lastid').val('0');
-			//$('#art-add').val("true");
-			console.log("今の状態：" + $('#mode').val());
+		} else if (getLocalStorage('Style') === "list") {
+			setLocalStorage('Style', 'tile');
+			$('#art-page').val("1");
+			$('#lastid').val('0');
+			$('#art-add').val("true");
+			console.log("今の状態：" + getLocalStorage('Style'));
 
 			// こいつがリロード
 			styleListChange();
@@ -225,7 +224,7 @@ function styleListChange() {
 	startload();
 
 	// 1ページ目へ戻すよ
-	switch ($.cookie("viewMode")) {
+	switch (getSessionStorage("viewMode")) {
 	case "0":// マイリスト画面を表示しているとき
 		$('.grid').empty();
 
