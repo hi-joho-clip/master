@@ -184,14 +184,14 @@ function addFavArticle(article_id) {
 
 		var success = null;
 
-		if ($('#mode').val() === "tile") {
+		if (getLocalStorage('Style') === "tile") {
 			success = function(json) {
 				if (json.flag == "0") {
 					toastr.error(json.state);
 				} else {
 					$('#' + favtitle).attr('style', 'color:#FDB91B');
 					$('#' + favtitle).html(
-							"★" + $("#" + title).val() + "<BR><a href='"
+							"★" + $("#" + title).val() + "<BR><a class='art-title' href='"
 									+ $("#" + url).val() + "'>"
 									+ $("#" + url).val() + "</a>");
 					// グローバルflagをfalseにする
@@ -199,7 +199,7 @@ function addFavArticle(article_id) {
 					toastr.success(json.state);
 				}
 			};
-		} else if ($('#mode').val() === 'list') {
+		} else if (getLocalStorage('Style') === 'list') {
 			success = function(json) {
 				if (json.flag == "0") {
 					toastr.error(json.state);
@@ -223,14 +223,14 @@ function addFavArticle(article_id) {
 		// タイトルの横の★マークを削除
 		var failed = null;
 
-		if ($('#mode').val() === "tile") {
+		if (getLocalStorage('Style') === "tile") {
 			failed = function(json) {
 				if (json.flag == "0") {
 					toastr.error(json.state);
 				} else {
 					$('#' + favtitle).removeAttr('style', 'color:#FDB91B');
 					$('#' + favtitle).html(
-							$("#" + title).val() + "<BR><a href='"
+							$("#" + title).val() + "<BR><a class='art-title' href='"
 									+ $("#" + url).val() + "'>"
 									+ $("#" + url).val() + "</a>");
 
@@ -240,7 +240,7 @@ function addFavArticle(article_id) {
 				}
 			};
 
-		} else if ($('#mode').val() === "list") {
+		} else if (getLocalStorage('Style') === "list") {
 			failed = function(json) {
 				if (json.flag == "0") {
 					toastr.error(json.state);
