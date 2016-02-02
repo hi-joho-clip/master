@@ -28,12 +28,35 @@ function getMyList(page) {
 
 		$('#viewmode').val('0');
 		console.log(page + 'ゲットおおお');
-		getJSON(URL, jsonParam, func).then(function() {
-			return resolve();
+		getJSON(URL, jsonParam,func).then(function(json) {
+			console.log('保存プロセス');
+			setStorage(json);
+			resolve();
 		}['catch'](function (error) {
-			return reject();
+			reject();
 		}));
 	});
+}
+
+function setStorage(json) {
+	var sStrage = sessionStorage;
+	// 配列のまま受け取る
+	var arrayJson = [];
+	arrayJson.push(sStrage.getItem('json'));
+	// 新しい配列を入れ込む(文字列
+	arrayJson.push(JSON.stringify(json));
+	sStrage.setItem('json', arrayJson);
+	console.log(arrayJson);
+}
+
+function getStorage(json, callback) {
+	var arrayJson = [];
+	arrayJson.push(sStrage.getItem('json'));
+
+	for (var i = 0; i < arrayJson.length; i++) {
+		// コールバックにJsonを渡して描画させる(オブジェへ変換
+		callback(JSON.parse(arrayJson[i]));
+	}
 }
 
 // お気に入り

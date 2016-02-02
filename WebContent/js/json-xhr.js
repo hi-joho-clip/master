@@ -127,9 +127,9 @@ function getJSON(URL, param, callback) {
 
 	// console.log("getJSON" + param);
 	return new Promise(function(resolve, reject) {
-		getURL(URL, param).then(JSON.parse).then(callback).then(function() {
+		getURL(URL, param).then(JSON.parse).then(callback).then(function(json) {
 			console.log("通信がﾘｿﾞﾙﾌﾞした");
-			resolve();
+			resolve(json);
 		})['catch'](function(error) {
 			console.log(error);
 			reject();

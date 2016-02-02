@@ -109,8 +109,13 @@ $(document).ready(function() {
 
 	$('.pure-pusher').on("scroll", function() {
 			var scrollHeight = $('#wrap').height();
-		var scrollPosition = $('.pure-pusher').height() + $('.pure-pusher').scrollTop();
-		if ((scrollHeight - scrollPosition) / scrollHeight < 0) {
+		var scrollPosition = $('.pure-pusher').height() + Math.floor($('.pure-pusher').scrollTop()) - 200;
+
+		console.log(scrollPosition + ':' + $('.pure-pusher').height() + ':' + $('.pure-pusher').scrollTop());
+
+		console.log(scrollHeight + ':' + scrollPosition + ':' + scrollHeight );
+		console.log((scrollHeight - scrollPosition) / scrollHeight );
+		if ((scrollHeight - scrollPosition) / scrollHeight === 0) {
 			// when scroll to bottom of the page
 
 			if ($('#art-add').val() === 'true') {
@@ -159,21 +164,25 @@ $(document).ready(function() {
 		if ($('#mode').val() === "tile") {
 			$('#mode').val("list");
 			$.cookie('Style', 'list');
-			$('#art-page').val("1");
-			$('#art-add').val("true");
-			$('#lastid').val('0');
+			//$('#art-page').val("1");
+			//$('#art-add').val("true");
+			//$('#lastid').val('0');
 			$('div.grid').css({
 				'height' : '0px'
 			});
 			console.log("今の状態：" + $('#mode').val());
+
+			// こいつがリロードじゃなくなる
 			styleListChange();
 		} else if ($('#mode').val() === "list") {
 			$('#mode').val("tile");
 			$.cookie('Style', 'tile');
-			$('#art-page').val("1");
-			$('#lastid').val('0');
-			$('#art-add').val("true");
+			//$('#art-page').val("1");
+			//$('#lastid').val('0');
+			//$('#art-add').val("true");
 			console.log("今の状態：" + $('#mode').val());
+
+			// こいつがリロード
 			styleListChange();
 		}
 	});
