@@ -92,8 +92,8 @@
 
 	<script>
 		$(document).ready(function() {
-			$.cookie('viewMode', '0');
-			$.cookie('Style', 'tile');
+			setSessionStorage('viewMode', '0');
+			setLocalStorage('Style', 'tile');
 			lock();
 			getNonce();
 		});
