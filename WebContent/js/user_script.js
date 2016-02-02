@@ -277,6 +277,9 @@ function getUserList() {
 		} else  {
 			console.log("unknown");
 		}
+
+
+
 		var $onoffkun = $("<input type='checkbox' name='onoffswitch' class='onoffswitch-checkbox' id='myonoffswitch' "
 				+ flag
 				+ ">"
@@ -303,6 +306,8 @@ function getUserList() {
 				+ "</label>");
 		$("#onlineswitch").append($online).trigger("create");
 
+
+
 	};
 	getJSON(URL, null, setappend);
 }
@@ -321,6 +326,8 @@ function onlineMode() {
 		docCookies.setItem('online', false);
 	}
 }
+
+
 
 // ニックネーム変更画面
 function NickName() {
