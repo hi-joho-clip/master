@@ -43,13 +43,13 @@ body {
 /* 5 columns, percentage width */
 .grid-item,
 .grid-sizer {
-  width: 220px;
+  width: 370px;
   margin: 4px 4px 4px 4px;
 }
 
 .grid-item {
   float: left;
-  height: 220px;
+  height: 370px;
   background: #0D8;
   border: 2px solid #333;
   border-color: hsla(0, 0%, 0%, 0.7);
