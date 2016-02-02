@@ -142,16 +142,18 @@ function deleteArticle() {
 
 // お気に入りの追加削除
 function addFavArticle(article_id) {
-	// グローバルFlagを用意する。記事リストを作成時にグローバルFlagはtrue
-	// true=追加可、false=削除可
+	// グローバルFLAG  true=追加可、false=削除可
 
 	var jsonParam = "article_id=" + article_id+"&nonce="+$('#nonce').val();// 送りたいデータ
-	var grobalflag = "grobalflag" + article_id;// グローバルflagの名前付け
+	var grobalflag = "grobalflag" + article_id;// 今のお気に入りの状態を表すグローバルflagの名前付け
 	var favtitle = "favtitle" + article_id;// タイトルの★マークの名前
 	var title = "title" + article_id;
 	var url = "url" + article_id;
-	var flag = document.getElementById(grobalflag).value;
-	if (flag == "false") {
+	console.log("globalflag:"+$("#"+grobalflag).val());
+	console.log("favtitle:"+$("#"+favtitle).html());
+	console.log("title:"+$("#"+title).val());
+	console.log("url:"+$("#"+url).val());
+	if ($("#"+grobalflag).val() === "false") {
 
 		// 追加の処理
 		var URL = hostURL + "/addfav";
@@ -166,12 +168,9 @@ function addFavArticle(article_id) {
 					toastr.error(json.state);
 				}else{
 					$('#' + favtitle).attr('style', 'color:#FDB91B');
-					document.getElementById(favtitle).innerHTML = "★"
-							+ document.getElementById(title).value
-							+ "<BR><a href='" + document.getElementById(url).value
-							+ "'>" + document.getElementById(url).value + "</a>";
+					$('#'+favtitle).html("★"+$("#"+title).val()+"<BR><a href='"+$("#"+url).val()+"'>"+$("#"+url).val()+"</a>");
 					// グローバルflagをfalseにする
-					document.getElementById(grobalflag).value = true;
+					$("#"+grobalflag).val(true);
 					toastr.success(json.state);
 				}
 			};
@@ -181,10 +180,10 @@ function addFavArticle(article_id) {
 					toastr.error(json.state);
 				}else{
 					$('#' + favtitle).attr('style', 'color:#FDB91B');
-					document.getElementById(favtitle).innerHTML = "★"
-							+ document.getElementById(title).value;
+					$('#'+favtitle).html("★"+$("#"+title).val());
+
 					// グローバルflagをfalseにする
-					document.getElementById(grobalflag).value = true;
+					$("#"+grobalflag).val(true);
 					toastr.success(json.state);
 				}
 			};
@@ -192,7 +191,7 @@ function addFavArticle(article_id) {
 
 		getJSON(URL, jsonParam, success);
 
-	} else if (flag == "true") {
+	} else if ($("#"+grobalflag).val() === "true") {
 		// 削除の処理
 		var URL = hostURL + "/deletefav";
 
@@ -205,14 +204,10 @@ function addFavArticle(article_id) {
 					toastr.error(json.state);
 				}else{
 					$('#' + favtitle).removeAttr('style', 'color:#FDB91B');
+					$('#'+favtitle).html($("#"+title).val()+"<BR><a href='"+$("#"+url).val()+"'>"+$("#"+url).val()+"</a>");
 
-					document.getElementById(favtitle).innerHTML = document
-							.getElementById(title).value
-							+ "<BR><a href='"
-							+ document.getElementById(url).value
-							+ "'>" + document.getElementById(url).value + "</a>";
 					// グローバルflagをtrueにする
-					document.getElementById(grobalflag).value = false;
+					$("#"+grobalflag).val(false);
 					toastr.success(json.state);
 				}
 			};
@@ -223,12 +218,11 @@ function addFavArticle(article_id) {
 					toastr.error(json.state);
 				}else{
 					$('#' + favtitle).removeAttr('style', 'color:#FDB91B');
+					$('#'+favtitle).html($("#"+title).val());
 
-
-					document.getElementById(favtitle).innerHTML = document
-							.getElementById(title).value;
 					// グローバルflagをtrueにする
-					document.getElementById(grobalflag).value = false;
+					$("#"+grobalflag).val(false);
+
 					toastr.success(json.state);
 				}
 

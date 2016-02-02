@@ -56,10 +56,10 @@ function myListSearch(word) {
 	var func = get_mylists;
 	if (tileView()) {
 		func = get_mylists;
-		document.getElementById('title').innerHTML = '<h1>検索結果</h1><div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
+		document.getElementById('title').innerHTML = '<h1 class="title">検索結果</h1><div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
 	} else {
 		func = get_mylists_list;
-		document.getElementById('title').innerHTML =  '<h1>検索結果</h1><div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
+		document.getElementById('title').innerHTML =  '<h1 class="title">検索結果</h1><div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
 	}
 	var jsonParam = "text=" + word;// 送りたいデータ
 	var URL = hostURL + "/mylistsearch";
@@ -70,10 +70,10 @@ function favListSearch(word) {
 	var func = get_mylists;
 	if (tileView()) {
 		func = get_mylists;
-		document.getElementById('title').innerHTML = '<h1>検索結果</h1><div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
+		document.getElementById('title').innerHTML = '<h1 class="title">検索結果</h1><div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
 	} else {
 		func = get_mylists_list;
-		document.getElementById('title').innerHTML =  '<h1>検索結果</h1><div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
+		document.getElementById('title').innerHTML =  '<h1 class="title">検索結果</h1><div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
 	}
 	var jsonParam = "text=" + word;// 送りたいデータ
 	var URL = hostURL + "/favlistsearch";
@@ -85,10 +85,10 @@ function tagSearch(word) {
 	var func = get_mylists;
 	if (tileView()) {
 		func = get_mylists;
-		document.getElementById('title').innerHTML = '<h1>検索結果</h1><div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
+		document.getElementById('title').innerHTML = '<h1 class="title">検索結果</h1><div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
 	} else {
 		func = get_mylists_list;
-		document.getElementById('title').innerHTML =  '<h1>検索結果</h1><div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
+		document.getElementById('title').innerHTML =  '<h1 class="title">検索結果</h1><div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
 	}
 	var jsonParam = "tag=" + $.cookie("tagLists") + "&text=" + word;
 	var URL = hostURL + "/tagsearch";
@@ -99,10 +99,10 @@ function shareListSearch(word) {
 	var func = get_sharelists;
 	if (tileView()) {
 		func = get_sharelists;
-		document.getElementById('title').innerHTML = '<h1>検索結果</h1><div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
+		document.getElementById('title').innerHTML = '<h1 class="title">検索結果</h1><div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
 	} else {
 		func = get_sharelists_list;
-		document.getElementById('title').innerHTML =  '<h1>検索結果</h1><div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
+		document.getElementById('title').innerHTML =  '<h1 class="title">検索結果</h1><div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
 	}
 	var jsonParam = "friend_user_id=" + $.cookie("shareLists") + "&text=" + word;
 	var URL = hostURL +  "/sharelistsearch";
