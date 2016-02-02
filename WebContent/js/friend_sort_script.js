@@ -20,7 +20,7 @@ function getFriendList() {
 
 			} else if (json[i].status === 3){
 				// フレンドの場合
-				$('#table-body').append('<tr class="first"><td><h2 id="friend"' + json[i].friend_user_id + '">' + "<a class='art-title' href='index.html'onclick='javascript:$.cookie(\"viewMode\",\"3\");$.cookie(\"shareLists\",\""
+				$('#table-body').append('<tr class="first"><td><h2 id="friend"' + json[i].friend_user_id + '">' + "<a class='art-title' href='index.html'onclick='javascript:setSessionStorage(\"viewMode\",\"3\");setSessionStorage(\"shareLists\",\""
 						+ json[i].friend_user_id
 						+ "\");'>" +
 					json[i].nickname + '</h2></td><td><a href="#" data-remodal-target="delete_friend" class="friend art-title" onclick="javascript:remodalCreate(' + json[i].friend_user_id + ');">削除</td></tr>');

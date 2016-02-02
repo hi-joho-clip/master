@@ -20,7 +20,8 @@ function onclickSearch() {
 
 	var sesStorage = sessionStorage;
 	sesStorage.setItem('search', word);
-	sesStorage.setItem('viewMode', 4);
+	//sesStorage.setItem('searchMode', true);
+	$('#searchMode').val("true");
 
 	switch ($('#viewmode').val()) {
 	case "0":

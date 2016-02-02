@@ -196,7 +196,7 @@
 							<div class="grid" align="left"></div>
 							<input type="hidden" id="art-page" value="1">
 							<input type="hidden" id="art-add" value="true">
-							<input type="hidden" id="mode" value="tile">
+							<input type="hidden" id="searchMode" value="false">
 							<input type="hidden" id="lastid" value="0">
 							<input type="hidden" id="viewmode" value="0">
 							<input type="hidden" id="article_id" value="0">
@@ -217,6 +217,10 @@
 
 			if (!getLocalStorage('Style')) {
 				setLocalStorage('Style','tile');
+			}
+
+			if (!getSessionStorage('viewMode')) {
+				setSessionStorage('viewMode','0');
 			}
 
 		});
