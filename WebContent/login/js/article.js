@@ -193,32 +193,6 @@ $(document).ready(function() {
 
 });
 
-function isSettinOnLine() {
-	var SetFlag = docCookies.getItem('online');
-
-	if (SetFlag == null) {
-		docCookies.setItem('online', true);
-	}
-
-	console.log(SetFlag);
-	if (SetFlag === 'true') {
-		if (navigator.onLine === true) {
-			console.log('true');
-			return true;
-		} else if (navigator.onLine === false) {
-			return false;
-			console.log('false');
-		} else {
-			return false;
-			console.log('UnknownNetworkState');
-		}
-	} else if (SetFlag === 'false') {
-		return false;
-	} else {
-		toastr.warning('再ログインしてくだaさい');
-	}
-}
-
 // タイルリスト表示を押したときに走るメソッド
 function styleListChange() {
 	startload();

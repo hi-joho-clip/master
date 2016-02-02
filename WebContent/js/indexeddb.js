@@ -23,12 +23,14 @@ function getArticle(username, article_id) {
 			// 成功の場合
 			var tutorial = getArticleInstance();
 
+			console.log('offline' + username + article_id);
 			tutorial.tx([ "article" ], function(tx, todo) {
 				todo.fetch({
-					filter : article_filter
+					filter : article_filter,
+					//filter : user_filter
 				}, function(values) {
-					// console.log("values = " + JSON.stringify(values));
-					// console.log("done.");
+					 //console.log("values = " + JSON.stringify(values));
+					console.log("done.");
 					resolve(values);
 					// console.log(values.body.created);
 				});
@@ -40,10 +42,11 @@ function getArticle(username, article_id) {
 		}
 		function article_filter(record) {
 			// GUIDが自身であり、アーティクルIDが同一
-			return record.username == username
-					&& record.article_id == article_id;
-		}
-		;
+			return record.article_id == article_id;
+		};
+		function user_filter(record) {
+			return record.username == username;
+		};
 	});
 };
 
