@@ -203,9 +203,16 @@ function styleListChange() {
 		$('.grid').empty();
 
 		if (isSettinOnLine() === true) {
+			if($('#searchMode').val()==="true"){
+				//マイリストの検索をしているページを出す
+				initPagingMylist(myListSearch(getSessionStorage('search')));
+			}else{
+				//普通のマイリストを出す
+				initPagingMylist(getMyList);
+			}
 			// ページング処理
 			// if ($.cookie("Style") === "tile") {
-			initPagingMylist(getMyList);
+
 			// } else if ($.cookie("Style") === "list") {
 			// console.log('マイリスト');
 			// initPagingMylist(getMyListList);
@@ -242,7 +249,13 @@ function styleListChange() {
 
 		if (isSettinOnLine() === true) {
 			// オフライン判断
-			getFavList();
+			if($('#searchMode').val()==="true"){
+				//お気に入りの検索をしているページを出す
+				favListSearch(getSessionStorage('search'));
+			}else{
+				//普通のお気に入りを出す
+				getFavList();
+			}
 		} else {
 
 		}
@@ -252,8 +265,13 @@ function styleListChange() {
 		$('.grid').empty();
 		// オフライン判断
 		if (isSettinOnLine() === true) {
-			//console.log($.cookie("tagLists"));
-			getTagArticleList(0, getSessionStorage("tagLists"));
+			if($('#searchMode').val()==="true"){
+				//特定のタグの検索をしているページを出す
+				tagSearch(getSessionStorage('search'));
+			}else{
+				//普通の特定のタグを出す
+				getTagArticleList(0, getSessionStorage("tagLists"));
+			}
 		}
 		break;
 	case "3":// シェア画面を表示しているとき
@@ -261,8 +279,17 @@ function styleListChange() {
 
 		if (isSettinOnLine() === true) {
 			// オフライン判断
-			initPagingSharelist(getShareList, getSessionStorage("shareLists"));
-			initTopPage();
+
+			if($('#searchMode').val()==="true"){
+				//特定のタグの検索をしているページを出す
+				shareListSearch(getSessionStorage('search'));
+			}else{
+				//普通の特定のタグを出す
+				initPagingSharelist(getShareList, getSessionStorage("shareLists"));
+				initTopPage();
+			}
+			/*initPagingSharelist(getShareList, getSessionStorage("shareLists"));
+			initTopPage();*/
 			toastr.warning("オンライン");
 
 		} else if (isSettinOnLine() === false) {
