@@ -9,6 +9,8 @@ var getBrowser = function(){
     var ver = window.navigator.appVersion.toLowerCase();
     var name = 'unknown';
 
+
+    alert(ua);
     if (ua.indexOf("msie") != -1){
         if (ver.indexOf("msie 6.") != -1){
             name = 'ie6';
@@ -27,7 +29,7 @@ var getBrowser = function(){
         name = 'ie11';
     }else if (ua.indexOf('chrome') != -1){
         name = 'chrome';
-    }else if (ua.indexOf('CriOS') != -1){
+    }else if (ua.indexOf('crios') != -1){
         name = 'chrome';
     }else if (ua.indexOf('safari') != -1){
         name = 'safari';
@@ -36,6 +38,7 @@ var getBrowser = function(){
     }else if (ua.indexOf('firefox') != -1){
         name = 'firefox';
     }
+    alert(name);
     return name;
 };
 

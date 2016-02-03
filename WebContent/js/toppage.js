@@ -12,10 +12,12 @@ function initTopPage() {
 	store.set('username', username);
 	store.set('auto', true);
 
-	console.log("initPage");
+	//alert("initPage");
 	/*
 	 * 対応ブラウザならオフライン処理を開始 （ここでダイアログ
 	 */
+
+	setLocalStorage('auto','true');
 
 	if (isSupported([ 'chrome', 'opera', 'firefox', 'ie11', 'ie10' ])) {
 
@@ -40,8 +42,10 @@ function initTopPage() {
 //							console.log('alert no');
 //						}
 //					} else {
+						//alert(getLocalStorage('auto'));
 						// 自動更新の設定ならそのまま
-						if (getLocalStorage('auto')) {
+						if (getLocalStorage('auto') === 'true') {
+							//alert(username);
 							startUpdate(username);
 						} else {
 							console.log('not autoupdate');
@@ -52,7 +56,9 @@ function initTopPage() {
 //}
 function startUpdate(username) {
 
-	if (window.Worker) {
+	//alert(window.Worker);
+	//if (window.Worker) {
+	if (true)
 		console.log('worker start:' + username);
 		// これが疑似的なPromiseオブジェクト→Deferredオブジェクト
 		var worker = new Worker('../js/worker.js');
@@ -70,4 +76,4 @@ function startUpdate(username) {
 		});
 
 	}
-}
+

@@ -51,7 +51,7 @@ public class LoginFilter implements Filter {
 		try {
 			String target = ((HttpServletRequest) request).getRequestURI();
 			String loginURL = "/clipMaster/login/index.html";
-			String logoutURL = "//clipMaster/login/logout.html";
+			String logoutURL = "/clipMaster/login/logout.html";
 
 			HttpSession session = ((HttpServletRequest) request).getSession();
 			//String servletName = ((HttpServletRequest) request).getServletPath();

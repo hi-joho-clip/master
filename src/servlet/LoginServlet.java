@@ -101,6 +101,8 @@ public class LoginServlet extends HttpServlet {
 			response.addCookie(c_start_time);
 			response.addCookie(username);
 			loginsession.setAttribute("guid", guid.toString());
+			// セッションの有効期限を1日にする
+			loginsession.setMaxInactiveInterval(86400);
 
 			// 成功した場合、クッキー情報、削除
 			for (int i = 0; i < cookie.length; i++) {
