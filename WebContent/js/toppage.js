@@ -20,36 +20,36 @@ function initTopPage() {
 	if (isSupported([ 'chrome', 'opera', 'firefox', 'ie11', 'ie10' ])) {
 
 		// IDBに自身のキャッシュデータがない場合にアラート
-		getIDBAllArticleList(username).then(
-				function(values) {
+//		getIDBAllArticleList(username).then(
+//				function(values) {
+//
+//					// 返り値はオブジェクトでないとダメ
+//					if (values.length === 0) {
 
-					// 返り値はオブジェクトでないとダメ
-					if (values.length === 0) {
-
-						if (confirm("キャッシュデータがありません。\n"
-								+ "すべての記事をダウンロードしますか？\n"
-								+ "大量のデータをダウンロードする可能性があります。\n")) {
-							// 「はい」選択時の処理
-
-							// usernameがある場合
-							if (username) {
-								startUpdate(username);
-							}
-						} else {
-							// 「いいえ」選択時の処理
-							console.log('alert no');
-						}
-					} else {
+//						if (confirm("キャッシュデータがありません。\n"
+//								+ "すべての記事をダウンロードしますか？\n"
+//								+ "大量のデータをダウンロードする可能性があります。\n")) {
+//							// 「はい」選択時の処理
+//
+//							// usernameがある場合
+//							if (username) {
+//								startUpdate(username);
+//							}
+//						} else {
+//							// 「いいえ」選択時の処理
+//							console.log('alert no');
+//						}
+//					} else {
 						// 自動更新の設定ならそのまま
-						if (store.get('auto')) {
+						if (getLocalStorage('auto')) {
 							startUpdate(username);
 						} else {
-							console.log('is null');
+							console.log('not autoupdate');
 						}
 					}
-				});
+			//	});
 	}
-}
+//}
 function startUpdate(username) {
 
 	if (window.Worker) {
