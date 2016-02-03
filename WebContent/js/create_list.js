@@ -180,13 +180,15 @@ var get_mylists = function(json) {
 function addViewNext(json) {
 
 	// 20件以上の場合はValueを加算し、20件未満の場合はボタンを削除する。
-	if (json.length > 19) {
+	if (json.length >= 20) {
 		console.log('number:' + $('#art-page').val());
 		// 最後に読み込んだArticleIDを残す
+
 		$('#lastid').val(json[json.length-1].article_id);
 	} else if (json.length <= 19){
 		console.log("under 19");
 		// 無限読み込み停止用
+		$('#buttonbox').css({'display' : 'none'});
 		$('#art-add').val('false');
 	}
 }
