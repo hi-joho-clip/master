@@ -72,20 +72,20 @@ public class test_dao {
 
 	}
 
-	public static void searchUserName(String mailaddress, String password) {
-
-
-		try {
-			UserDAO userDAO = new UserDAO();
-			UserDTO userDTO = userDAO.searchUserName(mailaddress, password);
-
-			System.out.println(userDTO.getUser_name());
-
-		} catch (Exception e) {
-			e.getStackTrace();
-		}
-
-	}
+//	public static void searchUserName(String mailaddress, String password) {
+//
+//
+//		try {
+//			UserDAO userDAO = new UserDAO();
+//			UserDTO userDTO = userDAO.searchUserName(mailaddress, password);
+//
+//			System.out.println(userDTO.getUser_name());
+//
+//		} catch (Exception e) {
+//			e.getStackTrace();
+//		}
+//
+//	}
 
 	public static void checkUserName(String user_name) throws Exception{
 

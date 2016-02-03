@@ -22,7 +22,6 @@ public class User {
 
 	private UserDAO userDAO;
 
-
 	private UserDTO userDTO;
 
 	//private ArrayList<UserDTO> userlists = new ArrayList<UserDTO>();
@@ -76,6 +75,26 @@ public class User {
 	}
 
 	/**
+	 *
+	 * @return
+	 * @throws Exception
+	 */
+	private boolean checkString(String str) throws Exception {
+
+		if (str.indexOf("#") == -1) {
+			return false;
+		} else if (str.indexOf("&") == -1) {
+			return false;
+		} else if (str.indexOf("%") == -1) {
+			return false;
+		} else if (str.indexOf("#") == -1) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	/**
 	 * データ挿入前のバリデーションチェック
 	 * @return
 	 * @throws Exception
@@ -86,7 +105,11 @@ public class User {
 		if (!this.userDAO.checkUserName(this.user_name) || this.user_name == null) {
 			//すでに同名ユーザが存在する
 			validate_flag = false;
-			ErrorMessages.put("user_name", "すでに登録されているユーザ名です。");
+			if (checkString(this.user_name)) {
+				ErrorMessages.put("mailaddress", "登録できない文字です。");
+			} else {
+				ErrorMessages.put("user_name", "すでに登録されているユーザ名です。");
+			}
 		}
 		return validate_flag;
 	}
@@ -102,7 +125,12 @@ public class User {
 		if (!this.userDAO.checkMailAddress(this.mailaddress) || this.mailaddress == null) {
 			// 同一のメールアドレスが登録されているか確認する
 			validate_flag = false;
-			ErrorMessages.put("mailaddress", "すでに登録されているメールアドレスです。");
+
+			if (checkString(this.mailaddress)) {
+				ErrorMessages.put("mailaddress", "登録できない文字です。");
+			} else {
+				ErrorMessages.put("mailaddress", "すでに登録されているメールアドレスです。");
+			}
 		}
 		return validate_flag;
 
@@ -111,15 +139,12 @@ public class User {
 	/**
 	 * パスワード検索
 	 */
-	public void searchPassword() throws Exception{
+	public void searchPassword() throws Exception {
 		this.userDAO = new UserDAO();
 		setUserDTO();
-		userDTO = userDAO.searchPassword(this.user_name , this.mailaddress);
-
+		userDTO = userDAO.searchPassword(this.user_name, this.mailaddress);
 
 	}
-
-
 
 	/**
 	 * フレンド申請の許可設定
@@ -168,7 +193,11 @@ public class User {
 		setUserDTO();
 
 		if (checkUserNameValidation()) {
-			this.userDAO.update(this.userDTO);
+			if (checkString(this.user_name)) {
+				this.userDAO.update(this.userDTO);
+			} else {
+				ErrorMessages.put("updateUserName", "登録できない文字です。");
+			}
 		} else {
 			return;
 		}
@@ -182,8 +211,12 @@ public class User {
 		this.userDAO = new UserDAO();
 		setUserDTO();
 
-		if (checkUserMailaddressValidation()) {
-			userDAO.update(this.userDTO);
+		if (checkUserMailaddressValidation() && this.mailaddress != null && this.mailaddress.equals("")) {
+			if (checkString(this.mailaddress)) {
+				userDAO.update(this.userDTO);
+			} else {
+				ErrorMessages.put("updateMailaddress", "登録できない文字です。");
+			}
 		} else {
 			return;
 		}
@@ -198,6 +231,11 @@ public class User {
 		setUserDTO();
 
 		if (this.userDTO.getNickname() != null && !this.userDTO.getNickname().equals("")) {
+			if (checkString(this.user_name)) {
+				this.userDAO.update(this.userDTO);
+			} else {
+				ErrorMessages.put("updateNickname", "登録できない文字です。");
+			}
 			userDAO.update(this.userDTO);
 		} else {
 			this.ErrorMessages.put("nickname", "invalid nickname");
@@ -222,51 +260,49 @@ public class User {
 	/**
 	 * パスワード再発行(ユーザ名、メールアドレス、生年月日で検索)
 	 */
-	public boolean searchPass() throws Exception{
+	public boolean searchPass() throws Exception {
 		boolean flag = false;
 		this.userDAO = new UserDAO();
 		setUserDTO();
 
-		userDTO = userDAO.PasswordSearch(this.userDTO.getMailaddress(), this.userDTO.getUser_name(), this.userDTO.getBirth());
-		 if(userDTO.getUser_id() != 0){
-			 flag = true;
-			 this.user_id = userDTO.getUser_id();
-		 }
-		 return flag;
+		userDTO = userDAO.PasswordSearch(this.userDTO.getMailaddress(), this.userDTO.getUser_name(),
+				this.userDTO.getBirth());
+		if (userDTO.getUser_id() != 0) {
+			flag = true;
+			this.user_id = userDTO.getUser_id();
+		}
+		return flag;
 	}
-
 
 	/**
 	 * パスワード再発行(パスワードを更新)
 	 */
-	public void reissuePass() throws Exception{
+	public void reissuePass() throws Exception {
 		this.userDAO = new UserDAO();
 		setUserDTO();
 
 		userDAO.updatePassword(this.userDTO.getUser_id(), this.userDTO.getUser_name(), this.userDTO.getPassword());
 	}
 
-
 	/**
 	 * ユーザID確認
 	 * @throws Exception
 	 */
-	public boolean UserID() throws Exception{
+	public boolean UserID() throws Exception {
 		boolean flag = false;
 		this.userDAO = new UserDAO();
 		setUserDTO();
 
 		String user_name = userDAO.viewMail(this.userDTO.getMailaddress()).getUser_name();
 
-		userDTO =  userDAO.searchUserName(this.userDTO.getMailaddress(), user_name,this.userDTO.getPassword());
+		userDTO = userDAO.searchUserName(this.userDTO.getMailaddress(), user_name, this.userDTO.getPassword());
 
-		if(userDTO.getUser_id() != 0){
+		if (userDTO.getUser_id() != 0) {
 			flag = true;
-			 this.user_id = userDTO.getUser_id();
+			this.user_id = userDTO.getUser_id();
 		}
 		return flag;
 	}
-
 
 	/**
 	 * ユーザーの削除（未完成）
@@ -276,7 +312,7 @@ public class User {
 	public boolean deleteUser() throws Exception {
 		this.userDAO = new UserDAO();
 		setUserDTO();
-		if(userDAO.delete(this.userDTO.getUser_id())){
+		if (userDAO.delete(this.userDTO.getUser_id())) {
 			return true;
 		}
 		return false;
@@ -374,7 +410,5 @@ public class User {
 	public void setBirth(String birth) {
 		this.birth = birth;
 	}
-
-
 
 }
