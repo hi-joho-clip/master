@@ -47,10 +47,12 @@ public class AddUserServlet extends HttpServlet {
 			if (request.getParameter("username") != null&& request.getParameter("nickname") != null&& request.getParameter("birth") != null&& request.getParameter("email") != null&& request.getParameter("password") != null) {
 				String user_name = request.getParameter("username");
 				String nickname = request.getParameter("nickname");
+				nickname = new String(nickname.getBytes("UTF-8"), "UTF-8");
 				String birth = request.getParameter("birth");
 				String inputmail = request.getParameter("email"); // メールアドレス取得
+				inputmail = new String(inputmail.getBytes("UTF-8"), "UTF-8");
 				String inputpass = request.getParameter("password"); // パスワードを取得
-
+				inputpass = new String(inputpass.getBytes("UTF-8"), "UTF-8");
 				userbean.setUser_name(user_name);
 				userbean.setNickname(nickname);
 				userbean.setBirth(birth);

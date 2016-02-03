@@ -64,9 +64,7 @@ function lock() {
 	$("#login").append($userList).trigger("create");
 }
 
-
-
-//パスワード再発行ロック
+// パスワード再発行ロック
 function ForgotPass_lock() {
 
 	var result = null;
@@ -124,7 +122,8 @@ function ForgotPass_lock() {
 		console.log("失敗してない");
 	} else if (cnt < 5) {
 		console.log("1回以上失敗してる");
-		$userList = $("<h4>" + cnt + "回パスワード再発行失敗しました<br>5回失敗すると、5分間ロックされます</h4>");
+		$userList = $("<h4>" + cnt
+				+ "回パスワード再発行失敗しました<br>5回失敗すると、5分間ロックされます</h4>");
 	} else {
 		$userList = $("<h4>5分間ロックしました</h4>");
 		console.log("ロックされちゃった");
@@ -132,9 +131,7 @@ function ForgotPass_lock() {
 	$("#forgotpass").append($userList).trigger("create");
 }
 
-
-
-//ユーザID確認ロック
+// ユーザID確認ロック
 function userID_lock() {
 
 	var result = null;
@@ -192,7 +189,8 @@ function userID_lock() {
 		console.log("失敗してない");
 	} else if (cnt < 5) {
 		console.log("1回以上失敗してる");
-		$userList = $("<h4>" + cnt + "回ユーザID確認失敗しました<br>5回失敗すると、5分間ロックされます</h4>");
+		$userList = $("<h4>" + cnt
+				+ "回ユーザID確認失敗しました<br>5回失敗すると、5分間ロックされます</h4>");
 	} else {
 		$userList = $("<h4>5分間ロックしました</h4>");
 		console.log("ロックされちゃった");
@@ -215,19 +213,31 @@ function logout() {
 
 // 新規登録後
 function addUser() {
-
-	var jsonParam = "username=" + username.value + '&nickname=' + nickname.value+"&birth="+ birth.value + "&email=" + email.value + "&password=" + passwd.value +"&nonce="+ nonce.value;// 送りたいデータ
-	var URL = hostURL +  "/adduser";
-	var userList = "";
-	var setappend = function(json) {
-		if(json.flag == 0){
-			userList = json.ErrorMessage + "<br>";
-		}else if(json.flag == 1){
-			location.href = hostURL + "/login/login.html";
-		}
-		document.getElementById('info').innerHTML = userList;
-	};
-	getJSON(URL, jsonParam, setappend);
+	if ($('#re_email').val() === $('#email').val()
+			&& $('#passwd').val() === $('#re_passwd').val()
+			&& $('#email').val().indexOf('@') != -1
+			&& $('div.formErrorContent').val() != ""
+			&& $('#username').val() != "" && $('#nickname').val() != ""
+			&& $('#birth').val() != "") {
+		var jsonParam = "username=" + encodeURIComponent(username.value)
+				+ '&nickname=' + encodeURIComponent(nickname.value) + '&birth='
+				+ encodeURIComponent(birth.value) + '&email='
+				+ encodeURIComponent(email.value) + '&password='
+				+ encodeURIComponent(passwd.value) + '&nonce=' + nonce.value;// 送りたいデータ
+		var URL = hostURL + "/adduser";
+		var userList = "";
+		var setappend = function(json) {
+			if (json.flag == 0) {
+				userList = json.ErrorMessage + "<br>";
+			} else if (json.flag == 1) {
+				location.href = hostURL + "/login/login.html";
+			}
+			document.getElementById('info').innerHTML = userList;
+		};
+		getJSON(URL, jsonParam, setappend);
+	} else {
+		toastr.error("入力フォームが正しくありません");
+	}
 }
 
 // ユーザ削除（リダイレクトLoginページ）
@@ -278,11 +288,9 @@ function getUserList() {
 			on_kyohi = "";
 			on_kyoka = "checked";
 			console.log("on");
-		} else  {
+		} else {
 			console.log("unknown");
 		}
-
-
 
 		var $onoffkun = $("<input type='checkbox' name='onoffswitch' class='onoffswitch-checkbox' id='myonoffswitch' "
 				+ flag
@@ -310,8 +318,6 @@ function getUserList() {
 				+ "</label>");
 		$("#onlineswitch").append($online).trigger("create");
 
-
-
 	};
 	getJSON(URL, null, setappend);
 }
@@ -330,8 +336,6 @@ function onlineMode() {
 		docCookies.setItem('online', false);
 	}
 }
-
-
 
 // ニックネーム変更画面
 function NickName() {
@@ -359,82 +363,95 @@ function MailAddress() {
 	getJSON(URL, jsonParam, setappend);
 }
 
-//ニックネーム変更時
+// ニックネーム変更時
 function nick() {
-	var jsonParam = "newnickname=" + nickname.value + '&password=' + passwd.value+"&nonce="+ nonce.value ;// 送りたいデータ
-	console.log(jsonParam);
-	var URL = hostURL + "/updatenickname";
-	var userList = "";
-	var setappend = function(json) {
-		/*if(json.flag==0){
-			toastr.error(json.state);
-		}else if(json.flag==1){
-			toastr.success(json.state);
-		}else if(json.flag==2){
-			userList += json.state;
-		}
-		document.getElementById('nick').innerHTML = userList;
-*/
-		if(json.flag==0){
-			toastr.error(json.state);
-		}else{
-			location.href = hostURL + "/login/info.html";
-			toastr.success(json.state);
-		}
-	};
-	getJSON(URL, jsonParam, setappend);
+	if ($('div.formErrorContent').val() != "" && $('#nickname').val() != "") {
+		var jsonParam = "newnickname=" + encodeURIComponent(nickname.value)
+				+ '&password=' + encodeURIComponent(passwd.value) + "&nonce="
+				+ nonce.value;// 送りたいデータ
+		console.log(jsonParam);
+		var URL = hostURL + "/updatenickname";
+		var setappend = function(json) {
+			/*
+			 * if(json.flag==0){ toastr.error(json.state); }else
+			 * if(json.flag==1){ toastr.success(json.state); }else
+			 * if(json.flag==2){ userList += json.state; }
+			 * document.getElementById('nick').innerHTML = userList;
+			 */
+			if (json.flag == 0) {
+				toastr.error(json.state);
+			} else {
+				location.href = hostURL + "/login/info.html";
+				toastr.success(json.state);
+			}
+		};
+		getJSON(URL, jsonParam, setappend);
+	} else {
+		toastr.error("入力フォームが正しくありません");
+	}
 }
 
-//メールアドレス変更時
+// メールアドレス変更時
 function mail() {
-	var jsonParam = "newemail=" + email.value + '&password=' + passwd.value+"&nonce="+ nonce.value ;// 送りたいデータ
-	console.log(jsonParam);
-	var URL = hostURL + "/updatemailaddress";
-	var userList = "";
-	var setappend = function(json) {
-		/*if(json.flag==0){
-			toastr.error(json.state);
-		}else if(json.flag==1){
-			toastr.success(json.state);
-		}else if(json.flag==2){
-			userList += json.ErrorMessage;
-		}
 
-		document.getElementById('mail').innerHTML = userList;*/
-		if(json.flag==0){
-			toastr.error(json.state);
-		}else{
-			location.href = hostURL + "/login/info.html";
-			toastr.success(json.state);
-		}
-	};
-	getJSON(URL, jsonParam, setappend);
+	if ($('#re_email').val() === $('#email').val()
+			&& $('#email').val().indexOf('@') != -1
+			&& $('div.formErrorContent').val() != "") {
+		var jsonParam = "newemail=" + encodeURIComponent(email.value)
+				+ '&password=' + encodeURIComponent(passwd.value) + "&nonce="
+				+ nonce.value;// 送りたいデータ
+		console.log(jsonParam);
+		var URL = hostURL + "/updatemailaddress";
+		var setappend = function(json) {
+			/*
+			 * if(json.flag==0){ toastr.error(json.state); }else
+			 * if(json.flag==1){ toastr.success(json.state); }else
+			 * if(json.flag==2){ userList += json.ErrorMessage; }
+			 *
+			 * document.getElementById('mail').innerHTML = userList;
+			 */
+			if (json.flag == 0) {
+				toastr.error(json.state);
+			} else {
+				location.href = hostURL + "/login/info.html";
+				toastr.success(json.state);
+			}
+		};
+		getJSON(URL, jsonParam, setappend);
+	} else {
+		toastr.error("入力フォームが正しくありません");
+	}
 }
 
-//パスワード変更時
+// パスワード変更時
 function pass() {
-	var jsonParam = "newpassword=" + passwd.value + '&password=' + now_pass.value+"&nonce="+ nonce.value ;// 送りたいデータ
-	console.log(jsonParam);
-	var URL = hostURL + "/updatepassword";
-	var userList = "";
-	var setappend = function(json) {
-		/*if(json.flag==0){
-			toastr.error(json.state);
-		}else if(json.flag==1){
-			toastr.success(json.state);
-		}else if(json.flag==2){
-			userList += json.ErrorMessage;
-		}
-
-		document.getElementById('pass').innerHTML = userList;*/
-		if(json.flag==0){
-			toastr.error(json.state);
-		}else{
-			location.href = hostURL + "/login/info.html";
-			toastr.success(json.state);
-		}
-	};
-	getJSON(URL, jsonParam, setappend);
+	if ($('#passwd').val() === $('#re_passwd').val()
+			&& $('div.formErrorContent').val() != ""
+			&& $('#passwd').val() != "") {
+		var jsonParam = "newpassword=" + encodeURIComponent(passwd.value)
+				+ '&password=' + encodeURIComponent(now_pass.value) + "&nonce="
+				+ nonce.value;// 送りたいデータ
+		console.log(jsonParam);
+		var URL = hostURL + "/updatepassword";
+		var setappend = function(json) {
+			/*
+			 * if(json.flag==0){ toastr.error(json.state); }else
+			 * if(json.flag==1){ toastr.success(json.state); }else
+			 * if(json.flag==2){ userList += json.ErrorMessage; }
+			 *
+			 * document.getElementById('pass').innerHTML = userList;
+			 */
+			if (json.flag == 0) {
+				toastr.error(json.state);
+			} else {
+				location.href = hostURL + "/login/info.html";
+				toastr.success(json.state);
+			}
+		};
+		getJSON(URL, jsonParam, setappend);
+	} else {
+		toastr.error("入力フォームが正しくありません");
+	}
 }
 
 // フレンド申請 承認設定
@@ -442,15 +459,14 @@ function AcceptFriend() {
 
 	var jsonParam = null;// 送りたいデータ
 	var URL = hostURL + "/acceptfriend";
-	var userList = "";
 	var setappend = function(json) {
-		if(json.flag==0){
+		if (json.flag == 0) {
 			toastr.error(json.state);
-		}else{
+		} else {
 			toastr.success(json.state);
 		}
-		//userList = json.Message;
-		//document.getElementById('info').innerHTML = userList;
+		// userList = json.Message;
+		// document.getElementById('info').innerHTML = userList;
 	};
 	getJSON(URL, jsonParam, setappend);
 }
