@@ -311,6 +311,19 @@ div[data-wysihtml5-dialog="createTable"] td {
 		</div>
 	</div>
 
+	<section class="section">
+		<div class="head-bar">
+			<div class="container-fluid">
+				<h1 class="text-center">
+
+					<a href="index.html"
+						onclick="javascript:setSessionStorage('viewMode','0');">CLIP</a>
+
+				</h1>
+			</div>
+		</div>
+	</section>
+
 
 
 
@@ -321,34 +334,34 @@ div[data-wysihtml5-dialog="createTable"] td {
 			class="pure-toggle-label" for="pure-toggle-left"
 			data-toggle-label="left"><span class="pure-toggle-icon"></span></label>
 
-            <nav class="pure-drawer" data-position="left">
+		<nav class="pure-drawer" data-position="left">
 
 
 
-                 <p>
-	              <div id="bg-link">
-					<a href="info.html"><h4>ユーザ情報</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="index.html" onclick="javascript:$.cookie('viewMode','0');"><h4>マイリスト</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="index.html" onclick="javascript:$.cookie('viewMode','1');"><h4>お気に入り</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="taglist.html" ><h4>タグ</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="friend.html"><h4>フレンド一覧</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="friendbox.html"><h4>フレンドボックス</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="friendsearch.html"><h4>フレンド検索</h4></a>
-				 </div>
-				</p>
-            </nav>
+			<p>
+			<div id="bg-link">
+				<a href="info.html"><h4>ユーザ情報</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="index.html" onclick="javascript:$.cookie('viewMode','0');"><h4>マイリスト</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="index.html" onclick="javascript:$.cookie('viewMode','1');"><h4>お気に入り</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="taglist.html"><h4>タグ</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="friend.html"><h4>フレンド一覧</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="friendbox.html"><h4>フレンドボックス</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="friendsearch.html"><h4>フレンド検索</h4></a>
+			</div>
+			</p>
+		</nav>
 		<label class="pure-overlay" for="pure-toggle-left" data-overlay="left"></label>
 		<div class="pure-pusher-container">
 			<div class="pure-pusher">
@@ -359,8 +372,14 @@ div[data-wysihtml5-dialog="createTable"] td {
 
 						<div class="view-title"></div>
 						<div class="changecolor">
-							<div style="text-align: right;position: relative;top: -31px;left: -35px;">
-						<button id="themachange" title="テーマ切り替え"  onclick="javascript:changeColor()" style="visibility: hidden; "><img src="img/thema.png"  style="visibility: visible; width:40px;"></button></div>
+							<div
+								style="text-align: right; position: relative; top: -31px; left: -35px;">
+								<button id="themachange" title="テーマ切り替え"
+									onclick="javascript:changeColor()" style="visibility: hidden;">
+									<img src="img/thema.png"
+										style="visibility: visible; width: 40px;">
+								</button>
+							</div>
 						</div>
 						<div id="image" style="padding-top: 20px"></div>
 						</h7>
@@ -457,27 +476,13 @@ div[data-wysihtml5-dialog="createTable"] td {
 									<div id="editable" class="editable"
 										style="font-size: 200%; padding: 10px" contenteditable="false"></div>
 								</div>
-								<section class="section">
-									<div class="head-bar">
-										<div class="container-fluid">
-											<h1 class="text-center">
-
-												<a href="index.html"
-													onclick="javascript:setSessionStorage('viewMode','0');">CLIP</a>
-
-											</h1>
-										</div>
-									</div>
-								</section>
 								<div class="images"></div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-
 		</div>
-
 	</div>
 
 
@@ -545,7 +550,6 @@ div[data-wysihtml5-dialog="createTable"] td {
 												}
 											});
 
-
 							if (isSettinOnLine() === true) {
 								//alert("current network status is online");
 								// ここはオフライン判定が必要
@@ -564,8 +568,8 @@ div[data-wysihtml5-dialog="createTable"] td {
 								});
 								$('#footerArea').remove();
 								$('#edit-button').remove();
-								getViewArticleOffline(location.search.substring(1,
-										location.search.length))
+								getViewArticleOffline(location.search
+										.substring(1, location.search.length))
 
 							} else {
 								//alert("current network status is unknown");
@@ -631,3 +635,5 @@ div[data-wysihtml5-dialog="createTable"] td {
 			updateStates();
 		});
 	</script>
+	</body>
+</html>

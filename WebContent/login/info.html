@@ -14,7 +14,7 @@
 <link href="css/bootstrap.index.css" rel="stylesheet" media="screen">
 <link href="css/articlemenu.css" rel="stylesheet">
 <link href="css/grid.css" rel="stylesheet">
-<link href="css/button.css" rel="stylesheet"/>
+<link href="css/button.css" rel="stylesheet" />
 <link href="css/userinfo.css" rel="stylesheet">
 <link href="css/Configuration.css" rel="stylesheet">
 
@@ -50,128 +50,146 @@
 </style>
 </head>
 <body>
-	<div class="remodal" data-remodal-id="delete_user" >
-		<a data-remodal-action="close" class="remodal-close"></a>
-		<h2>退会</h2>
+	<section class="section">
+		<div class="head-bar">
+			<div class="container-fluid">
+				<h1 class="text-center">
 
-		<a class="remodal-confirm" href="Login.html"
-			onclick="javascript:deleteuser();">OK</a>
-			<a class="remodal-cancel" href="#">キャンセル</a>
-	</div>
-	<section>
+					<a href="index.html" onclick="javascript:setSessionStorage('viewMode','0');">CLIP</a>
 
-
-		<div class="pure-container" data-effect="pure-effect-slide">
-			<input type="checkbox" id="pure-toggle-left" class="pure-toggle"
-				data-toggle="left" /> <input type="checkbox" id="pure-toggle-right"
-				class="pure-toggle" data-toggle="right" /> <label
-				class="pure-toggle-label" for="pure-toggle-left"
-				data-toggle-label="left"><span class="pure-toggle-icon"></span></label>
-			<label class="pure-toggle-label" for="pure-toggle-right"
-				data-toggle-label="right"><span class="pure-toggle-icon"></span></label>
-
-
-            <nav class="pure-drawer" data-position="left">
-
-
-
-                 <p>
-	              <div id="bg-link">
-					<a href="info.html"><h4>ユーザ情報</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="index.html" onclick="javascript:$.cookie('viewMode','0');"><h4>マイリスト</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="index.html" onclick="javascript:$.cookie('viewMode','1');"><h4>お気に入り</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="taglist.html" ><h4>タグ</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="friend.html"><h4>フレンド一覧</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="friendbox.html"><div id ="notice"></div></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="friendsearch.html"><h4>フレンド検索</h4></a>
-				 </div>
-				</p>
-            </nav>
-
-            <nav class="pure-drawer" data-position="right">
-					 <p2><p><br>
-					 <input type="search" name="search-1" id="searchbox" value=""  placeholder="検索ワード">
-					 <input type="button" id="titlesearch" value="検索">
-					 <input type="search" name="search-2" id="search-2" value="" placeholder="http://..." class="validate[required,custom[url]] text-input">
-					 <input type="button" id="add-article" value="記事追加">
-					</p></p2>
-            </nav>
-            <label class="pure-overlay" for="pure-toggle-left" data-overlay="left"></label>
-            <label class="pure-overlay" for="pure-toggle-right" data-overlay="right"></label>
-        </div>
-		<div class="container">
-			<div style="margin: 0px auto;">
-
-				<div class="form-wrapper"style="max-width: 400px;">
-					<div align="center">
-					<h2 >ユーザー情報</h2>
-						<div id="info"></div>
-					</div>
-					<div class="form-footer">
-
-						<!--　ニックネーム変更画面  -->
-						<h5>
-							<a href="nicknamechange.html">ニックネーム変更</a>
-						</h5>
-						<!--　メールアドレス変更画面  -->
-						<h5>
-							<a href="mailchange.html">メールアドレス変更</a>
-						</h5>
-						<!--　パスワード変更画面  -->
-						<h5>
-							<a href="passchange.html">パスワード変更</a>
-						</h5>
-						<table>
-							<tr>
-								<td><h6>ユーザ申請 :</h6></td>
-								<td><div id="onoffswitch"></div></td>
-							</tr>
-							<tr>
-								<td><h6>オンライン :</h6></td>
-								<td><div id="onlineswitch"></div></td>
-							</tr>
-						</table>
-						 <h5><a href="Login.html" onclick="javascript:logout();">ログアウト</a></h5>
-
-						 <div class="remodal-bg">
-						 	<h5><a href="#" data-remodal-target="delete_user">退会</a></h5>
-					</div>
-				</div>
-
-				<section class="section">
-					<div class="head-bar">
-						<div class="container-fluid">
-							<h1 class="text-center">
-
-							<a href="index.html"  onclick="javascript:$.cookie('viewMode','0');">CLIP</a>
-
-							</h1>
-						</div>
-					</div>
-				</section>
-				<script>
-					$(document).ready(function() {
-						getUserList();
-						notice();
-					});
-				</script>
-
+				</h1>
 			</div>
 		</div>
-
 	</section>
+
+
+	<div class="pure-container" data-effect="pure-effect-slide">
+		<input type="checkbox" id="pure-toggle-left" class="pure-toggle"
+			data-toggle="left" /> <input type="checkbox" id="pure-toggle-right"
+			class="pure-toggle" data-toggle="right" /> <label
+			class="pure-toggle-label" for="pure-toggle-left"
+			data-toggle-label="left"><span class="pure-toggle-icon"></span></label>
+		<label class="pure-toggle-label" for="pure-toggle-right"
+			data-toggle-label="right"><span class="pure-toggle-icon"></span></label>
+
+
+		<nav class="pure-drawer" data-position="left">
+
+
+
+			<p>
+			<div id="bg-link">
+				<a href="info.html"><h4>ユーザ情報</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="index.html" onclick="javascript:setSessionStorage('viewMode','0');"><h4>マイリスト</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="index.html" onclick="javascript:setSessionStorage('viewMode','1');"><h4>お気に入り</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="taglist.html"><h4>タグ</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="friend.html"><h4>フレンド一覧</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="friendbox.html"><div id="notice"></div></a>
+			</div>
+			<div id="bg-link">
+				<a href="friendsearch.html"><h4>フレンド検索</h4></a>
+			</div>
+			</p>
+		</nav>
+
+		<nav class="pure-drawer" data-position="right">
+			<p2>
+			<p>
+				<br> <input type="search" name="search-1" id="searchbox"
+					value="" placeholder="検索ワード"> <input type="button"
+					id="titlesearch" value="検索"> <input type="search"
+					name="search-2" id="search-2" value="" placeholder="http://..."
+					class="validate[required,custom[url]] text-input"> <input
+					type="button" id="add-article" value="記事追加">
+			</p>
+			</p2>
+		</nav>
+		<label class="pure-overlay" for="pure-toggle-left" data-overlay="left"></label>
+		<label class="pure-overlay" for="pure-toggle-right"
+			data-overlay="right"></label>
+
+		<div class="pure-pusher-container">
+			<div class="pure-pusher">
+				<!-- このDIV内にコンテンツをいれるんだぞい -->
+				<div id="wrap">
+					<div class="remodal" data-remodal-id="delete_user">
+						<a data-remodal-action="close" class="remodal-close"></a>
+						<h2>退会</h2>
+
+						<a class="remodal-confirm" href="Login.html"
+							onclick="javascript:deleteuser();">OK</a> <a
+							class="remodal-cancel" href="#">キャンセル</a>
+					</div>
+				</div>
+				<div class="container">
+					<div style="margin: 0px auto;">
+
+						<div class="form-wrapper" style="max-width: 400px;">
+							<div align="center">
+								<h2>ユーザー情報</h2>
+								<div id="info"></div>
+							</div>
+							<div class="form-footer">
+
+								<!--　ニックネーム変更画面  -->
+								<h5>
+									<a href="nicknamechange.html">ニックネーム変更</a>
+								</h5>
+								<!--　メールアドレス変更画面  -->
+								<h5>
+									<a href="mailchange.html">メールアドレス変更</a>
+								</h5>
+								<!--　パスワード変更画面  -->
+								<h5>
+									<a href="passchange.html">パスワード変更</a>
+								</h5>
+								<table>
+									<tr>
+										<td><h6>ユーザ申請 :</h6></td>
+										<td><div id="onoffswitch"></div></td>
+									</tr>
+									<tr>
+										<td><h6>オンライン :</h6></td>
+										<td><div id="onlineswitch"></div></td>
+									</tr>
+								</table>
+								<h5>
+									<a href="Login.html" onclick="javascript:logout();">ログアウト</a>
+								</h5>
+
+								<div class="remodal-bg">
+									<h5>
+										<a href="#" data-remodal-target="delete_user">退会</a>
+									</h5>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<script>
+		$(document).ready(function() {
+			getUserList();
+			notice();
+		});
+	</script>
+
+
+
 
 </body>
 </html>
