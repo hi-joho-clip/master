@@ -18,11 +18,15 @@ function getMyList(page) {
 					$('div.stylebutton')
 							.html(
 									'<button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button>');
+					$('div#themebutton').html('<button id="themachange" title="テーマ切り替え"onclick="javascript:changeColor()" style="visibility: hidden;">'+
+					'<img src="img/thema.png"style="visibility: visible; width: 25px;"></button>');
 				} else {
 					func = get_mylists_list;
 					$('div.stylebutton')
 							.html(
 									'<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
+					$('div#themebutton').html('<button id="themachange" title="テーマ切り替え"onclick="javascript:changeColor()" style="visibility: hidden;">'+
+					'<img src="img/thema.png"style="visibility: visible; width: 25px;"></button>');
 				}
 				var jsonParam = 'page=' + page + '&article_id='
 						+ $('#lastid').val();// 送りたいデータ(ページ番号）
@@ -52,11 +56,15 @@ function getFavList(page) {
 					$('div.stylebutton')
 							.html(
 									'<button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button>');
+					$('div#themebutton').html('<button id="themachange" title="テーマ切り替え"onclick="javascript:changeColor()" style="visibility: hidden;">'+
+					'<img src="img/thema.png"style="visibility: visible; width: 25px;"></button>');
 				} else {
 					func = get_mylists_list;
 					$('div.stylebutton')
 							.html(
 									'<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
+					$('div#themebutton').html('<button id="themachange" title="テーマ切り替え"onclick="javascript:changeColor()" style="visibility: hidden;">'+
+					'<img src="img/thema.png"style="visibility: visible; width: 25px;"></button>');
 				}
 
 				var jsonParam = 'page=' + page + '&article_id='
@@ -77,19 +85,17 @@ function getShareList(friend_user_id, page) {
 		$('div.stylebutton')
 				.html(
 						'<button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button>');
-		// document.getElementById('title').innerHTML = '<h1>シェア記事</h1><div
-		// style="text-align: right;"><button id="stylechange"
-		// title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png"
-		// style="visibility:visible"></button></div>';
+		$('div#themebutton').html('<button id="themachange" title="テーマ切り替え"onclick="javascript:changeColor()" style="visibility: hidden;">'+
+		'<img src="img/thema.png"style="visibility: visible; width: 25px;"></button>');
+
 	} else {
 		func = get_sharelists_list;
 		$('div.stylebutton')
 				.html(
 						'<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
-		// document.getElementById('title').innerHTML = '<h1>シェア記事</h1><div
-		// style="text-align: right;"><button id="stylechange"
-		// title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png"
-		// style="visibility:visible"></button></div>';
+		$('div#themebutton').html('<button id="themachange" title="テーマ切り替え"onclick="javascript:changeColor()" style="visibility: hidden;">'+
+		'<img src="img/thema.png"style="visibility: visible; width: 25px;"></button>');
+
 	}
 
 	var jsonParam = "friend_user_id=" + friend_user_id + '&page=' + page;// 送りたいデータ
