@@ -107,14 +107,14 @@ $(document).ready(function() {
 			'<input type="hidden" id="nonce" value="'
 					+ docCookies.getItem("nonce") + '">');
 
-	$('.pure-pusher').on("scroll", function() {
+	$('.pure-pusher-container').on("scroll", function() {
 			var scrollHeight = $('#wrap').height();
-		var scrollPosition = $('.pure-pusher').height() +Math.round($('.pure-pusher').scrollTop()) - 200;
+		var scrollPosition = $('.pure-pusher-container').height() +Math.round($('.pure-pusher-container').scrollTop()) - 200;
 
-		//console.log(scrollPosition + ':' + $('.pure-pusher').height() + ':' + $('.pure-pusher').scrollTop());
+		console.log(scrollPosition + ':' + $('.pure-pusher-container').height() + ':' + $('.pure-pusher-container').scrollTop());
 
-		//console.log(scrollHeight + ':' + scrollPosition + ':' + scrollHeight );
-		//console.log((scrollHeight - scrollPosition) / scrollHeight );
+		console.log(scrollHeight + ':' + scrollPosition + ':' + scrollHeight );
+		console.log((scrollHeight - scrollPosition) / scrollHeight );
 		if ((scrollHeight - scrollPosition) / scrollHeight == 0) {
 			// when scroll to bottom of the page
 

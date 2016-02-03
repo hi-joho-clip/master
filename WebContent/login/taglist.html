@@ -5,13 +5,14 @@
 <meta charset="UTF-8">
 <title>CLIP</title>
 
-<meta name="viewport"content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
 
 <link href="css/normalize.css" rel="stylesheet">
 <link href="css/bootstrap.index.css" rel="stylesheet" media="screen">
 <link href="css/articlemenu.css" rel="stylesheet">
 <link href="css/grid.css" rel="stylesheet">
-<link href="css/button.css" rel="stylesheet"/>
+<link href="css/button.css" rel="stylesheet" />
 <link rel='stylesheet' href='css/toastr.css' />
 
 <script src="../js/1.11.1_jquery.min.js"></script>
@@ -28,13 +29,15 @@
 <link id="viewcolor" href="css/articlemenu_black.css" rel="stylesheet">
 
 <!-- toastr -->
-<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css' />
-<script src='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.js'></script>
+<link rel='stylesheet'
+	href='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css' />
+<script
+	src='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.js'></script>
 
-    <!-- Load local lib and tests -->
-    <link rel="stylesheet" href="../tag-it/src/remodal.css">
-    <link rel="stylesheet" href="../tag-it/src/remodal-default-theme.css">
-    <script src="../tag-it/src/remodal.js"></script>
+<!-- Load local lib and tests -->
+<link rel="stylesheet" href="../tag-it/src/remodal.css">
+<link rel="stylesheet" href="../tag-it/src/remodal-default-theme.css">
+<script src="../tag-it/src/remodal.js"></script>
 <script src="../tag-it/src/remodal.js"></script>
 
 <!-- 読み込み中 -->
@@ -43,124 +46,143 @@
 
 
 <style>
-      .remodal-overlay.without-animation.remodal-is-opening,
-      .remodal-overlay.without-animation.remodal-is-closing,
-      .remodal.without-animation.remodal-is-opening,
-      .remodal.without-animation.remodal-is-closing,
-      .remodal-bg.without-animation.remodal-is-opening,
-      .remodal-bg.without-animation.remodal-is-closing {
-        animation: none;
-      }
+.remodal-overlay.without-animation.remodal-is-opening,.remodal-overlay.without-animation.remodal-is-closing,.remodal.without-animation.remodal-is-opening,.remodal.without-animation.remodal-is-closing,.remodal-bg.without-animation.remodal-is-opening,.remodal-bg.without-animation.remodal-is-closing
+	{
+	animation: none;
+}
 </style>
 
 
 
 </head>
-<body>
+<body id="body">
 
-<div id="loader-bg">
-  <div id="loader">
+	<div id="loader-bg">
+		<div id="loader">
 
-    <p>Now Loading...</p>
-  </div>
-</div>
-<div id="wrap">
-
-<!-- <div id="tag_id"></div> -->
-<div class="remodal" data-remodal-id="tagdeletemodal" data-remodal-options="hashTracking: false,closeOnOutsideClick:false"">
-
-  <a data-remodal-action="close" class="remodal-close" ></a>
-  <h2>削除しますか</h2><BR><BR>
-
-	<a data-remodal-action="confirm" class="remodal-confirm" href="#"onclick="javascript:deleteTag();return false;">削除</a>
-	<a data-remodal-action="cancel" class="remodal-cancel" href="#"onclick="javascript:return false;">キャンセル</a>
-</div>
-
-	<section>
-		  <div class="pure-container" data-effect="pure-effect-slide">
-            <input type="checkbox" id="pure-toggle-left" class="pure-toggle" data-toggle="left"/>
-			 <input type="checkbox" id="pure-toggle-right" class="pure-toggle" data-toggle="right"/>
-
-
-            <label class="pure-toggle-label" for="pure-toggle-left" data-toggle-label="left"><span class="pure-toggle-icon"></span></label>
-			<label class="pure-toggle-label" for="pure-toggle-right" data-toggle-label="right"><span class="pure-toggle-icon"></span></label>
-
-
-            <nav class="pure-drawer" data-position="left">
-
-
-
-                 <p>
-	              <div id="bg-link">
-					<a href="info.html"><h4>ユーザ情報</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="index.html" onclick="javascript:setSessionStorage('viewMode','0');"><h4>マイリスト</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="index.html" onclick="javascript:setSessionStorage('viewMode','1');"><h4>お気に入り</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="taglist.html" ><h4>タグ</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="friend.html"><h4>フレンド一覧</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="friendbox.html"><div id ="notice"></div></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="friendsearch.html"><h4>フレンド検索</h4></a>
-				 </div>
-				</p>
-            </nav>
-			 <nav class="pure-drawer" data-position="right">
-					 <p2><p>
-					 <input type="search" name="search-2" id="search-2" value="" placeholder="http://..." class="validate[required,custom[url]] text-input">
-					 <input type="button" id="add-article" value="記事追加">
-					</p></p2>
-            </nav>
-            <label class="pure-overlay" for="pure-toggle-left" data-overlay="left"></label>
-        </div>
-        <div class="container" >
-			<div style="margin: 100px auto;">
-			<h1 class="title">タグリスト</h1>
-			<div style="text-align: right;position: relative;top: -31px;left: -35px;">
-						<button id="themachange" title="テーマ切り替え"  onclick="javascript:changeColor()" style="visibility: hidden; "><img src="img/thema.png"  style="visibility: visible; width:25px;"></button></div>
-				<div align="center">
-					<div id="taglist"></div>
-					<input type="hidden" id="tag_id" value="">
-				</div>
-				</div>
-				<section class="section">
-					<div class="head-bar">
-						<div class="container-fluid">
-							<h1 class="text-center">
-
-							<a href="index.html"  onclick="javascript:setSessionStorage('viewMode','0');">CLIP</a>
-
-							</h1>
-
-						</div>
-					</div>
-				</section>
-			</div>
-			<div class="hiddenarea"></div>
-
-
-	</section>
+			<p>Now Loading...</p>
+		</div>
 	</div>
+
+	<section class="section">
+		<div class="head-bar">
+			<div class="container-fluid">
+				<h1 class="text-center">
+					<a href="index.html"
+						onclick="javascript:setSessionStorage('viewMode','0');">CLIP</a>
+				</h1>
+			</div>
+		</div>
+	</section>
+
+	<div class="pure-container" data-effect="pure-effect-slide">
+		<input type="checkbox" id="pure-toggle-left" class="pure-toggle"
+			data-toggle="left" /> <input type="checkbox" id="pure-toggle-right"
+			class="pure-toggle" data-toggle="right" /> <label
+			class="pure-toggle-label" for="pure-toggle-left"
+			data-toggle-label="left"><span class="pure-toggle-icon"></span></label>
+		<label class="pure-toggle-label" for="pure-toggle-right"
+			data-toggle-label="right"><span class="pure-toggle-icon"></span></label>
+
+
+		<nav class="pure-drawer" data-position="left">
+
+
+
+			<p>
+			<div id="bg-link">
+				<a href="info.html"><h4>ユーザ情報</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="index.html"
+					onclick="javascript:setSessionStorage('viewMode','0');"><h4>マイリスト</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="index.html"
+					onclick="javascript:setSessionStorage('viewMode','1');"><h4>お気に入り</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="taglist.html"><h4>タグ</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="friend.html"><h4>フレンド一覧</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="friendbox.html"><div id="notice"></div></a>
+			</div>
+			<div id="bg-link">
+				<a href="friendsearch.html"><h4>フレンド検索</h4></a>
+			</div>
+			</p>
+		</nav>
+		<nav class="pure-drawer" data-position="right">
+			<p2>
+			<p>
+				<br> <input type="search" name="search-2" id="search-2"
+					value="" placeholder="http://..."
+					class="validate[required,custom[url]] text-input"> <input
+					type="button" id="add-article" value="記事追加">
+			</p>
+			</p2>
+		</nav>
+		<label class="pure-overlay" for="pure-toggle-left" data-overlay="left"></label>
+
+
+
+		<div class="pure-pusher-container">
+			<div class="pure-pusher">
+
+				<!-- このDIV内にコンテンツをいれるんだぞい -->
+
+				<div id="wrap">
+
+					<!-- <div id="tag_id"></div> -->
+					<div class="remodal" data-remodal-id="tagdeletemodal"
+						data-remodal-options="hashTracking: false,closeOnOutsideClick:false">
+
+						<a data-remodal-action="close" class="remodal-close"></a>
+						<h2>削除しますか</h2>
+						<BR> <BR> <a data-remodal-action="confirm"
+							class="remodal-confirm" href="#"
+							onclick="javascript:deleteTag();return false;">削除</a> <a
+							data-remodal-action="cancel" class="remodal-cancel" href="#"
+							onclick="javascript:return false;">キャンセル</a>
+					</div>
+				</div>
+				<div class="container" style="margin: 100px auto;">
+					<h1 class="title">タグリスト</h1>
+					<div
+						style="text-align: right; position: relative; top: -31px; left: -35px;">
+						<button id="themachange" title="テーマ切り替え"
+							onclick="javascript:changeColor()" style="visibility: hidden;">
+							<img src="img/thema.png"
+								style="visibility: visible; width: 25px;">
+						</button>
+					</div>
+					<div align="center">
+						<div id="taglist"></div>
+						<input type="hidden" id="tag_id" value="">
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="hiddenarea"></div>
 	<script>
-		$(document).ready(function() {
-			colorMode();
+		$(document).ready(
+				function() {
+					colorMode();
 
-				$("div.hiddenarea").append('<input type="hidden" id="nonce" value="'+ docCookies.getItem("nonce") + '">');
+					$("div.hiddenarea").append(
+							'<input type="hidden" id="nonce" value="'
+									+ docCookies.getItem("nonce") + '">');
 
-			notice();
-			getTagList();
+					notice();
+					getTagList();
 
-
-		});
+				});
 	</script>
 
 </body>

@@ -293,7 +293,7 @@ body {
 .pure-pusher-container {
   position: relative;
   height: 100%;
-  overflow: hidden;
+  overflow: auto;
 }
 
 /***********
@@ -302,7 +302,6 @@ body {
 .pure-pusher {
   position: relative;
   height: 100%;
-  overflow-y: auto;
   left: 0;
   z-index: 2;
   /*background-color: #fff;*/

@@ -14,7 +14,7 @@
 
 /* force scrollbar, prevents initial gap */
 html {
-  overflow-y: hidden;
+  /*overflow-y: hidden;*/
 }
 
 body {
@@ -123,7 +123,7 @@ body {
 
 /* force scrollbar, prevents initial gap */
 html {
-  overflow-y: hidden;
+  /*overflow-y: hidden;*/
 }
 
 body {
@@ -175,7 +175,7 @@ body {
 
 /* force scrollbar, prevents initial gap */
 html {
-  overflow-y: hidden;
+  /*overflow-y: hidden;*/
 }
 
 body {
@@ -230,7 +230,7 @@ body {
 
 /* force scrollbar, prevents initial gap */
 html {
-  overflow-y: hidden;
+  /*overflow-y: hidden;*/
 }
 
 body {
@@ -283,7 +283,7 @@ body {
 
 /* force scrollbar, prevents initial gap */
 html {
-  overflow-y: hidden;
+  /*overflow-y: hidden;*/
 }
 
 body {
@@ -335,7 +335,7 @@ body {
 
 /* force scrollbar, prevents initial gap */
 html {
-  overflow-y: hidden;
+  /*overflow-y: hidden;*/
 }
 
 body {
@@ -388,7 +388,7 @@ body {
 
 /* force scrollbar, prevents initial gap */
 html {
-  overflow-y: hidden;
+  /*overflow-y: hidden;*/
 }
 
 body {
@@ -440,7 +440,7 @@ body {
 
 /* force scrollbar, prevents initial gap */
 html {
-  overflow-y: hidden;
+  /*overflow-y: hidden;*/
 }
 
 body {
