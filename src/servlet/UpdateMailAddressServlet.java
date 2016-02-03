@@ -40,7 +40,7 @@ public class UpdateMailAddressServlet extends HttpServlet {
 
 		String resp = "{\"state\": \"unknownError\", \"flag\": 0}";
 		Nonce nonce = new Nonce(request);
-
+		String ErrorMessage = null;
 		User userbean = null;
 		UserAuth userauth = new UserAuth();
 		//boolean hantei = false;
@@ -66,26 +66,25 @@ public class UpdateMailAddressServlet extends HttpServlet {
 					//hantei = userauth.loginUserName(userbean.getUser_name(),inputpass);
 
 					if (userauth.loginUserName(userbean.getUser_name(),inputpass)) {
+						System.out.println("成功");
 						userbean.setMailaddress(inputmail);
 						userbean.setPassword(inputpass);
 						userbean.updateMailaddress();
 						resp = "{\"state\": \"更新しました\",  \"flag\": 1}";
+						out.println(resp);
 					} else {
-						System.out.println("間違ってる");
+						if (userbean.getErrorMessages().containsKey("mailaddress")) {
+							System.out.println(userbean.getErrorMessages().get("mailaddress"));
+							ErrorMessage = userbean.getErrorMessages().get("mailaddress");
+							resp = "{\"state\":\"" + ErrorMessage + "\",  \"flag\": 0}";
+							out = response.getWriter();
+							out.println(resp);
+						}
+						System.out.println("パスワード間違ってる");
 						// パスワードが一致しなかった処理
 						resp = "{\"state\": \"パスワードが間違ってます\",  \"flag\": 0}";
-						//resp = "{\"state\": \"パスワードが間違ってます\",  \"flag\": 2}";
-						//out.println(resp);
-						//return;
+						out.println(resp);
 					}
-					out.println(resp);
-					/*
-					 * //メッセージ処理 if
-					 * (userbean.getErrorMessages().containsKey("mailaddress")) {
-					 * //メールアドレスが既に存在していたのでメッセージを出す
-					 * System.out.println(userbean.getErrorMessages
-					 * ().get("mailaddress")); }else { }
-					 */
 
 				} catch (Exception e) {
 					// TODO 自動生成された catch ブロック

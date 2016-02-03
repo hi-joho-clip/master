@@ -15,6 +15,8 @@
 <script src="../js/lib/jquery.validationEngine.js"></script>
 <script src="../js/lib/jquery.validationEngine-ja.js"></script>
 <script src="../js/lib/cookie.js"></script>
+<script src="../js/user_script.js"></script>
+<script type="text/javascript" src="../js/json-xhr.js"></script>
 <link rel="stylesheet" type="text/css" href="css/AccountCreate.css">
 <link href="../css/validationEngine.jquery.css" rel="stylesheet"
 	type="text/css" />
@@ -47,22 +49,22 @@
 
 
 				<!--　アカウント新規作成  -->
-				<form id="form" method="post" action="../adduser">
+				<form id="form" method="post">
 
 					<div class="form-item">
 						<!--　ユーザネーム  -->
 						<label for="username"></label> <input class="validate[custom[onlyLetterNumber]] text-input" type="text" name="username"
-							required="required" placeholder="User Name"></input>
+							required="required" placeholder="User Name" id="username"></input>
 					</div>
 					<div class="form-item">
 						<!--　ニックネーム  -->
 						<label for="nickname"></label> <input type="text" name="nickname"
-							required="required" placeholder="Nick Name"></input>
+							required="required" placeholder="Nick Name" id="nickname"></input>
 					</div>
 					<div class="form-item">
 						<!--　生年月日  -->
 						<label for="birth"></label> <input type="date" name="birth"
-							required="required" placeholder="birth"></input>
+							required="required" placeholder="birth" id="birth"></input>
 					</div>
 					<div class="form-item">
 						<!--　メールアドレス  -->
@@ -87,9 +89,12 @@
 							class="validate[required,equals[passwd]] text-input"
 							required="required" placeholder="Password(確認)" id="re_passwd"></input>
 					</div>
+
+					<div id="info"></div>
+
 					<!--　新規登録ボタン  -->
 					<div class="button-panel">
-						<input type="submit" class="button" title="Create" value="Create"></input>
+						<input type="button" class="button" title="Create" value="Create"  onclick="javascript:addUser();"></input>
 					</div>
 					<div class="hiddenarea"></div>
 				</form>

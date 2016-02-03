@@ -76,14 +76,14 @@ public class UpdateNicknameServlet extends HttpServlet {
 						// パスワードが一致しなかった処理
 						resp = "{\"state\": \"パスワードが間違ってます\",  \"flag\": 0}";
 						//resp = "{\"state\": \"パスワードが間違ってます\",  \"flag\": 2}";
-						//out.println(resp);
-						return;
+
 					}
 
 				} catch (Exception e) {
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
 				}
+				out = response.getWriter();
 				out.println(resp);
 			}else{
 				//newnickname passwordがnullならunknownerror

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="UTF-8" />
+<title>CLIP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/style.css" />
+<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700'
+	rel='stylesheet' type='text/css'>
+<!-- remember, jQuery is completely optional -->
+<!-- <script type='text/javascript' src='js/jquery-1.11.1.min.js'></script> -->
+<script type='text/javascript'
+	src='../js/jquery/jquery.particleground.js'></script>
+	<script type="text/javascript" src="../js/jquery/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery.cookie.js"></script>
+<script type='text/javascript' src='js/demo.js'></script>
+<script type="text/javascript" src="../js/json-xhr.js"></script>
+<link rel="stylesheet" type="text/css" href="css/Login.css">
+<script src="../js/lib/cookie.js"></script>
+<script src="../js/user_script.js"></script>
+
+<script src="../js/lib/jquery.validationEngine.js"></script>
+<script src="../js/lib/jquery.validationEngine-ja.js"></script>
+
+<link href="../css/validationEngine.jquery.css" rel="stylesheet"
+	type="text/css" />
+</head>
+
+
+
+<script type="text/javascript">
+<!--
+	$(function() {
+		$('body *').removeAttr('style');
+	});
+jQuery(document).ready(function() {
+	jQuery("#form").validationEngine();
+});
+	-->
+</script>
+
+<body>
+
+
+	<div id="particles">
+		<div id="intro">
+			<h1>C L I P</h1>
+			<p>New Password Sending</p>
+			<div class="form-wrapper">
+
+
+
+
+				<!--　ユーザID確認  -->
+				<form id="form" method="post" action="../viewuserid">
+
+					<div class="form-item">
+						<!--　メールアドレス  -->
+						<label for="email"></label> <input class="validate[custom[email]] text-input" type="email" name="email"
+							required="required" placeholder="Email Address"></input>
+					</div>
+
+					<div class="form-item">
+						<!--　パスワード  -->
+						<label for="password"></label> <input type="password" name="password"
+							required="required" placeholder="password"></input>
+					</div>
+
+					<div id="IDLock"></div>
+
+					<!--　ユーザ確認ボタン  -->
+					<div class="button-panel">
+						<input type="submit" class="button" title="SEND" value="SEND" id="lock"></input>
+					</div>
+
+				</form>
+				<div class="form-footer">
+
+					<!--　戻る  -->
+					<p>
+						<a href="Login.html">BACK</a>
+					</p>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<script>
+		$(document).ready(function() {
+			userID_lock();
+		});
+	</script>
+
+</body>
+</html>

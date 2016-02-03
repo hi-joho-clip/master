@@ -133,7 +133,7 @@ function limit() {
 			$remodal += "<h2>リクエスト送信</h2>"
 					//+ "<a data-remodal-action='confirm' class='remodal-confirm' href='#' onclick='addRequest(document.getElementById(\"user_id\").innerHTML);location.reload()\'>追加</a>"
 					+ "<a data-remodal-action='confirm' class='remodal-confirm' href='#' onclick='addRequest(document.getElementById(\"user_id\").innerHTML);\'>追加</a>"
-					+ "&emsp;<a class='remodal-cancel' href='#' onclick='javascript:return false;'>キャンセル</a>";
+					+ "&emsp;<a data-remodal-action='cancel' class='remodal-cancel' href='#'onclick='javascript:return false;'>キャンセル</a>";
 		}
 		$("#limit").append($remodal).trigger("create");
 	};
