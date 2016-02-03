@@ -159,7 +159,7 @@ var get_mylists = function(json) {
 			$grid.prepend($myList).isotope('insert', $myList).trigger('create');
 			if(json[i].favflag==true){
 				//console.log('#favtitle'+json[i].article_id);
-				$('#favtitle'+json[i].article_id).attr('style', 'color:#FDB91B');
+				$('#favtitle'+json[i].article_id).attr('style', 'color:#FF9800');
 			}
 		}
 
@@ -287,7 +287,7 @@ var get_mylists_list = function(json) {
 			$grid.append($myList).isotope('insert', $myList).trigger('create');
 			if(json[i].favflag==true){
 				//console.log('#favtitle'+json[i].article_id);
-				$('#favtitle'+json[i].article_id).attr('style', 'color:#FDB91B');
+				$('#favtitle'+json[i].article_id).attr('style', 'color:#FF9800');
 			}//#FFEB3B
 		}
 
