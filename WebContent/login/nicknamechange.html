@@ -108,11 +108,11 @@
 	<h6><div id="info"></div></h6>
 
 	<!--　変更  -->
-	<form method="post" >
+	<form id="form" method="post" >
 		<div class="form-item">
 			<!--　ニックネーム  -->
 			<label for="newnickname"></label> <input type="text"
-				name="newnickname" required="required" placeholder="New Nick Name" id="nickname"></input>
+				name="newnickname" class="validate[required,minSize[1]] text-input" required="required" placeholder="New Nick Name" id="nickname"></input>
 		</div>
 		<div class="form-item">
 			<!--　パスワード  -->
@@ -125,7 +125,7 @@
 
 		<!--　変更ボタン  -->
 		<div class="button-panel">
-			<input type="button" class="button" title="Change" value="Change" onclick="javascript:nick();"></input>
+			<input type="button" class="button" title="Change" value="Change" onclick="javascript:nick();" id="lock"></input>
 		</div>
 		<input type="hidden" id="nonce" value="" name="nonce" >
 	</form>
@@ -154,6 +154,10 @@
 	$(document).ready(function() {
 		NickName();
 		$('#nonce').val(docCookies.getItem("nonce"));
+	});
+
+	jQuery(document).ready(function() {
+		jQuery("#form").validationEngine();
 	});
 </script>
 

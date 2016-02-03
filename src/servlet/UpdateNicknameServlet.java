@@ -59,7 +59,9 @@ public class UpdateNicknameServlet extends HttpServlet {
 					int user_id = (int) session.getAttribute("user_id");
 
 					String inputname = request.getParameter("newnickname");
+					inputname = new String(inputname.getBytes("UTF-8"), "UTF-8");
 					String inputpass = request.getParameter("password");
+					inputpass = new String(inputpass.getBytes("UTF-8"), "UTF-8");
 					System.out.println("request受け取った" + inputname);
 					System.out.println("request受け取った" + inputpass);
 

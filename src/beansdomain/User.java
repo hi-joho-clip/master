@@ -80,14 +80,19 @@ public class User {
 	 * @throws Exception
 	 */
 	private boolean checkString(String str) throws Exception {
-
-		if (str.indexOf("#") == -1) {
+		System.out.println("str:"+str);
+		System.out.println("str:"+str.indexOf("%"));
+		if (str.indexOf("#") != -1) {
+			System.out.println("#");
 			return false;
-		} else if (str.indexOf("&") == -1) {
+		} else if (str.indexOf("&") != -1) {
+			System.out.println("&");
 			return false;
-		} else if (str.indexOf("%") == -1) {
+		} else if (str.indexOf("%") != -1) {
+			System.out.println("%");
 			return false;
-		} else if (str.indexOf("#") == -1) {
+		} else if (str.indexOf("#") != -1) {
+			System.out.println("#2");
 			return false;
 		} else {
 			return true;
@@ -106,7 +111,7 @@ public class User {
 			//すでに同名ユーザが存在する
 			validate_flag = false;
 			if (checkString(this.user_name)) {
-				ErrorMessages.put("mailaddress", "登録できない文字です。");
+				ErrorMessages.put("user_name", "登録できない文字です。");
 			} else {
 				ErrorMessages.put("user_name", "すでに登録されているユーザ名です。");
 			}
@@ -127,9 +132,10 @@ public class User {
 			validate_flag = false;
 
 			if (checkString(this.mailaddress)) {
-				ErrorMessages.put("mailaddress", "登録できない文字です。");
-			} else {
 				ErrorMessages.put("mailaddress", "すでに登録されているメールアドレスです。");
+			} else {
+				ErrorMessages.put("mailaddress", "登録できない文字です。");
+
 			}
 		}
 		return validate_flag;
@@ -207,18 +213,24 @@ public class User {
 	 * メールアドレスのアップデート
 	 * @throws Exception
 	 */
-	public void updateMailaddress() throws Exception {
+	public boolean updateMailaddress() throws Exception {
 		this.userDAO = new UserDAO();
 		setUserDTO();
-
-		if (checkUserMailaddressValidation() && this.mailaddress != null && this.mailaddress.equals("")) {
+		//System.out.println("mail:"+this.mailaddress);
+		System.out.println("mail:"+this.mailaddress);
+		if (checkUserMailaddressValidation() && this.mailaddress != null && !this.mailaddress.equals("")) {
+			System.out.println("hairuzo");
 			if (checkString(this.mailaddress)) {
 				userDAO.update(this.userDTO);
+				return true;
+				//System.out.println("SQLSQLSQLSLQLSQSLQL");
 			} else {
-				ErrorMessages.put("updateMailaddress", "登録できない文字です。");
+				System.out.println("moumuri");
+				ErrorMessages.put("ErrorMessage", "登録できない文字です。");
+				return false;
 			}
 		} else {
-			return;
+			return false;
 		}
 	}
 
@@ -232,11 +244,12 @@ public class User {
 
 		if (this.userDTO.getNickname() != null && !this.userDTO.getNickname().equals("")) {
 			if (checkString(this.user_name)) {
+				System.out.println("入るなや");
 				this.userDAO.update(this.userDTO);
 			} else {
 				ErrorMessages.put("updateNickname", "登録できない文字です。");
 			}
-			userDAO.update(this.userDTO);
+			//userDAO.update(this.userDTO);
 		} else {
 			this.ErrorMessages.put("nickname", "invalid nickname");
 			return;
