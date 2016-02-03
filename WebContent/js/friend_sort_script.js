@@ -15,22 +15,23 @@ function getFriendList() {
 			// リクエスト中の一覧
 			if (json[i].status === 2) {
 			// リクエスト申請したユーザ一覧
-				$('#table-body').append('<tr class="first"><td><h2 id="friend' + json[i].friend_user_id + '" >' +
-					json[i].nickname + '</h2></td><td><a href="#" data-remodal-target="delete_request" class="request art-title" onclick="javascript:remodalCreate(' + json[i].friend_user_id + ');">取消</td></tr>');
+				$('#table-body').append('<tr class="first"><td><h8 class="request" id="friend' + json[i].friend_user_id + '" >' +
+					json[i].nickname + '</h8></td><td><a href="#" data-remodal-target="delete_request" class="request art-title btn btn-primary onclick="javascript:remodalCreate(' + json[i].friend_user_id + ');">取消</td></tr>');
 
 			} else if (json[i].status === 3){
 				// フレンドの場合
-				$('#table-body').append('<tr class="first"><td><h2 id="friend"' + json[i].friend_user_id + '">' + "<a class='art-title' href='index.html'onclick='javascript:setSessionStorage(\"viewMode\",\"3\");setSessionStorage(\"shareLists\",\""
+				$('#table-body').append('<tr class="first"><td><h8 id="friend"' + json[i].friend_user_id + '">' + "<a class='art-title' href='index.html'onclick='javascript:setSessionStorage(\"viewMode\",\"3\");setSessionStorage(\"shareLists\",\""
 						+ json[i].friend_user_id
 						+ "\");'>" +
-					json[i].nickname + '</h2></td><td><a href="#" data-remodal-target="delete_friend" class="friend art-title" onclick="javascript:remodalCreate(' + json[i].friend_user_id + ');">削除</td></tr>');
+					json[i].nickname + '</h8></td><td><a href="#" data-remodal-target="delete_friend" class="friend art-title btn btn-danger" onclick="javascript:remodalCreate(' + json[i].friend_user_id + ');">削除</td></tr>');
 			}
 		}
 		$('#friend-table').datatable({
 			pageSize : 50,
 			sort : [ true, true ],
 			filters : [ true, false ],
-			filterText : 'Type to filter... '
+			sortKey:['申請'],
+			filterText : '名前検索... '
 		});
 	};
 	getJSON(URL, jsonParam, setappend);

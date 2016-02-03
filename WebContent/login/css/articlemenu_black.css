@@ -29,7 +29,7 @@ a.art-title tr:hover {
 	background: #333;
 }
 
-.first:hover {
+.first tbody tr:hover {
 	background: #444;
 }
 .mosaic-block {

@@ -17,6 +17,14 @@ font-weight:100;
 	word-break:break-word;
 }
 
+#add-button {
+	margin-bottom: 3em;
+    font-size: 3em;
+    color: #666;
+    width: 7em;
+    background-color: rgba(255,255,255,0);
+}
+
 a, a:hover {
 text-decoration:none;
 }

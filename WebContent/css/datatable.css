@@ -59,14 +59,28 @@
 
 a.friend {
 	font-size : 2em;
+	color:#FFF;
 }
 
 a.request {
 	font-size: 2em;
-	color: red;
+	color: #FFF;
+}
+
+.request {
+	color:#428bca;
 }
 
 .datatable-input-text {
 	font-size:2em;
+}
+
+
+tbody tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-bottom: 2px solid;
+    border-color: #d3381c;
+    text-align: -webkit-left;
 }
 

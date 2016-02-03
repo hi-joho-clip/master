@@ -107,52 +107,90 @@ $(document).ready(function() {
 			'<input type="hidden" id="nonce" value="'
 					+ docCookies.getItem("nonce") + '">');
 
-	$('.pure-pusher-container').on("scroll", function() {
-			var scrollHeight = $('#wrap').height();
-		var scrollPosition = $('.pure-pusher-container').height() +Math.round($('.pure-pusher-container').scrollTop()) - 200;
 
-		console.log(scrollPosition + ':' + $('.pure-pusher-container').height() + ':' + $('.pure-pusher-container').scrollTop());
 
-		console.log(scrollHeight + ':' + scrollPosition + ':' + scrollHeight );
-		console.log((scrollHeight - scrollPosition) / scrollHeight );
-		if ((scrollHeight - scrollPosition) / scrollHeight == 0) {
-			// when scroll to bottom of the page
+	$('#add-button').on("click", function () {
+		if ($('#art-add').val() === 'true') {
+			// 今のページ番号を取得
+			console.log("ｹﾂ");
 
-			if ($('#art-add').val() === 'true') {
-				// 今のページ番号を取得
-				console.log("ｹﾂ");
-
-				var page = parseInt($('#art-page').val()) + 1;
-				$('#art-page').val(page);
-				switch (getSessionStorage("viewMode")) {
-				case "0":
-					console.log("netstat" + isSettinOnLine());
-					if (isSettinOnLine === true) {
-						console.log("マイリスト");
-						getMyList(page);
-					} else {
-						getMyList(page);
-					}
-					break;
-				case "2":
-
-					// お気に入り
-					if (isSettinOnLine === true) {
-						//getFavList(page);
-					} else {
-						//getFavList(page);
-					}
-					break;
-				case "3":
-					getShareList($.cookie("shareLists"), page);
-					break;
-				case "4":
-					//getMyListList(page);
-					break;
+			var page = parseInt($('#art-page').val()) + 1;
+			$('#art-page').val(page);
+			switch (getSessionStorage("viewMode")) {
+			case "0":
+				console.log("netstat" + isSettinOnLine());
+				if (isSettinOnLine === true) {
+					console.log("マイリスト");
+					getMyList(page);
+				} else {
+					getMyList(page);
 				}
+				break;
+			case "2":
+				// お気に入り
+				if (isSettinOnLine === true) {
+					getFavList(page);
+				} else {
+					getFavList(page);
+				}
+				break;
+			case "3":
+				getShareList($.cookie("shareLists"), page);
+				break;
+			case "4":
+				//getMyListList(page);
+				break;
 			}
 		}
+
 	});
+
+//	$('.pure-pusher-container').on("scroll", function() {
+//			var scrollHeight = $('#wrap').height();
+//		var scrollPosition = $('.pure-pusher-container').height() +Math.round($('.pure-pusher-container').scrollTop()) - 200;
+//
+//		console.log(scrollPosition + ':' + $('.pure-pusher-container').height() + ':' + $('.pure-pusher-container').scrollTop());
+//
+//		console.log(scrollHeight + ':' + scrollPosition + ':' + scrollHeight );
+//		console.log((scrollHeight - scrollPosition) / scrollHeight );
+//		if ((scrollHeight - scrollPosition) / scrollHeight == 0) {
+//			// when scroll to bottom of the page
+//
+//			if ($('#art-add').val() === 'true') {
+//				// 今のページ番号を取得
+//				console.log("ｹﾂ");
+//
+//				var page = parseInt($('#art-page').val()) + 1;
+//				$('#art-page').val(page);
+//				switch (getSessionStorage("viewMode")) {
+//				case "0":
+//					console.log("netstat" + isSettinOnLine());
+//					if (isSettinOnLine === true) {
+//						console.log("マイリスト");
+//						getMyList(page);
+//					} else {
+//						getMyList(page);
+//					}
+//					break;
+//				case "2":
+//
+//					// お気に入り
+//					if (isSettinOnLine === true) {
+//						//getFavList(page);
+//					} else {
+//						//getFavList(page);
+//					}
+//					break;
+//				case "3":
+//					getShareList($.cookie("shareLists"), page);
+//					break;
+//				case "4":
+//					//getMyListList(page);
+//					break;
+//				}
+//			}
+//		}
+//	});
 
 	// 記事追加用のリスナー
 	$(document).on('click', '#add-article', function() {
@@ -197,6 +235,9 @@ $(document).ready(function() {
 // タイルリスト表示を押したときに走るメソッド
 function styleListChange() {
 	startload();
+
+	// ボタン表示
+	$('#buttonbox').css({'display' : 'block'});
 
 	// 1ページ目へ戻すよ
 	switch (getSessionStorage("viewMode")) {

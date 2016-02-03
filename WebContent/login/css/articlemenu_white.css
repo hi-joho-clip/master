@@ -36,7 +36,7 @@ a.art-title tr:hover {
 	background: #FFF;
 }
 
-.first:hover {
+.first tbody tr:hover {
 	background: #EEE;
 }
 

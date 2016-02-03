@@ -109,7 +109,7 @@ public class TagDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<TagDTO> tagList = new ArrayList<TagDTO>();
-		String sql = "SELECT * FROM tags WHERE tag_body <> 'お気に入り' AND user_id = ?";
+		String sql = "SELECT * FROM tags WHERE tag_body <> 'お気に入り' AND user_id = ? order by lastest desc";
 
 		try {
 			pstmt = con.prepareStatement(sql);
