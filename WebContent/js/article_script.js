@@ -204,7 +204,7 @@ function addFavArticle(article_id) {
 				if (json.flag == "0") {
 					toastr.error(json.state);
 				} else {
-					$('#' + favtitle).attr('style', 'color:#FDB91B');
+					$('#' + favtitle).attr('style', 'color:#FF9800');
 					$('#' + favtitle).html(
 							"★" + $("#" + title).val() + "<BR><a class='art-title' href='"
 									+ $("#" + url).val() + "'>"
@@ -219,7 +219,7 @@ function addFavArticle(article_id) {
 				if (json.flag == "0") {
 					toastr.error(json.state);
 				} else {
-					$('#' + favtitle).attr('style', 'color:#FDB91B');
+					$('#' + favtitle).attr('style', 'color:#FF9800');
 					$('#' + favtitle).html("★" + $("#" + title).val());
 
 					// グローバルflagをfalseにする
@@ -243,7 +243,7 @@ function addFavArticle(article_id) {
 				if (json.flag == "0") {
 					toastr.error(json.state);
 				} else {
-					$('#' + favtitle).removeAttr('style', 'color:#FDB91B');
+					$('#' + favtitle).removeAttr('style', 'color:#FF9800');
 					$('#' + favtitle).html(
 							$("#" + title).val() + "<BR><a class='art-title' href='"
 									+ $("#" + url).val() + "'>"
@@ -260,7 +260,7 @@ function addFavArticle(article_id) {
 				if (json.flag == "0") {
 					toastr.error(json.state);
 				} else {
-					$('#' + favtitle).removeAttr('style', 'color:#FDB91B');
+					$('#' + favtitle).removeAttr('style', 'color:#FF9800');
 					$('#' + favtitle).html($("#" + title).val());
 
 					// グローバルflagをtrueにする

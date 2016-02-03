@@ -80,10 +80,10 @@
 					<a href="info.html"><h4>ユーザ情報</h4></a>
 				 </div>
 				 <div id="bg-link">
-					<a href="index.html" onclick="javascript:setSessionStorage('viewMode','0');"><h4>マイリスト</h4></a>
+					<a href="index.html" onclick="javascript:$.cookie('viewMode','0');"><h4>マイリスト</h4></a>
 				 </div>
 				 <div id="bg-link">
-					<a href="index.html" onclick="javascript:setSessionStorage('viewMode','1');"><h4>お気に入り</h4></a>
+					<a href="index.html" onclick="javascript:$.cookie('viewMode','1');"><h4>お気に入り</h4></a>
 				 </div>
 				 <div id="bg-link">
 					<a href="taglist.html" ><h4>タグ</h4></a>
@@ -112,40 +112,27 @@
             <label class="pure-overlay" for="pure-toggle-right" data-overlay="right"></label>
         </div>
 		<div class="container">
-			<div style="margin: 100px auto;">
+			<div style="margin: 0px auto;">
 
 				<div class="form-wrapper"style="max-width: 400px;">
-
 					<div align="center">
 					<h2 >ユーザー情報</h2>
-
 						<div id="info"></div>
 					</div>
 					<div class="form-footer">
 
-
 						<!--　ニックネーム変更画面  -->
-
 						<h5>
 							<a href="nicknamechange.html">ニックネーム変更</a>
 						</h5>
-						<br>
-
-
 						<!--　メールアドレス変更画面  -->
-
 						<h5>
 							<a href="mailchange.html">メールアドレス変更</a>
 						</h5>
-						<br>
-
 						<!--　パスワード変更画面  -->
-
 						<h5>
 							<a href="passchange.html">パスワード変更</a>
 						</h5>
-						<br> <br>
-
 						<table>
 							<tr>
 								<td><h6>ユーザ申請 :</h6></td>
@@ -156,14 +143,10 @@
 								<td><div id="onlineswitch"></div></td>
 							</tr>
 						</table>
-						<br><br>
-						 <h5><a href="login.html" onclick="javascript:logout();">ログアウト</a></h5>
+						 <h5><a href="Login.html" onclick="javascript:logout();">ログアウト</a></h5>
 
 						 <div class="remodal-bg">
 						 	<h5><a href="#" data-remodal-target="delete_user">退会</a></h5>
-						 </div>
-
-
 					</div>
 				</div>
 
@@ -172,7 +155,7 @@
 						<div class="container-fluid">
 							<h1 class="text-center">
 
-							<a href="index.html"  onclick="javascript:setSessionStorage('viewMode','0');">CLIP</a>
+							<a href="index.html"  onclick="javascript:$.cookie('viewMode','0');">CLIP</a>
 
 							</h1>
 						</div>
