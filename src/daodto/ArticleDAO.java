@@ -1061,8 +1061,8 @@ public class ArticleDAO {
 
 			String deletesql = "delete FROM article_tag WHERE id = ?";
 			String getid = "SELECT id FROM article_tag WHERE tag_id = ? AND article_id = ?;";
-			String deletetagsql = "delete FROM tags WHERE tag_id = ?";
-			String get_id = "SELECT id FROM article_tag WHERE tag_id = ? ";
+			//String deletetagsql = "delete FROM tags WHERE tag_id = ?";
+			//String get_id = "SELECT id FROM article_tag WHERE tag_id = ? ";
 
 			TagBean tagbean = new TagBean();
 			ArrayList<TagBean> tag_list = new ArrayList<TagBean>();
@@ -1093,7 +1093,7 @@ public class ArticleDAO {
 						pstmt.executeUpdate();
 					}
 					//更にこのユーザがそのタグを一つも使っていなければtagsの中のタグを削除する
-					pstmt = con.prepareStatement(get_id);
+					/*pstmt = con.prepareStatement(get_id);
 					pstmt.setInt(1, tag_list.get(i).getTag_id());
 					System.out.println("消したいタグID" + tag_list.get(i).getTag_id());
 					rs = pstmt.executeQuery();
@@ -1102,7 +1102,7 @@ public class ArticleDAO {
 						pstmt = con.prepareStatement(deletetagsql);//該当しないIDを削除
 						pstmt.setInt(1, tag_list.get(i).getTag_id());
 						pstmt.executeUpdate();
-					}
+					}*/
 				}
 			}
 			con.commit();
