@@ -55,7 +55,9 @@ public class UpdatePasswordServlet extends HttpServlet {
 					int user_id = (int) session.getAttribute("user_id");
 
 					String inputpass = request.getParameter("password");
+					inputpass = new String(inputpass.getBytes("UTF-8"), "UTF-8");
 					String newpass = request.getParameter("newpassword");
+					newpass = new String(newpass.getBytes("UTF-8"), "UTF-8");
 					System.out.println("request受け取った古いパス:" + inputpass);
 					System.out.println("request受け取った新パス:" + newpass);
 
