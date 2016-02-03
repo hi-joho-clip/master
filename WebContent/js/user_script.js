@@ -245,8 +245,8 @@ function getUserList() {
 	var URL = hostURL + "/viewuser";
 	var userList = "";
 	var setappend = function(json) {
-		userList = "<h2>" + "ニックネーム<br>" + json.nickname + "<br><br>"
-				+ "メールアドレス:<br>" + json.mailaddress + "<br><br></h2>";
+		userList = "<h5>" + "ニックネーム<br>" + json.nickname + "<br>"
+				+ "メールアドレス<br>" + json.mailaddress + "</h5>";
 		document.getElementById('info').innerHTML = userList;
 		var kyoka = "";
 		var kyohi = "";
