@@ -187,6 +187,7 @@ $(document).ready(function() {
 	});
 
 	styleListChange();
+	console.log("onnline:" + isSettinOnLine());
 	if (isSettinOnLine()) {
 		initTopPage();
 	}
