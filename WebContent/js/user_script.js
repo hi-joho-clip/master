@@ -216,11 +216,15 @@ function logout() {
 // 新規登録後
 function addUser() {
 
-	var jsonParam = null;// 送りたいデータ
+	var jsonParam = "username=" + username.value + '&nickname=' + nickname.value+"&birth="+ birth.value + "&email=" + email.value + "&password=" + passwd.value +"&nonce="+ nonce.value;// 送りたいデータ
 	var URL = hostURL +  "/adduser";
 	var userList = "";
 	var setappend = function(json) {
-		userList = json.ErrorMessage + "<br>";
+		if(json.flag == 0){
+			userList = json.ErrorMessage + "<br>";
+		}else if(json.flag == 1){
+			location.href = hostURL + "/login/login.html";
+		}
 		document.getElementById('info').innerHTML = userList;
 	};
 	getJSON(URL, jsonParam, setappend);
@@ -374,6 +378,7 @@ function nick() {
 		if(json.flag==0){
 			toastr.error(json.state);
 		}else{
+			location.href = hostURL + "/login/info.html";
 			toastr.success(json.state);
 		}
 	};
@@ -399,6 +404,7 @@ function mail() {
 		if(json.flag==0){
 			toastr.error(json.state);
 		}else{
+			location.href = hostURL + "/login/info.html";
 			toastr.success(json.state);
 		}
 	};
@@ -424,6 +430,7 @@ function pass() {
 		if(json.flag==0){
 			toastr.error(json.state);
 		}else{
+			location.href = hostURL + "/login/info.html";
 			toastr.success(json.state);
 		}
 	};

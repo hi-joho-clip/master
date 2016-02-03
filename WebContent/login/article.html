@@ -95,6 +95,13 @@ a#edit-button:hover,a:focus {
 		z-index: 30;
 		border-radius: 20%;
 	}
+	.view-title {
+		font-size: 3em;
+	}
+	#editable  {
+	font-size: 1.7em;
+	padding: 10px;
+	}
 }
 
 small {
@@ -283,8 +290,14 @@ div[data-wysihtml5-dialog="createTable"] td {
 	margin-bottom: 1em;
 }
 
-.view-title {
-	font-size: 4em;
+@media only screen and (min-width: 768px) {
+	.view-title {
+		font-size: 4em;
+	}
+	#editable  {
+	font-size: 2.2em;
+	padding: 10px;
+	}
 }
 </style>
 
@@ -467,6 +480,7 @@ div[data-wysihtml5-dialog="createTable"] td {
 							</div>
 
 
+
 							<div style="border-top: 1px solid #ccc;">
 								<br />
 								<div class="hiddenarea"></div>
@@ -474,7 +488,7 @@ div[data-wysihtml5-dialog="createTable"] td {
 								<div align="left">
 
 									<div id="editable" class="editable"
-										style="font-size: 200%; padding: 10px" contenteditable="false"></div>
+										 contenteditable="false"></div>
 								</div>
 								<div class="images"></div>
 							</div>
@@ -635,5 +649,5 @@ div[data-wysihtml5-dialog="createTable"] td {
 			updateStates();
 		});
 	</script>
-	</body>
+</body>
 </html>
