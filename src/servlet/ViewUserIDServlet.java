@@ -77,7 +77,7 @@ public class ViewUserIDServlet extends HttpServlet {
 						response.addCookie(visitedCookie);
 					}
 				}
-
+				response.sendRedirect(URL + "/login.html");
 			} else {
 
 				if (cookie != null) {
@@ -117,7 +117,7 @@ public class ViewUserIDServlet extends HttpServlet {
 
 
 				// 一致しなかった処理
-				response.sendRedirect(URL + "/UserID.html");
+				response.sendRedirect(URL + "/forgotuserid.html");
 				return;
 			}
 
@@ -125,6 +125,6 @@ public class ViewUserIDServlet extends HttpServlet {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-		response.sendRedirect(URL + "/Login.html");
+
 	}
 }
