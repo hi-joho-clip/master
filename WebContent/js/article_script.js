@@ -149,8 +149,8 @@ function setViewArticle(json) {
 				+ json.imageListDTO[image].blob_image;
 		$("div.images")
 				.append(
-						'<img id="icon_here"  data-lity style="max-width:auto; max-height:200px;padding :10px" src = '
-								+ data + '>');
+						'<a href=' + data + ' data-lightbox="gazo"><img id="icon_here"   style="max-width:auto; max-height:200px;padding :10px" src = '
+								+ data + '></a>');
 	}
 
 	// document.getElementById('viewArticle').innerHTML = viewArticle;
