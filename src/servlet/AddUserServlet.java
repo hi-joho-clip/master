@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mail.SendMail;
 import net.arnx.jsonic.JSON;
 import beansdomain.User;
 
@@ -61,17 +62,21 @@ public class AddUserServlet extends HttpServlet {
 
 
 				try {
-					if (userbean.addUser()) {
+					// 0でない限り成功
+					int insert_id = userbean.addUser();
+					if (insert_id != 0) {
 						// 成功処理
 						System.out.println("登録した");
 						ErrorMessage = "登録完了しました。";
 						resp = "{\"ErrorMessage\":\"登録完了 \",  \"flag\": 1}";
 						out = response.getWriter();
 						out.println(resp);
-						//response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
-						//response.setContentType("text/html; charset=Shift_JIS");
-						//response.setHeader("Location",URL+"/login.html");
-						//response.sendRedirect(URL + "/login.html");
+
+						// メール送信
+						User user = new User(insert_id);
+						SendMail mail = new SendMail();
+						mail.addUserMail(user.getMailaddress(), user.getUser_name(), user.getNickname());
+
 					} else {
 						if (userbean.getErrorMessages().containsKey("user_name") && userbean.getErrorMessages().containsKey("mailaddress")) {
 							System.out.println(userbean.getErrorMessages().get("user_name"));

@@ -21,7 +21,7 @@ public class UserDAO {
 	public int add(UserDTO userDTO) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		int insert_user_id = -1;
+		int insert_user_id = 0;
 		String sql = "INSERT INTO users values(0,?,?,?,?,?,now(),now(),?);";
 		String mylist_sql ="INSERT into mylists values(0,?,false)";
 		String tag_sql = "insert into tags values(0,?,now(),now(),null,?)";

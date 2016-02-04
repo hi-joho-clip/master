@@ -11,7 +11,6 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class SendInquiry
  */
-@WebServlet("/SendMail")
+
 public class SendMail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -36,7 +35,7 @@ public class SendMail extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doPost(request,response);
+		doPost(request, response);
 	}
 
 	/**
@@ -119,7 +118,29 @@ public class SendMail extends HttpServlet {
 		out.close();
 	}
 
-	public boolean createMail(String title, String message, String address, String username) throws Exception {
+	public boolean addUserMail(String address, String username, String nickname) {
+
+		String message;
+		String title = "[CLIP]新規登録が完了しました。";
+
+		message = "<br>★会員登録完了のお知らせ★<br><br><div>CLIPをご登録いただき、ありがとうございます。<br><br>" +
+				"ユーザ登録を下記のとおり完了いたしました。<br><br>ご登録内容のご確認ください。<br><br><br>ユーザネーム:" +
+				username + "<br>ニックネーム:" + nickname +
+				"<br><a href='http://clip-sc.com/login/login.html'>ログインページ</a><br>===========================================================" +
+				"<br>　CLIP 宇宙猫<br>　http://clip-sc.com/<br>　Mailto：clip.spcat@gmail.com" +
+				"<br>===========================================================<br><br>";
+
+		try {
+			createMail(title, message, address, nickname);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return true;
+
+	}
+
+	private boolean createMail(String title, String message, String address, String username) throws Exception {
 
 		try {
 			Properties property = new Properties();
