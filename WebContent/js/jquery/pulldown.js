@@ -44,13 +44,25 @@ function date() {
 		$('#day').append('<option value="">日</option>');
 		for ( var i = 1; i <= last; i++) {
 			if (d == i) { // 日がすでに選択されている場合はその値が選択された状態で表示
-				$('#day')
-						.append(
-								'<option value="' + i + '" selected>' + i
-										+ '</option>');
+				if(i<= 9){
+					$('#day')
+					.append(
+							'<option value="0' + i + '" selected>' + i
+									+ '</option>');
+				}else{
+					$('#day')
+					.append(
+							'<option value="' + i + '" selected>' + i
+									+ '</option>');
+				}
 			} else {
-				$('#day')
-						.append('<option value="' + i + '">' + i + '</option>');
+				if(i<=9){
+					$('#day')
+					.append('<option value="0' + i + '">' + i + '</option>');
+				}else{
+					$('#day')
+					.append('<option value="' + i + '">' + i + '</option>');
+				}
 			}
 		}
 	}
