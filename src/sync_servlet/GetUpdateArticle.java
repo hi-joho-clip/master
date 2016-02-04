@@ -92,6 +92,8 @@ public class GetUpdateArticle extends HttpServlet {
 			ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
 			article_list = articlebean.viewALLArticleList(user_id);
 
+			System.out.println("allsize:" + article_list.size());
+
 			/*
 			 * ハッシュマップ作成（Articleは画像がついてるので高速化を含めて実装
 			 */

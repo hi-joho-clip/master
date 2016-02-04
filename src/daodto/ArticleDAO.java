@@ -502,7 +502,7 @@ public class ArticleDAO {
 		String sql = "INSERT INTO article_tag(article_id,tag_id) VALUES(?,"
 				+ " (SELECT tag_id FROM tags " + " WHERE user_id = ? "
 				+ " AND tag_body = 'お気に入り'))";
-		String article_fav = "update articles set favflag = TRUE , modified = DATE_ADD(modified, INTERVAL 1 SECOND) where article_id = ?";
+		String article_fav = "update articles set favflag = TRUE , modified = DATE_ADD(modified, INTERVAL 10 SECOND) where article_id = ?";
 
 		try {
 			con.setAutoCommit(false);

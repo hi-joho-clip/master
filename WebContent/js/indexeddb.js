@@ -288,7 +288,6 @@ function getIDEArticleList(username, page, share_id, title, fav_state, direct) {
 				filter : guid_filter,
 				filter : share_filter,
 				filter : title_filter,
-				// 20件ずつ表示
 				offset : page * 20 - 20,
 				limit : 20,
 				direction : direct
@@ -300,7 +299,6 @@ function getIDEArticleList(username, page, share_id, title, fav_state, direct) {
 				filter : share_filter,
 				filter : title_filter,
 				filter : fav_filter,
-				// 20件ずつ表示
 				offset : page * 20 - 20,
 				limit : 20,
 				direction : direct
@@ -351,7 +349,7 @@ function getIDEArticleList(username, page, share_id, title, fav_state, direct) {
 
 		function fav_filter(record) {
 			flag = false;
-			if (record.article.favflag === 'true') {
+			if (record.article.favflag === true) {
 				// strにhogeを含む場合の処理
 				flag = true;
 			}

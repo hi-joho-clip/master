@@ -7,7 +7,83 @@ function tileView() {
 	}
 }
 
-// マイリスト
+/**
+ * オフラインでのマイリスト（検索対応）
+ * @param page
+ * @returns {Promise}
+ */
+function getOffMyList(page) {
+
+	return new Promise(function(resolve, reject) {
+
+		console.log("offline" + page);
+		var username = docCookies.getItem('username');
+
+
+		var word = '';
+
+		if ($('#searchMode').val() === "true") {
+			// マイリストの検索をしているページを出す
+			word = getSessionStorage('search');
+		}
+		getIDEArticleList(username, page, '0', word, false).then(function(json) {
+			// 純粋なリストが必要
+			if (getLocalStorage('Style') === 'tile') {
+				get_mylists(json);
+				resolve();
+			} else {
+				get_mylists_list(json);
+				resolve();
+			}
+		})['catch'](function(error) {
+			console.log(error);
+			reject();
+		});
+	});
+
+}
+
+/**
+ * オフラインでのマイリスト（検索対応）
+ * @param page
+ * @returns {Promise}
+ */
+function getOffFavList(page) {
+
+	return new Promise(function(resolve, reject) {
+
+		console.log("offline" + page);
+		var username = docCookies.getItem('username');
+
+		var word = '';
+
+		if ($('#searchMode').val() === "true") {
+			// マイリストの検索をしているページを出す
+			word = getSessionStorage('search');
+		}
+		getIDEArticleList(username, page, '0', word, true).then(function(json) {
+			// 純粋なリストが必要
+			if (getLocalStorage('Style') === 'tile') {
+				get_mylists(json);
+				resolve();
+			} else {
+				get_mylists_list(json);
+				resolve();
+			}
+		})['catch'](function(error) {
+			console.log(error);
+			reject();
+		});
+	});
+
+}
+
+
+/**
+ *
+ * @param page
+ * @returns {Promise}
+ */
 function getMyList(page) {
 	return new Promise(
 			function(resolve, reject) {

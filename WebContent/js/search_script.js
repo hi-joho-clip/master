@@ -31,40 +31,28 @@ function onclickSearch() {
 	switch ($('#viewmode').val()) {
 	case "0":
 		// マイリストの検索
-		if (isSettinOnLine()) {
+		if (isSettinOnLine() === true) {
 
 			$('.grid').empty();
 			// 最初は1ページ目
 			myListSearch(1);
-		} else {
+		} else if (isSettinOnLine() === false){
 
 			$('.grid').empty();
-
-			// テスト用修正必要
 			page = 1;
-			getIDEArticleList(username, page, 0, word).then(function(json) {
-				// 純粋なリストが必要
-				get_mylists(json);
-			})['catch'](function(error) {
-				console.log(error);
-			});
+			getOffMyList(page);
 		}
 
 		break;
 	case "1":
 		// お気に入りの検索
-		if (isSettinOnLine()) {
+		if (isSettinOnLine() === true) {
 			$('.grid').empty();
 			favListSearch(1);
-		} else {
+		} else if (isSettinOnLine() === false){
 			// テスト用修正必要
 			page = 1;
-			getIDEArticleList(username, page, 1, getSessionStorage('search')).then(function(json) {
-				// 純粋なリストが必要
-				get_mylists(json);
-			})['catch'](function(error) {
-				console.log(error);
-			});
+			getOffFavList(page);
 		}
 
 		break;

@@ -54,7 +54,7 @@ public class LoginFilter implements Filter {
 		// セッションからログインを判定する
 		//セッション維持のためのセッションを生成
 		try {
-			System.out.println("fileter on");
+			//System.out.println("fileter on");
 			//String target = ((HttpServletRequest) request).getRequestURI();
 			//System.out.println("target:" + target);
 			String loginURL = "/clipMaster/login/login.html";

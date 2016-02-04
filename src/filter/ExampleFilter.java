@@ -41,7 +41,7 @@ public class ExampleFilter implements Filter {
   // TODO Auto-generated method stub
   // place your code here
 	 String target = ((HttpServletRequest) request).getRequestURI();
-	 System.out.println("target:" + target);
+	// System.out.println("target:" + target);
 	 request.setCharacterEncoding(encoding);
 	 response.setContentType("text/html; charset=" + encoding);
 	  // pass the request along the filter chain
