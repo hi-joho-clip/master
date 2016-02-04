@@ -1,4 +1,4 @@
-// フレンドボックス画面
+/*// フレンドボックス画面
 function getFriendRequest() {
 	var jsonParam = null;// 送りたいデータ
 	var URL = hostURL + "/friendrequest";
@@ -13,6 +13,24 @@ function getFriendRequest() {
 					+ json[i].friend_user_id + "\";'>拒否</a></div>" ;
 		}
 		document.getElementById('info').innerHTML = friendList + "</div>";
+	};
+	getJSON(URL, jsonParam, setappend);
+
+}*/
+
+
+// フレンドボックス画面
+function getFriendRequest() {
+	var jsonParam = null;// 送りたいデータ
+	var URL = hostURL + "/friendrequest";
+	var setappend = function(json) {
+		for ( var i = 0; i < json.length; i++) {
+			$('#table-body').append('<tr id="'+json[i].nickname+'" class="first"><td>' + json[i].nickname + "</td><td>" + "<a href='#' data-remodal-target='kyoka' onclick='document.getElementById(\"user_id\").innerHTML=\""
+					+ json[i].friend_user_id + "\";'>承認</a></td>" + "&emsp;"
+					+ "<td><a href='#' data-remodal-target='kyohi' onclick='document.getElementById(\"user_id\").innerHTML=\""
+					+ json[i].friend_user_id + "\";'>拒否</a></td>");
+		}
+		/*document.getElementById('info').innerHTML = friendList + "</div>";*/
 	};
 	getJSON(URL, jsonParam, setappend);
 
