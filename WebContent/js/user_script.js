@@ -232,13 +232,14 @@ function addUser() {
 			if (json.flag == 0) {
 				userList = "<c>" + json.ErrorMessage + "</c><br>";
 			} else if (json.flag == 1) {
+				console.log("来てる");
 				location.href = hostURL + "/login/login.html";
 			}
 			document.getElementById('info').innerHTML = userList;
 		};
 		getJSON(URL, jsonParam, setappend);
 	} else {
-		var userList ="<h4>入力フォームが正しくありません</h4>";
+		var userList ="<c>入力フォームが正しくありません</c>";
 		document.getElementById('info').innerHTML = userList;
 		/*toastr.error("入力フォームが正しくありません");*/
 	}
