@@ -54,7 +54,7 @@ public class User {
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean addUser() throws Exception {
+	public int addUser() throws Exception {
 		this.userDAO = new UserDAO();
 		setUserDTO();
 		/*
@@ -63,10 +63,10 @@ public class User {
 		 * お気に入りタグ生成
 		 */
 		if (checkUserNameValidation() && checkUserMailaddressValidation()) {
-			userDAO.add(userDTO);
-			return true;
+			return userDAO.add(userDTO);
 		} else {
-			return false;
+			// 0は失敗
+			return 0;
 		}
 
 		/*
