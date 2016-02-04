@@ -218,10 +218,12 @@ function addUser() {
 			&& $('#email').val().indexOf('@') != -1
 			&& $('div.formErrorContent').val() != ""
 			&& $('#username').val() != "" && $('#nickname').val() != ""
-			&& $('#birth').val() != "") {
+			&& $('#year').val() != "0"
+			&& $('#month').val() != "0"
+			&& $('#day').val() != "0") {
 		var jsonParam = "username=" + encodeURIComponent(username.value)
 				+ '&nickname=' + encodeURIComponent(nickname.value) + '&birth='
-				+ encodeURIComponent(birth.value) + '&email='
+				+ year.value + '-' + month.value + '-' + day.value + '&email='
 				+ encodeURIComponent(email.value) + '&password='
 				+ encodeURIComponent(passwd.value) + '&nonce=' + nonce.value;// 送りたいデータ
 		var URL = hostURL + "/adduser";
