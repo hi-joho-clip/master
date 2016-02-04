@@ -55,6 +55,7 @@ public class MyListServlet extends HttpServlet {
 		int page = 1; // パラメータからページ番号取得(デフォルト1）
 		int start_article_id = 0;
 
+
 		try {
 			user_id = (int) session.getAttribute("user_id");
 			if (request.getParameter("page") != null) {

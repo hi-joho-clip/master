@@ -174,6 +174,7 @@
 										<a href="#" data-remodal-target="delete_user">退会</a>
 									</h5>
 								</div>
+								<div class="hiddenarea"></div>
 							</div>
 						</div>
 					</div>
@@ -187,6 +188,10 @@
 		$(document).ready(function() {
 			getUserList();
 			notice();
+
+			$("div.hiddenarea").append(
+					'<input type="hidden" id="nonce" value="'
+							+ docCookies.getItem("nonce") + '">');
 		});
 	</script>
 

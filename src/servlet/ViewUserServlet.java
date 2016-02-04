@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.arnx.jsonic.JSON;
-
 import beansdomain.User;
 
 @WebServlet("/viewuser")
@@ -38,6 +37,7 @@ public class ViewUserServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 
 		User userbeans = null;
+		User n_user = new User();
 
 		HttpSession session = request.getSession(true);
 
@@ -50,10 +50,13 @@ public class ViewUserServlet extends HttpServlet {
 			try {
 				int user_id = (int) session.getAttribute("user_id");
 				userbeans = new User(user_id);
+				n_user.setNickname(userbeans.getNickname());
+				n_user.setMailaddress(userbeans.getMailaddress());
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			out.println(JSON.encode(userbeans, true).toString());
+			out.println(JSON.encode(n_user, true).toString());
 		}
 	}
 
