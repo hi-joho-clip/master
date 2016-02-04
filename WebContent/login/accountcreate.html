@@ -11,6 +11,8 @@
 <!-- remember, jQuery is completely optional -->
 <script type='text/javascript' src='../js/jquery/jquery-2.1.4.min.js'></script>
 <script type='text/javascript'
+	src='../js/jquery/pulldown.js'></script>
+<script type='text/javascript'
 	src='../js/jquery/jquery.particleground.js'></script>
 <script type='text/javascript' src='js/demo.js'></script>
 <script src="../js/lib/jquery.validationEngine.js"></script>
@@ -36,6 +38,9 @@
 	jQuery(document).ready(function() {
 		jQuery("#form").validationEngine();
 		$("div.hiddenarea").append('<input type="hidden" name="nonce" id="nonce" value="'+ docCookies.getItem("nonce") + '">');
+	});
+	$(document).ready(function() {
+		date();
 	});
 
 </script>
@@ -65,9 +70,16 @@
 							required="required" placeholder="Nick Name" id="nickname"></input>
 					</div>
 					<div class="form-item">
+						<p>birthday
 						<!--　生年月日  -->
-						<label for="birth"></label> <input type="date" name="birth"
-							required="required" placeholder="birth" id="birth"></input>
+						<select id="year"><option value="0">--年</option></select>
+						<select id="month"><option value="0">--月</option></select>
+						<select id="day"><option value="0">--日</option></select>​</p>
+
+
+
+						<!-- <label for="birth"></label> <input type="date" name="birth"
+							required="required" placeholder="birth" id="birth"></input> -->
 					</div>
 					<div class="form-item">
 						<!--　メールアドレス  -->
