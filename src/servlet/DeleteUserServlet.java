@@ -34,6 +34,7 @@ public class DeleteUserServlet extends HttpServlet {
 
 	private void perform(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+
 		User userbean = new User();
 		String ErrorMessage = null;
 		String URL = request.getContextPath() + "/login";
@@ -43,12 +44,13 @@ public class DeleteUserServlet extends HttpServlet {
 		response.setContentType("application/json; charset=utf-8");
 		response.setHeader("Cache-Control", "private");
 		PrintWriter out = response.getWriter();
+		System.out.println("delete入った");
 		if (nonce.isNonce()) {
-
-
+			System.out.println("nonce入った");
 			try {
 				int user_id = (int) session.getAttribute("user_id");
 				userbean.setUser_id(user_id);
+				System.out.println("ユーザ"+ user_id);
 				if(userbean.deleteUser()){
 					//削除リダイレクト
 				}else{

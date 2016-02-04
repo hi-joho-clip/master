@@ -200,7 +200,7 @@ function userID_lock() {
 
 // ログアウト
 function logout() {
-	var jsonParam = null;// 送りたいデータ
+	var jsonParam = "nonce=" + $('#nonce').val();;// 送りたいデータ
 	var URL = hostURL + "/logout";
 	var userList = "";
 	var setappend = function(json) {
@@ -232,15 +232,14 @@ function addUser() {
 			if (json.flag == 0) {
 				userList = "<c>" + json.ErrorMessage + "</c><br>";
 			} else if (json.flag == 1) {
-				console.log("来てる");
-				location.href = hostURL + "/login/login.html";
+				location.href = hostURL + "/login/AccountCreateOK.html";
 			}
 			document.getElementById('info').innerHTML = userList;
 		};
 		getJSON(URL, jsonParam, setappend);
 	} else {
-		var userList ="<c>入力フォームが正しくありません</c>";
-		document.getElementById('info').innerHTML = userList;
+		var List ="<c>入力フォームが正しくありません</c>";
+		document.getElementById('info').innerHTML = List;
 		/*toastr.error("入力フォームが正しくありません");*/
 	}
 }
@@ -248,7 +247,7 @@ function addUser() {
 // ユーザ削除（リダイレクトLoginページ）
 function deleteuser() {
 
-	var jsonParam = null;// 送りたいデータ
+	var jsonParam ="nonce=" + $('#nonce').val();// 送りたいデータ
 	var URL = hostURL + "/deleteuser";
 	var userList = "";
 	var setappend = function(json) {
