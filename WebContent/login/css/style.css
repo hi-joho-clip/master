@@ -67,6 +67,10 @@ body {
 }
 
 
+b{
+	color:#999;
+}
+
 #particles {
   width: 100%;
   height: 100%;
@@ -194,6 +198,8 @@ p {
   margin: 0 0 30px 0;
   font-size: 24px;
 }
+
+
 
 @media only screen and (max-width: 736px) {
 p {
