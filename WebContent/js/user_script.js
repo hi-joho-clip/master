@@ -238,7 +238,9 @@ function addUser() {
 		};
 		getJSON(URL, jsonParam, setappend);
 	} else {
-		toastr.error("入力フォームが正しくありません");
+		var userList ="<h4>入力フォームが正しくありません</h4>";
+		document.getElementById('info').innerHTML = userList;
+		/*toastr.error("入力フォームが正しくありません");*/
 	}
 }
 
