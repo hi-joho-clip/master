@@ -230,7 +230,7 @@ function addUser() {
 		var userList = "";
 		var setappend = function(json) {
 			if (json.flag == 0) {
-				userList = json.ErrorMessage + "<br>";
+				userList = "<c>" + json.ErrorMessage + "</c><br>";
 			} else if (json.flag == 1) {
 				location.href = hostURL + "/login/login.html";
 			}
