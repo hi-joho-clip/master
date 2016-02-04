@@ -64,11 +64,15 @@ public class ForgotPasswordServlet extends HttpServlet {
 			System.out.println(pass);
 
 
-			if(request.getParameter("email")!=null&&request.getParameter("username")!=null&&request.getParameter("birth")!=null){
+			if(request.getParameter("email")!=null&&request.getParameter("username")!=null){
 				try {
 					String inputmail = request.getParameter("email");
 					String inputuser_name = request.getParameter("username");
-					String inputbirth = request.getParameter("birth");
+					String inputbirth = request.getParameter("year") +"-" +request.getParameter("month")+ "-"+ request.getParameter("day");
+
+					System.out.println(inputbirth);
+
+
 					userbean.setMailaddress(inputmail);
 					userbean.setUser_name(inputuser_name);
 					userbean.setBirth(inputbirth);
