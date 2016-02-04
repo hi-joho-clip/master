@@ -69,12 +69,17 @@ function onclickSearch() {
 // マイリスト内のタイトル検索
 function myListSearch(word) {
 	var func = get_mylists;
+	$('h1.title').html('検索結果');
 	if (tileView()) {
 		func = get_mylists;
-		document.getElementById('title').innerHTML = '<h1 class="title">検索結果</h1><div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
+		$('div#themebutton').html('<button id="themachange" title="テーマ切り替え"onclick="javascript:changeColor()" style="visibility: hidden;">'+
+		'<img src="img/thema.png"style="visibility: visible; width: 25px;"></button>');
+		$('div.stylebutton').html('<button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button>');
 	} else {
 		func = get_mylists_list;
-		document.getElementById('title').innerHTML =  '<h1 class="title">検索結果</h1><div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
+		$('div#themebutton').html('<button id="themachange" title="テーマ切り替え"onclick="javascript:changeColor()" style="visibility: hidden;">'+
+		'<img src="img/thema.png"style="visibility: visible; width: 25px;"></button>');
+		$('div.stylebutton').html('<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
 	}
 	var jsonParam = "text=" + word;// 送りたいデータ
 	var URL = hostURL + "/mylistsearch";
@@ -85,10 +90,14 @@ function favListSearch(word) {
 	var func = get_mylists;
 	if (tileView()) {
 		func = get_mylists;
-		document.getElementById('title').innerHTML = '<h1 class="title">検索結果</h1><div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
+		$('div#themebutton').html('<button id="themachange" title="テーマ切り替え"onclick="javascript:changeColor()" style="visibility: hidden;">'+
+		'<img src="img/thema.png"style="visibility: visible; width: 25px;"></button>');
+		$('div.stylebutton').html('<button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button>');
 	} else {
 		func = get_mylists_list;
-		document.getElementById('title').innerHTML =  '<h1 class="title">検索結果</h1><div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
+		$('div#themebutton').html('<button id="themachange" title="テーマ切り替え"onclick="javascript:changeColor()" style="visibility: hidden;">'+
+		'<img src="img/thema.png"style="visibility: visible; width: 25px;"></button>');
+		$('div.stylebutton').html('<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
 	}
 	var jsonParam = "text=" + word;// 送りたいデータ
 	var URL = hostURL + "/favlistsearch";
@@ -100,10 +109,14 @@ function tagSearch(word) {
 	var func = get_mylists;
 	if (tileView()) {
 		func = get_mylists;
-		document.getElementById('title').innerHTML = '<h1 class="title">検索結果</h1><div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
+		$('div#themebutton').html('<button id="themachange" title="テーマ切り替え"onclick="javascript:changeColor()" style="visibility: hidden;">'+
+		'<img src="img/thema.png"style="visibility: visible; width: 25px;"></button>');
+		$('div.stylebutton').html('<button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button>');
 	} else {
 		func = get_mylists_list;
-		document.getElementById('title').innerHTML =  '<h1 class="title">検索結果</h1><div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
+		$('div#themebutton').html('<button id="themachange" title="テーマ切り替え"onclick="javascript:changeColor()" style="visibility: hidden;">'+
+		'<img src="img/thema.png"style="visibility: visible; width: 25px;"></button>');
+		$('div.stylebutton').html('<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
 	}
 	var jsonParam = "tag=" + getSessionStorage("tagLists") + "&text=" + word;
 	var URL = hostURL + "/tagsearch";
@@ -114,10 +127,14 @@ function shareListSearch(word) {
 	var func = get_sharelists;
 	if (tileView()) {
 		func = get_sharelists;
-		document.getElementById('title').innerHTML = '<h1 class="title">検索結果</h1><div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
+		$('div#themebutton').html('<button id="themachange" title="テーマ切り替え"onclick="javascript:changeColor()" style="visibility: hidden;">'+
+		'<img src="img/thema.png"style="visibility: visible; width: 25px;"></button>');
+		$('div.stylebutton').html('<button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button>');
 	} else {
 		func = get_sharelists_list;
-		document.getElementById('title').innerHTML =  '<h1 class="title">検索結果</h1><div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
+		$('div#themebutton').html('<button id="themachange" title="テーマ切り替え"onclick="javascript:changeColor()" style="visibility: hidden;">'+
+		'<img src="img/thema.png"style="visibility: visible; width: 25px;"></button>');
+		$('div.stylebutton').html('<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
 	}
 	var jsonParam = "friend_user_id=" + getSessionStorage("shareLists") + "&text=" + word;
 	var URL = hostURL +  "/sharelistsearch";
