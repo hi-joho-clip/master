@@ -240,6 +240,7 @@
                     // except when there is an open quote or if setting allowSpaces = true.
                     // Tab will also create a tag, unless the tag input is empty,
                     // in which case it isn't caught.
+                    console.log("that.tagInput.val()"+that.tagInput.val());
                     if (
                         (event.which === $.ui.keyCode.COMMA && event.shiftKey === false) ||
                         event.which === $.ui.keyCode.ENTER ||
@@ -262,7 +263,14 @@
                     ) {
                         // Enter submits the form if there's no text in the input.
                         if (!(event.which === $.ui.keyCode.ENTER && that.tagInput.val() === '')) {
+                        	console.log("ストップ");
                             event.preventDefault();
+                        }
+
+                        if(!(event.which === $.ui.keyCode.ENTER && that.tagInput.val() !=='お気に入り')){
+                        	console.log("お気に入りストップ");
+                        	event.preventDefault();
+                        	that.tagInput.val('');
                         }
 
                         // Autocomplete will create its own tag from a selection and close automatically.
@@ -515,6 +523,8 @@
             // DEPRECATED.
             this._trigger('onTagAdded', null, tag);
 
+
+
             this.tagInput.val('');
 
             // Insert tag.
@@ -538,6 +548,7 @@
 
             // DEPRECATED.
             this._trigger('onTagRemoved', null, tag);
+            this._trigger('onTagRemoved', null, 'お気に入り');
 
             if (this._trigger('beforeTagRemoved', null, {tag: tag, tagLabel: this.tagLabel(tag)}) === false) {
                 return;
