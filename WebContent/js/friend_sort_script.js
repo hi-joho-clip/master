@@ -16,7 +16,7 @@ function getFriendList() {
 			if (json[i].status === 2) {
 			// リクエスト申請したユーザ一覧
 				$('#table-body').append('<tr class="first"><td><h8 class="request" id="friend' + json[i].friend_user_id + '" >' +
-					json[i].nickname + '</h8></td><td><a href="#" data-remodal-target="delete_request" class="request art-title btn btn-primary onclick="javascript:remodalCreate(' + json[i].friend_user_id + ');">取消</td></tr>');
+					json[i].nickname + '</h8></td><td><a href="#" data-remodal-target="delete_request" class="request art-title btn btn-primary" onclick="javascript:remodalCreate(' + json[i].friend_user_id + ');">取消</td></tr>');
 
 			} else if (json[i].status === 3){
 				// フレンドの場合
