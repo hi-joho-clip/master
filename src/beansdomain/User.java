@@ -111,9 +111,10 @@ public class User {
 			//すでに同名ユーザが存在する
 			validate_flag = false;
 			if (checkString(this.user_name)) {
-				ErrorMessages.put("user_name", "登録できない文字です。");
-			} else {
+
 				ErrorMessages.put("user_name", "すでに登録されているユーザ名です。");
+			} else {
+				ErrorMessages.put("user_name", "登録できない文字です。");
 			}
 		}
 		return validate_flag;
