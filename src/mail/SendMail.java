@@ -48,7 +48,7 @@ public class SendMail extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 
 		String title = "こんにちは";
-		String message = "ほんたいだよ";
+		String message = "ほんたいだよ<br>kaigyou";
 
 		System.out.println("タイトル：" + title);
 		System.out.println("メッセージ" + message);
@@ -100,6 +100,8 @@ public class SendMail extends HttpServlet {
 			mimeMessage.setSubject(title, "ISO-2022-JP");
 
 			mimeMessage.setText(message, "ISO-2022-JP");
+
+			mimeMessage.setContent(message, "text/html;charset=shift-jis");
 
 			Transport.send(mimeMessage);
 
@@ -183,6 +185,9 @@ public class SendMail extends HttpServlet {
 			mimeMessage.setSubject(title, "ISO-2022-JP");
 
 			mimeMessage.setText(message, "ISO-2022-JP");
+
+			// HTML設定
+			mimeMessage.setContent(message, "text/html;charset=shift-jis");
 
 			Transport.send(mimeMessage);
 
