@@ -17,6 +17,7 @@ function initTopPage() {
 	 * 対応ブラウザならオフライン処理を開始 （ここでダイアログ
 	 */
 
+
 	setLocalStorage('auto','true');
 
 	if (isSupported([ 'chrome', 'opera', 'firefox', 'ie11', 'ie10' ])) {

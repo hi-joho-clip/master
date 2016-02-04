@@ -10,7 +10,7 @@ var getBrowser = function(){
     var name = 'unknown';
 
 
-    alert(ua);
+    //alert(ua);
     if (ua.indexOf("msie") != -1){
         if (ver.indexOf("msie 6.") != -1){
             name = 'ie6';
