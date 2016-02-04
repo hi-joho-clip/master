@@ -75,7 +75,10 @@ public class AddUserServlet extends HttpServlet {
 						// メール送信
 						User user = new User(insert_id);
 						SendMail mail = new SendMail();
+						// コンストラクタ替わりに設定必要
 						mail.addUserMail(user.getMailaddress(), user.getUser_name(), user.getNickname());
+						// スレッドスタート
+						mail.start();
 
 					} else {
 						if (userbean.getErrorMessages().containsKey("user_name") && userbean.getErrorMessages().containsKey("mailaddress")) {
