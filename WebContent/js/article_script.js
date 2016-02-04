@@ -78,7 +78,7 @@ function getFavList(page) {
 
 // シェア記事一覧
 function getShareList(friend_user_id, page) {
-	$('h1.title').html('シェア記事');
+	$('h1.title').html(getSessionStorage('friend'));
 	var func = get_sharelists;
 	if (tileView()) {
 		func = get_sharelists;
