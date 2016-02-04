@@ -70,6 +70,8 @@ public class AddTagArticleServlet extends HttpServlet {
 				}
 				System.out.println("article_id:" + article_id);
 				for (int i = 0; i < tag_body.length - 1; i++) {
+					tag_body[i]=tag_body[i].replaceAll("お気に入り","");
+					System.out.println("tag_bodykun:"+tag_body[i]);
 					tag_body_list.add(i, tag_body[i + 1]);
 					System.out.println("tagbody:" + tag_body_list.get(i) + "&user_id:" + user_id);
 				}

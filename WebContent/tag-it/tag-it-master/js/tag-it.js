@@ -263,10 +263,11 @@
                     ) {
                         // Enter submits the form if there's no text in the input.
                         if (!(event.which === $.ui.keyCode.ENTER && that.tagInput.val() === '')) {
+                        	console.log("ストップ");
                             event.preventDefault();
                         }
 
-                        if(that.tagInput.val() !=='お気に入り'){
+                        if(!(event.which === $.ui.keyCode.ENTER && that.tagInput.val() !=='お気に入り')){
                         	console.log("お気に入りストップ");
                         	event.preventDefault();
                         	that.tagInput.val('');
