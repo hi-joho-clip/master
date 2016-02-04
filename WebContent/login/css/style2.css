@@ -46,6 +46,15 @@ table {
   border-spacing: 0;
 }
 
+b{
+	color:#999;
+}
+
+c{
+	color:#F44336;
+}
+
+
 /* particleground demo */
 
 * {
