@@ -206,6 +206,8 @@ function logout() {
 	var setappend = function(json) {
 		userList = "";
 
+		// ログアウト時はデータベースを削除する
+		deleteDatabase("article");
 		document.getElementById('logout').innerHTML = userList;
 	};
 	getJSON(URL, jsonParam, setappend);

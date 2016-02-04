@@ -15,30 +15,26 @@ import javax.mail.internet.MimeMessage;
 
 public class SendMail extends Thread {
 
-
 	private String address;
 	private String username;
 	private String nickname;
 	private String title;
 	private String message;
-
+	private String header = "<br><br>===========================================================" +
+			"<br>　CLIP 宇宙猫<br>　http://clip-sc.com/<br>　Mailto：clip.spcat@gmail.com" +
+			"<br>===========================================================<br><br>";
 
 	public boolean addUserMail(String address, String username, String nickname) {
 		this.address = address;
 		this.username = username;
 		this.nickname = nickname;
 
-
 		this.title = "[CLIP]新規登録が完了しました。";
 
 		this.message = "<br>★会員登録完了のお知らせ★<br><br><div>CLIPをご登録いただき、ありがとうございます。<br><br>" +
 				"ユーザ登録を下記のとおり完了いたしました。<br><br>ご登録内容のご確認ください。<br><br><br>ユーザネーム:" +
 				username + "<br>ニックネーム:" + nickname +
-				"<br><br><br><a href='http://clip-sc.com/login/login.html'>ログインページ</a><br>s<br>===========================================================" +
-				"<br>　CLIP 宇宙猫<br>　http://clip-sc.com/<br>　Mailto：clip.spcat@gmail.com" +
-				"<br>===========================================================<br><br>";
-
-
+				"<br><br><br><a href='http://clip-sc.com/login/login.html'>ログインページ</a>" + header;
 		return true;
 
 	}
@@ -98,8 +94,6 @@ public class SendMail extends Thread {
 			mimeMessage.setContent(message, "text/html;charset=shift-jis");
 
 			Transport.send(mimeMessage);
-
-
 
 		} catch (Exception e) {
 

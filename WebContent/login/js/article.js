@@ -28,10 +28,41 @@ function TESTinitPagingMylist(callback) {
 }
 
 /**
- *
+ * 単なるマイリスト表示用
  * @param callback
  */
 function initPagingMylist(callback) {
+	// var page = parseInt($('#art-page').val());
+	// ページング用番号の初期化
+
+	var count = 1;
+
+	var proMylist = function() {
+		return new Promise(function(resolve, reject) {
+
+			setTimeout(function() {
+				callback(count++);
+				resolve();
+			}, 800);
+		});
+	};
+	// モードがタイルの場合
+	if ($('#art-page').val() === '1') {
+		$('#lastid').val('0');
+		var last_promise = proMylist();
+		last_promise.then();
+	} else {
+		// 1でないときはその分までループする
+		// 最後のIDは初期化しておく
+		$('#lastid').val('0');
+		var last_promise = proMylist();
+		for ( var i = 2; i <= parseInt($('#art-page').val()); i++) {
+			last_promise = last_promise.then(proMylist);
+		}
+	}
+}
+
+function initPagingMylistSearch(callback) {
 	// var page = parseInt($('#art-page').val());
 	// ページング用番号の初期化
 
@@ -239,6 +270,8 @@ function styleListChange() {
 	// ボタン表示
 	$('#buttonbox').css({'display' : 'block'});
 
+	var username = docCookies.getItem('username');
+
 	// 1ページ目へ戻すよ
 	switch (getSessionStorage("viewMode")) {
 	case "0":// マイリスト画面を表示しているとき
@@ -247,27 +280,18 @@ function styleListChange() {
 		if (isSettinOnLine() === true) {
 			if($('#searchMode').val()==="true"){
 				//マイリストの検索をしているページを出す
-				initPagingMylist(myListSearch(getSessionStorage('search')));
+				initPagingMylistSearch(myListSearch);
 			}else{
 				//普通のマイリストを出す
 				initPagingMylist(getMyList);
 			}
-			// ページング処理
-			// if ($.cookie("Style") === "tile") {
-
-			// } else if ($.cookie("Style") === "list") {
-			// console.log('マイリスト');
-			// initPagingMylist(getMyListList);
-			// }
-			// toastr.warning("オンライン状態なり");
-
 		} else if (isSettinOnLine() === false) {
 
 			$('.head-bar').css({
 				'background' : '#31708f'
 			});
 			toastr.warning("オフラインなんだなーこれ");
-			var username = docCookies.getItem('username');
+			$('#title').append('<h1 class="title" >マイリスト</h1>');
 
 			// テスト用修正必要
 			//var i_page = 1;
@@ -275,7 +299,6 @@ function styleListChange() {
 				getIDEArticleList(username, page, '0', '', false).then(
 				function(json) {
 					// 純粋なリストが必要
-					$('#title').append('<h1>マイリスト</h1>');
 					get_mylists(json);
 				})['catch'](function(error) {
 					console.log(error);
@@ -293,13 +316,30 @@ function styleListChange() {
 			// オフライン判断
 			if($('#searchMode').val()==="true"){
 				//お気に入りの検索をしているページを出す
-				favListSearch(getSessionStorage('search'));
+				initPagingMylist(favListSearch);
 			}else{
 				//普通のお気に入りを出す
-				getFavList();
+				initPagingMylist(getFavList);
 			}
 		} else {
+			$('.head-bar').css({
+				'background' : '#31708f'
+			});
+			toastr.warning("オフラインなんだなーこれ");
 
+			// テスト用修正必要
+			//var i_page = 1;
+			var offlineMyList = function(page) {
+				getIDEArticleList(username, page, '0', '', true).then(
+				function(json) {
+					// 純粋なリストが必要
+					$('#title').append('<h1>お気に入り</h1>');
+					get_mylists(json);
+				})['catch'](function(error) {
+					console.log(error);
+				});
+			};
+			initPagingMylist(offlineMyList);
 		}
 
 		break;
