@@ -39,6 +39,7 @@ public class LoginServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 
 		String inputid = request.getParameter("mail_or_name");
+		inputid = new String(inputid.getBytes("UTF-8"), "UTF-8");
 		String inputpass = request.getParameter("password");
 		System.out.println("inputid:"+inputid+"inputpass:"+inputpass);
 		String URL = request.getContextPath() + "/login";
