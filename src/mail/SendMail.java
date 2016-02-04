@@ -124,8 +124,8 @@ public class SendMail extends HttpServlet {
 		message = "<br>★会員登録完了のお知らせ★<br><br><div>CLIPをご登録いただき、ありがとうございます。<br><br>" +
 				"ユーザ登録を下記のとおり完了いたしました。<br><br>ご登録内容のご確認ください。<br><br><br>ユーザネーム:" +
 				username + "<br>ニックネーム:" + nickname +
-				"<br><br>===========================================================" +
-				"<br>　CLIP 宇宙猫<br>　<br>　Mailto：clip.spcat@gmail.com" +
+				"<br><a href='http://clip-sc.com/login/login.html'>ログインページ</a><br>===========================================================" +
+				"<br>　CLIP 宇宙猫<br>　http://clip-sc.com/<br>　Mailto：clip.spcat@gmail.com" +
 				"<br>===========================================================<br><br>";
 
 		try {
