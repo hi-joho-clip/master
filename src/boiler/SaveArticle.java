@@ -121,7 +121,11 @@ public class SaveArticle {
 		//			System.out.println(element.getTextContent());
 		//			System.out.println("utf8:" + isUTF8(element.getTextContent().toString().getBytes()));
 		//			System.out.println("sjis:" + isSJIS(element.getTextContent().toString().getBytes()));
-		String title = new String(getTitle(str_url));
+		String title = getTitle(str_url);
+
+		if (title == null) {
+			title = "タイトルがありません。";
+		}
 		//			System.out.println(title);
 		//		}
 

@@ -459,7 +459,7 @@ function pass() {
 // フレンド申請 承認設定
 function AcceptFriend() {
 
-	var jsonParam = null;// 送りたいデータ
+	var jsonParam ='nonce='+$('#nonce').val();// 送りたいデータ
 	var URL = hostURL + "/acceptfriend";
 	var setappend = function(json) {
 		if (json.flag == 0) {
@@ -476,12 +476,14 @@ function AcceptFriend() {
 // フレンド申請 拒否設定
 function DenyFriend() {
 
-	var jsonParam = null;// 送りたいデータ
+	var jsonParam ='nonce='+$('#nonce').val();
 	var URL = hostURL + "/denyfriend";
-	var userList = "";
 	var setappend = function(json) {
-		userList = json.Message;
-		document.getElementById('info').innerHTML = userList;
+		if (json.flag == 0) {
+			toastr.error(json.state);
+		} else {
+			toastr.success(json.state);
+		}
 	};
 	getJSON(URL, jsonParam, setappend);
 }

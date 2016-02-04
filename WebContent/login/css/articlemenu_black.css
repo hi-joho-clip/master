@@ -35,3 +35,10 @@ a.art-title tr:hover {
 .mosaic-block {
 border:1px solid #fff;
 }
+
+#loader-bg {
+  background:#333;
+}
+#loader {
+  color: #fff;
+}

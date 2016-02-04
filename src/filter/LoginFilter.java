@@ -1,6 +1,7 @@
 package filter;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -10,7 +11,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -19,7 +19,12 @@ import javax.servlet.http.HttpSession;
  * 404だとサーバ判断になるのでサーブレットの方が良い。
  * 1222現在はまだ使わないがきちんと動きます
  */
-@WebFilter()
+@WebFilter(urlPatterns = { "/taglist",
+		"/mylist",
+		"/sharelist",
+		"/viewarticle",
+		"/favlist",
+		"/viewuser" })
 public class LoginFilter implements Filter {
 
 	private String encoding = "UTF-8";
@@ -49,36 +54,54 @@ public class LoginFilter implements Filter {
 		// セッションからログインを判定する
 		//セッション維持のためのセッションを生成
 		try {
-			String target = ((HttpServletRequest) request).getRequestURI();
-			String loginURL = "/clipMaster/login/index.html";
-			String logoutURL = "/clipMaster/login/logout.html";
+			System.out.println("fileter on");
+			//String target = ((HttpServletRequest) request).getRequestURI();
+			//System.out.println("target:" + target);
+			String loginURL = "/clipMaster/login/login.html";
+			String logoutURL = "/clipMaster/logout.html";
 
 			HttpSession session = ((HttpServletRequest) request).getSession();
 			//String servletName = ((HttpServletRequest) request).getServletPath();
+			String resp = "{\"state\": \"unknownError\", \"flag\": 0}";
+			response.setContentType("application/json;charset=UTF-8");
+			PrintWriter out = response.getWriter();
 
 			// ログインとログアウトのURLパターン以外全部
-			if (!(target.equals(loginURL) || target.equals(logoutURL))) {
+			//if (!(target.equals(loginURL) || target.equals(logoutURL))) {
 
-				if (session == null) {
-					/* まだ認証されていない */
-					session = ((HttpServletRequest) request).getSession(true);
-					session.setAttribute("target", target);
+			if (session == null) {
+				/* まだ認証されていない */
+				// セッション自体がない場合
+				session = ((HttpServletRequest) request).getSession(true);
+				//session.setAttribute("target", target);
 
-					((HttpServletResponse) response).sendRedirect(loginURL);
-				} else {
-					Object loginCheck = session.getAttribute("login");
-					if (loginCheck == null) {
-						/* まだ認証されていない */
-						session.setAttribute("target", target);
-						((HttpServletResponse) response).sendRedirect(loginURL);
-					}
-				}
-				// pass the request along the filter chain
-				chain.doFilter(request, response);
+				System.out.println("non session");
+				// 通常リダイレクトできないのでパラメータで送りJSでハンドリングする
+				resp = "{\"redirect\": \"true\", \"redirect_url\": \"" + loginURL + "\"}";
+				out.print(resp);
+				//((HttpServletResponse) response).sendRedirect(loginURL);
 			} else {
-				// pass the request along the filter chain
-				chain.doFilter(request, response);
+				String username = (String) session.getAttribute("username");
+				// User_idがない場合認証されていない
+				if (username == null) {
+					/* まだ認証されていない */
+					resp = "{\"redirect\": \"true\", \"redirect_url\": \"" + loginURL + "\"}";
+					System.out.println("not Authorized:" + resp);
+					out.print(resp);
+
+					//session.setAttribute("target", target);
+					//((HttpServletResponse) response).sendRedirect(loginURL);
+				} else {
+					// ここは認証成功
+					// pass the request along the filter chain
+					chain.doFilter(request, response);
+				}
 			}
+			//			} else {
+			//				// pass the request along the filter chain
+			//				System.out.println("not need Auth");
+			//				chain.doFilter(request, response);
+			//			}
 		} catch (ServletException se) {
 		} catch (IOException e) {
 		}

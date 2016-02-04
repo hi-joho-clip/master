@@ -179,7 +179,16 @@ function getJSON(URL, param, callback) {
 
 	// console.log("getJSON" + param);
 	return new Promise(function(resolve, reject) {
-		getURL(URL, param).then(JSON.parse).then(callback).then(function() {
+		getURL(URL, param).then(JSON.parse).then(function(json) {
+			console.log(json);
+			// リダイレクト
+			if (json.redirect === "true") {
+				location.href = hostURL + "/login/login.html";
+
+			} else {
+				return json;
+			}
+		}).then(callback).then(function() {
 			resolve();
 		})['catch'](function(error) {
 			console.log(error);
@@ -206,7 +215,9 @@ function addArticle() {
 		if (json.flag == 0) {
 			toastr.error(json.state);
 		} else {
+			$('#search-2').val('');
 			toastr.success(json.state);
+
 		}
 	};
 	getJSON(URL, jsonParam, update_article);
@@ -230,7 +241,8 @@ function colorMode() {
 		color = 'white';
 		docCookies.setItem('color', color);
 	}
-	document.getElementById("viewcolor").href ="css/articlemenu_" + color+ ".css";
+	document.getElementById("viewcolor").href = "css/articlemenu_" + color
+			+ ".css";
 }
 
 function changeColor() {
@@ -242,17 +254,19 @@ function changeColor() {
 		if (color === 'white') {
 			color = 'black';
 			docCookies.setItem('color', color);
-			document.getElementById("viewcolor").href ="css/articlemenu_" + color+ ".css";
+			document.getElementById("viewcolor").href = "css/articlemenu_"
+					+ color + ".css";
 		} else {
 			color = 'white';
 			docCookies.setItem('color', color);
-			document.getElementById("viewcolor").href ="css/articlemenu_" + color+ ".css";
+			document.getElementById("viewcolor").href = "css/articlemenu_"
+					+ color + ".css";
 		}
 	}
 
 }
 
-//フレンド登録者のリストをもらう処理
+// フレンド登録者のリストをもらう処理
 function getFriends() {
 	var jsonParam = null;// 送りたいデータ
 	var URL = hostURL + "/friendlistff";
@@ -277,7 +291,6 @@ function getLocalStorage(name) {
 	var storage = localStorage;
 	return storage.getItem(name);
 }
-
 
 function isSettinOnLine() {
 	var SetFlag = docCookies.getItem('online');

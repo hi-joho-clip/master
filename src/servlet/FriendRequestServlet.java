@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.arnx.jsonic.JSON;
-
 import beansdomain.Friend;
 
 @WebServlet("/friendrequest")
@@ -44,12 +43,12 @@ public class FriendRequestServlet extends HttpServlet {
 		ArrayList<Friend> request_friend_list = new ArrayList<Friend>();
 		HttpSession session = request.getSession(true);
 
-		if (session != null) {
-
-			response.setContentType("application/json; charset=utf-8");
+		response.setContentType("application/json; charset=utf-8");
 			response.setHeader("Cache-Control", "private");
 			PrintWriter out = response.getWriter();
 
+		String username = (String)session.getAttribute("username");
+		if (username != null) {
 			try {
 				int own_user_id = (int) session.getAttribute("user_id");
 				friend_list = friendbeans.getFriendList(own_user_id);
@@ -71,9 +70,12 @@ public class FriendRequestServlet extends HttpServlet {
 
 			} catch (Exception e) {
 				// TODO 自動生成された catch ブロック
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			out.println(JSON.encode(request_friend_list, true).toString());
+		} else {
+			String resp = "{\"redirect\": \"true\", \"redirect_url\": \"" + "aaaa" + "\"}";
+			out.print(resp);
 		}
 	}
 
