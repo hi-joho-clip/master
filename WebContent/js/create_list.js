@@ -114,7 +114,15 @@ var get_mylists = function(json) {
 		random = 3;
 		$myList = $("<div class='grid-sizer'></div>");
 		$grid.append($myList).isotope('appended', $myList).trigger('create');
-		for ( var i = 0; i < json.length; i++) {
+		console.log("jsonlength:"+json.length);
+		/*21ページ以上記事がある場合、lengthが21となるため、余分にリストを作ることをやめさせるためlengthを操作する*/
+		var listLength = 0;
+		if(json.length==21){
+			listLength=json.length-1;//21ページ以上ある場合余分なリストを作成させない
+		}else{
+			listLength=json.length;//20ページ以下はこのまま
+		}
+		for ( var i = 0; i < listLength; i++) {
 			var flag="";
 			if(json[i].favflag==true){
 				flag="★"+json[i].title;
@@ -178,12 +186,11 @@ var get_mylists = function(json) {
 
 
 function addViewNext(json) {
-
 	// 20件以上の場合はValueを加算し、20件未満の場合はボタンを削除する。
 	if (json.length >= 20) {
 		console.log('number:' + $('#art-page').val());
 		// 最後に読み込んだArticleIDを残す
-
+		console.log("21page:"+json[json.length-1].article_id);
 		$('#lastid').val(json[json.length-1].article_id);
 	} else if (json.length <= 19){
 		console.log("under 19");
@@ -201,7 +208,13 @@ var get_sharelists = function(json) {
 	var random =Math.floor(Math.random()*3);
 	$myList = $("<div class='grid-sizer'></div>");
 	$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
-	for ( var i = 0; i < json.length ; i++) {
+	var listLength = 0;
+	if(json.length==21){
+		listLength=json.length-1;//21ページ以上ある場合余分なリストを作成させない
+	}else{
+		listLength=json.length;//20ページ以下はこのまま
+	}
+	for ( var i = 0; i < listLength ; i++) {
 		$myList = $("<div id='" + json[i].article_id+ "' class='"+item[random][i] + " mosaic-block bar'>" +
 						"<div class='mosaic-overlay'>"+
 						 "<div id='link-body'><a href='../login/article.html?"+json[i].article_id+"'></a></div>" +
@@ -239,7 +252,13 @@ var get_mylists_list = function(json) {
 		setLocalStorage("Style","list");
 		$myList = $("<div class='grid-sizer' ></div>");
 		$grid.append($myList).isotope('insert', $myList).trigger('create');
-		for ( var i = 0; i < json.length ; i++) {
+		var listLength = 0;
+		if(json.length==21){
+			listLength=json.length-1;//21ページ以上ある場合余分なリストを作成させない
+		}else{
+			listLength=json.length;//20ページ以下はこのまま
+		}
+		for ( var i = 0; i < listLength ; i++) {
 			var flag="";
 			if(json[i].favflag==true){
 				flag="★"+json[i].title;
@@ -303,7 +322,13 @@ var get_sharelists_list = function(json) {
 	setLocalStorage("Style","list");
 	$myList = $("<div class='grid-sizer' ></div>");
 	$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
-	for ( var i = 0; i < json.length ; i++) {
+	var listLength = 0;
+	if(json.length==21){
+		listLength=json.length-1;//21ページ以上ある場合余分なリストを作成させない
+	}else{
+		listLength=json.length;//20ページ以下はこのまま
+	}
+	for ( var i = 0; i < listLength ; i++) {
 		$myList = $("<ol id='" + json[i].article_id+ "'>"+
 						"<a class='art-title' href='../login/article.html?"+json[i].article_id+"'><li class='first'>"+
 							"<div class='dan'>"+

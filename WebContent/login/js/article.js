@@ -143,13 +143,15 @@ $(document).ready(
 			$('#add-button').on("click", function() {
 				if ($('#art-add').val() === 'true') {
 					// 今のページ番号を取得
-					console.log("ｹﾂ");
+					console.log("lastidマン"+$('#lastid').val());
 
 					var page = parseInt($('#art-page').val()) + 1;
 					$('#art-page').val(page);
+					console.log("pageマン"+page);
 					switch (getSessionStorage("viewMode")) {
 					case "0":
 						console.log("netstat" + isSettinOnLine());
+						//マイリスト
 						if (isSettinOnLine) {
 							console.log("マイリスト");
 							getMyList(page);
@@ -158,7 +160,7 @@ $(document).ready(
 							getOffMyList(page);
 						}
 						break;
-					case "2":
+					case "1":
 						// お気に入り
 						if (isSettinOnLine) {
 							getFavList(page);
@@ -166,11 +168,22 @@ $(document).ready(
 							getOffFavList(page);
 						}
 						break;
-					case "3":
-						getShareList($.cookie("shareLists"), page);
+					case "2":
+						//特定のタグ
+						if (isSettinOnLine) {
+							getTagArticleList(0, getSessionStorage("tagLists"));
+						} else {
+
+						}
+
 						break;
-					case "4":
-						// getMyListList(page);
+					case "3":
+						//シェア画面
+						if (isSettinOnLine) {
+							getShareList(getSessionStorage("shareLists"), page);
+						} else {
+
+						}
 						break;
 					}
 				}
