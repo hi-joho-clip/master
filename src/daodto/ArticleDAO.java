@@ -696,9 +696,9 @@ public class ArticleDAO {
 		}
 		String tag_sql = "select tag_id from tags where tag_body like ? and user_id = ?";
 		String article_id_sql = "select article_id from article_tag where tag_id = ? limit 21 offset ?";
-		String art_sql = " select article_id from article_tag where tag_id = ? and "+
-				"modified <= (select modified from articles where article_id = ?) " +
-				" order by modified desc limit 21 offset ?;";
+
+		String art_sql = "select article_id from articles where article_id IN (select article_id from article_tag where tag_id=?) "+
+		"and modified <= (select modified from articles where article_id = ?) order by modified desc limit 21 offset ?";
 		ArrayList<Integer> tag_id_list = new ArrayList<Integer>();
 		ArrayList<Integer> article_id_list = new ArrayList<Integer>();
 
@@ -736,7 +736,10 @@ public class ArticleDAO {
 					pstmt.setInt(3, 0);
 				}
 				rs = pstmt.executeQuery();
+				int count=0;
 				while (rs.next()) {
+					count++;
+					System.out.println(count);
 					article_id_list.add(rs.getInt("article_id"));
 					// System.out.println("article:" + article_id_list.size());
 				}
@@ -770,7 +773,7 @@ public class ArticleDAO {
 		ArrayList<Integer> article_id_list = new ArrayList<Integer>();
 
 		try {
-			article_id_list = getArticleId(tag_body_list, user_id, page,start_article_id);
+			article_id_list = getArticleId(tag_body_list, user_id,page,start_article_id);
 
 			// 記事リストがあるだけ記事のデータを取得
 			for (int article_id : article_id_list) {

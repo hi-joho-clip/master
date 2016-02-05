@@ -153,7 +153,7 @@ function getFavList(page) {
 }
 
 // シェア記事一覧
-function getShareList(friend_user_id, page) {
+function getShareList(page) {
 	$('h1.title').html(getSessionStorage('friend'));
 	var func = get_sharelists;
 	if (tileView()) {
@@ -174,7 +174,7 @@ function getShareList(friend_user_id, page) {
 
 	}
 
-	var jsonParam = "friend_user_id=" + friend_user_id + '&page=' + page;// 送りたいデータ
+	var jsonParam = "friend_user_id=" +getSessionStorage('shareLists') + '&page=' + page+"&article_id="+$('#lastid').val();// 送りたいデータ
 	var URL = hostURL + "/sharelist";
 
 	$('#viewmode').val('3');
