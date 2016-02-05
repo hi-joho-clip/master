@@ -70,6 +70,8 @@ public class MyListServlet extends HttpServlet {
 			//e.printStackTrace();
 		}
 
+
+		System.out.println("user_id:" + user_id + "page:" + page + "start_article_id:" + start_article_id);
 		ArticleBean articlebean = new ArticleBean();
 		ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
 		try {

@@ -293,10 +293,10 @@ function getLocalStorage(name) {
 }
 
 function isSettinOnLine() {
-	var SetFlag = docCookies.getItem('online');
+	var SetFlag = getLocalStorage('online');
 
 	if (SetFlag == null) {
-		docCookies.setItem('online', true);
+		setLocalStorage('online', 'true');
 	}
 
 	console.log(SetFlag);
@@ -305,15 +305,18 @@ function isSettinOnLine() {
 			console.log('true');
 			return true;
 		} else if (navigator.onLine === false) {
-			return false;
 			console.log('false');
-		} else {
 			return false;
+
+		} else {
 			console.log('UnknownNetworkState');
+			return false;
+
 		}
 	} else if (SetFlag === 'false') {
 		return false;
 	} else {
 		toastr.warning('再ログインしてくだaさい');
+		return false;
 	}
 }

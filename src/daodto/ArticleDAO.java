@@ -509,6 +509,7 @@ public class ArticleDAO {
 			pstmt = con.prepareStatement(hantei_sql);
 			pstmt.setInt(1, article_id);
 			pstmt.setInt(2, user_id);
+			System.out.println(pstmt);
 			rs = pstmt.executeQuery();
 			// 検索結果がない場合インサート可能
 			if (!rs.next()) {
@@ -519,6 +520,7 @@ public class ArticleDAO {
 				pstmt.executeUpdate();
 				pstmt = con.prepareStatement(article_fav);
 				pstmt.setInt(1, article_id);
+				System.out.println(pstmt);
 				pstmt.executeUpdate();
 				con.commit();
 				flag = true;
@@ -766,30 +768,35 @@ public class ArticleDAO {
 	public ArrayList<ArticleDTO> lists(int user_id, int page, int article_id) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		System.out.println(page +":::" + article_id);
+		System.out.println(page + ":::" + article_id);
 		int def_page = 0;
+
+		// 0を嫌った処理
 		if (page != 0) {
 			def_page = 20 * (page - 1);
 		} else {
 			def_page = 0;
 		}
+
 		//System.out.println(def_page);
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
 		String sql = " select * from articles where id = any (SELECT id FROM mylists WHERE user_id = ? and share_flag = 0 ) "
-				+" order by modified desc limit 20 offset ?;";
+				+ " order by modified desc limit 21 offset ?;";
 
 		String art_sql = " select * from articles where id = any (SELECT id FROM mylists WHERE user_id = ? and share_flag = 0 ) and "
 				+
-				"modified < (select modified from articles where article_id = ?) " +
-				" order by modified desc limit 20 offset ?;";
+				"modified <= (select modified from articles where article_id = ?) " +
+				" order by modified desc limit 21 offset ?;";
 		try {
 			if (article_id == 0) {
+				// 最初のリスト
 				// artID=0 1ページ目
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, user_id);
 				pstmt.setInt(2, def_page);
 
 			} else {
+				// addbuttonでのリスト
 				// artID=N番目から
 				pstmt = con.prepareStatement(art_sql);
 				pstmt.setInt(1, user_id);
@@ -798,18 +805,25 @@ public class ArticleDAO {
 			}
 			//System.out.println(pstmt);
 			rs = pstmt.executeQuery();
+			int count = 0;
 			while (rs.next()) {
 				ArticleDTO article = new ArticleDTO();
-				article.setArticle_id(rs.getInt("article_id"));
-				article.setTitle(rs.getString("title"));
-				article.setUrl(rs.getString("url"));
-				article.setCreated(DateEncode.toDate(rs.getString("created")));
-				article.setModified(DateEncode.toDate(rs.getString("modified")));
-				article.setShare_url(rs.getString("share_url"));
-				article.setShare_expior(rs.getDate("share_expior"));
-				article.setFavflag(rs.getBoolean("favflag"));
-				article.setThum(rs.getBytes("thum"));
-				articleList.add(article);
+				if (count < 20) {
+					article.setArticle_id(rs.getInt("article_id"));
+					article.setTitle(rs.getString("title"));
+					article.setUrl(rs.getString("url"));
+					article.setCreated(DateEncode.toDate(rs.getString("created")));
+					article.setModified(DateEncode.toDate(rs.getString("modified")));
+					article.setShare_url(rs.getString("share_url"));
+					article.setShare_expior(rs.getDate("share_expior"));
+					article.setFavflag(rs.getBoolean("favflag"));
+					article.setThum(rs.getBytes("thum"));
+					articleList.add(article);
+				} else if (count == 20) {
+					article.setArticle_id(rs.getInt("article_id"));
+					articleList.add(article);
+				}
+				count++;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

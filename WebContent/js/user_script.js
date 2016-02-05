@@ -202,13 +202,15 @@ function userID_lock() {
 function logout() {
 	var jsonParam = "nonce=" + $('#nonce').val();;// 送りたいデータ
 	var URL = hostURL + "/logout";
-	var userList = "";
 	var setappend = function(json) {
 		userList = "";
 
-		// ログアウト時はデータベースを削除する
-		deleteDatabase("article");
-		document.getElementById('logout').innerHTML = userList;
+		if (!(json.redirect === 'logout')) {
+			console.log('logout');
+			// ログアウト時はデータベースを削除する
+			deleteDatabase("article");
+			location.href = hostURL + json.redirect_url;
+		}
 	};
 	getJSON(URL, jsonParam, setappend);
 }
@@ -284,12 +286,12 @@ function getUserList() {
 		var online_flag = "";
 		var on_kyohi = "";
 		var on_kyoka = "";
-		if (docCookies.getItem('online') === 'false') {
+		if (getLocalStorage('online') === 'false') {
 			online_flag = "";
 			on_kyohi = "checked";
 			on_kyoka = "";
 			console.log("off");
-		} else if (docCookies.getItem('online') === 'true') {
+		} else if (getLocalStorage('online') === 'true') {
 			online_flag = "checked";
 			on_kyohi = "";
 			on_kyoka = "checked";
@@ -336,10 +338,10 @@ function onlineMode() {
 	console.log(data);
 
 	if (data == false) {
-		docCookies.setItem('online', true);
+		setLocalStorage('online', 'true');
 		console.log(docCookies.getItem('online'));
 	} else if (data == true) {
-		docCookies.setItem('online', false);
+		setLocalStorage('online', 'false');
 	}
 }
 

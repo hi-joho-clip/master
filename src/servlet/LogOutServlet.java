@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +19,7 @@ public class LogOutServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		perform(request, response);
+		//perform(request, response);
 	}
 
 	@Override
@@ -32,7 +33,14 @@ public class LogOutServlet extends HttpServlet {
 
 		//String inputbutton = request.getParameter("button");
 		//セッションを取り出す
-		HttpSession sessionadmin = request.getSession(false);
+		HttpSession sessionadmin = request.getSession(true);
+
+
+		String loginURL ="/login/login.html";
+		String resp = "{\"redirect\": \"logout\", \"redirect_url\": \"" + loginURL + "\"}";
+		response.setContentType("application/json;charset=UTF-8");
+		response.setHeader("Cache-Control", "private");
+		PrintWriter out = response.getWriter();
 
 		try {//セッションがnullでないなら（つまりまだログインしているなら）
 			if (sessionadmin != null) {
@@ -50,6 +58,9 @@ public class LogOutServlet extends HttpServlet {
 		                        ((HttpServletResponse)response).addCookie(cookies[i]);
 				}
 			}
+
+			out.print(resp);
+			out.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -150,16 +150,17 @@ $(document).ready(
 					switch (getSessionStorage("viewMode")) {
 					case "0":
 						console.log("netstat" + isSettinOnLine());
-						if (isSettinOnLine === true) {
+						if (isSettinOnLine) {
 							console.log("マイリスト");
 							getMyList(page);
 						} else {
+							console.log('オフラインマイリスト');
 							getOffMyList(page);
 						}
 						break;
 					case "2":
 						// お気に入り
-						if (isSettinOnLine === true) {
+						if (isSettinOnLine) {
 							getFavList(page);
 						} else {
 							getOffFavList(page);

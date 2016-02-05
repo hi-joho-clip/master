@@ -26,7 +26,7 @@ function getOffMyList(page) {
 			// マイリストの検索をしているページを出す
 			word = getSessionStorage('search');
 		}
-		getIDEArticleList(username, page, '0', word, false).then(function(json) {
+		getIDEArticleList(username, page, 0, word, false).then(function(json) {
 			// 純粋なリストが必要
 			if (getLocalStorage('Style') === 'tile') {
 				get_mylists(json);
@@ -61,7 +61,7 @@ function getOffFavList(page) {
 			// マイリストの検索をしているページを出す
 			word = getSessionStorage('search');
 		}
-		getIDEArticleList(username, page, '0', word, true).then(function(json) {
+		getIDEArticleList(username, page, 0, word, true).then(function(json) {
 			// 純粋なリストが必要
 			if (getLocalStorage('Style') === 'tile') {
 				get_mylists(json);
