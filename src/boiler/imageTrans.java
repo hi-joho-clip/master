@@ -33,10 +33,10 @@ public class imageTrans extends Thread {
 		this.user_id = user_id;
 	}
 
-	public static void main(String[] args) {
-
-		getImage("http://pc.watch.impress.co.jp/img/pcw/docs/738/654/2_s.jpg");
-	}
+//	public static void main(String[] args) {
+//
+//		getImage("http://pc.watch.impress.co.jp/img/pcw/docs/738/654/2_s.jpg");
+//	}
 
 	/**
 	 * 画像を保存する。
@@ -102,7 +102,7 @@ public class imageTrans extends Thread {
 	 * 拡張子の対応確認
 	 * 対応できる拡張子は、jpg,pngのみ
 	 */
-	public static String extentHantei(String src) {
+	public String extentHantei(String src) {
 		if (src.indexOf(".jpg") != -1) {
 			return "jpg";
 		} else if (src.indexOf(".JPG") != -1) {
@@ -129,7 +129,7 @@ public class imageTrans extends Thread {
 	 * @param str_url
 	 * @return
 	 */
-	public static byte[] getImage(String str_url) {
+	public byte[] getImage(String str_url) {
 
 		byte[] new_ByteImage = null;
 
@@ -178,7 +178,7 @@ public class imageTrans extends Thread {
 	* @param format フォーマット名
 	* @return バイト列
 	*/
-	private static byte[] getBytesFromImage(BufferedImage img, String format) throws IOException {
+	private byte[] getBytesFromImage(BufferedImage img, String format) throws IOException {
 
 		if (format == null) {
 			format = "jpg";
@@ -206,7 +206,7 @@ public class imageTrans extends Thread {
 	 * @param nh
 	 * @return
 	 */
-	private static BufferedImage rescale(BufferedImage srcImage, int nw, int nh) {
+	private BufferedImage rescale(BufferedImage srcImage, int nw, int nh) {
 		BufferedImage dstImage = null;
 		if (srcImage.getColorModel() instanceof IndexColorModel) {
 			dstImage = new BufferedImage(nw, nh, srcImage.getType(), (IndexColorModel) srcImage.getColorModel());

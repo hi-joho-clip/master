@@ -65,6 +65,7 @@ public class TagArticleListServlet extends HttpServlet {
 				user_id = (int) session.getAttribute("user_id");
 				if (request.getParameter("page") != null) {
 					page = Integer.parseInt(request.getParameter("page"));
+					System.out.println("page:" + page);
 				}
 
 			} catch (NumberFormatException e) {

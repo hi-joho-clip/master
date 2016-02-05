@@ -84,6 +84,8 @@ public class MyListServlet extends HttpServlet {
 		response.setHeader("Cache-Control", "private");
 		PrintWriter out = response.getWriter();
 		out.println(JSON.encode(article_list, true).toString());
+		out.close();
+		article_list = null;
 	}
 
 }
