@@ -53,23 +53,26 @@ public class ShareListServlet extends HttpServlet {
 		int user_id = 0;
 		int friend_user_id = 0;
 		int page = 1; // パラメータからページ番号取得初期値1
-
+		int start_article_id = 0;
 		if (request.getParameter("page") != null && request.getParameter("friend_user_id") != null) {
 			try {
 				user_id = (int) session.getAttribute("user_id");
 				page = Integer.parseInt(request.getParameter("page"));
 				friend_user_id = Integer.parseInt(request.getParameter("friend_user_id"));
+				if (request.getParameter("article_id") != null) {
+					start_article_id = Integer.parseInt(request.getParameter("article_id"));//記事一覧表示の一番後ろのIDを持つ。
+				}
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			System.out.println(page);
+			System.out.println("user_id:" + user_id + "page:" + page + "start_article_id:" + start_article_id);
 
 			ArticleBean articlebean = new ArticleBean();
 			ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
 			try {
-				article_list = articlebean.viewShareArticleList(user_id, friend_user_id, page);
+				article_list = articlebean.viewShareArticleList(user_id, friend_user_id, page,start_article_id);
 				//System.out.println(article_list.size());
 			} catch (Exception e) {
 				// TODO 自動生成された catch ブロック

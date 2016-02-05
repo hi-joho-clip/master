@@ -72,7 +72,7 @@ public class TagFavListServlet extends HttpServlet {
 		ArticleBean articlebean = new ArticleBean();
 		ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
 		try {
-			article_list = articlebean.viewTagFavArticleList(user_id, tag_body_list, page);
+			//article_list = articlebean.viewTagFavArticleList(user_id, tag_body_list, page);
 		} catch (Exception e) {
 			e.getStackTrace();
 		}

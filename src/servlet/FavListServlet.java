@@ -57,12 +57,16 @@ public class FavListServlet extends HttpServlet {
 		//お気に入りの記事一覧表示
 		int user_id =0;//sessionからuser_idを取得
 		int page = 1; // パラメータからページ番号取得初期値1
+		int start_article_id = 0;
 
 
 		try {
 			user_id = (int) session.getAttribute("user_id");
 			if (request.getParameter("page") != null) {
 			page = Integer.parseInt(request.getParameter("page"));
+			}
+			if (request.getParameter("article_id") != null) {
+				start_article_id = Integer.parseInt(request.getParameter("article_id"));//記事一覧表示の一番後ろのIDを持つ。
 			}
 		} catch (NumberFormatException e) {
 			//e.printStackTrace();
@@ -71,11 +75,11 @@ public class FavListServlet extends HttpServlet {
 		}
 
 
-
+		System.out.println("user_id:" + user_id + "page:" + page + "start_article_id:" + start_article_id);
 		ArticleBean articlebean = new ArticleBean();
 		ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
 		try {
-			article_list=articlebean.viewFavArticleList(user_id, page);
+			article_list=articlebean.viewFavArticleList(user_id, page,start_article_id);
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
