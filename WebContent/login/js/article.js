@@ -171,7 +171,7 @@ $(document).ready(
 					case "2":
 						//特定のタグ
 						if (isSettinOnLine) {
-							getTagArticleList(0, getSessionStorage("tagLists"));
+							getTagArticleList(page);
 						} else {
 
 						}
@@ -180,7 +180,7 @@ $(document).ready(
 					case "3":
 						//シェア画面
 						if (isSettinOnLine) {
-							getShareList(getSessionStorage("shareLists"), page);
+							getShareList(page);
 						} else {
 
 						}
@@ -347,7 +347,7 @@ function styleListChange() {
 				tagSearch(getSessionStorage('search'));
 			} else {
 				// 普通の特定のタグを出す
-				getTagArticleList(0, getSessionStorage("tagLists"));
+				initPagingMylist(getTagArticleList);
 			}
 		}
 		break;
@@ -362,9 +362,7 @@ function styleListChange() {
 				shareListSearch(getSessionStorage('search'));
 			} else {
 				// 普通の特定のタグを出す
-				initPagingSharelist(getShareList,
-						getSessionStorage("shareLists"));
-				initTopPage();
+				initPagingMylist(getShareList);
 			}
 			/*
 			 * initPagingSharelist(getShareList,

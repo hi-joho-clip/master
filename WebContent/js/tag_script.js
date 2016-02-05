@@ -65,10 +65,9 @@ function deleteTag(){
 
 }
 //特定のタグの記事一覧（タイル表示）
-function getTagArticleList(tag_list,tag_id) {
+function getTagArticleList(page) {
 
-	var title = "";
-	if(tag_id==0 && tag_list!=0){//tag_idが0なら、タグが複数あるリストをもとに検索をして一覧表示させる処理
+	/*if(tag_id==0 && tag_list!=0){//tag_idが0なら、タグが複数あるリストをもとに検索をして一覧表示させる処理
 		for(var i=0;i<tag_list.length;i++){
 			arr[i]=tag_list.item(i).value;//1番目からタグが入る
 		}
@@ -78,7 +77,9 @@ function getTagArticleList(tag_list,tag_id) {
 	}else if(tag_list==0 && tag_id!=0){//tag_listが0なら、特定のタグをクリックして一覧表示させる処理
 		taglists = "tag_list="+tag_id;
 		title = tag_id;
-	}
+	}*/
+	var taglists = "tag_list="+getSessionStorage('tagLists')+"&page="+page+"&article_id="+$('#lastid').val();
+	var title = getSessionStorage('tagLists');
 	var func = get_mylists;
 	$('h1.title').html(title);
 	if (tileView()) {
