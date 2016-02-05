@@ -389,7 +389,7 @@ function nick() {
 			if (json.flag == 0) {
 				toastr.error(json.state);
 			} else {
-				location.href = hostURL + "/login/info.html";
+				location.href = hostURL + "/login/userconfirmation.html";
 				toastr.success(json.state);
 			}
 		};
@@ -421,7 +421,7 @@ function mail() {
 			if (json.flag == 0) {
 				toastr.error(json.state);
 			} else {
-				location.href = hostURL + "/login/info.html";
+				location.href = hostURL + "/login/userconfirmation.html";
 				toastr.success(json.state);
 			}
 		};
@@ -452,7 +452,7 @@ function pass() {
 			if (json.flag == 0) {
 				toastr.error(json.state);
 			} else {
-				location.href = hostURL + "/login/info.html";
+				location.href = hostURL + "/login/userconfirmation.html";
 				toastr.success(json.state);
 			}
 		};
@@ -507,4 +507,8 @@ function onoff() {
 
 function jump(){
 	location.href = hostURL + "/login/login.html";
+}
+
+function userjump(){
+	location.href = hostURL + "/login/info.html";
 }
