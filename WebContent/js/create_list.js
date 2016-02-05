@@ -209,6 +209,7 @@ var get_sharelists = function(json) {
 	stopload();
 	setLocalStorage("Style","tile");
 	var random =Math.floor(Math.random()*3);
+	random = 3;
 	$myList = $("<div class='grid-sizer'></div>");
 	$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
 	var listLength = 0;
@@ -238,7 +239,7 @@ var get_sharelists = function(json) {
 							"<div class='absolute'>"+json[i].title+"<BR><a class='art-title' href='"+json[i].url+"' target='_blank'>"+json[i].url+"</a></div>" +
 						"</div>"+
 					"</div>");
-		$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
+		$grid.prepend($myList).isotope('insert', $myList).trigger('create');
 	}
 
 	addViewNext(json);

@@ -34,10 +34,45 @@ function getTagArticle(article_id) {
 }
 
 /**
+ * オフラインでのマイリスト（検索対応）
+ *
+ * @param page
+ * @returns {Promise}
+ */
+function getOffTagMyList(page) {
+
+	return new Promise(function(resolve, reject) {
+
+		console.log("offline" + page);
+		var username = docCookies.getItem('username');
+
+		var word = '';
+
+		if ($('#searchMode').val() === "true") {
+			// マイリストの検索をしているページを出す
+			word = getSessionStorage('search');
+		}
+		getIDEArticleTagList(username, page, word, getSessionStorage('tagLists')).then(function(json) {
+			// 純粋なリストが必要
+			if (getLocalStorage('Style') === 'tile') {
+				get_mylists(json);
+				resolve();
+			} else {
+				get_mylists_list(json);
+				resolve();
+			}
+		})['catch'](function(error) {
+			console.log(error);
+			reject();
+		});
+	});
+
+}
+
+/**
  * オフラインでのタグ表示
  */
 function getOffTagList() {
-
 	get_taglists(JSON.parse(getLocalStorage('tagList')));
 
 }
