@@ -33,12 +33,72 @@ function getTagArticle(article_id) {
 	getJSON(URL, jsonParam, get_tag_article_lists);
 }
 
+/**
+ * オフラインでのマイリスト（検索対応）
+ *
+ * @param page
+ * @returns {Promise}
+ */
+function getOffTagMyList(page) {
+
+	return new Promise(function(resolve, reject) {
+
+		console.log("offline" + page);
+		var username = docCookies.getItem('username');
+
+		var word = '';
+
+		if ($('#searchMode').val() === "true") {
+			// マイリストの検索をしているページを出す
+			word = getSessionStorage('search');
+		}
+		getIDEArticleTagList(username, page, word, getSessionStorage('tagLists')).then(function(json) {
+			// 純粋なリストが必要
+			if (getLocalStorage('Style') === 'tile') {
+				get_mylists(json);
+				resolve();
+			} else {
+				get_mylists_list(json);
+				resolve();
+			}
+		})['catch'](function(error) {
+			console.log(error);
+			reject();
+		});
+	});
+
+}
+
+/**
+ * オフラインでのタグ表示
+ */
+function getOffTagList() {
+	get_taglists(JSON.parse(getLocalStorage('tagList')));
+
+}
 //タグ一覧表示
 function getTagList() {
 	var jsonParam = null;// 送りたいデータ
 	var URL = hostURL + "/taglist";
+	getTagCache();
 	getJSON(URL, jsonParam, get_taglists);
 }
+
+/**
+ * オフラインのためのキャッシュ
+ */
+function getTagCache() {
+	var jsonParam = null;// 送りたいデータ
+	var URL = hostURL + "/taglist";
+
+	var savetag = function (json) {
+		setLocalStorage('tagList', JSON.stringify(json));
+	};
+	getJSON(URL, jsonParam, savetag);
+}
+
+
+
 //更新日時が新しいタグ20件を表示
 function getUsingTags(){
 	var jsonParam = null;// 送りたいデータ
@@ -65,10 +125,10 @@ function deleteTag(){
 
 }
 //特定のタグの記事一覧（タイル表示）
-function getTagArticleList(tag_list,tag_id) {
+function getTagArticleList(page) {
 
-	var title = "";
-	if(tag_id==0 && tag_list!=0){//tag_idが0なら、タグが複数あるリストをもとに検索をして一覧表示させる処理
+
+	/*if(tag_id==0 && tag_list!=0){//tag_idが0なら、タグが複数あるリストをもとに検索をして一覧表示させる処理
 		for(var i=0;i<tag_list.length;i++){
 			arr[i]=tag_list.item(i).value;//1番目からタグが入る
 		}
@@ -78,7 +138,9 @@ function getTagArticleList(tag_list,tag_id) {
 	}else if(tag_list==0 && tag_id!=0){//tag_listが0なら、特定のタグをクリックして一覧表示させる処理
 		taglists = "tag_list="+tag_id;
 		title = tag_id;
-	}
+	}*/
+	var taglists = "tag_list="+getSessionStorage('tagLists')+"&page="+page+"&article_id="+$('#lastid').val();
+	var title = getSessionStorage('tagLists');
 	var func = get_mylists;
 	$('h1.title').html(title);
 	if (tileView()) {
@@ -101,6 +163,7 @@ function getTagArticleList(tag_list,tag_id) {
 		//document.getElementById('title').innerHTML =  '<h1 class="title">'+title+'</h1>'+'<div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
 	}
 	$('#viewmode').val('2');
+	setSessionStorage('viewMode', '2');
 	var URL = hostURL + "/tagarticlelist";
 	getJSON(URL, taglists, func);
 }

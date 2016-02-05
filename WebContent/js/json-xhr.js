@@ -320,3 +320,9 @@ function isSettinOnLine() {
 		return false;
 	}
 }
+
+function colorOffline () {
+	$('.head-bar').css({
+		'background' : '#31708f'
+	});
+}

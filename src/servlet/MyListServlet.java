@@ -62,7 +62,7 @@ public class MyListServlet extends HttpServlet {
 				page = Integer.parseInt(request.getParameter("page"));
 			}
 			if (request.getParameter("article_id") != null) {
-				start_article_id = Integer.parseInt(request.getParameter("article_id"));
+				start_article_id = Integer.parseInt(request.getParameter("article_id"));//記事一覧表示の一番後ろのIDを持つ。
 			}
 		} catch (NumberFormatException e) {
 			//e.printStackTrace();
@@ -80,10 +80,17 @@ public class MyListServlet extends HttpServlet {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
+
 		response.setContentType("application/json;charset=UTF-8");
 		response.setHeader("Cache-Control", "private");
 		PrintWriter out = response.getWriter();
-		out.println(JSON.encode(article_list, true).toString());
+		// 最大深度5階層以下
+		JSON json = new JSON();
+		json.setMaxDepth(4);
+		out.println(json.encode(article_list).toString());
+		out.close();
+		article_list = null;
+		json = null;
 	}
 
 }

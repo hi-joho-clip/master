@@ -273,105 +273,188 @@ function updateIDBArticleListDelete(values) {
  */
 function getIDEArticleList(username, page, share_id, title, fav_state, direct) {
 
-	return new Promise(
-			function(resolve, reject) {
-				// console.log(guid + page);
+	return new Promise(function(resolve, reject) {
+		// console.log(guid + page);
 
-				var offset_filter;
+		var offset_filter;
 
-				var direct = "prev";
+		var direct = "prev";
 
-				if (!fav_state) {
-					//
-					offset_filter = {
-						filter : fav_false,
-						offset : page * 20 - 20,
-						limit : 20,
-						direction : direct
-					};
+		if (!fav_state) {
+			//
+			offset_filter = {
+				filter : fav_false,
+				offset : page * 20 - 20,
+				limit : 20,
+				direction : direct
+			};
+		} else {
+			// 絶対お気に入り
+			console.log("fav_false");
+			offset_filter = {
+				filter : fav_true,
+				offset : page * 20 - 20,
+				limit : 20,
+				direction : direct
+			};
+		}
+
+		// console.log(offset_filter);
+		var tutorial = getArticleInstance();
+		tutorial.onerror = function(event) {
+			// エラーの詳細をコンソールに出力する
+			reject(event.kage_message);
+		};
+
+		tutorial.tx([ "article" ], function(tx, todo) {
+			todo.index("modified").fetch(offset_filter, function(values) {
+				if (values) {
+					// console.log("values = " +
+					// JSON.stringify(values));
+					var val = [];
+					for ( var i in values) {
+						val.push(values[i]["article"]);
+						console.log("art:" + values[i]['modified']);
+					}
+					console.log(val.length);
+					resolve(val);
 				} else {
-					// 絶対お気に入り
-					console.log ("fav_false");
-					offset_filter = {
-						filter :fav_true,
-						offset : page * 20 - 20,
-						limit : 20,
-						direction : direct
-					};
+					reject(new Error("not found"));
 				}
 
-				// console.log(offset_filter);
-				var tutorial = getArticleInstance();
-				tutorial.onerror = function(event) {
-					// エラーの詳細をコンソールに出力する
-					reject(event.kage_message);
-				};
-
-				tutorial.tx([ "article" ], function(tx, todo) {
-					todo.index("modified").fetch(
-							offset_filter,
-							function(values) {
-								if (values) {
-									// console.log("values = " +
-									// JSON.stringify(values));
-									var val = [];
-									for ( var i in values) {
-										val.push(values[i]["article"]);
-										console.log("art:"
-												+ values[i]['modified']);
-									}
-									console.log(val.length);
-									resolve(val);
-								} else {
-									reject(new Error("not found"));
-								}
-
-							});
-				});
-
-				function guid_filter(record) {
-					console.log('guid');
-					return record.username === username;
-				}
-				function share_filter(record) {
-					console.log('share');
-					return record.share_id === share_id;
-				}
-				function title_filter(record) {
-					console.log('title');
-					flag = false;
-					if (record.article.title.indexOf(title) != -1) {
-						flag = true;
-					}
-					return flag;
-				}
-				function fav_filter(record) {
-					console.log('fav');
-					flag = false;
-					if (record.article.favflag === true) {
-						flag = true;
-					}
-					return flag;
-				}
-				function fav_true(record) {
-					console.log('fabt');
-					if (guid_filter(record) && share_filter(record)
-							&& title_filter(record) && fav_filter(record)) {
-						return true;
-					} else {
-						return false;
-					}
-				}
-				function fav_false(record) {
-					console.log('fabf');
-					if (guid_filter(record) && share_filter(record)
-							&& title_filter(record)) {
-						return true;
-					} else {
-						return false;
-					}
-				}
 			});
+		});
+
+		function guid_filter(record) {
+			console.log('guid');
+			return record.username === username;
+		}
+		function share_filter(record) {
+			console.log('share');
+			return record.share_id === share_id;
+		}
+		function title_filter(record) {
+			console.log('title');
+			flag = false;
+			if (record.article.title.indexOf(title) != -1) {
+				flag = true;
+			}
+			return flag;
+		}
+		function fav_filter(record) {
+			console.log('fav');
+			flag = false;
+			if (record.article.favflag === true) {
+				flag = true;
+			}
+			return flag;
+		}
+		function fav_true(record) {
+			console.log('fabt');
+			if (guid_filter(record) && share_filter(record)
+					&& title_filter(record) && fav_filter(record)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		function fav_false(record) {
+			console.log('fabf');
+			if (guid_filter(record) && share_filter(record)
+					&& title_filter(record)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	});
+};
+
+/**
+ * タグ専用のリスト検索
+ *
+ * @param guid
+ * @param page
+ */
+function getIDEArticleTagList(username, page, title, tag, direct) {
+
+	return new Promise(function(resolve, reject) {
+		// console.log(guid + page);
+
+		var offset_filter;
+
+		var direct = "prev";
+
+		//
+		offset_filter = {
+			filter : fav_false,
+			offset : page * 20 - 20,
+			limit : 20,
+			direction : direct
+		};
+
+		// console.log(offset_filter);
+		var tutorial = getArticleInstance();
+		tutorial.onerror = function(event) {
+			// エラーの詳細をコンソールに出力する
+			reject(event.kage_message);
+		};
+
+		tutorial.tx([ "article" ], function(tx, todo) {
+			todo.index("modified").fetch(offset_filter, function(values) {
+				if (values) {
+					// console.log("values = " +
+					// JSON.stringify(values));
+					var val = [];
+					for ( var i in values) {
+						val.push(values[i]["article"]);
+						console.log("art:" + values[i]['modified']);
+					}
+					console.log(val.length);
+					resolve(val);
+				} else {
+					reject(new Error("not found"));
+				}
+
+			});
+		});
+
+		function guid_filter(record) {
+			console.log('guid');
+			return record.username === username;
+		}
+
+		function title_filter(record) {
+			console.log('title');
+			flag = false;
+			if (record.article.title.indexOf(title) != -1) {
+				flag = true;
+			}
+			return flag;
+		}
+
+		function tag_filter(record) {
+			tags = record.article.tagBeans;
+
+			flag= false;
+			for ( var r_tag in tags) {
+				if (r_tag.tag_body.indexOf(tag) != -1){
+					flag = true;
+				}
+			}
+			return flag;
+		}
+
+		function fav_false(record) {
+			if (guid_filter(record) && title_filter(record)) {
+				if (tag_filter(record)) {
+					return true;
+				}
+			} else {
+				return false;
+			}
+		}
+	});
 };
 
 /**
