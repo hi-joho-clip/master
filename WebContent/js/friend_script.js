@@ -40,19 +40,19 @@ function getFriendRequest() {
 function getFriendSearch(nickname) {
 	var jsonParam = "nickname=" + nickname.item(0).value;// 送りたいデータ
 	var URL = hostURL + "/searchfriend";
-	var friendList = "<div class='remodal-bg'>";
+	var friendList = "<div class='remodal-bg'><table><tbody>";
 	var setappend = function(json) {
 		if (json.length != 0) {
 			for ( var i = 0; i < json.length; i++) {
-				friendList +="<div id='"+json[i].nickname+"'><h8>" + json[i].nickname
-						+ "</h8><a class='btn btn-primary' href='#' data-remodal-target='add' onclick='document.getElementById(\"user_id\").innerHTML=\""
-						+ json[i].user_id + "\";'>追加</a></div>";
+				friendList +="<tr><td id='"+json[i].nickname+"'><h8 style='padding-right: 1em;'>" + json[i].nickname
+						+ "</h8><a class='btn btn-success' href='#' data-remodal-target='add' onclick='document.getElementById(\"user_id\").innerHTML=\""
+						+ json[i].user_id + "\";'>追加</a></td><tr>";
 
 			}
 		} else {
 			friendList += "空入力 または、検索結果が1件もありません。";
 		}
-		document.getElementById('info').innerHTML = friendList + "</div>";
+		document.getElementById('info').innerHTML = friendList + "<tbody></table></div>";
 	};
 	getJSON(URL, jsonParam, setappend);
 }

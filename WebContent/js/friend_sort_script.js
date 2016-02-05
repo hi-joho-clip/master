@@ -1,4 +1,3 @@
-
 // フレンド登録者一覧画面
 function getFriendList() {
 	var jsonParam = null;// 送りたいデータ
@@ -27,6 +26,10 @@ function getFriendList() {
 					json[i].nickname + '</h8></td><td><a href="#" data-remodal-target="delete_friend" class="friend art-title btn btn-danger" onclick="javascript:remodalCreate(' + json[i].friend_user_id + ');">削除</td></tr>');
 			}
 		}
+
+
+
+
 		$('#friend-table').datatable({
 			pageSize : 50,
 			sort : [ true, true ],
@@ -39,10 +42,16 @@ function getFriendList() {
 }
 
 
+
+
+
+
+
+
 function remodalCreate(friend_user_id) {
 
 	$('#friend_user_id').val(friend_user_id);
-	//$('#row').val($('#table-body tr').index(this));
+	// $('#row').val($('#table-body tr').index(this));
 }
 
 
@@ -57,14 +66,14 @@ function deleteRequest(friend_user_id) {
 
 		if (json.flag === 1) {
 			$('#friend' + json.friend_user_id).parent().parent().empty();
-			//console.log('id:' + '#friend' + json.friend_user_id);
+			// console.log('id:' + '#friend' + json.friend_user_id);
 			toastr.success(json.state);
 		} else {
 			toastr.error(json.state);
 		}
 	};
 	getJSON(URL, jsonParam, setappend);
-	//location.reload();
+	// location.reload();
 }
 
 // フレンドを削除後の画面
@@ -74,7 +83,7 @@ function deleteFriend(friend_user_id, row) {
 	var URL = hostURL + "/deletefriend";
 	var setappend = function(json) {
 
-		//$('#friend-table').datatable('refresh');
+		// $('#friend-table').datatable('refresh');
 		if (json.flag === 1) {
 			$('#friend' + json.friend_user_id).parent().parent().empty();
 			toastr.success(json.state);
@@ -89,7 +98,7 @@ function deleteFriend(friend_user_id, row) {
 
 
 
-//// フレンド申請があると、申請通知が来る
+// // フレンド申請があると、申請通知が来る
 function notice() {
 	var jsonParam = null;// 送りたいデータ
 	var URL = hostURL + "/friendrequest";

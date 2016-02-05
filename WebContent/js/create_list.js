@@ -346,9 +346,9 @@ var get_taglists = function(json) {
 		tagList +=
 
 				"<tr id='tagtable"+json[i].tag_id+"' align='left' valign='top'><td style='border-bottom:1px solid #d3381c;'>"+
-				"<h8><a class='art-title' href='index.html'onclick='javascript:setSessionStorage(\"viewMode\",\"2\");setSessionStorage(\"tagLists\",\""+json[i].tag_body+"\");'>"+json[i].tag_body + "</a></h8><br>" +
+				"<h8><a style='padding-right: 1em;' class='art-title' href='index.html'onclick='javascript:setSessionStorage(\"viewMode\",\"2\");setSessionStorage(\"tagLists\",\""+json[i].tag_body+"\");'>"+json[i].tag_body + "</a></h8><br>" +
 				"<input type='hidden' value='"+json[i].lastest+"' name='lastest"+i+"'>"+
-				"</td><td style='border-bottom:1px solid #d3381c;'><h8><a class='art-title' href='/' data-remodal-target='tagdeletemodal' onclick='javascript:getTag_id("+json[i].tag_id+");return false;'>削除</a></h8></td></tr>";
+				"</td><td style='border-bottom:1px solid #d3381c;'><h8><a style='color : #FFF;' class='btn btn-danger art-title' href='/' data-remodal-target='tagdeletemodal' onclick='javascript:getTag_id("+json[i].tag_id+");return false;'>削除</a></h8></td></tr>";
 
 	}
 	tagList += "</table>";
