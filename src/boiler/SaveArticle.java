@@ -191,7 +191,7 @@ public class SaveArticle {
 	 * 1ページ60MBまでで、タイムアウト10秒、コネクション10秒、
 	 * @param url
 	 */
-	public static boolean isConAndTimeOut(String str_url) {
+	public boolean isConAndTimeOut(String str_url) {
 
 		boolean flag = false;
 		try {
@@ -244,7 +244,7 @@ public class SaveArticle {
 	 * @param src
 	 * @return
 	 */
-	public static boolean isUTF8(byte[] src)
+	public boolean isUTF8(byte[] src)
 	{
 		try {
 			byte[] tmp = new String(src, "UTF8").getBytes("UTF8");
@@ -254,7 +254,7 @@ public class SaveArticle {
 		}
 	}
 
-	public static boolean isSJIS(byte[] src)
+	public boolean isSJIS(byte[] src)
 	{
 		try {
 			byte[] tmp = new String(src, "Shift_JIS").getBytes("Shift_JIS");
@@ -264,7 +264,7 @@ public class SaveArticle {
 		}
 	}
 
-	public static String getTitle(String page_url) throws Exception {
+	public String getTitle(String page_url) throws Exception {
 		//アクセスしたいページpage_url
 		URL url = new URL(page_url);
 		URLConnection conn = url.openConnection();

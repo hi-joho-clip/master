@@ -344,7 +344,7 @@ function styleListChange() {
 		if (isSettinOnLine() === true) {
 			if ($('#searchMode').val() === "true") {
 				// 特定のタグの検索をしているページを出す
-				tagSearch(getSessionStorage('search'));
+				initPagingMylist(tagSearch);
 			} else {
 				// 普通の特定のタグを出す
 				initPagingMylist(getTagArticleList);
@@ -359,7 +359,7 @@ function styleListChange() {
 
 			if ($('#searchMode').val() === "true") {
 				// 特定のタグの検索をしているページを出す
-				shareListSearch(getSessionStorage('search'));
+				initPagingMylist(shareListSearch);
 			} else {
 				// 普通の特定のタグを出す
 				initPagingMylist(getShareList);

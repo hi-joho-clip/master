@@ -67,6 +67,7 @@ function deleteTag(){
 //特定のタグの記事一覧（タイル表示）
 function getTagArticleList(page) {
 
+
 	/*if(tag_id==0 && tag_list!=0){//tag_idが0なら、タグが複数あるリストをもとに検索をして一覧表示させる処理
 		for(var i=0;i<tag_list.length;i++){
 			arr[i]=tag_list.item(i).value;//1番目からタグが入る
@@ -101,7 +102,7 @@ function getTagArticleList(page) {
 
 		//document.getElementById('title').innerHTML =  '<h1 class="title">'+title+'</h1>'+'<div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
 	}
-	$('#viewmode').val('2');
+	setSessionStorage('viewMode', '2');
 	var URL = hostURL + "/tagarticlelist";
 	getJSON(URL, taglists, func);
 }
