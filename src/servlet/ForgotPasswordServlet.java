@@ -143,7 +143,7 @@ public class ForgotPasswordServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				out.println(JSON.encode(pass, true).toString());
-				response.sendRedirect(URL + "/login.html");
+				response.sendRedirect(URL + "/confirmation.html");
 			}else{
 				out.println(JSON.encode("unknownError" , true).toString());
 				System.out.println("unknownerror");
