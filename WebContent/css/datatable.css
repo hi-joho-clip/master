@@ -79,8 +79,9 @@ a.request {
 tbody tr {
     display: table-row;
     vertical-align: inherit;
-    border-bottom: 2px solid;
+    border-bottom: 3px solid;
     border-color: #d3381c;
     text-align: -webkit-left;
 }
+
 

@@ -66,6 +66,12 @@ function createFriendList(json) {
 	});
 };
 
+
+
+
+
+
+
 function remodalCreate(friend_user_id) {
 
 	$('#friend_user_id').val(friend_user_id);
@@ -113,6 +119,7 @@ function deleteFriend(friend_user_id, row) {
 	};
 	getJSON(URL, jsonParam, setappend);
 }
+
 
 // // フレンド申請があると、申請通知が来る
 function notice() {
