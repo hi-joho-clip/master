@@ -504,3 +504,7 @@ function onoff() {
 		DenyFriend();
 	}
 }
+
+function jump(){
+	location.href = hostURL + "/login/login.html";
+}
