@@ -152,37 +152,37 @@ $(document).ready(
 					case "0":
 						console.log("netstat" + isSettinOnLine());
 						//マイリスト
-						if (isSettinOnLine) {
+						if (isSettinOnLine() == true) {
 							console.log("マイリスト");
 							getMyList(page);
-						} else {
+						} else if (isSettinOnLine() == false){
 							console.log('オフラインマイリスト');
 							getOffMyList(page);
 						}
 						break;
 					case "1":
 						// お気に入り
-						if (isSettinOnLine) {
+						if (isSettinOnLine() == true) {
 							getFavList(page);
-						} else {
+						} else if (isSettinOnLine() == false){
 							getOffFavList(page);
 						}
 						break;
 					case "2":
 						//特定のタグ
-						if (isSettinOnLine) {
+						if (isSettinOnLine() == true) {
 							getTagArticleList(page);
-						} else {
-
+						} else if (isSettinOnLine() == true){
+							getTagOffArticleList(page);
 						}
 
 						break;
 					case "3":
 						//シェア画面
-						if (isSettinOnLine) {
+						if (isSettinOnLine() == true) {
 							getShareList(page);
-						} else {
-
+						} else if (isSettinOnLine() == false){
+							getOffShareList(page);
 						}
 						break;
 					}
@@ -304,11 +304,6 @@ function styleListChange() {
 				initPagingMylist(getMyList);
 			}
 		} else if (isSettinOnLine() === false) {
-
-			$('.head-bar').css({
-				'background' : '#31708f'
-			});
-			toastr.warning("オフラインなんだなーこれ");
 			$('#title').append('<h1 class="title" >マイリスト</h1>');
 
 			initPagingMylist(getOffMyList);
@@ -376,4 +371,5 @@ function styleListChange() {
 
 		}
 	}
+
 }

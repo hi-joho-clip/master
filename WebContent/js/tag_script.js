@@ -33,12 +33,37 @@ function getTagArticle(article_id) {
 	getJSON(URL, jsonParam, get_tag_article_lists);
 }
 
+/**
+ * オフラインでのタグ表示
+ */
+function getOffTagList() {
+
+	get_taglists(JSON.parse(getLocalStorage('tagList')));
+
+}
 //タグ一覧表示
 function getTagList() {
 	var jsonParam = null;// 送りたいデータ
 	var URL = hostURL + "/taglist";
+	getTagCache();
 	getJSON(URL, jsonParam, get_taglists);
 }
+
+/**
+ * オフラインのためのキャッシュ
+ */
+function getTagCache() {
+	var jsonParam = null;// 送りたいデータ
+	var URL = hostURL + "/taglist";
+
+	var savetag = function (json) {
+		setLocalStorage('tagList', JSON.stringify(json));
+	};
+	getJSON(URL, jsonParam, savetag);
+}
+
+
+
 //更新日時が新しいタグ20件を表示
 function getUsingTags(){
 	var jsonParam = null;// 送りたいデータ

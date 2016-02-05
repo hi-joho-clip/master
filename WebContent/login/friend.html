@@ -202,13 +202,17 @@
 	<script>
 		$(document).ready(
 				function() {
-					getFriendList();
-					notice();
-
 					$("div.hiddenarea").append(
 							'<input type="hidden" id="nonce" value="'
 									+ docCookies.getItem("nonce") + '">');
 					colorMode();
+
+					if (isSettinOnLine() == true) {
+						getFriendList();
+						notice();
+					} else if (isSettinOnLine() == false) {
+						getOffFriendList()
+					}
 				});
 	</script>
 
