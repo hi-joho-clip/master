@@ -695,7 +695,7 @@ public class ArticleDAO {
 			def_page = 0;
 		}
 		String tag_sql = "select tag_id from tags where tag_body like ? and user_id = ?";
-		String article_id_sql = "select article_id from article_tag where tag_id = ? limit 20 offset ?";
+		String article_id_sql = "select article_id from article_tag where tag_id = ? limit 21 offset ?";
 		String art_sql = " select article_id from article_tag where tag_id = ? and "+
 				"modified <= (select modified from articles where article_id = ?) " +
 				" order by modified desc limit 21 offset ?;";
