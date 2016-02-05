@@ -578,32 +578,60 @@ public class ArticleDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleDTO> FavoriteLists(int user_id, int page) throws Exception {
+	public ArrayList<ArticleDTO> FavoriteLists(int user_id, int page,int article_id) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		int def_page = 20 * (page - 1);
+		int def_page = 0;
+		// 0を嫌った処理
+		if (page != 0) {
+			def_page = 21 * (page - 1);
+		} else {
+			def_page = 0;
+		}
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
 		String sql = "SELECT * FROM articles WHERE article_id IN"
 				+ " (SELECT article_id FROM article_tag WHERE tag_id ="
-				+ " (SELECT tag_id FROM tags WHERE tag_body = 'お気に入り' AND user_id = ?)) order by modified desc limit 20 offset ?";
+				+ " (SELECT tag_id FROM tags WHERE tag_body = 'お気に入り' AND user_id = ?)) order by modified desc limit 21 offset ?";
 
+		String art_sql =  "SELECT * FROM articles WHERE article_id IN"
+				+ " (SELECT article_id FROM article_tag WHERE tag_id ="
+				+ " (SELECT tag_id FROM tags WHERE tag_body = 'お気に入り' AND user_id = ?)) AND modified <= (select modified from articles where article_id = ?) " +
+				" order by modified desc limit 21 offset ?;";
 		try {
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, user_id);
-			pstmt.setInt(2, def_page);
-			rs = pstmt.executeQuery();
+			if (article_id == 0) {
+				// 最初のリスト
+				// artID=0 1ページ目
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, user_id);
+				pstmt.setInt(2, def_page);
+				rs = pstmt.executeQuery();
+			} else {
+				// addbuttonでのリスト
+				// artID=N番目から
+				pstmt = con.prepareStatement(art_sql);
+				pstmt.setInt(1, user_id);
+				pstmt.setInt(2, article_id);
+				pstmt.setInt(3, 0);
+				rs = pstmt.executeQuery();
+			}
+			int count = 1;
 			while (rs.next()) {
 				ArticleDTO article = new ArticleDTO();
-				article.setArticle_id(rs.getInt("article_id"));
-				article.setTitle(rs.getString("title"));
-				article.setUrl(rs.getString("url"));
-				article.setCreated(DateEncode.toDate(rs.getString("created")));
-				article.setModified(DateEncode.toDate(rs.getString("modified")));
-				article.setFavflag(rs.getBoolean("favflag"));
-				article.setShare_url(rs.getString("share_url"));
-				article.setShare_expior(rs.getDate("share_expior"));
-				article.setThum(rs.getBytes("thum"));
-				articleList.add(article);
+				if(count<21){
+					article.setArticle_id(rs.getInt("article_id"));
+					article.setTitle(rs.getString("title"));
+					article.setUrl(rs.getString("url"));
+					article.setCreated(DateEncode.toDate(rs.getString("created")));
+					article.setModified(DateEncode.toDate(rs.getString("modified")));
+					article.setFavflag(rs.getBoolean("favflag"));
+					article.setShare_url(rs.getString("share_url"));
+					article.setShare_expior(rs.getDate("share_expior"));
+					article.setThum(rs.getBytes("thum"));
+					articleList.add(article);
+				}else if(count==21){
+					article.setArticle_id(rs.getInt("article_id"));
+					articleList.add(article);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -612,13 +640,13 @@ public class ArticleDAO {
 		return articleList;
 	}
 
-	/**
+/*	*//**
 	 * タグ内でお気に入り検索
 	 * paginator(OK)
 	 *
 	 * @return
 	 * @throws Exception
-	 */
+	 *//*
 	public ArrayList<ArticleDTO> searchFavoriteTagLists(int user_id,
 			ArrayList<String> tag_body_list, int page) throws Exception {
 
@@ -647,7 +675,7 @@ public class ArticleDAO {
 			throw new Exception();
 		}
 		return articleList;
-	}
+	}*/
 
 	/**
 	 * タグ名から重複しない記事IDを取得
@@ -656,17 +684,26 @@ public class ArticleDAO {
 	 * @throws Exception
 	 */
 	private ArrayList<Integer> getArticleId(ArrayList<String> tag_body_list,
-			int user_id, int page) throws Exception {
+			int user_id, int page,int article_id) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		int def_page = 20 * (page - 1);
+		int def_page = 0;
+		// 0を嫌った処理
+		if (page != 0) {
+			def_page = 21 * (page - 1);
+		} else {
+			def_page = 0;
+		}
 		String tag_sql = "select tag_id from tags where tag_body like ? and user_id = ?";
-		String article_id_sql = "select article_id from article_tag where tag_id = ? limit 20 offset ?";
+		String article_id_sql = "select article_id from article_tag where tag_id = ? limit 21 offset ?";
 
+		String art_sql = "select article_id from articles where article_id IN (select article_id from article_tag where tag_id=?) "+
+		"and modified <= (select modified from articles where article_id = ?) order by modified desc limit 21 offset ?";
 		ArrayList<Integer> tag_id_list = new ArrayList<Integer>();
 		ArrayList<Integer> article_id_list = new ArrayList<Integer>();
 
 		try {
+
 			// 複数タグのタグID取得
 			for (String tag_body : tag_body_list) {
 				pstmt = con.prepareStatement(tag_sql);
@@ -682,11 +719,27 @@ public class ArticleDAO {
 			// 該当タグがある場合
 			for (int tag_id : tag_id_list) {
 				// タグのついたArticle_id取得
-				pstmt = con.prepareStatement(article_id_sql);
-				pstmt.setInt(1, tag_id);
-				pstmt.setInt(2, def_page);
+
+				if (article_id == 0) {
+					// 最初のリスト
+					// artID=0 1ページ目
+					pstmt = con.prepareStatement(article_id_sql);
+					pstmt.setInt(1, tag_id);
+					pstmt.setInt(2, def_page);
+
+				} else {
+					// addbuttonでのリスト
+					// artID=N番目から
+					pstmt = con.prepareStatement(art_sql);
+					pstmt.setInt(1, tag_id);
+					pstmt.setInt(2, article_id);
+					pstmt.setInt(3, 0);
+				}
 				rs = pstmt.executeQuery();
+				int count=0;
 				while (rs.next()) {
+					count++;
+					System.out.println(count);
 					article_id_list.add(rs.getInt("article_id"));
 					// System.out.println("article:" + article_id_list.size());
 				}
@@ -694,6 +747,7 @@ public class ArticleDAO {
 			// タグのついた記事がある場合
 			if (article_id_list != null) {
 				// Article_idの重複を排除
+
 				article_id_list = Unique.unique(article_id_list);
 				// System.out.println("newarticle:" + article_id_list.size());
 
@@ -712,14 +766,14 @@ public class ArticleDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleDTO> viewTagArticle(ArrayList<String> tag_body_list, int user_id, int page)
+	public ArrayList<ArticleDTO> viewTagArticle(ArrayList<String> tag_body_list, int user_id, int page,int start_article_id)
 			throws Exception {
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
 
 		ArrayList<Integer> article_id_list = new ArrayList<Integer>();
 
 		try {
-			article_id_list = getArticleId(tag_body_list, user_id, page);
+			article_id_list = getArticleId(tag_body_list, user_id,page,start_article_id);
 
 			// 記事リストがあるだけ記事のデータを取得
 			for (int article_id : article_id_list) {
@@ -773,7 +827,7 @@ public class ArticleDAO {
 
 		// 0を嫌った処理
 		if (page != 0) {
-			def_page = 20 * (page - 1);
+			def_page = 21 * (page - 1);
 		} else {
 			def_page = 0;
 		}
@@ -805,10 +859,10 @@ public class ArticleDAO {
 			}
 			//System.out.println(pstmt);
 			rs = pstmt.executeQuery();
-			int count = 0;
+			int count = 1;
 			while (rs.next()) {
 				ArticleDTO article = new ArticleDTO();
-				if (count < 20) {
+				if (count < 21) {
 					article.setArticle_id(rs.getInt("article_id"));
 					article.setTitle(rs.getString("title"));
 					article.setUrl(rs.getString("url"));
@@ -819,7 +873,7 @@ public class ArticleDAO {
 					article.setFavflag(rs.getBoolean("favflag"));
 					article.setThum(rs.getBytes("thum"));
 					articleList.add(article);
-				} else if (count == 20) {
+				} else if (count == 21) {
 					article.setArticle_id(rs.getInt("article_id"));
 					articleList.add(article);
 				}
@@ -978,34 +1032,65 @@ public class ArticleDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleDTO> viewShareArticle(int user_id, int friend_user_id, int page)
+	public ArrayList<ArticleDTO> viewShareArticle(int user_id, int friend_user_id, int page,int article_id)
 			throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		int def_page = 20 * (page - 1);
+		int def_page = 0;
+
+		// 0を嫌った処理
+		if (page != 0) {
+			def_page = 21 * (page - 1);
+		} else {
+			def_page = 0;
+		}
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
 		String sql = "SELECT * FROM articles WHERE articles.id = " +
 				"(SELECT M.id FROM friends F,mylists M WHERE F.own_user_id = ? AND F.friend_user_id = ? " +
-				"AND M.id = F.id AND M.share_flag=1) order by modified desc limit 20 offset ?";
+				"AND M.id = F.id AND M.share_flag=1) order by modified desc limit 21 offset ?";
+
+		String art_sql ="SELECT * FROM articles WHERE articles.id = " +
+				"(SELECT M.id FROM friends F,mylists M WHERE F.own_user_id = ? AND F.friend_user_id = ? " +
+				"AND M.id = F.id AND M.share_flag=1) and "+
+				"modified <= (select modified from articles where article_id = ?) " +
+				" order by modified desc limit 21 offset ?;";
 		try {
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, user_id);
-			pstmt.setInt(2, friend_user_id);
-			pstmt.setInt(3, def_page);
-			//System.out.println(pstmt);
+			if (article_id == 0) {
+				// 最初のリスト
+				// artID=0 1ページ目
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, user_id);
+				pstmt.setInt(2, friend_user_id);
+				pstmt.setInt(3, def_page);
+
+			} else {
+				// addbuttonでのリスト
+				// artID=N番目から
+				pstmt = con.prepareStatement(art_sql);
+				pstmt.setInt(1, user_id);
+				pstmt.setInt(2, friend_user_id);
+				pstmt.setInt(3, article_id);
+				pstmt.setInt(4, 0);
+			}
 			rs = pstmt.executeQuery();
+			int count=1;
 			while (rs.next()) {
 				ArticleDTO article = new ArticleDTO();
-				article.setArticle_id(rs.getInt("article_id"));
-				article.setTitle(rs.getString("title"));
-				article.setUrl(rs.getString("url"));
-				article.setCreated(DateEncode.toDate(rs.getString("created")));
-				article.setModified(DateEncode.toDate(rs.getString("created")));
-				article.setShare_url(rs.getString("share_url"));
-				article.setFavflag(rs.getBoolean("favflag"));
-				article.setShare_expior(rs.getDate("share_expior"));
-				article.setThum(rs.getBytes("thum"));
-				articleList.add(article);
+				if(count<21){
+					article.setArticle_id(rs.getInt("article_id"));
+					article.setTitle(rs.getString("title"));
+					article.setUrl(rs.getString("url"));
+					article.setCreated(DateEncode.toDate(rs.getString("created")));
+					article.setModified(DateEncode.toDate(rs.getString("created")));
+					article.setShare_url(rs.getString("share_url"));
+					article.setFavflag(rs.getBoolean("favflag"));
+					article.setShare_expior(rs.getDate("share_expior"));
+					article.setThum(rs.getBytes("thum"));
+					articleList.add(article);
+				}else if(count==21){
+					article.setArticle_id(rs.getInt("article_id"));
+					articleList.add(article);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
