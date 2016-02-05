@@ -84,9 +84,13 @@ public class MyListServlet extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");
 		response.setHeader("Cache-Control", "private");
 		PrintWriter out = response.getWriter();
-		out.println(JSON.encode(article_list, true).toString());
+		// 最大深度5階層以下
+		JSON json = new JSON();
+		json.setMaxDepth(4);
+		out.println(json.encode(article_list).toString());
 		out.close();
 		article_list = null;
+		json = null;
 	}
 
 }

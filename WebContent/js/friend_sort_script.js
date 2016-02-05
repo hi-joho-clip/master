@@ -46,7 +46,7 @@ function createFriendList(json) {
 									+ json[i].nickname
 									+ "\");setSessionStorage(\"viewMode\",\"3\");setSessionStorage(\"shareLists\",\""
 									+ +json[i].friend_user_id
-									+ "\");'>"
+									+ "\");setSessionStorage(\"shareListId\",\"" + json[i].share_id + "\")'>"
 									+ json[i].nickname
 									+ '</h8></td><td><a href="#" data-remodal-target="delete_friend" class="friend art-title btn btn-danger" onclick="javascript:remodalCreate('
 									+ json[i].friend_user_id

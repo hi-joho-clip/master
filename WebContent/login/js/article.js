@@ -208,6 +208,7 @@ $(document).ready(
 								getShareList(page);
 							}
 						} else if (isSettinOnLine() == false){
+							console.log('offline share');
 							getOffShareList(page);
 						}
 						break;
@@ -372,6 +373,8 @@ function styleListChange() {
 				initPagingMylist(getTagArticleList);
 				console.log("def tag");
 			}
+		} else {
+			initPagingMylist(getOffTagMyList);
 		}
 		break;
 	case "3":// シェア画面を表示しているとき
@@ -394,9 +397,7 @@ function styleListChange() {
 			toastr.warning("オンライン");
 
 		} else if (isSettinOnLine() === false) {
-
-		} else {
-
+			initPagingMylist(getOffShareList);
 		}
 	}
 
