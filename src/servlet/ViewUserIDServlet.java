@@ -77,7 +77,7 @@ public class ViewUserIDServlet extends HttpServlet {
 						response.addCookie(visitedCookie);
 					}
 				}
-				response.sendRedirect(URL + "/login.html");
+				response.sendRedirect(URL + "/confirmation.html");
 			} else {
 
 				if (cookie != null) {
