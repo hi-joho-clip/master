@@ -56,20 +56,24 @@ public class ShareListSearchServlet extends HttpServlet {
 		ArrayList<String> text_list = new ArrayList<String>();
 		String text = "";
 		int friend_user_id=0;
+		int start_article_id=0;
 		if (request.getParameter("friend_user_id") != null) {
 			try {
 				user_id = (int) session.getAttribute("user_id");
 				friend_user_id = Integer.parseInt(request.getParameter("friend_user_id"));
+				text = request.getParameter("text");
 				if (request.getParameter("page") != null) {
 					page = Integer.parseInt(request.getParameter("page"));
 					System.out.println("nakafrienduser:"+friend_user_id);
+				}
+				if (request.getParameter("article_id") != null) {
+					start_article_id = Integer.parseInt(request.getParameter("article_id"));//記事一覧表示の一番後ろのIDを持つ。
 				}
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			text = request.getParameter("text");
 			// _ %が含まれる文字列のエスケープ
 			//全角の空白文字をひとつの半角空白に置換
 			text=text.replaceAll("_","\\\\_").replaceAll("%", "\\\\%").replaceAll("　"," ");
@@ -91,7 +95,7 @@ public class ShareListSearchServlet extends HttpServlet {
 			ArticleBean articlebean = new ArticleBean();
 			ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
 			try {
-				article_list = articlebean.viewShareListSearch(user_id,text_list,friend_user_id, page);
+				article_list = articlebean.viewShareListSearch(user_id,text_list,friend_user_id, page,start_article_id);
 			} catch (Exception e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();

@@ -60,7 +60,7 @@ function onclickSearch() {
 		// タグの検索
 		if (isSettinOnLine()) {
 			$('.grid').empty();
-			tagSearch(word);
+			tagSearch(1);
 		}
 
 		break;
@@ -68,7 +68,7 @@ function onclickSearch() {
 		// シェアの検索
 		if (isSettinOnLine()) {
 			$('.grid').empty();
-			shareListSearch(word);
+			shareListSearch(1);
 		}
 
 		break;
@@ -78,7 +78,7 @@ function onclickSearch() {
 // マイリスト内のタイトル検索
 function myListSearch(page) {
 	var func = get_mylists;
-	$('h1.title').html('検索結果');
+	$('h1.title').html('マイリストの検索結果');
 	if (tileView()) {
 		func = get_mylists;
 		$('div#themebutton')
@@ -98,13 +98,14 @@ function myListSearch(page) {
 				.html(
 						'<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
 	}
-	var jsonParam = "text=" + getSessionStorage('search') + "&page=" + page;// 送りたいデータ
+	var jsonParam = "text=" + getSessionStorage('search') + "&page=" + page+"&article_id="+$('#lastid').val();// 送りたいデータ
 	var URL = hostURL + "/mylistsearch";
 	getJSON(URL, jsonParam, func);
 }
 // お気に入りのタイトル検索
 function favListSearch(page) {
 	var func = get_mylists;
+	$('h1.title').html('お気に入りの検索結果');
 	if (tileView()) {
 		func = get_mylists;
 		$('div#themebutton')
@@ -124,7 +125,7 @@ function favListSearch(page) {
 				.html(
 						'<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
 	}
-	var jsonParam = "text=" + getSessionStorage('search') + "&page=" +  page;// 送りたいデータ
+	var jsonParam = "text=" + getSessionStorage('search') + "&page=" +  page+"&article_id="+$('#lastid').val();// 送りたいデータ
 	var URL = hostURL + "/favlistsearch";
 
 	getJSON(URL, jsonParam, func);
@@ -132,6 +133,7 @@ function favListSearch(page) {
 // タグのタイトル検索
 function tagSearch(page) {
 	var func = get_mylists;
+	$('h1.title').html(getSessionStorage("tagLists")+'の検索結果');
 	if (tileView()) {
 		func = get_mylists;
 		$('div#themebutton')
@@ -151,13 +153,14 @@ function tagSearch(page) {
 				.html(
 						'<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
 	}
-	var jsonParam = "tag=" + getSessionStorage("tagLists") + "&text=" + getSessionStorage('search') + '&page=' + page;
+	var jsonParam = "tag=" + getSessionStorage("tagLists") + "&text=" + getSessionStorage('search') + '&page=' + page + "&article_id="+$('#lastid').val();
 	var URL = hostURL + "/tagsearch";
 	getJSON(URL, jsonParam, func);
 }
 // シェアのタイトル検索
 function shareListSearch(page) {
 	var func = get_sharelists;
+	$('h1.title').html(getSessionStorage("friend")+'の検索結果');
 	if (tileView()) {
 		func = get_sharelists;
 		$('div#themebutton')
@@ -178,7 +181,7 @@ function shareListSearch(page) {
 						'<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
 	}
 	var jsonParam = "friend_user_id=" + getSessionStorage("shareLists")
-			+ "&text=" + getSessionStorage('search') + '&page=' + page;
+			+ "&text=" + getSessionStorage('search') + '&page=' + page+"&article_id="+$('#lastid').val();
 	var URL = hostURL + "/sharelistsearch";
 	getJSON(URL, jsonParam, func);
 };

@@ -632,6 +632,7 @@ public class ArticleDAO {
 					article.setArticle_id(rs.getInt("article_id"));
 					articleList.add(article);
 				}
+				count++;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1091,6 +1092,7 @@ public class ArticleDAO {
 					article.setArticle_id(rs.getInt("article_id"));
 					articleList.add(article);
 				}
+				count++;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1224,15 +1226,22 @@ public class ArticleDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleDTO> mylist_search(int user_id, ArrayList<String> text_list, int page) throws Exception {
+	public ArrayList<ArticleDTO> mylist_search(int user_id, ArrayList<String> text_list, int page,int article_id) throws Exception {
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		int def_page = 20 * (page - 1);
-		System.out.println("page:" + def_page);
+		int def_page = 0;
+
+		// 0を嫌った処理
+		if (page != 0) {
+			def_page = 21 * (page - 1);
+		} else {
+			def_page = 0;
+		}
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
 		String sql = "";
 		String like = "";
+
 		int count = 0;//値をセットするために必要なカウント変数
 
 		//text_list.size()-1なのは最後のANDを取り除きたいから
@@ -1245,29 +1254,54 @@ public class ArticleDAO {
 		System.out.println(like);
 
 		sql = "SELECT * FROM articles WHERE " + like
-				+ " AND id = ANY (SELECT id FROM mylists WHERE user_id = ? and share_flag = 0) limit 20 offset ?";
-
+				+ " AND id = ANY (SELECT id FROM mylists WHERE user_id = ? and share_flag = 0) order by modified desc limit 21 offset ?";
+		String art_sql ="SELECT * FROM articles WHERE " + like
+				+ " AND id = ANY (SELECT id FROM mylists WHERE user_id = ? and share_flag = 0) and "+
+				"modified <= (select modified from articles where article_id = ?) " +
+				" order by modified desc limit 21 offset ?;";
 		try {
-			pstmt = con.prepareStatement(sql);
+			if (article_id == 0) {
+				// 最初のリスト
+				// artID=0 1ページ目
+				pstmt = con.prepareStatement(sql);
 
-			for (int i = 1; i <= count; i++) {
-				pstmt.setString(i, "%" + text_list.get(i - 1) + "%");
+				for (int i = 1; i <= count; i++) {
+					pstmt.setString(i, "%" + text_list.get(i - 1) + "%");
+				}
+				pstmt.setInt(count + 1, user_id);
+				pstmt.setInt(count + 2, def_page);
+
+			} else {
+				pstmt = con.prepareStatement(art_sql);
+
+				for (int i = 1; i <= count; i++) {
+					pstmt.setString(i, "%" + text_list.get(i - 1) + "%");
+				}
+				pstmt.setInt(count + 1, user_id);
+				pstmt.setInt(count + 2, article_id);
+				pstmt.setInt(count + 3, 0);
 			}
-			pstmt.setInt(count + 1, user_id);
-			pstmt.setInt(count + 2, def_page);
+
 			rs = pstmt.executeQuery();
+			int cnt=1;
 			while (rs.next()) {
 				ArticleDTO article = new ArticleDTO();
-				article.setArticle_id(rs.getInt("article_id"));
-				article.setTitle(rs.getString("title"));
-				article.setUrl(rs.getString("url"));
-				article.setCreated(DateEncode.toDate(rs.getString("created")));
-				article.setModified(DateEncode.toDate(rs.getString("modified")));
-				article.setShare_url(rs.getString("share_url"));
-				article.setShare_expior(rs.getDate("share_expior"));
-				article.setFavflag(rs.getBoolean("favflag"));
-				article.setThum(rs.getBytes("thum"));
-				articleList.add(article);
+				if(cnt<21){
+					article.setArticle_id(rs.getInt("article_id"));
+					article.setTitle(rs.getString("title"));
+					article.setUrl(rs.getString("url"));
+					article.setCreated(DateEncode.toDate(rs.getString("created")));
+					article.setModified(DateEncode.toDate(rs.getString("modified")));
+					article.setShare_url(rs.getString("share_url"));
+					article.setShare_expior(rs.getDate("share_expior"));
+					article.setFavflag(rs.getBoolean("favflag"));
+					article.setThum(rs.getBytes("thum"));
+					articleList.add(article);
+				}else if(cnt==21){
+					article.setArticle_id(rs.getInt("article_id"));
+					articleList.add(article);
+				}
+				cnt++;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1283,11 +1317,18 @@ public class ArticleDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleDTO> favlist_search(int user_id, ArrayList<String> text_list, int page) throws Exception {
+	public ArrayList<ArticleDTO> favlist_search(int user_id, ArrayList<String> text_list, int page,int article_id) throws Exception {
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		int def_page = 20 * (page - 1);
+		int def_page = 0;
+
+		// 0を嫌った処理
+		if (page != 0) {
+			def_page = 21 * (page - 1);
+		} else {
+			def_page = 0;
+		}
 		System.out.println("page:" + def_page);
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
 		String sql = "";
@@ -1306,29 +1347,55 @@ public class ArticleDAO {
 
 		sql = "SELECT * FROM articles WHERE " + like + " AND article_id IN"
 				+ " (SELECT article_id FROM article_tag WHERE tag_id ="
-				+ " (SELECT tag_id FROM tags WHERE tag_body = 'お気に入り' AND user_id = ?)) limit 20 offset ?";
+				+ " (SELECT tag_id FROM tags WHERE tag_body = 'お気に入り' AND user_id = ?)) order by modified desc limit 21 offset ?";
 
+		String art_sql ="SELECT * FROM articles WHERE " + like + " AND article_id IN"
+				+ " (SELECT article_id FROM article_tag WHERE tag_id ="
+				+ " (SELECT tag_id FROM tags WHERE tag_body = 'お気に入り' AND user_id = ?)) and "+
+				"modified <= (select modified from articles where article_id = ?) " +
+				" order by modified desc limit 21 offset ?;";
 		try {
-			pstmt = con.prepareStatement(sql);
+			if (article_id == 0) {
+				// 最初のリスト
+				// artID=0 1ページ目
+				pstmt = con.prepareStatement(sql);
 
-			for (int i = 1; i <= count; i++) {
-				pstmt.setString(i, "%" + text_list.get(i - 1) + "%");
+				for (int i = 1; i <= count; i++) {
+					pstmt.setString(i, "%" + text_list.get(i - 1) + "%");
+				}
+				pstmt.setInt(count + 1, user_id);
+				pstmt.setInt(count + 2, def_page);
+
+			} else {
+				pstmt = con.prepareStatement(art_sql);
+
+				for (int i = 1; i <= count; i++) {
+					pstmt.setString(i, "%" + text_list.get(i - 1) + "%");
+				}
+				pstmt.setInt(count + 1, user_id);
+				pstmt.setInt(count + 2, article_id);
+				pstmt.setInt(count + 3, 0);
 			}
-			pstmt.setInt(count + 1, user_id);
-			pstmt.setInt(count + 2, def_page);
 			rs = pstmt.executeQuery();
+			int cnt=1;
 			while (rs.next()) {
 				ArticleDTO article = new ArticleDTO();
-				article.setArticle_id(rs.getInt("article_id"));
-				article.setTitle(rs.getString("title"));
-				article.setUrl(rs.getString("url"));
-				article.setCreated(DateEncode.toDate(rs.getString("created")));
-				article.setModified(DateEncode.toDate(rs.getString("modified")));
-				article.setShare_url(rs.getString("share_url"));
-				article.setShare_expior(rs.getDate("share_expior"));
-				article.setFavflag(rs.getBoolean("favflag"));
-				article.setThum(rs.getBytes("thum"));
-				articleList.add(article);
+				if(cnt<21){
+					article.setArticle_id(rs.getInt("article_id"));
+					article.setTitle(rs.getString("title"));
+					article.setUrl(rs.getString("url"));
+					article.setCreated(DateEncode.toDate(rs.getString("created")));
+					article.setModified(DateEncode.toDate(rs.getString("modified")));
+					article.setShare_url(rs.getString("share_url"));
+					article.setShare_expior(rs.getDate("share_expior"));
+					article.setFavflag(rs.getBoolean("favflag"));
+					article.setThum(rs.getBytes("thum"));
+					articleList.add(article);
+				}else if(cnt==21){
+					article.setArticle_id(rs.getInt("article_id"));
+					articleList.add(article);
+				}
+				cnt++;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1344,12 +1411,20 @@ public class ArticleDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleDTO> tag_search(int user_id, ArrayList<String> text_list, String tag, int page)
+	@SuppressWarnings("resource")
+	public ArrayList<ArticleDTO> tag_search(int user_id, ArrayList<String> text_list, String tag, int page,int article_id)
 			throws Exception {
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		int def_page = 20 * (page - 1);
+		int def_page = 0;
+
+		// 0を嫌った処理
+		if (page != 0) {
+			def_page = 21 * (page - 1);
+		} else {
+			def_page = 0;
+		}
 		System.out.println("page:" + def_page);
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
 		String sql = "";
@@ -1370,8 +1445,12 @@ public class ArticleDAO {
 
 		String get_tagid = "SELECT tag_id FROM tags WHERE tag_body = ? AND user_id = ?";
 		sql = "SELECT * FROM articles WHERE " + like + " AND id = ? AND " +
-				"article_id IN (SELECT article_id FROM article_tag WHERE tag_id = ?) limit 20 offset ?";
+				"article_id IN (SELECT article_id FROM article_tag WHERE tag_id = ?) order by modified desc limit 21 offset ?";
 
+		String art_sql ="SELECT * FROM articles WHERE " + like + " AND id = ? AND " +
+				"article_id IN (SELECT article_id FROM article_tag WHERE tag_id = ?) and "+
+				"modified <= (select modified from articles where article_id = ?) " +
+				" order by modified desc limit 21 offset ?;";
 		mylist_id = getMylistID(user_id);
 
 		try {
@@ -1382,27 +1461,51 @@ public class ArticleDAO {
 			if (rs.next()) {
 				tag_id = rs.getInt("tag_id");
 			}
-			pstmt = con.prepareStatement(sql);
+			if (article_id == 0) {
+				// 最初のリスト
+				// artID=0 1ページ目
+				pstmt = con.prepareStatement(sql);
 
-			for (int i = 1; i <= count; i++) {
-				pstmt.setString(i, "%" + text_list.get(i - 1) + "%");
+				for (int i = 1; i <= count; i++) {
+					pstmt.setString(i, "%" + text_list.get(i - 1) + "%");
+				}
+				pstmt.setInt(count + 1, mylist_id);
+				pstmt.setInt(count + 2, tag_id);
+				pstmt.setInt(count + 3, def_page);
+
+			} else {
+
+				pstmt = con.prepareStatement(art_sql);
+				for (int i = 1; i <= count; i++) {
+					pstmt.setString(i, "%" + text_list.get(i - 1) + "%");
+				}
+				pstmt.setInt(count + 1, mylist_id);
+				pstmt.setInt(count + 2, tag_id);
+				pstmt.setInt(count + 3, article_id);
+				pstmt.setInt(count + 4, 0);
 			}
-			pstmt.setInt(count + 1, mylist_id);
-			pstmt.setInt(count + 2, tag_id);
-			pstmt.setInt(count + 3, def_page);
+
+
 			rs = pstmt.executeQuery();
+			int cnt=1;
 			while (rs.next()) {
 				ArticleDTO article = new ArticleDTO();
-				article.setArticle_id(rs.getInt("article_id"));
-				article.setTitle(rs.getString("title"));
-				article.setUrl(rs.getString("url"));
-				article.setCreated(DateEncode.toDate(rs.getString("created")));
-				article.setModified(DateEncode.toDate(rs.getString("modified")));
-				article.setShare_url(rs.getString("share_url"));
-				article.setShare_expior(rs.getDate("share_expior"));
-				article.setFavflag(rs.getBoolean("favflag"));
-				article.setThum(rs.getBytes("thum"));
-				articleList.add(article);
+				if(cnt<21){
+					article.setArticle_id(rs.getInt("article_id"));
+					article.setTitle(rs.getString("title"));
+					article.setUrl(rs.getString("url"));
+					article.setCreated(DateEncode.toDate(rs.getString("created")));
+					article.setModified(DateEncode.toDate(rs.getString("modified")));
+					article.setShare_url(rs.getString("share_url"));
+					article.setShare_expior(rs.getDate("share_expior"));
+					article.setFavflag(rs.getBoolean("favflag"));
+					article.setThum(rs.getBytes("thum"));
+					articleList.add(article);
+				}else if(cnt==21){
+					article.setArticle_id(rs.getInt("article_id"));
+					articleList.add(article);
+				}
+				cnt++;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1418,12 +1521,19 @@ public class ArticleDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleDTO> sharelist_search(int user_id, ArrayList<String> text_list, int friend_user_id, int page)
+	public ArrayList<ArticleDTO> sharelist_search(int user_id, ArrayList<String> text_list, int friend_user_id, int page,int article_id)
 			throws Exception {
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		int def_page = 20 * (page - 1);
+		int def_page = 0;
+
+		// 0を嫌った処理
+		if (page != 0) {
+			def_page = 21 * (page - 1);
+		} else {
+			def_page = 0;
+		}
 		System.out.println("page:" + def_page);
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
 		String sql = "";
@@ -1442,30 +1552,58 @@ public class ArticleDAO {
 
 		sql = "SELECT * FROM articles WHERE " + like + " AND articles.id = " +
 				"(SELECT M.id FROM friends F,mylists M WHERE F.own_user_id = ? AND F.friend_user_id = ? " +
-				"AND M.id = F.id AND M.share_flag=1) limit 20 offset ?";
+				"AND M.id = F.id AND M.share_flag=1) order by modified desc limit 21 offset ?";
 
+		String art_sql ="SELECT * FROM articles WHERE " + like + " AND articles.id = " +
+				"(SELECT M.id FROM friends F,mylists M WHERE F.own_user_id = ? AND F.friend_user_id = ? " +
+				"AND M.id = F.id AND M.share_flag=1) and "+
+				"modified <= (select modified from articles where article_id = ?) " +
+				" order by modified desc limit 21 offset ?;";
 		try {
-			pstmt = con.prepareStatement(sql);
+			if (article_id == 0) {
+				// 最初のリスト
+				// artID=0 1ページ目
+				pstmt = con.prepareStatement(sql);
 
-			for (int i = 1; i <= count; i++) {
-				pstmt.setString(i, "%" + text_list.get(i - 1) + "%");
+				for (int i = 1; i <= count; i++) {
+					pstmt.setString(i, "%" + text_list.get(i - 1) + "%");
+				}
+				pstmt.setInt(count + 1, user_id);
+				pstmt.setInt(count + 2, friend_user_id);
+				pstmt.setInt(count + 3, def_page);
+
+			} else {
+				pstmt = con.prepareStatement(art_sql);
+
+				for (int i = 1; i <= count; i++) {
+					pstmt.setString(i, "%" + text_list.get(i - 1) + "%");
+				}
+				pstmt.setInt(count + 1, user_id);
+				pstmt.setInt(count + 2, friend_user_id);
+				pstmt.setInt(count + 3, article_id);
+				pstmt.setInt(count + 4, 0);
 			}
-			pstmt.setInt(count + 1, user_id);
-			pstmt.setInt(count + 2, friend_user_id);
-			pstmt.setInt(count + 3, def_page);
+
 			rs = pstmt.executeQuery();
+			int cnt =1;
 			while (rs.next()) {
 				ArticleDTO article = new ArticleDTO();
-				article.setArticle_id(rs.getInt("article_id"));
-				article.setTitle(rs.getString("title"));
-				article.setUrl(rs.getString("url"));
-				article.setCreated(DateEncode.toDate(rs.getString("created")));
-				article.setModified(DateEncode.toDate(rs.getString("modified")));
-				article.setShare_url(rs.getString("share_url"));
-				article.setShare_expior(rs.getDate("share_expior"));
-				article.setFavflag(rs.getBoolean("favflag"));
-				article.setThum(rs.getBytes("thum"));
-				articleList.add(article);
+				if(cnt<21){
+					article.setArticle_id(rs.getInt("article_id"));
+					article.setTitle(rs.getString("title"));
+					article.setUrl(rs.getString("url"));
+					article.setCreated(DateEncode.toDate(rs.getString("created")));
+					article.setModified(DateEncode.toDate(rs.getString("modified")));
+					article.setShare_url(rs.getString("share_url"));
+					article.setShare_expior(rs.getDate("share_expior"));
+					article.setFavflag(rs.getBoolean("favflag"));
+					article.setThum(rs.getBytes("thum"));
+					articleList.add(article);
+				}else if(cnt==21){
+					article.setArticle_id(rs.getInt("article_id"));
+					articleList.add(article);
+				}
+				cnt++;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

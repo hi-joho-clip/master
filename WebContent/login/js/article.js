@@ -154,7 +154,13 @@ $(document).ready(
 						//マイリスト
 						if (isSettinOnLine() == true) {
 							console.log("マイリスト");
-							getMyList(page);
+							if ($('#searchMode').val() === "true") {
+								// マイリストの検索をしているページを出す
+								myListSearch(page);
+							} else {
+								// 普通のマイリストを出す
+								getMyList(page);
+							}
 						} else if (isSettinOnLine() == false){
 							console.log('オフラインマイリスト');
 							getOffMyList(page);
@@ -162,16 +168,30 @@ $(document).ready(
 						break;
 					case "1":
 						// お気に入り
-						if (isSettinOnLine() == true) {
-							getFavList(page);
+
+						if (isSettinOnLine) {
+							if ($('#searchMode').val() === "true") {
+								// お気に入りの検索をしているページを出す
+								favListSearch(page);
+							} else {
+								// 普通のマイリストを出す
+								getFavList(page);
+							}
 						} else if (isSettinOnLine() == false){
 							getOffFavList(page);
 						}
 						break;
 					case "2":
 						//特定のタグ
-						if (isSettinOnLine() == true) {
-							getTagArticleList(page);
+
+						if (isSettinOnLine) {
+							if ($('#searchMode').val() === "true") {
+								// タグの検索をしているページを出す
+								tagSearch(page);
+							} else {
+								// 普通のマイリストを出す
+								getTagArticleList(page);
+							}
 						} else if (isSettinOnLine() == true){
 							getTagOffArticleList(page);
 						}
@@ -179,8 +199,14 @@ $(document).ready(
 						break;
 					case "3":
 						//シェア画面
-						if (isSettinOnLine() == true) {
-							getShareList(page);
+						if (isSettinOnLine) {
+							if ($('#searchMode').val() === "true") {
+								// シェアの検索をしているページを出す
+								shareListSearch(page);
+							} else {
+								// 普通のマイリストを出す
+								getShareList(page);
+							}
 						} else if (isSettinOnLine() == false){
 							getOffShareList(page);
 						}
@@ -298,7 +324,7 @@ function styleListChange() {
 		if (isSettinOnLine() === true) {
 			if ($('#searchMode').val() === "true") {
 				// マイリストの検索をしているページを出す
-				initPagingMylistSearch(myListSearch);
+				initPagingMylist(myListSearch);
 			} else {
 				// 普通のマイリストを出す
 				initPagingMylist(getMyList);
@@ -340,9 +366,11 @@ function styleListChange() {
 			if ($('#searchMode').val() === "true") {
 				// 特定のタグの検索をしているページを出す
 				initPagingMylist(tagSearch);
+				console.log("tokuteino tag");
 			} else {
 				// 普通の特定のタグを出す
 				initPagingMylist(getTagArticleList);
+				console.log("def tag");
 			}
 		}
 		break;

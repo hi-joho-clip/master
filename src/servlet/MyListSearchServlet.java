@@ -55,6 +55,7 @@ public class MyListSearchServlet extends HttpServlet {
 		int page = 1; // パラメータからページ番号取得(デフォルト1）
 		ArrayList<String> text_list = new ArrayList<String>();
 		String text = "";
+		int start_article_id = 0;
 		try {
 			user_id = (int) session.getAttribute("user_id");
 			text = request.getParameter("text");
@@ -77,6 +78,9 @@ public class MyListSearchServlet extends HttpServlet {
 
 				page = Integer.parseInt(request.getParameter("page"));
 			}
+			if (request.getParameter("article_id") != null) {
+				start_article_id = Integer.parseInt(request.getParameter("article_id"));//記事一覧表示の一番後ろのIDを持つ。
+			}
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -86,7 +90,7 @@ public class MyListSearchServlet extends HttpServlet {
 		ArticleBean articlebean = new ArticleBean();
 		ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
 		try {
-			article_list = articlebean.viewMyListSearch(user_id,text_list, page);
+			article_list = articlebean.viewMyListSearch(user_id,text_list, page,start_article_id);
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
