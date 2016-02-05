@@ -27,9 +27,9 @@ function getArticle(username, article_id) {
 			tutorial.tx([ "article" ], function(tx, todo) {
 				todo.fetch({
 					filter : article_filter,
-					//filter : user_filter
+				// filter : user_filter
 				}, function(values) {
-					 //console.log("values = " + JSON.stringify(values));
+					// console.log("values = " + JSON.stringify(values));
 					console.log("done.");
 					resolve(values);
 					// console.log(values.body.created);
@@ -43,10 +43,12 @@ function getArticle(username, article_id) {
 		function article_filter(record) {
 			// GUIDが自身であり、アーティクルIDが同一
 			return record.article_id == article_id;
-		};
+		}
+		;
 		function user_filter(record) {
 			return record.username == username;
-		};
+		}
+		;
 	});
 };
 
@@ -85,9 +87,6 @@ function getArticleID(article_id) {
 		;
 	});
 };
-
-
-
 
 /**
  * 記事の件数分ループさせて更新する
@@ -148,7 +147,7 @@ function updateArticleDelete(id) {
 
 	return new Promise(function(resolve, reject) {
 		// ユーザ名でDB識別
-		//console.log("hhhhhhh"+id);
+		// console.log("hhhhhhh"+id);
 
 		// console.log('jsonarticle:' + article['article_id']);
 		// スキーマのインスタンス取得
@@ -160,9 +159,8 @@ function updateArticleDelete(id) {
 
 		// 更新処理
 		tutorial.tx([ "article" ], "readwrite", function(tx, todo) {
-			todo.del( id
-					, function() {
-				//console.log("done. key = ");
+			todo.del(id, function() {
+				// console.log("done. key = ");
 				// 成功時はキーを渡す
 				resolve();
 			});
@@ -246,7 +244,7 @@ function updateIDBArticleListDelete(values) {
 
 	var pro_list = [];
 
-	//console.log("きているうううううううう");
+	// console.log("きているうううううううう");
 
 	/*
 	 * PromiseAll（promiseサーバ通信→promise書き込み）これをリスト分回す（全部完了したら成功にする） param :
@@ -254,7 +252,7 @@ function updateIDBArticleListDelete(values) {
 	 */
 	for ( var art_json in jsons) {
 		param = jsons[art_json].article_id;
-		//console.log("パラメータ:" + param);
+		// console.log("パラメータ:" + param);
 		pro_list.push(getArticleID(param).then(updateArticleDelete));
 	}
 	if (pro_list) {
@@ -275,88 +273,105 @@ function updateIDBArticleListDelete(values) {
  */
 function getIDEArticleList(username, page, share_id, title, fav_state, direct) {
 
-	return new Promise(function(resolve, reject) {
-		// console.log(guid + page);
+	return new Promise(
+			function(resolve, reject) {
+				// console.log(guid + page);
 
-		var offset_filter;
+				var offset_filter;
 
-		var direct = "prev";
+				var direct = "prev";
 
-		if (!fav_state) {
-			//
-			offset_filter = {
-				filter : guid_filter,
-				filter : share_filter,
-				filter : title_filter,
-				offset : page * 20 - 20,
-				limit : 20,
-				direction : direct
-			};
-		} else {
-			// 絶対お気に入り
-			offset_filter = {
-				filter : guid_filter,
-				filter : share_filter,
-				filter : title_filter,
-				filter : fav_filter,
-				offset : page * 20 - 20,
-				limit : 20,
-				direction : direct
-			};
-		}
-
-		// console.log(offset_filter);
-		var tutorial = getArticleInstance();
-		tutorial.onerror = function(event) {
-			// エラーの詳細をコンソールに出力する
-			reject(event.kage_message);
-		};
-
-		tutorial.tx([ "article" ], function(tx, todo) {
-			todo.index("modified").fetch(offset_filter, function(values) {
-				if (values) {
-					// console.log("values = " + JSON.stringify(values));
-					var val = [];
-					for ( var i in values) {
-						val.push(values[i]["article"]);
-						console.log("art:" + values[i]['modified']);
-					}
-					console.log(val.length);
-					resolve(val);
+				if (!fav_state) {
+					//
+					offset_filter = {
+						filter : fav_false,
+						offset : page * 20 - 20,
+						limit : 20,
+						direction : direct
+					};
 				} else {
-					reject(new Error("not found"));
+					// 絶対お気に入り
+					console.log ("fav_false");
+					offset_filter = {
+						filter :fav_true,
+						offset : page * 20 - 20,
+						limit : 20,
+						direction : direct
+					};
 				}
 
+				// console.log(offset_filter);
+				var tutorial = getArticleInstance();
+				tutorial.onerror = function(event) {
+					// エラーの詳細をコンソールに出力する
+					reject(event.kage_message);
+				};
+
+				tutorial.tx([ "article" ], function(tx, todo) {
+					todo.index("modified").fetch(
+							offset_filter,
+							function(values) {
+								if (values) {
+									// console.log("values = " +
+									// JSON.stringify(values));
+									var val = [];
+									for ( var i in values) {
+										val.push(values[i]["article"]);
+										console.log("art:"
+												+ values[i]['modified']);
+									}
+									console.log(val.length);
+									resolve(val);
+								} else {
+									reject(new Error("not found"));
+								}
+
+							});
+				});
+
+				function guid_filter(record) {
+					console.log('guid');
+					return record.username === username;
+				}
+				function share_filter(record) {
+					console.log('share');
+					return record.share_id === share_id;
+				}
+				function title_filter(record) {
+					console.log('title');
+					flag = false;
+					if (record.article.title.indexOf(title) != -1) {
+						flag = true;
+					}
+					return flag;
+				}
+				function fav_filter(record) {
+					console.log('fav');
+					flag = false;
+					if (record.article.favflag === true) {
+						flag = true;
+					}
+					return flag;
+				}
+				function fav_true(record) {
+					console.log('fabt');
+					if (guid_filter(record) && share_filter(record)
+							&& title_filter(record) && fav_filter(record)) {
+						return true;
+					} else {
+						return false;
+					}
+				}
+				function fav_false(record) {
+					console.log('fabf');
+					if (guid_filter(record) && share_filter(record)
+							&& title_filter(record)) {
+						return true;
+					} else {
+						return false;
+					}
+				}
 			});
-		});
-
-		function guid_filter(record) {
-			return record.username === username;
-		}
-		function share_filter(record) {
-			return record.share_id === share_id;
-		}
-		function title_filter(record) {
-			flag = false;
-			if (record.article.title.indexOf(title) != -1) {
-				// strにhogeを含む場合の処理
-				flag = true;
-
-			}
-			return flag;
-			// record.article.title === title;
-		}
-
-		function fav_filter(record) {
-			flag = false;
-			if (record.article.favflag === true) {
-				// strにhogeを含む場合の処理
-				flag = true;
-			}
-			return flag;
-			// record.article.title === title;
-		}
-	});
 };
 
 /**
