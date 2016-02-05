@@ -160,13 +160,16 @@
 		$(document).ready(
 				function() {
 					colorMode();
-
 					$("div.hiddenarea").append(
 							'<input type="hidden" id="nonce" value="'
 									+ docCookies.getItem("nonce") + '">');
+					if (isSettinOnLine() == true) {
+						notice();
+						getTagList();
+					} else if (isSettinOnLine() == false) {
+						getOffTagList();
 
-					notice();
-					getTagList();
+					}
 
 				});
 	</script>
