@@ -25,10 +25,10 @@ function getFriendRequest() {
 	var URL = hostURL + "/friendrequest";
 	var setappend = function(json) {
 		for ( var i = 0; i < json.length; i++) {
-			$('#table-body').append('<tr id="'+json[i].nickname+'" class="first"><td>' + json[i].nickname + "</td><td>" + "<a href='#' data-remodal-target='kyoka' onclick='document.getElementById(\"user_id\").innerHTML=\""
-					+ json[i].friend_user_id + "\";'>承認</a></td>" + "&emsp;"
-					+ "<td><a href='#' data-remodal-target='kyohi' onclick='document.getElementById(\"user_id\").innerHTML=\""
-					+ json[i].friend_user_id + "\";'>拒否</a></td>");
+			$('#table-body').append('<tr id="'+json[i].nickname+'" class="first"><td><h8>' + json[i].nickname + "</h8></td><td><h8>" + "<a href='#' class='btn btn-primary' data-remodal-target='kyoka' onclick='document.getElementById(\"user_id\").innerHTML=\""
+					+ json[i].friend_user_id + "\";'>承認</a></h8></td>" + "&emsp;"
+					+ "<td><h8><a href='#' class='btn btn-danger' data-remodal-target='kyohi' onclick='document.getElementById(\"user_id\").innerHTML=\""
+					+ json[i].friend_user_id + "\";'>拒否</a></h8></td>");
 		}
 		/*document.getElementById('info').innerHTML = friendList + "</div>";*/
 	};
