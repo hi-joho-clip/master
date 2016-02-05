@@ -102,6 +102,7 @@ function getTagArticleList(page) {
 
 		//document.getElementById('title').innerHTML =  '<h1 class="title">'+title+'</h1>'+'<div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
 	}
+	$('#viewmode').val('2');
 	setSessionStorage('viewMode', '2');
 	var URL = hostURL + "/tagarticlelist";
 	getJSON(URL, taglists, func);

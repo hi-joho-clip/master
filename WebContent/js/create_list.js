@@ -189,8 +189,11 @@ function addViewNext(json) {
 	// 20件以上の場合はValueを加算し、20件未満の場合はボタンを削除する。
 	if (json.length >= 20) {
 		console.log('number:' + $('#art-page').val());
-		// 最後に読み込んだArticleIDを残す
+		//サーチをするときなどに有効にしないと消えたままとなる。
+		$('#buttonbox').css({'display' : 'block'});
+		$('#art-add').val('true');
 		console.log("21page:"+json[json.length-1].article_id);
+		// 最後に読み込んだArticleIDを残す
 		$('#lastid').val(json[json.length-1].article_id);
 	} else if (json.length <= 19){
 		console.log("under 19");

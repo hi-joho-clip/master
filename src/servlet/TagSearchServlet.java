@@ -59,23 +59,24 @@ public class TagSearchServlet extends HttpServlet {
 		ArrayList<String> text_list = new ArrayList<String>();
 		String text = "";
 		String tag = "";
-
+		int start_article_id=0;
 		if (request.getParameter("tag") != null) {
 			try {
 				user_id = (int) session.getAttribute("user_id");
 				tag = request.getParameter("tag");
+				text = request.getParameter("text");
 				if (request.getParameter("page") != null) {
 					page = Integer.parseInt(request.getParameter("page"));
 					System.out.println("nakatag:" + tag);
 				}
-
+				if (request.getParameter("article_id") != null) {
+					start_article_id = Integer.parseInt(request.getParameter("article_id"));//記事一覧表示の一番後ろのIDを持つ。
+				}
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
-			text = request.getParameter("text");
 			// _ %が含まれる文字列のエスケープ
 			// 全角の空白文字をひとつの半角空白に置換
 			text = text.replaceAll("_", "\\\\_").replaceAll("%", "\\\\%")
@@ -98,7 +99,7 @@ public class TagSearchServlet extends HttpServlet {
 			ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
 			try {
 				article_list = articlebean.viewTagSearch(user_id, text_list,
-						tag, page);
+						tag, page,start_article_id);
 			} catch (Exception e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();

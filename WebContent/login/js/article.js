@@ -154,7 +154,14 @@ $(document).ready(
 						//マイリスト
 						if (isSettinOnLine) {
 							console.log("マイリスト");
-							getMyList(page);
+
+							if ($('#searchMode').val() === "true") {
+								// マイリストの検索をしているページを出す
+								myListSearch(page);
+							} else {
+								// 普通のマイリストを出す
+								getMyList(page);
+							}
 						} else {
 							console.log('オフラインマイリスト');
 							getOffMyList(page);
@@ -163,7 +170,13 @@ $(document).ready(
 					case "1":
 						// お気に入り
 						if (isSettinOnLine) {
-							getFavList(page);
+							if ($('#searchMode').val() === "true") {
+								// お気に入りの検索をしているページを出す
+								favListSearch(page);
+							} else {
+								// 普通のマイリストを出す
+								getFavList(page);
+							}
 						} else {
 							getOffFavList(page);
 						}
@@ -171,7 +184,14 @@ $(document).ready(
 					case "2":
 						//特定のタグ
 						if (isSettinOnLine) {
-							getTagArticleList(page);
+							if ($('#searchMode').val() === "true") {
+								// タグの検索をしているページを出す
+								tagSearch(page);
+							} else {
+								// 普通のマイリストを出す
+								getTagArticleList(page);
+							}
+
 						} else {
 
 						}
@@ -180,7 +200,13 @@ $(document).ready(
 					case "3":
 						//シェア画面
 						if (isSettinOnLine) {
-							getShareList(page);
+							if ($('#searchMode').val() === "true") {
+								// シェアの検索をしているページを出す
+								shareListSearch(page);
+							} else {
+								// 普通のマイリストを出す
+								getShareList(page);
+							}
 						} else {
 
 						}
@@ -298,7 +324,7 @@ function styleListChange() {
 		if (isSettinOnLine() === true) {
 			if ($('#searchMode').val() === "true") {
 				// マイリストの検索をしているページを出す
-				initPagingMylistSearch(myListSearch);
+				initPagingMylist(myListSearch);
 			} else {
 				// 普通のマイリストを出す
 				initPagingMylist(getMyList);
@@ -345,9 +371,11 @@ function styleListChange() {
 			if ($('#searchMode').val() === "true") {
 				// 特定のタグの検索をしているページを出す
 				initPagingMylist(tagSearch);
+				console.log("tokuteino tag");
 			} else {
 				// 普通の特定のタグを出す
 				initPagingMylist(getTagArticleList);
+				console.log("def tag");
 			}
 		}
 		break;
