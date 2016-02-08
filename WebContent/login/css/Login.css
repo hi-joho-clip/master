@@ -11,6 +11,11 @@
 /* Simple Reset */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+.birth {
+	padding-bottom: 1em;
+    padding-top: 1em;
+}
+
 /* body */
 body {
   background: #333;
