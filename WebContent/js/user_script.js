@@ -389,7 +389,7 @@ function nick() {
 			if (json.flag == 0) {
 				toastr.error(json.state);
 			} else {
-				location.href = hostURL + "/login/userconfirmation.html";
+				location.href = hostURL + "/login/info.html";
 				toastr.success(json.state);
 			}
 		};
