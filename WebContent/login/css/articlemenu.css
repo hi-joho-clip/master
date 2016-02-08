@@ -38,7 +38,9 @@ h1.text-center {
 font-size:6.5em;
 -webkit-margin-before: 0.1em;
 -webkit-margin-after: 0.1em;
+ margin: 0.1em;
 }
+
 
 p {
 font-size:39px;
