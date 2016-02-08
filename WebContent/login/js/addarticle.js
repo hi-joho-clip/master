@@ -4,7 +4,8 @@ function addArticle() {
 
 	// getArticle_id(article_id);//html内の<div
 	// UTF-8で取得する
-	var jsonParam = 'url=' + encodeURIComponent($("#search-1").val());
+	var jsonParam = 'url=' + encodeURIComponent($("#search-2").val());
+	console.log(jsonParam);
 	// Nonceを載せる
 	jsonParam = jsonParam + "&nonce=" + $('#nonce').val();
 	console.log("log:" + encodeURIComponent($("#search-1e").html()));
@@ -16,22 +17,28 @@ function addArticle() {
 			console.log("表示まできてる");
 			// グリッドが存在すると記事表示なの
 			if ($('div.grid-sizer')[0]) {
-				// 記事IDから記事を取得して、追加する
-				var username = getLocalStorage('username');
-				getArticle(username, json.article_id).then(function(json) {
-					if ($('#mode').val() === "tile") {
-
-					} else if ($('#mode').val() === "list") {
-						addListView(json);
-					}
-				});
+				getOneArticle(json.article_id, addArticle_call);
 				toastr.success(json.state);
 			} else {
+				console.log('HERE!');
 				toastr.success(json.state);
 			}
 		}
 	};
 	getJSON(URL, jsonParam, update_article);
+}
+
+function addArticle_call(json) {
+	console.log('art_call' + getLocalStorage('Style'));
+	if (getLocalStorage('Style')=== "tile") {
+
+
+	} else if (getLocalStorage('Style') === "list") {
+		console.log('list');
+		$("#search-2").val('');
+		$('ol#' + json.article_id).remove();
+		addListView(json);
+	}
 }
 
 
@@ -40,6 +47,13 @@ function addArticle() {
  * @param json
  */
 function addListView(json) {
+
+	var flag="";
+	if(json.favflag==true){
+		flag="★"+json.title;
+	}else if(json.favflag==false){
+		flag=json.title;
+	}
 	$myList = $("<ol id='" + json.article_id+ "'>"+
 			"<a href='../login/article.html?"+json.article_id+"'><li class='first'>"+
 				"<div class='dan'>"+
@@ -81,4 +95,8 @@ function addListView(json) {
 			"</li></a>"+
 		"</ol>");
 	$grid.prepend($myList).isotope('prepended', $myList).trigger('create');
+	if(json.favflag==true){
+		//console.log('#favtitle'+json[i].article_id);
+		$('#favtitle'+json.article_id).attr('style', 'color:#FF9800');
+	}//#FFEB3B
 }

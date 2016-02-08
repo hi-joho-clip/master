@@ -13,6 +13,8 @@ function getOffFriendList() {
 
 function createFriendList(json) {
 
+	//console.log(json);
+
 	var date_obj;
 	for ( var i = 0; i < json.length; i++) {
 		date_obj = new Date(json[i].created);
@@ -21,7 +23,7 @@ function createFriendList(json) {
 
 		var arrayFriend = [];
 		// リクエスト中の一覧
-		if (json[i].status === 2) {
+		if (json[i].status === 2 && getLocalStorage('online') === 'true') {
 			// リクエスト申請したユーザ一覧
 			$('#table-body')
 					.append(
@@ -54,8 +56,9 @@ function createFriendList(json) {
 		}
 	}
 
+	//console.log( JSON.stringify(arrayFriend));
 	if (isSettinOnLine() == true) {
-		setLocalStorage('friendList', JSON.stringify(arrayFriend));
+		setLocalStorage('friendList', JSON.stringify(json));
 	}
 	$('#friend-table').datatable({
 		pageSize : 50,

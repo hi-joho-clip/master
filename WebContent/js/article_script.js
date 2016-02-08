@@ -89,25 +89,7 @@ function getMyList(page) {
 			function(resolve, reject) {
 				var func = get_mylists;
 				$('h1.title').html('マイリスト');
-				if (tileView()) {
-					func = get_mylists;
-					$('div.stylebutton')
-							.html(
-									'<button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button>');
-					$('div#themebutton')
-							.html(
-									'<button id="themachange" title="テーマ切り替え"onclick="javascript:changeColor()" style="visibility: hidden;">'
-											+ '<img src="img/thema.png"style="visibility: visible; width: 25px;"></button>');
-				} else {
-					func = get_mylists_list;
-					$('div.stylebutton')
-							.html(
-									'<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
-					$('div#themebutton')
-							.html(
-									'<button id="themachange" title="テーマ切り替え"onclick="javascript:changeColor()" style="visibility: hidden;">'
-											+ '<img src="img/thema.png"style="visibility: visible; width: 25px;"></button>');
-				}
+				func = changeViewSwitti(get_mylists, get_mylists_list);
 				var jsonParam = 'page=' + page + '&article_id='
 						+ $('#lastid').val();// 送りたいデータ(ページ番号）
 				var URL = hostURL + "/mylist";
@@ -120,9 +102,9 @@ function getMyList(page) {
 					console.log('保存プロセス');
 					setStorage(json);
 					resolve();
-				}['catch'](function(error) {
+				})['catch'](function(error) {
 					reject();
-				}));
+				});
 			});
 }
 // お気に入り
@@ -131,25 +113,8 @@ function getFavList(page) {
 			function(resolve, reject) {
 
 				$('h1.title').html('お気に入り');
-				if (tileView()) {
-					func = get_mylists;
-					$('div.stylebutton')
-							.html(
-									'<button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button>');
-					$('div#themebutton')
-							.html(
-									'<button id="themachange" title="テーマ切り替え"onclick="javascript:changeColor()" style="visibility: hidden;">'
-											+ '<img src="img/thema.png"style="visibility: visible; width: 25px;"></button>');
-				} else {
-					func = get_mylists_list;
-					$('div.stylebutton')
-							.html(
-									'<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
-					$('div#themebutton')
-							.html(
-									'<button id="themachange" title="テーマ切り替え"onclick="javascript:changeColor()" style="visibility: hidden;">'
-											+ '<img src="img/thema.png"style="visibility: visible; width: 25px;"></button>');
-				}
+
+				func = changeViewSwitti(get_mylists, get_mylists_list);
 
 				var jsonParam = 'page=' + page + '&article_id='
 						+ $('#lastid').val();// 送りたいデータ
@@ -164,27 +129,8 @@ function getFavList(page) {
 function getShareList(page) {
 	$('h1.title').html(getSessionStorage('friend'));
 	var func = get_sharelists;
-	if (tileView()) {
-		func = get_sharelists;
-		$('div.stylebutton')
-				.html(
-						'<button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button>');
-		$('div#themebutton')
-				.html(
-						'<button id="themachange" title="テーマ切り替え"onclick="javascript:changeColor()" style="visibility: hidden;">'
-								+ '<img src="img/thema.png"style="visibility: visible; width: 25px;"></button>');
 
-	} else {
-		func = get_sharelists_list;
-		$('div.stylebutton')
-				.html(
-						'<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
-		$('div#themebutton')
-				.html(
-						'<button id="themachange" title="テーマ切り替え"onclick="javascript:changeColor()" style="visibility: hidden;">'
-								+ '<img src="img/thema.png"style="visibility: visible; width: 25px;"></button>');
-
-	}
+	func = changeViewSwitti(get_sharelists, get_sharelists_list);
 
 	var jsonParam = "friend_user_id=" + getSessionStorage('shareLists')
 			+ '&page=' + page + "&article_id=" + $('#lastid').val();// 送りたいデータ
@@ -236,27 +182,38 @@ function getOffShareList(page) {
 }
 
 
-function changeViewSwitti() {
+function changeViewSwitti(tile, list) {
+	var func;
 	if (tileView()) {
-
+		func = tile;
 		$('div.stylebutton')
 				.html(
-						'<button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button>');
+						'<div id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></div>');
 		$('div#themebutton')
 				.html(
-						'<button id="themachange" title="テーマ切り替え"onclick="javascript:changeColor()" style="visibility: hidden;">'
-								+ '<img src="img/thema.png"style="visibility: visible; width: 25px;"></button>');
-
+						'<div id="themachange" title="テーマ切り替え" style="visibility: hidden;">'
+								+ '<img onclick="javascript:changeColor()" src="img/thema.png"style="visibility: visible; width: 25px;"></div>');
 	} else {
+		func = list;
 		$('div.stylebutton')
 				.html(
-						'<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
+						'<div id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></div>');
 		$('div#themebutton')
 				.html(
-						'<button id="themachange" title="テーマ切り替え"onclick="javascript:changeColor()" style="visibility: hidden;">'
-								+ '<img src="img/thema.png"style="visibility: visible; width: 25px;"></button>');
-
+						'<div id="themachange" title="テーマ切り替え"onclick="javascript:changeColor()" style="visibility: hidden;">'
+								+ '<img src="img/thema.png"style="visibility: visible; width: 25px;"></div>');
 	}
+	return func;
+}
+
+
+//記事の表示
+function getOneArticle(article_id, callback) {
+
+	var jsonParam = "article_id=" + article_id;// 送りたいデータ
+	var URL = hostURL + "/viewarticle";
+	var setappend = callback;
+	getJSON(URL, jsonParam, setappend);
 }
 
 // 記事の表示
