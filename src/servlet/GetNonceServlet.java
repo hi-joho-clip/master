@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
@@ -40,6 +41,13 @@ public class GetNonceServlet extends HttpServlet {
 
 		Cookie c_nonce = new Cookie("nonce", nonce.toString());
 		response.addCookie(c_nonce);
+
+		String resp = "{\"state\": \"ok\"}";
+		response.setContentType("application/json;charset=UTF-8");
+		response.setHeader("Cache-Control", "private");
+		PrintWriter out = response.getWriter();
+		out.print(resp);
+		out.close();
 
 	}
 }

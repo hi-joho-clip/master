@@ -14,7 +14,7 @@ function initPromise() {
 		operative.Promise = ES6Promise.Promise;
 	}
 }
-var hostURL = "http://localhost:8080/clipMaster"; // http://clip-sc.com
+var hostURL = "http://clip-sc.com"; // http://localhost:8080/clipMaster
 
 /**
  * URLからJSONオブジェクトを取得する
@@ -30,7 +30,7 @@ function getURL(URL, param) {
 
 		// サーバからアーティクルリストを取得する
 
-		// console.log('parameter:' + param);
+		console.log('parameter:' + URL);
 		if (URL === "") {
 			reject(new Error("url is null"));
 		}

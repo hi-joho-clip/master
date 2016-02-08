@@ -205,10 +205,11 @@ function logout() {
 	var setappend = function(json) {
 		userList = "";
 
-		if (!(json.redirect === 'logout')) {
+		if (json.redirect === 'logout') {
 			console.log('logout');
 			// ログアウト時はデータベースを削除する
 			deleteDatabase("article");
+			alert('delete');
 			location.href = hostURL + json.redirect_url;
 		}
 	};
