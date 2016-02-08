@@ -197,31 +197,31 @@ function getJSON(URL, param, callback) {
 	});
 }
 
-/**
- * 記事追加用リンク
- */
-function addArticle() {
-
-	// getArticle_id(article_id);//html内の<div
-	// UTF-8で取得する
-	var jsonParam = 'url=' + encodeURIComponent($("#search-2").val());
-	console.log(jsonParam);
-	// Nonceを載せる
-	jsonParam = jsonParam + "&nonce=" + $('#nonce').val();
-	console.log("log:" + encodeURIComponent($("#search-1e").html()));
-	var URL = hostURL + "/addarticle";
-	var update_article = function(json) {
-
-		if (json.flag == 0) {
-			toastr.error(json.state);
-		} else {
-			$('#search-2').val('');
-			toastr.success(json.state);
-
-		}
-	};
-	getJSON(URL, jsonParam, update_article);
-}
+///**
+// * 記事追加用リンク
+// */
+//function addArticle() {
+//
+//	// getArticle_id(article_id);//html内の<div
+//	// UTF-8で取得する
+//	var jsonParam = 'url=' + encodeURIComponent($("#search-2").val());
+//	console.log(jsonParam);
+//	// Nonceを載せる
+//	jsonParam = jsonParam + "&nonce=" + $('#nonce').val();
+//	console.log("log:" + encodeURIComponent($("#search-1e").html()));
+//	var URL = hostURL + "/addarticle";
+//	var update_article = function(json) {
+//
+//		if (json.flag == 0) {
+//			toastr.error(json.state);
+//		} else {
+//			$('#search-2').val('');
+//			toastr.success(json.state);
+//
+//		}
+//	};
+//	getJSON(URL, jsonParam, update_article);
+//}
 
 function thumView(json, width, height) {
 	if (json.thum != null) {

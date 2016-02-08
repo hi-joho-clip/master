@@ -9,8 +9,9 @@
 }
 
 
+
 /*PCを想定したディスプレイサイズ*/
-@media only screen and (min-width: 1024px) {
+@media only screen and (min-width: 1200px) {
 
 /* force scrollbar, prevents initial gap */
 html {
@@ -60,6 +61,58 @@ body {
 .grid-item--3 { width: 448px;  height: 448px; }
 
 }
+
+@media only screen and (max-width: 1200px) {
+
+/* force scrollbar, prevents initial gap */
+html {
+  /*overflow-y: hidden;*/
+}
+
+body {
+  font-family:Avenir , "Open Sans" , "Helvetica Neue" , Helvetica , Arial , Verdana , Roboto ,"游ゴシック" ,  "ヒラギノ角ゴ Pro W3"  , "メイリオ"  , "ＭＳ Ｐゴシック"  ,  sans-serif;
+
+}
+
+
+/* ---- grid ---- */
+
+.grid {
+  /*background: #333;*/
+    max-width: 1500px;
+
+}
+
+/* clear fix */
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* ---- .element-item ---- */
+
+/* 5 columns, percentage width */
+.grid-item,
+.grid-sizer {
+  width: 450px;
+  margin: 4px 4px 4px 4px;
+}
+
+.grid-item {
+  float: left;
+  height: 450px;
+  background: #0D8;
+  border: 2px solid #333;
+  border-color: hsla(0, 0%, 0%, 0.7);
+
+}
+
+.grid-item--width2 { width: 709px; }
+.grid-item--3 { width: 709px;  height: 609px; }
+
+}
+
 
 
 /*NEXUS9 or iPad(横向き)を想定したディスプレイサイズ*/
@@ -116,6 +169,8 @@ body {
 .grid-item--3 { width: 460px;  height: 468px; }
 
 }
+
+
 
 
 /*NEXUS9 or iPad(縦向き)を想定したディスプレイサイズ*/

@@ -11,6 +11,11 @@
 /* Simple Reset */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+.birth {
+	padding-bottom: 1em;
+    padding-top: 1em;
+}
+
 /* body */
 body {
   background: #333;
@@ -39,12 +44,14 @@ form {
 .form-item {
   margin-bottom: 0.75em;
   width: 100%;
+  border-bottom: 2px solid #e9e9e9;
+  text-align: left;
 }
 
 .form-item input {
   background: #fafafa;
   border: none;
-  border-bottom: 2px solid #e9e9e9;
+
   color: #666;
   font-family:Avenir , "Open Sans" , "Helvetica Neue" , Helvetica , Arial , Verdana , Roboto ,"游ゴシック" ,  "ヒラギノ角ゴ Pro W3"  , "メイリオ"  , "ＭＳ Ｐゴシック"  ,  sans-serif;
   font-size: 1em;

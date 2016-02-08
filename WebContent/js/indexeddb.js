@@ -277,23 +277,25 @@ function getIDEArticleList(username, page, share_id, title, fav_state, direct) {
 		// console.log(guid + page);
 
 		var offset_filter;
+		console.log(page);
 
 		var direct = "prev";
 
-		if (!fav_state) {
-			//
-			offset_filter = {
-				filter : fav_false,
-				offset : page * 20 - 20,
-				limit : 20,
-				direction : direct
-			};
-		} else {
+		if (fav_state) {
 			// 絶対お気に入り
 			console.log("fav_false");
 			offset_filter = {
 				filter : fav_true,
-				offset : page * 20 - 20,
+				offset : page * 20 - 18,
+				limit : 20,
+				direction : direct
+			};
+
+		} else {
+			//
+			offset_filter = {
+				filter : fav_false,
+				offset : page * 20 - 18,
 				limit : 20,
 				direction : direct
 			};
@@ -388,7 +390,7 @@ function getIDEArticleTagList(username, page, title, tag, direct) {
 		//
 		offset_filter = {
 			filter : fav_false,
-			offset : page * 20 - 20,
+			offset : page * 20 - 19,
 			limit : 20,
 			direction : direct
 		};
