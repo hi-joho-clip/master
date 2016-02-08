@@ -11,13 +11,13 @@ function addArticle() {
 	var URL = hostURL + "/addarticle";
 	var update_article = function(json) {
 		if(json.flag==0){
-		toastr.error(json.state);
+			toastr.error(json.state);
 		}else{
 			console.log("表示まできてる");
 			// グリッドが存在すると記事表示なの
 			if ($('div.grid-sizer')[0]) {
 				// 記事IDから記事を取得して、追加する
-				var username = docCookies.docCookies.getItem('username');
+				var username = getLocalStorage('username');
 				getArticle(username, json.article_id).then(function(json) {
 					if ($('#mode').val() === "tile") {
 
