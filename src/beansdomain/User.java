@@ -284,6 +284,7 @@ public class User {
 		if (userDTO.getUser_id() != 0) {
 			flag = true;
 			this.user_id = userDTO.getUser_id();
+			this.nickname = userDTO.getNickname();
 		}
 		return flag;
 	}
@@ -313,7 +314,8 @@ public class User {
 
 		if (userDTO.getUser_id() != 0) {
 			flag = true;
-			this.user_id = userDTO.getUser_id();
+			this.user_name= userDTO.getUser_name();
+			this.nickname = userDTO.getNickname();
 		}
 		return flag;
 	}

@@ -512,3 +512,7 @@ function jump(){
 function userjump(){
 	location.href = hostURL + "/login/info.html";
 }
+
+function indexjump(){
+	location.href = hostURL + "/login/index.html";
+}

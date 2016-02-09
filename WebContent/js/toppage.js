@@ -20,7 +20,7 @@ function initTopPage() {
 
 	setLocalStorage('auto','true');
 
-	if (isSupported([ 'chrome', 'opera', 'firefox', 'ie11', 'ie10' ])) {
+	if (true) {//isSupported([ 'chrome', 'opera', 'firefox', 'ie11', 'ie10' ])) {
 
 		// IDBに自身のキャッシュデータがない場合にアラート
 //		getIDBAllArticleList(username).then(
