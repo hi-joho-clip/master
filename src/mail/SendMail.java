@@ -23,7 +23,7 @@ public class SendMail extends Thread {
 	private String title;
 	private String message;
 	private String header = "<br><br>===========================================================" +
-			"<br>　CLIP 宇宙猫<br>　http://clip-sc.com/<br>　Mailto：clip.spcat@gmail.com" +
+			"<br>　CLIP 宇宙猫<br>　https://clip-sc.com/<br>　Mailto：clip.spcat@gmail.com" +
 			"<br>===========================================================<br><br>";
 
 	public boolean addUserMail(String address, String username, String nickname) {
@@ -57,17 +57,16 @@ public class SendMail extends Thread {
 
 	}
 
-	public boolean userIDMail(String address, String username, String nickname, int user_id) {
+	public boolean userIDMail(String address, String username, String nickname) {
 		this.address = address;
 		this.username = username;
 		this.nickname = nickname;
-		this.user_id = user_id;
 
-		this.title = "[CLIP]ユーザIDのご確認のお知らせ";
+		this.title = "[CLIP]ユーザ名のご確認のお知らせ";
 
-		this.message = "<br>★ユーザIDのご確認のお知らせ★<br><br><div>いつも「CLIP」をご利用いただき、ありがとうございます。<br><br>" +
+		this.message = "<br>★ユーザ名のご確認のお知らせ★<br><br><div>いつも「CLIP」をご利用いただき、ありがとうございます。<br><br>" +
 				"ユーザIDを送信しましたので、ご確認ください。<br><br><br>" +
-				"ニックネーム:" + nickname + "<br>ユーザID:" + user_id +
+				"ニックネーム:" + nickname + "<br>ユーザ名:" + username +
 				"<br><br><br><a href='http://clip-sc.com/login/login.html'>ログインページ</a>" + header;
 		return true;
 
