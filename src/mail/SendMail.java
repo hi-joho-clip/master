@@ -18,6 +18,8 @@ public class SendMail extends Thread {
 	private String address;
 	private String username;
 	private String nickname;
+	private String user_id;
+	private String password;
 	private String title;
 	private String message;
 	private String header = "<br><br>===========================================================" +
@@ -35,6 +37,52 @@ public class SendMail extends Thread {
 				"ユーザ登録を下記のとおり完了いたしました。<br><br>ご登録内容のご確認ください。<br><br><br>ユーザネーム:" +
 				username + "<br>ニックネーム:" + nickname +
 				"<br><br><br><a href='http://clip-sc.com/login/login.html'>ログインページ</a>" + header;
+		return true;
+
+	}
+
+	public boolean forgotPassMail(String address, String username, String nickname, String password) {
+		this.address = address;
+		this.username = username;
+		this.nickname = nickname;
+		this.password = password;
+
+		this.title = "[CLIP]パスワードを再発行しました";
+
+		this.message = "<br>★パスワード再発行のお知らせ★<br><br><div>いつも「CLIP」をご利用いただき、ありがとうございます。<br><br>" +
+				"パスワードを再発行しましたので、お知らせいたします。<br><br>パスワードをご確認ください。<br><br><br>" +
+				"<br>ニックネーム:" + nickname + "<br>パスワード:" + password +
+				"<br><br><br><a href='http://clip-sc.com/login/login.html'>ログインページ</a>" + header;
+		return true;
+
+	}
+
+	public boolean userIDMail(String address, String username, String nickname, String user_id) {
+		this.address = address;
+		this.username = username;
+		this.nickname = nickname;
+		this.user_id = user_id;
+
+		this.title = "[CLIP]ユーザIDのご確認のお知らせ";
+
+		this.message = "<br>★ユーザIDのご確認のお知らせ★<br><br><div>いつも「CLIP」をご利用いただき、ありがとうございます。<br><br>" +
+				"ユーザIDを送信しましたので、ご確認ください。<br><br><br>" +
+				"ニックネーム:" + nickname + "<br>ユーザID:" + user_id +
+				"<br><br><br><a href='http://clip-sc.com/login/login.html'>ログインページ</a>" + header;
+		return true;
+
+	}
+
+	public boolean userInfoMail(String address,String username, String nickname) {
+		this.address = address;
+		this.username = username;
+		this.nickname = nickname;
+
+		this.title = "[CLIP]会員情報が変更されました";
+
+		this.message = "<br>★CLIP  会員情報変更のお知らせ★<br><br><div>いつも「CLIP」をご利用いただき、ありがとうございます。<br><br>" +
+				"会員情報が変更されましたので、お知らせいたします<br><br>このメールは会員情報が変更された際に、確認のために送信しています。<br><br><br>"+
+				 "<br><br><br><a href='http://clip-sc.com/login/login.html'>ログインページ</a>" + header;
 		return true;
 
 	}
