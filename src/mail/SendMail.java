@@ -18,7 +18,7 @@ public class SendMail extends Thread {
 	private String address;
 	private String username;
 	private String nickname;
-	private String user_id;
+	private int user_id;
 	private String password;
 	private String title;
 	private String message;
@@ -51,13 +51,13 @@ public class SendMail extends Thread {
 
 		this.message = "<br>★パスワード再発行のお知らせ★<br><br><div>いつも「CLIP」をご利用いただき、ありがとうございます。<br><br>" +
 				"パスワードを再発行しましたので、お知らせいたします。<br><br>パスワードをご確認ください。<br><br><br>" +
-				"<br>ニックネーム:" + nickname + "<br>パスワード:" + password +
+				/*"<br>ニックネーム:" + nickname +*/ "<br>パスワード:" + password +
 				"<br><br><br><a href='http://clip-sc.com/login/login.html'>ログインページ</a>" + header;
 		return true;
 
 	}
 
-	public boolean userIDMail(String address, String username, String nickname, String user_id) {
+	public boolean userIDMail(String address, String username, String nickname, int user_id) {
 		this.address = address;
 		this.username = username;
 		this.nickname = nickname;

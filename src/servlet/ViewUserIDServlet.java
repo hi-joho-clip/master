@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import mail.SendMail;
 import net.arnx.jsonic.JSON;
 
 import beansdomain.User;
@@ -77,6 +78,13 @@ public class ViewUserIDServlet extends HttpServlet {
 						response.addCookie(visitedCookie);
 					}
 				}
+
+				SendMail mail = new SendMail();
+				// コンストラクタ替わりに設定必要
+				mail.userIDMail(userbean.getMailaddress(), userbean.getUser_name(), userbean.getNickname(),user_id);
+				// スレッドスタート
+				mail.start();
+
 				response.sendRedirect(URL + "/confirmation.html");
 			} else {
 
