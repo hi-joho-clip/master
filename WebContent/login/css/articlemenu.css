@@ -11,6 +11,14 @@ font-weight:100;
 -webkit-text-size-adjust: 100%;
 }
 
+a.art-title :hover {
+	color :#CD0A0A;
+}
+
+div.absolute :hover {
+	color :#CD0A0A;
+}
+
 .url {
 	font-size:0.8em;
 	display: block;

@@ -15,9 +15,9 @@
 <link href="css/grid.css" rel="stylesheet">
 <link href="css/button.css" rel="stylesheet" />
 <link href="css/userinfo.css" rel="stylesheet">
-<link href="css/Configuration.css" rel="stylesheet">
 <link rel='stylesheet' href='css/toastr.css' />
 <link id="viewcolor" href="css/articlemenu_black.css" rel="stylesheet">
+<link href="../css/datatable.css" rel="stylesheet">
 <link rel="shortcut icon" href="img/favicon.png">
 
 <script src="../js/1.11.1_jquery.min.js"></script>
@@ -53,98 +53,98 @@
 
 <body>
 
-			<section class="section">
-				<div class="head-bar">
-					<div class="container-fluid">
-						<h1 class="text-center">
-				<a href="index.html"  onclick="javascript:setSessionStorage('viewMode','0');">CLIP</a>
-                </h1>
-					</div>
+	<section class="section">
+		<div class="head-bar">
+			<div class="container-fluid">
+				<h1 class="text-center">
+					<a href="index.html"
+						onclick="javascript:setSessionStorage('viewMode','0');">CLIP</a>
+				</h1>
+			</div>
+		</div>
+	</section>
+
+	<div class="pure-container" data-effect="pure-effect-slide">
+		<input type="checkbox" id="pure-toggle-left" class="pure-toggle"
+			data-toggle="left" /> <label class="pure-toggle-label"
+			for="pure-toggle-left" data-toggle-label="left"><span
+			class="pure-toggle-icon"></span></label>
+
+
+		<nav class="pure-drawer" data-position="left">
+
+
+
+			<p>
+			<div id="bg-link">
+				<a href="info.html"><h4>ユーザ情報</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="index.html"
+					onclick="javascript:setSessionStorage('viewMode','0');"><h4>マイリスト</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="index.html"
+					onclick="javascript:setSessionStorage('viewMode','1');"><h4>お気に入り</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="taglist.html"><h4>タグ</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="friend.html"><h4>フレンド一覧</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="friendbox.html"><div id="notice"></div></a>
+			</div>
+			<div id="bg-link">
+				<a href="friendsearch.html"><h4>フレンド検索</h4></a>
+			</div>
+
+		</nav>
+
+
+		<label class="pure-overlay" for="pure-toggle-left" data-overlay="left"></label>
+
+
+		<div class="pure-pusher-container">
+			<div class="pure-pusher">
+				<!-- このDIV内にコンテンツをいれるんだぞい -->
+				<div class="remodal" data-remodal-id="kyoka"
+					data-remodal-options="hashTracking: false">
+					<a data-remodal-action="close" class="remodal-close"></a>
+
+					<div id="limitBox"></div>
 				</div>
-			</section>
+				<div class="remodal" data-remodal-id="kyohi"
+					data-remodal-options="hashTracking: false,closeOnOutsideClick:false">
+					<a data-remodal-action="close" class="remodal-close"></a>
+					<h2>フレンド拒否</h2>
 
-		  <div class="pure-container" data-effect="pure-effect-slide">
-            <input type="checkbox" id="pure-toggle-left" class="pure-toggle" data-toggle="left"/>
-
-
-
-            <label class="pure-toggle-label" for="pure-toggle-left" data-toggle-label="left"><span class="pure-toggle-icon"></span></label>
-
-
-            <nav class="pure-drawer" data-position="left">
-
+					<a data-remodal-action="confirm" class="remodal-confirm" href="#"
+						onclick="javascript:denyRequest(document.getElementById('user_id').innerHTML);">OK</a>
+					<a data-remodal-action="cancel" class="remodal-cancel" href="#"
+						onclick="javascript:return false;">キャンセル</a>
+				</div>
 
 
-                 <p>
-	              <div id="bg-link">
-					<a href="info.html"><h4>ユーザ情報</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="index.html" onclick="javascript:setSessionStorage('viewMode','0');"><h4>マイリスト</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="index.html" onclick="javascript:setSessionStorage('viewMode','1');"><h4>お気に入り</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="taglist.html" ><h4>タグ</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="friend.html"><h4>フレンド一覧</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="friendbox.html"><div id ="notice"></div></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="friendsearch.html"><h4>フレンド検索</h4></a>
-				 </div>
-
-            </nav>
+				<div id="user_id"></div>
+				<div class="container">
+					<div style="margin: 100px auto;">
+						<h1 class="title">フレンドボックス</h1>
+						<div class="form-wrapper">
 
 
-            <label class="pure-overlay" for="pure-toggle-left" data-overlay="left"></label>
+							<!-- <div id="info"></div> -->
 
+							<table id="friend-table">
+								<thead>
+								</thead>
+								<tbody id="table-body">
 
-	        <div class="pure-pusher-container">
-				<div  class="pure-pusher" >
-					<!-- このDIV内にコンテンツをいれるんだぞい -->
+								</tbody>
+							</table>
 
-					<div id="user_id"></div>
-					<div class="remodal" data-remodal-id="kyoka"
-						data-remodal-options="hashTracking: false">
-						<a data-remodal-action="close" class="remodal-close"></a>
-
-						<div id="limitBox"></div>
-					</div>
-
-					<div class="remodal" data-remodal-id="kyohi"
-						data-remodal-options="hashTracking: false,closeOnOutsideClick:false">
-						<a data-remodal-action="close" class="remodal-close"></a>
-						<h2>フレンド拒否</h2>
-
-						<a data-remodal-action="confirm" class="remodal-confirm" href="#"
-							onclick="javascript:denyRequest(document.getElementById('user_id').innerHTML);">OK</a>
-						<a data-remodal-action="cancel" class="remodal-cancel" href="#"
-							onclick="javascript:return false;">キャンセル</a>
-					</div>
-					<div class="container">
-						<div style="margin: 100px auto;">
-							<h1 class="title">フレンドボックス</h1>
-							<div class="form-wrapper">
-
-
-								<!-- <div id="info"></div> -->
-								<div class="remodal-bg">
-								<table>
-									<thead>
-									</thead>
-									<tbody id="table-body">
-
-									</tbody>
-									</table>
-									</div>
-
-								<div class="form-footer">
-							</div>
+							<div class="form-footer"></div>
 						</div>
 					</div>
 					<div class="hiddenarea"></div>
@@ -154,13 +154,16 @@
 	</div>
 
 	<script>
-		$(document).ready(function() {
-			$("div.hiddenarea").append('<input type="hidden" id="nonce" value="'+ docCookies.getItem("nonce") + '">');
-			getFriendRequest();
-			notice();
-			limitBox();
-			colorMode();
-		});
+		$(document).ready(
+				function() {
+					$("div.hiddenarea").append(
+							'<input type="hidden" id="nonce" value="'
+									+ docCookies.getItem("nonce") + '">');
+					getFriendRequest();
+					notice();
+					limitBox();
+					colorMode();
+				});
 	</script>
 
 </body>

@@ -15,7 +15,7 @@
 <link href="css/articlemenu.css" rel="stylesheet">
 <link href="css/articlemenu_black.css" rel="stylesheet">
 <link href="css/grid.css" rel="stylesheet">
-<link href="css/button.css" rel="stylesheet"/>
+<link href="css/button.css" rel="stylesheet" />
 <link href="css/userinfo.css" rel="stylesheet">
 <link href="css/Configuration.css" rel="stylesheet">
 <link rel='stylesheet' href='css/toastr.css' />
@@ -47,120 +47,133 @@
 </head>
 <body>
 
-	<section>
-
-
-		<div class="pure-container" data-effect="pure-effect-slide">
-			<input type="checkbox" id="pure-toggle-left" class="pure-toggle"
-				data-toggle="left" /> <label
-				class="pure-toggle-label" for="pure-toggle-left"
-				data-toggle-label="left"><span class="pure-toggle-icon"></span></label>
-
-
-            <nav class="pure-drawer" data-position="left">
-
-
-
-                 <p>
-	              <div id="bg-link">
-					<a href="info.html"><h4>ユーザ情報</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="index.html" onclick="javascript:setSessionStorage('viewMode','0');"><h4>マイリスト</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="index.html" onclick="javascript:setSessionStorage('viewMode','1');"><h4>お気に入り</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="taglist.html" ><h4>タグ</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="friend.html"><h4>フレンド一覧</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="friendbox.html"><div id ="notice"></div></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="friendseach.html"><h4>フレンド検索</h4></a>
-				 </div>
-				</p>
-            </nav>
-
-            <label class="pure-overlay" for="pure-toggle-left" data-overlay="left"></label>
-
-
-	<div class="container">
-			<div style="margin: 100px auto;">
-		<h1 class="title">パスワード変更</h1>
-<div class="form-wrapper">
-
-
-	<br>
-
-
-
-	<!--　変更  -->
-	<form id="form" method="post" >
-		<div class="form-item">
-			<!--　新しいパスワード  -->
-			<label for="newpassword"></label> <input type="password"
-				name="newpassword" class="validate[required] text-input"
-				required="required" placeholder="New Password" id="passwd"></input>
-		</div>
-		<div class="form-item">
-			<!--　新しいパスワード（確認）  -->
-			<label for="newpassword2"></label> <input type="password"
-				name="newpassword2" class="validate[required,equals[passwd]] text-input"
-				required="required" placeholder="New Password(確認)" id="re_passwd"></input>
-		</div>
-		<div class="form-item">
-			<!--　現在のパスワード  -->
-			<label for="password"></label> <input type="password" name="password"
-				required="required" placeholder="Password(現在)"  id="now_pass"></input>
-		</div>
-
-		<div id="pass"></div>
-
-		<!--　変更ボタン  -->
-		<div class="button-panel">
-			<input type="button" class="button" title="Change" value="Change" onclick="javascript:pass();"></input>
-		</div>
-		<input type="hidden" id="nonce" value="" name="nonce" >
-	</form>
-	<div class="form-footer">
-
-		<!--　戻る  -->
-		<p>
-			<a href="info.html">BACK</a>
-		</p>
-
-	</div>
-</div>
 	<section class="section">
-					<div class="head-bar">
-						<div class="container-fluid">
-							<h1 class="text-center">
+		<div class="head-bar">
+			<div class="container-fluid">
+				<h1 class="text-center">
 
-							<a href="index.html"  onclick="javascript:setSessionStorage('viewMode','0');">CLIP</a>
+					<a href="index.html"
+						onclick="javascript:setSessionStorage('viewMode','0');">CLIP</a>
 
-							</h1>
+				</h1>
+			</div>
+		</div>
+	</section>
+
+
+	<div class="pure-container" data-effect="pure-effect-slide">
+		<input type="checkbox" id="pure-toggle-left" class="pure-toggle"
+			data-toggle="left" /> <label class="pure-toggle-label"
+			for="pure-toggle-left" data-toggle-label="left"><span
+			class="pure-toggle-icon"></span></label>
+
+
+		<nav class="pure-drawer" data-position="left">
+
+
+
+			<p>
+			<div id="bg-link">
+				<a href="info.html"><h4>ユーザ情報</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="index.html"
+					onclick="javascript:setSessionStorage('viewMode','0');"><h4>マイリスト</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="index.html"
+					onclick="javascript:setSessionStorage('viewMode','1');"><h4>お気に入り</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="taglist.html"><h4>タグ</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="friend.html"><h4>フレンド一覧</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="friendbox.html"><div id="notice"></div></a>
+			</div>
+			<div id="bg-link">
+				<a href="friendseach.html"><h4>フレンド検索</h4></a>
+			</div>
+			</p>
+		</nav>
+
+		<label class="pure-overlay" for="pure-toggle-left" data-overlay="left"></label>
+
+
+
+		<div class="pure-pusher-container">
+			<div class="pure-pusher">
+				<!-- このDIV内にコンテンツをいれるんだぞい -->
+				<div id="wrap">
+					<div class="container">
+						<div style="margin: 100px auto;">
+							<h1 class="title">パスワード変更</h1>
+							<div class="form-wrapper">
+
+
+								<br>
+								<!--　変更  -->
+								<form id="form" method="post">
+									<div class="form-item">
+										<!--　新しいパスワード  -->
+										<label for="newpassword"></label> <input type="password"
+											name="newpassword" class="validate[required] text-input"
+											required="required" placeholder="New Password" id="passwd"></input>
+									</div>
+									<div class="form-item">
+										<!--　新しいパスワード（確認）  -->
+										<label for="newpassword2"></label> <input type="password"
+											name="newpassword2"
+											class="validate[required,equals[passwd]] text-input"
+											required="required" placeholder="New Password(確認)"
+											id="re_passwd"></input>
+									</div>
+									<div class="form-item">
+										<!--　現在のパスワード  -->
+										<label for="password"></label> <input type="password"
+											name="password" required="required"
+											placeholder="Password(現在)" id="now_pass"></input>
+									</div>
+
+									<div id="pass"></div>
+
+									<!--　変更ボタン  -->
+									<div class="button-panel">
+										<input type="button" class="button" title="Change"
+											value="Change" onclick="javascript:pass();"></input>
+									</div>
+									<input type="hidden" id="nonce" value="" name="nonce">
+								</form>
+								<div class="form-footer">
+
+									<!--　戻る  -->
+									<p>
+										<a href="info.html">BACK</a>
+									</p>
+
+								</div>
+							</div>
+							<script>
+								jQuery(document).ready(function() {
+									jQuery("#form").validationEngine();
+								});
+								$(document)
+										.ready(
+												function() {
+													$('#nonce')
+															.val(
+																	docCookies
+																			.getItem("nonce"));
+												});
+							</script>
 						</div>
 					</div>
-				</section>
-
-<script>
-	jQuery(document).ready(function() {
-		jQuery("#form").validationEngine();
-	});
-	$(document).ready(function() {
-		$('#nonce').val(docCookies.getItem("nonce"));
-	});
-</script>
-</div>
-</div>
-
-
-</section>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
 
