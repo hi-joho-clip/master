@@ -207,6 +207,11 @@ function logout() {
 
 		if (json.redirect === 'logout') {
 			console.log('logout');
+			// storageclear
+			var local = localStorage;
+			var session = sessionStorage;
+			session.clear();
+			local.clear();
 			// ログアウト時はデータベースを削除する
 			deleteDatabase("article");
 			location.href = hostURL + json.redirect_url;

@@ -65,14 +65,15 @@ public class AddArticleServlet extends HttpServlet {
 					url = request.getParameter("url");//JSON
 					url = new String(url.getBytes("UTF-8"), "UTF-8");
 					user_id = (int) session.getAttribute("user_id");
-					mode = request.getParameter("mode");
+					if (request.getParameter("mode") != null) {
+						mode = request.getParameter("mode");
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				mode = ("FULL");
-
-				//System.out.println("URL:" + url);
-
+				//mode = ("NORMAL");
+				System.out.println("URL:" + url);
+				System.out.println("mode:" + mode);
 				// http://か,https://以外はダメ
 				if (url.startsWith("http://") || url.startsWith("https://")) {
 					SaveArticle save = new SaveArticle();

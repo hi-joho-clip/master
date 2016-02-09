@@ -115,6 +115,10 @@ var $grid;
 $(document).ready(
 		function() {
 
+			$('#search-2').on('click', function(e) {
+				  e.target.setSelectionRange(0, e.target.value.length);
+			});
+
 			$grid = $('.grid').isotope({
 				itemSelector : '.grid-item',
 
@@ -302,7 +306,7 @@ $(document).ready(
 
 			styleListChange();
 			console.log("onnline:" + isSettinOnLine());
-			if (isSettinOnLine()) {
+			if (isSettinOnLine() === true) {
 				initTopPage();
 			}
 

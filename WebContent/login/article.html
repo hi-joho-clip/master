@@ -36,6 +36,7 @@
 <script src="../js/lib/cookie.js"></script>
 <script type="text/javascript" src="../js/indexeddb.js"></script>
 <script type="text/javascript" src="../js/lib/kagedb.js"></script>
+<script type="text/javascript" src="js/addarticle.js"></script>
 
 
 
@@ -381,7 +382,7 @@ div[data-wysihtml5-dialog="createTable"] td {
 				<!-- このDIV内にコンテンツをいれるんだぞい -->
 
 				<div class="container">
-					<div style="margin: 100px auto;">
+					<div style="margin: 120px auto;">
 
 						<div class="view-title"></div>
 						<div class="changecolor">
@@ -390,6 +391,11 @@ div[data-wysihtml5-dialog="createTable"] td {
 								<button id="themachange" title="テーマ切り替え"
 									onclick="javascript:changeColor()" style="visibility: hidden;">
 									<img src="img/thema.png"
+										style="visibility: visible; width: 40px;">
+								</button>
+								<button id="addfullbutton" title="保存"
+									onclick="javascript:addFullArticle()" style="visibility: hidden;">
+									<img src="img/all.png"
 										style="visibility: visible; width: 40px;">
 								</button>
 							</div>
@@ -532,6 +538,9 @@ div[data-wysihtml5-dialog="createTable"] td {
 													$('#editable').attr(
 															'contenteditable',
 															'false');
+													$('#editable')
+													.attr('style',
+															'');
 													text_edit_flag = 'false';
 												}
 											});
@@ -552,6 +561,9 @@ div[data-wysihtml5-dialog="createTable"] td {
 													$('#editable').attr(
 															'contenteditable',
 															'false');
+													$('#editable')
+													.attr('style',
+															'');
 													text_edit_flag = 'false';
 
 												}
@@ -575,6 +587,7 @@ div[data-wysihtml5-dialog="createTable"] td {
 								});
 								$('#footerArea').remove();
 								$('#edit-button').remove();
+								$('#addfullbutton').remove();
 								getViewArticleOffline(location.search
 										.substring(1, location.search.length))
 
