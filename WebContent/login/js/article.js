@@ -119,6 +119,8 @@ $(document).ready(
 				  e.target.setSelectionRange(0, e.target.value.length);
 			});
 
+
+
 			$grid = $('.grid').isotope({
 				itemSelector : '.grid-item',
 
@@ -308,6 +310,8 @@ $(document).ready(
 			console.log("onnline:" + isSettinOnLine());
 			if (isSettinOnLine() === true) {
 				initTopPage();
+			} else if(isSettinOnLine() === false) {
+				colorOffline();
 			}
 
 		});
@@ -335,7 +339,6 @@ function styleListChange() {
 				initPagingMylist(getMyList);
 			}
 		} else if (isSettinOnLine() === false) {
-			$('#title').append('<h1 class="title" >マイリスト</h1>');
 
 			initPagingMylist(getOffMyList);
 
@@ -355,10 +358,6 @@ function styleListChange() {
 				initPagingMylist(getFavList);
 			}
 		} else if (isSettinOnLine() === false) {
-			$('.head-bar').css({
-				'background' : '#31708f'
-			});
-			toastr.warning("オフラインなんだなーこれ");
 
 			initPagingMylist(getOffFavList);
 		}
@@ -375,7 +374,7 @@ function styleListChange() {
 			} else {
 				// 普通の特定のタグを出す
 				initPagingMylist(getTagArticleList);
-				console.log("def tag");
+
 			}
 		} else {
 			initPagingMylist(getOffTagMyList);
@@ -398,7 +397,7 @@ function styleListChange() {
 			 * initPagingSharelist(getShareList,
 			 * getSessionStorage("shareLists")); initTopPage();
 			 */
-			toastr.warning("オンライン");
+			//toastr.warning("オンライン");
 
 		} else if (isSettinOnLine() === false) {
 			initPagingMylist(getOffShareList);

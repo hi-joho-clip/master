@@ -20,6 +20,7 @@ function getOffMyList(page) {
 		console.log("offline" + page);
 		var username = docCookies.getItem('username');
 
+		$('h1.title').html('マイリスト');
 		var word = '';
 
 		if ($('#searchMode').val() === "true") {
@@ -35,6 +36,7 @@ function getOffMyList(page) {
 				get_mylists_list(json);
 				resolve();
 			}
+			changeViewSwitti(get_mylists, get_mylists_list);
 		})['catch'](function(error) {
 			console.log(error);
 			reject();
@@ -56,6 +58,7 @@ function getOffFavList(page) {
 		console.log("offline" + page);
 		var username = docCookies.getItem('username');
 
+		$('h1.title').html('お気に入り');
 		var word = '';
 
 		if ($('#searchMode').val() === "true") {
@@ -71,6 +74,7 @@ function getOffFavList(page) {
 				get_mylists_list(json);
 				resolve();
 			}
+			changeViewSwitti(get_mylists, get_mylists_list);
 		})['catch'](function(error) {
 			console.log(error);
 			reject();
@@ -85,27 +89,25 @@ function getOffFavList(page) {
  * @returns {Promise}
  */
 function getMyList(page) {
-	return new Promise(
-			function(resolve, reject) {
-				var func = get_mylists;
-				$('h1.title').html('マイリスト');
-				func = changeViewSwitti(get_mylists, get_mylists_list);
-				var jsonParam = 'page=' + page + '&article_id='
-						+ $('#lastid').val();// 送りたいデータ(ページ番号）
-				var URL = hostURL + "/mylist";
+	return new Promise(function(resolve, reject) {
+		var func = get_mylists;
+		$('h1.title').html('マイリスト');
+		func = changeViewSwitti(get_mylists, get_mylists_list);
+		var jsonParam = 'page=' + page + '&article_id=' + $('#lastid').val();// 送りたいデータ(ページ番号）
+		var URL = hostURL + "/mylist";
 
-				console.log(jsonParam);
+		console.log(jsonParam);
 
-				$('#viewmode').val('0');
-				console.log(page + 'ゲットおおお');
-				getJSON(URL, jsonParam, func).then(function(json) {
-					console.log('保存プロセス');
-					setStorage(json);
-					resolve();
-				})['catch'](function(error) {
-					reject();
-				});
-			});
+		$('#viewmode').val('0');
+		console.log(page + 'ゲットおおお');
+		getJSON(URL, jsonParam, func).then(function(json) {
+			console.log('保存プロセス');
+			setStorage(json);
+			resolve();
+		})['catch'](function(error) {
+			reject();
+		});
+	});
 }
 // お気に入り
 function getFavList(page) {
@@ -154,6 +156,8 @@ function getOffShareList(page) {
 				// 表示
 				changeViewSwitti();
 
+				$('h1.title').html(getSessionStorage('friend'));
+
 				console.log("offline" + page);
 				var username = docCookies.getItem('username');
 
@@ -173,6 +177,8 @@ function getOffShareList(page) {
 								get_sharelists_list(json);
 								resolve();
 							}
+
+							changeViewSwitti(get_sharelists, get_sharelists_list);
 						})['catch'](function(error) {
 					console.log(error);
 					reject();

@@ -57,8 +57,8 @@ public class LoginFilter implements Filter {
 			//System.out.println("fileter on");
 			//String target = ((HttpServletRequest) request).getRequestURI();
 			//System.out.println("target:" + target);
-			String loginURL = "/clipMaster/login/login.html";
-			String logoutURL = "/clipMaster/logout.html";
+			String loginURL = "/login/login.html";
+			String logoutURL = "/login/logout.html";
 
 			HttpSession session = ((HttpServletRequest) request).getSession();
 			//String servletName = ((HttpServletRequest) request).getServletPath();

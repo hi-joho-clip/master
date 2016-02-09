@@ -62,7 +62,7 @@ public class ViewArticleServlet extends HttpServlet {
 		try {
 			if (request.getParameter("article_id") != null) {
 
-				article_id =Integer.parseInt(request.getParameter("article_id"));
+				article_id = Integer.parseInt(request.getParameter("article_id"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -78,17 +78,25 @@ public class ViewArticleServlet extends HttpServlet {
 				articlebean.setArticle_id(article_id);
 				article = articlebean.viewArticle(user_id, article_id);
 				System.out.println("fav:" + article.isFavflag());
-				article.setTagBeans(tagbean.viewExistingTag(user_id, article_id));
-				// ユーザ名も欲しい
-				article.setUsername((String) session.getAttribute("username"));
+				if (article.getTitle() != null) {
+					article.setTagBeans(tagbean.viewExistingTag(user_id, article_id));
+					// ユーザ名も欲しい
+					article.setUsername((String) session.getAttribute("username"));
 
+					//System.out.println(article.getBody());
+					response.setContentType("application/json;charset=UTF-8");
+					response.setHeader("Cache-Control", "private");
 
-				//System.out.println(article.getBody());
-				response.setContentType("application/json;charset=UTF-8");
-				response.setHeader("Cache-Control", "private");
+					PrintWriter out = response.getWriter();
+					out.println(JSON.encode(article, true).toString());
+				} else {
+					response.setContentType("application/json;charset=UTF-8");
+					response.setHeader("Cache-Control", "private");
 
-				PrintWriter out = response.getWriter();
-				out.println(JSON.encode(article, true).toString());
+					String resp = "{\"redirect\": \"true\", \"redirect_url\": \"/login/index.html\"}";
+					PrintWriter out = response.getWriter();
+					out.println(resp);
+				}
 
 			} catch (Exception e) {
 				e.getStackTrace();
@@ -97,12 +105,9 @@ public class ViewArticleServlet extends HttpServlet {
 			response.setContentType("application/json;charset=UTF-8");
 			response.setHeader("Cache-Control", "private");
 
-			String resp = "{\"Error\": \"認証できてない\"}";
+			String resp = "{\"redirect\": \"true\", \"redirect_url\": \"/login/index.html\"}";
 			PrintWriter out = response.getWriter();
 			out.println(resp);
-			// ログインへリダイレクト
-			String URL = "/clipMaster/login";
-			response.sendRedirect(URL + "/Login.html");
 		}
 
 	}
