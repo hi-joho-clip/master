@@ -64,8 +64,8 @@ public class SaveArticle {
 		int art_id = 0;
 		try {
 			//if (isConAndTimeOut(str_url)) {
-			BoilerpipeExtractor extractor = CommonExtractors.ARTICLE_EXTRACTOR;
-			art_id = article_extractor(user_id, str_url, extractor);
+			//BoilerpipeExtractor extractor = CommonExtractors.ARTICLE_EXTRACTOR;
+			art_id = article_extractor(user_id, str_url, "NORMAL");
 			//}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -83,8 +83,8 @@ public class SaveArticle {
 
 		try {
 			//if (isConAndTimeOut(str_url)) {
-			BoilerpipeExtractor extractor = CommonExtractors.KEEP_EVERYTHING_EXTRACTOR;
-			art_id = article_extractor(user_id, str_url, extractor);
+			//BoilerpipeExtractor extractor = CommonExtractors.KEEP_EVERYTHING_EXTRACTOR;
+			art_id = article_extractor(user_id, str_url, "FULL");
 			//}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -92,18 +92,25 @@ public class SaveArticle {
 		return art_id;
 	}
 
-	private int article_extractor(int user_id, String str_url, BoilerpipeExtractor extra) throws Exception {
+	private int article_extractor(int user_id, String str_url, String mode) throws Exception {
 		//			URL url = new URL(
 		//					"http://gigazine.net/news/20151201-mofur/");
 
 		URL url = new URL(str_url);
-		final BoilerpipeExtractor extractor = extra;
+		final BoilerpipeExtractor full = CommonExtractors.KEEP_EVERYTHING_EXTRACTOR;
 
 		final CommonExtractors htmlExtr;
 		ImageExtractor imageExtr = ImageExtractor.INSTANCE;
 
-		String text = CommonExtractors.KEEP_EVERYTHING_EXTRACTOR.getText(url);
-		List<Image> image = imageExtr.process(url, extractor);
+		String text;
+		//String text = CommonExtractors.KEEP_EVERYTHING_EXTRACTOR.getText(url);
+		if (mode.equals("FULL")) {
+			text = CommonExtractors.KEEP_EVERYTHING_EXTRACTOR.getText(url);
+		} else {
+			text = CommonExtractors.ARTICLE_EXTRACTOR.getText(url);
+		}
+
+		List<Image> image = imageExtr.process(url, full);
 		//
 		//		// title 処理
 		//		DOMParser parser = new DOMParser();

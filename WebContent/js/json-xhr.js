@@ -180,7 +180,7 @@ function getJSON(URL, param, callback) {
 	// console.log("getJSON" + param);
 	return new Promise(function(resolve, reject) {
 		getURL(URL, param).then(JSON.parse).then(function(json) {
-			console.log(json);
+			//console.log(json);
 			// リダイレクト
 			if (json.redirect === "true") {
 				location.href = hostURL + "/login/login.html";
@@ -292,31 +292,36 @@ function getLocalStorage(name) {
 	return storage.getItem(name);
 }
 
+/**
+ * 自動更新の判定
+ * @returns {Boolean}
+ */
 function isSettinOnLine() {
 	var SetFlag = getLocalStorage('online');
 
 	if (SetFlag == null) {
 		setLocalStorage('online', 'true');
 	}
+	SetFlag = getLocalStorage('online');
 
-	console.log(SetFlag);
+	//console.log(SetFlag);
 	if (SetFlag === 'true') {
 		if (navigator.onLine === true) {
-			console.log('true');
+			//console.log('true');
 			return true;
 		} else if (navigator.onLine === false) {
-			console.log('false');
+			//console.log('false');
 			return false;
 
 		} else {
-			console.log('UnknownNetworkState');
+			//console.log('UnknownNetworkState');
 			return false;
 
 		}
 	} else if (SetFlag === 'false') {
 		return false;
 	} else {
-		toastr.warning('再ログインしてくだaさい');
+		toastr.warning('再ログインしてください');
 		return false;
 	}
 }

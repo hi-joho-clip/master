@@ -247,6 +247,7 @@ function setViewArticle(json) {
 	$("div.hiddenarea").append(
 			'<input type="hidden" id="nonce" value="'
 					+ docCookies.getItem("nonce") + '">');
+	$('div.hiddenarea').append('<input type="hidden" id="article-url" value="' + json.url + '">');
 
 	$("div.view-title").append(json.title);
 	$('div.view-title').append(
@@ -414,7 +415,6 @@ function updateArticleOnline() {
 			+ encodeURIComponent($("div#editable").html());
 	var URL = hostURL + "/updatearticle";
 	var update_article = function(json) {
-
 		if (json.flag == 0) {
 			toastr.error(json.state);
 		} else {
