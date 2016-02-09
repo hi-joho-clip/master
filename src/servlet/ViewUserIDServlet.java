@@ -78,10 +78,9 @@ public class ViewUserIDServlet extends HttpServlet {
 						response.addCookie(visitedCookie);
 					}
 				}
-
 				SendMail mail = new SendMail();
 				// コンストラクタ替わりに設定必要
-				mail.userIDMail(userbean.getMailaddress(), userbean.getUser_name(), userbean.getNickname(),user_id);
+				mail.userIDMail(userbean.getMailaddress(), userbean.getUser_name(), userbean.getNickname());
 				// スレッドスタート
 				mail.start();
 
