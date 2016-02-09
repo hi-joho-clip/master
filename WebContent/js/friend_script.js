@@ -127,27 +127,17 @@ function denyRequest(user_id) {
 function limit() {
 
 	var jsonParam = "";// 送りたいデータ
-	var URL = hostURL + "/friendlist";
+	var URL = hostURL + "/friendlistaf";
 	var $remodal = "";
 	var setappend = function(json) {
-		var CON = 0; // 申請人数
-		var friend = 0; // フレンドの人数
-		for ( var i = 0; i < json.length; i++) {
-			if (json[i].status == 2) {
-				CON += 1;
-			} else {
-				friend += 1;
-			}
-		}
-		console.log(CON);
 
-		if (json.length > 49) {
+		if (json.flag == 2) {
 			$remodal += "<h3>フレンド人数オーバー</h3>"
 					+ "<a class='remodal-confirm' href='#'>OK</a>";
-		} else if (CON > 9) {
+		} else if (json.flag == 1) {
 			$remodal += "<h3>フレンド申請オーバー</h3>"
 					+ "<a data-remodal-action='confirm' class='remodal-confirm' href='#'>OK</a>";
-		} else if (json.length < 50 && CON < 10) {
+		} else if (json.flag == 0) {
 			$remodal += "<h3>リクエスト送信</h3>"
 					//+ "<a data-remodal-action='confirm' class='remodal-confirm' href='#' onclick='addRequest(document.getElementById(\"user_id\").innerHTML);location.reload()\'>追加</a>"
 					+ "<a data-remodal-action='confirm' class='remodal-confirm' href='#' onclick='addRequest(document.getElementById(\"user_id\").innerHTML);\'>追加</a>"
@@ -162,17 +152,10 @@ function limit() {
 function limitBox() {
 
 	var jsonParam = null;// 送りたいデータ
-	var URL = hostURL + "/friendlist";
+	var URL = hostURL + "/friendlistaf";
 	var $remodal = "";
 	var setappend = function(json) {
-		console.log("来てる");
-		var friend = 0; // フレンドの人数
-		for ( var i = 0; i < json.length; i++) {
-			if (json[i].status == 3) {
-				friend += 1;
-			}
-		}
-		if (friend > 49) {
+		if (json.flag == 2) {
 			$remodal += "<h3>フレンド数が上限により承認できません</h3>"
 					+ "<a data-remodal-action='confirm' class='remodal-confirm' href='#'>OK</a>";
 		} else {
