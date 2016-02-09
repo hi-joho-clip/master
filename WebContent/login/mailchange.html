@@ -15,11 +15,12 @@
 <link href="css/articlemenu.css" rel="stylesheet">
 <link href="css/articlemenu_black.css" rel="stylesheet">
 <link href="css/grid.css" rel="stylesheet">
-<link href="css/button.css" rel="stylesheet"/>
+<link href="css/button.css" rel="stylesheet" />
 <link href="css/userinfo.css" rel="stylesheet">
 <link href="css/Configuration.css" rel="stylesheet">
 <link rel='stylesheet' href='css/toastr.css' />
 <link rel="shortcut icon" href="img/favicon.png">
+<link id="viewcolor" href="css/articlemenu_black.css" rel="stylesheet">
 
 <script src="../js/1.11.1_jquery.min.js"></script>
 <script src="js/articlemenu.js"></script>
@@ -47,113 +48,139 @@
 </head>
 <body>
 
-	<section>
-
-
-		<div class="pure-container" data-effect="pure-effect-slide">
-			<input type="checkbox" id="pure-toggle-left" class="pure-toggle"
-				data-toggle="left" /> <label
-				class="pure-toggle-label" for="pure-toggle-left"
-				data-toggle-label="left"><span class="pure-toggle-icon"></span></label>
-
-            <nav class="pure-drawer" data-position="left">
-
-                 <p>
-	              <div id="bg-link">
-					<a href="info.html"><h4>ユーザ情報</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="index.html" onclick="javascript:setSessionStorage('viewMode','0');"><h4>マイリスト</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="index.html" onclick="javascript:setSessionStorage('viewMode','1');"><h4>お気に入り</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="taglist.html" ><h4>タグ</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="friend.html"><h4>フレンド一覧</h4></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="friendbox.html"><div id ="notice"></div></a>
-				 </div>
-				 <div id="bg-link">
-					<a href="friendsearch.html"><h4>フレンド検索</h4></a>
-				 </div>
-				</p>
-            </nav>
-
-            <label class="pure-overlay" for="pure-toggle-left" data-overlay="left"></label>
-
-        </div>
-
-	<div class="container">
-			<div style="margin: 100px auto;">
-				<h1 class="title">メールアドレス変更</h1>
-<div class="form-wrapper">
-
-<br>
-
-  <h6><div id="info"></div></h6>
-
-  <!--　変更  -->
-  <form id="form" method="post" >
-    <div class="form-item">
-      <!--　メールアドレス  -->
-      <label for="email"></label>
-      <input type="email" name="newemail" class="validate[required,custom[email]] text-input" required="required" placeholder="New Mail Address" id="email"></input>
-    </div>
-      <div class="form-item">
-      <!--　メールアドレス（確認）  -->
-      <label for="email"></label>
-      <input type="email" name="newemail2" class="validate[required,equals[email]] text-input" required="required" placeholder="New Mail Address(確認)" id="re_email"></input>
-    </div>
-    <div class="form-item">
-      <!--　パスワード  -->
-      <label for="password"></label>
-      <input type="password" name="password" required="required" placeholder="Password" id="passwd"></input>
-    </div>
-
-      <!--　変更ボタン  -->
-    <div class="button-panel">
-      <input type="button" class="button" title="Change" value="Change" onclick="javascript:mail();"></input>
-    </div>
-    <input type="hidden" id="nonce" value="" name="nonce" >
-  </form>
-  <div class="form-footer">
-
-   <!--　戻る  -->
-    <p><a href="info.html">BACK</a></p>
-
-  </div>
-</div>
 
 	<section class="section">
-					<div class="head-bar">
-						<div class="container-fluid">
-							<h1 class="text-center">
+		<div class="head-bar">
+			<div class="container-fluid">
+				<h1 class="text-center">
 
-							<a href="index.html"  onclick="javascript:setSessionStorage('viewMode','0');">CLIP</a>
+					<a href="index.html"
+						onclick="javascript:setSessionStorage('viewMode','0');">CLIP</a>
 
-							</h1>
+				</h1>
+			</div>
+		</div>
+	</section>
+
+
+
+	<div class="pure-container" data-effect="pure-effect-slide">
+		<input type="checkbox" id="pure-toggle-left" class="pure-toggle"
+			data-toggle="left" /> <label class="pure-toggle-label"
+			for="pure-toggle-left" data-toggle-label="left"><span
+			class="pure-toggle-icon"></span></label>
+
+		<nav class="pure-drawer" data-position="left">
+
+			<p>
+			<div id="bg-link">
+				<a href="info.html"><h4>ユーザ情報</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="index.html"
+					onclick="javascript:setSessionStorage('viewMode','0');"><h4>マイリスト</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="index.html"
+					onclick="javascript:setSessionStorage('viewMode','1');"><h4>お気に入り</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="taglist.html"><h4>タグ</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="friend.html"><h4>フレンド一覧</h4></a>
+			</div>
+			<div id="bg-link">
+				<a href="friendbox.html"><div id="notice"></div></a>
+			</div>
+			<div id="bg-link">
+				<a href="friendsearch.html"><h4>フレンド検索</h4></a>
+			</div>
+			</p>
+		</nav>
+
+		<label class="pure-overlay" for="pure-toggle-left" data-overlay="left"></label>
+
+
+
+		<div class="pure-pusher-container">
+			<div class="pure-pusher">
+				<!-- このDIV内にコンテンツをいれるんだぞい -->
+				<div id="wrap">
+					<div class="container">
+						<div style="margin: 100px auto;">
+							<h1 class="title">メールアドレス変更</h1>
+							<div class="form-wrapper">
+
+								<br>
+
+								<h6>
+									<div id="info"></div>
+								</h6>
+
+								<!--　変更  -->
+								<form id="form" method="post">
+									<div class="form-item">
+										<!--　メールアドレス  -->
+										<label for="email"></label> <input type="email"
+											name="newemail"
+											class="validate[required,custom[email]] text-input"
+											required="required" placeholder="New Mail Address" id="email"></input>
+									</div>
+									<div class="form-item">
+										<!--　メールアドレス（確認）  -->
+										<label for="email"></label> <input type="email"
+											name="newemail2"
+											class="validate[required,equals[email]] text-input"
+											required="required" placeholder="New Mail Address(確認)"
+											id="re_email"></input>
+									</div>
+									<div class="form-item">
+										<!--　パスワード  -->
+										<label for="password"></label> <input type="password"
+											name="password" required="required" placeholder="Password"
+											id="passwd"></input>
+									</div>
+
+									<!--　変更ボタン  -->
+									<div class="button-panel">
+										<input type="button" class="button" title="Change"
+											value="Change" onclick="javascript:mail();"></input>
+									</div>
+									<input type="hidden" id="nonce" value="" name="nonce">
+								</form>
+								<div class="form-footer">
+
+									<!--　戻る  -->
+									<p>
+										<a class="art-title" href="info.html">BACK</a>
+									</p>
+
+								</div>
+							</div>
+
+
+							<script>
+								$(document)
+										.ready(
+												function() {
+													colorMode();
+													MailAddress();
+													$('#nonce')
+															.val(
+																	docCookies
+																			.getItem("nonce"));
+												});
+
+								jQuery(document).ready(function() {
+									jQuery("#form").validationEngine();
+								});
+							</script>
 						</div>
 					</div>
-				</section>
-
-
-<script>
-	$(document).ready(function() {
-		MailAddress();
-		$('#nonce').val(docCookies.getItem("nonce"));
-	});
-
-	jQuery(document).ready(function() {
-		jQuery("#form").validationEngine();
-	});
-</script>
-
-</div>
-</div>
-</section>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

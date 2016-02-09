@@ -13,9 +13,7 @@
 <link href="css/articlemenu.css" rel="stylesheet">
 <link href="css/grid.css" rel="stylesheet">
 <link href="css/button.css" rel="stylesheet" />
-<link rel="stylesheet" href="css/mosaic.css" type="text/css" />
-<link rel="stylesheet" href="../css/stylesheet.css" type="text/css"
-	media="screen" title="no title" charset="utf-8">
+
 <link rel="shortcut icon" href="img/favicon.png">
 <link rel="stylesheet" href="css/lightbox.css" type="text/css" />
 
@@ -37,6 +35,7 @@
 <script type="text/javascript" src="../js/indexeddb.js"></script>
 <script type="text/javascript" src="../js/lib/kagedb.js"></script>
 <script type="text/javascript" src="js/addarticle.js"></script>
+<script type="text/javascript" src="../js/friend_script.js"></script>
 
 
 
@@ -99,9 +98,9 @@ a#edit-button:hover,a:focus {
 	.view-title {
 		font-size: 3em;
 	}
-	#editable  {
-	font-size: 1.7em;
-	padding: 10px;
+	#editable {
+		font-size: 1.7em;
+		padding: 10px;
 	}
 }
 
@@ -226,7 +225,7 @@ code {
 
 .toolbar a:hover,a:focus {
 	background-color: #ccc;
-	border: 1px solid rgba(0,0,0,0);
+	border: 1px solid rgba(0, 0, 0, 0);
 }
 
 .toolbar a.wysihtml5-command-active,.toolbar .wysihtml5-action-active {
@@ -295,9 +294,9 @@ div[data-wysihtml5-dialog="createTable"] td {
 	.view-title {
 		font-size: 4em;
 	}
-	#editable  {
-	font-size: 2.2em;
-	padding: 10px;
+	#editable {
+		font-size: 2.2em;
+		padding: 10px;
 	}
 }
 </style>
@@ -316,14 +315,9 @@ div[data-wysihtml5-dialog="createTable"] td {
 
 
 </head>
-<body>
+<body id="body">
 
-	<div id="loader-bg">
-		<div id="loader">
 
-			<p>Now Loading...</p>
-		</div>
-	</div>
 
 	<section class="section">
 		<div class="head-bar">
@@ -338,20 +332,17 @@ div[data-wysihtml5-dialog="createTable"] td {
 		</div>
 	</section>
 
-<a id="edit-button" title="Edit"><img src='img/edit.png'
-								width='100%' height='100%'></a>
+	<a id="edit-button" title="Edit"><img src='img/edit.png'
+		width='100%' height='100%'></a>
 
 
 	<div class="pure-container" data-effect="pure-effect-slide">
 		<input type="checkbox" id="pure-toggle-left" class="pure-toggle"
-			data-toggle="left" /> <label
-			class="pure-toggle-label" for="pure-toggle-left"
-			data-toggle-label="left"><span class="pure-toggle-icon"></span></label>
+			data-toggle="left" /> <label class="pure-toggle-label"
+			for="pure-toggle-left" data-toggle-label="left"><span
+			class="pure-toggle-icon"></span></label>
 
 		<nav class="pure-drawer" data-position="left">
-
-
-
 			<p>
 			<div id="bg-link">
 				<a href="info.html"><h4>ユーザ情報</h4></a>
@@ -369,10 +360,10 @@ div[data-wysihtml5-dialog="createTable"] td {
 				<a href="friend.html"><h4>フレンド一覧</h4></a>
 			</div>
 			<div id="bg-link">
-				<a href="friendbox.html"><h4>フレンドボックス</h4></a>
+				<a href="friendbox.html"><div id="notice"></div></a>
 			</div>
 			<div id="bg-link">
-				<a href="friendsearch.html"><h4>フレンド検索</h4></a>
+				<a href="friendsearch.html"><h4 id="friend-label">フレンド検索</h4></a>
 			</div>
 			</p>
 		</nav>
@@ -380,6 +371,12 @@ div[data-wysihtml5-dialog="createTable"] td {
 		<div class="pure-pusher-container">
 			<div class="pure-pusher">
 				<!-- このDIV内にコンテンツをいれるんだぞい -->
+				<div id="loader-bg">
+					<div id="loader">
+
+						<p>Now Loading...</p>
+					</div>
+				</div>
 
 				<div class="container">
 					<div style="margin: 120px auto;">
@@ -394,7 +391,8 @@ div[data-wysihtml5-dialog="createTable"] td {
 										style="visibility: visible; width: 40px;">
 								</button>
 								<button id="addfullbutton" title="保存"
-									onclick="javascript:addFullArticle()" style="visibility: hidden;">
+									onclick="javascript:addFullArticle()"
+									style="visibility: hidden;">
 									<img src="img/all.png"
 										style="visibility: visible; width: 40px;">
 								</button>
@@ -492,8 +490,7 @@ div[data-wysihtml5-dialog="createTable"] td {
 
 								<div align="left">
 
-									<div id="editable" class="editable"
-										 contenteditable="false"></div>
+									<div id="editable" class="editable" contenteditable="false"></div>
 								</div>
 								<div class="images"></div>
 							</div>
@@ -538,9 +535,8 @@ div[data-wysihtml5-dialog="createTable"] td {
 													$('#editable').attr(
 															'contenteditable',
 															'false');
-													$('#editable')
-													.attr('style',
-															'');
+													$('#editable').attr(
+															'style', '');
 													text_edit_flag = 'false';
 												}
 											});
@@ -561,9 +557,8 @@ div[data-wysihtml5-dialog="createTable"] td {
 													$('#editable').attr(
 															'contenteditable',
 															'false');
-													$('#editable')
-													.attr('style',
-															'');
+													$('#editable').attr(
+															'style', '');
 													text_edit_flag = 'false';
 
 												}
@@ -571,6 +566,7 @@ div[data-wysihtml5-dialog="createTable"] td {
 
 							if (isSettinOnLine() === true) {
 								//alert("current network status is online");
+								notice();
 								// ここはオフライン判定が必要
 								getViewArticle(location.search.substring(1,
 										location.search.length));
@@ -582,9 +578,7 @@ div[data-wysihtml5-dialog="createTable"] td {
 
 							} else if (isSettinOnLine() === false) {
 								//alert("current network status is offline");
-								$('.head-bar').css({
-									'background' : '#31708f'
-								});
+								colorOffline();
 								$('#footerArea').remove();
 								$('#edit-button').remove();
 								$('#addfullbutton').remove();

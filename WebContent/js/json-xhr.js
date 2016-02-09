@@ -183,7 +183,7 @@ function getJSON(URL, param, callback) {
 			//console.log(json);
 			// リダイレクト
 			if (json.redirect === "true") {
-				location.href = hostURL + "/login/login.html";
+				location.href = hostURL + json.redirect_url;
 
 			} else {
 				return json;
@@ -327,6 +327,12 @@ function isSettinOnLine() {
 }
 
 function colorOffline () {
+
+
+	$('#notice').remove();
+	$('#friend-label').remove();
+
+
 	$('.head-bar').css({
 		'background' : '#31708f'
 	});
