@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import mail.SendMail;
+
 import beansdomain.User;
 import beansdomain.UserAuth;
 
@@ -75,6 +77,12 @@ public class UpdateMailAddressServlet extends HttpServlet {
 							System.out.println("メールアドレス成功");
 							//userbean.updateMailaddress();
 							resp = "{\"state\": \"更新しました\",  \"flag\": 1}";
+
+							SendMail mail = new SendMail();
+							// コンストラクタ替わりに設定必要
+							mail.addUserMail(userbean.getMailaddress(), userbean.getUser_name(), userbean.getNickname());
+							// スレッドスタート
+							mail.start();
 
 						}else{
 							if (userbean.getErrorMessages().containsKey("mailaddress")) {
