@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import mail.SendMail;
+
 import beansdomain.User;
 import beansdomain.UserAuth;
 
@@ -68,6 +70,13 @@ public class UpdatePasswordServlet extends HttpServlet {
 						userbean.setPassword(newpass);
 						userbean.updatePassword();
 						resp = "{\"state\": \"更新しました\",  \"flag\": 1}";
+
+						SendMail mail = new SendMail();
+						// コンストラクタ替わりに設定必要
+						mail.userInfoMail(userbean.getMailaddress(), userbean.getUser_name(), userbean.getNickname());
+						// スレッドスタート
+						mail.start();
+
 					} else {
 						System.out.println("間違ってる");
 						// パスワードが一致しなかった処理

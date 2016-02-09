@@ -80,7 +80,7 @@ public class UpdateMailAddressServlet extends HttpServlet {
 
 							SendMail mail = new SendMail();
 							// コンストラクタ替わりに設定必要
-							mail.addUserMail(userbean.getMailaddress(), userbean.getUser_name(), userbean.getNickname());
+							mail.userInfoMail(userbean.getMailaddress(), userbean.getUser_name(), userbean.getNickname());
 							// スレッドスタート
 							mail.start();
 

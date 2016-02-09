@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import mail.SendMail;
 import net.arnx.jsonic.JSON;
 
 import beansdomain.User;
@@ -82,6 +83,7 @@ public class ForgotPasswordServlet extends HttpServlet {
 					if (hantei) {
 						userbean.setPassword(pass);
 						userbean.reissuePass();
+						System.out.println(userbean.getNickname());
 
 						// 成功した場合、クッキー情報、削除
 						for (int i = 0; i < cookie.length; i++) {
@@ -92,6 +94,13 @@ public class ForgotPasswordServlet extends HttpServlet {
 								response.addCookie(visitedCookie);
 							}
 						}
+
+						//メール送信処理
+						SendMail mail = new SendMail();
+						// コンストラクタ替わりに設定必要
+						mail.forgotPassMail(userbean.getMailaddress(), userbean.getUser_name(), userbean.getNickname(), userbean.getPassword());
+						// スレッドスタート
+						mail.start();
 
 					} else {
 

@@ -18,7 +18,7 @@ public class SendMail extends Thread {
 	private String address;
 	private String username;
 	private String nickname;
-	private String user_id;
+	private int user_id;
 	private String password;
 	private String title;
 	private String message;
@@ -57,7 +57,7 @@ public class SendMail extends Thread {
 
 	}
 
-	public boolean userIDMail(String address, String username, String nickname, String user_id) {
+	public boolean userIDMail(String address, String username, String nickname, int user_id) {
 		this.address = address;
 		this.username = username;
 		this.nickname = nickname;
