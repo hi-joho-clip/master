@@ -142,13 +142,13 @@ function limit() {
 		console.log(CON);
 
 		if (json.length > 49) {
-			$remodal += "<h2>フレンド人数オーバー</h2>"
+			$remodal += "<h3>フレンド人数オーバー</h3>"
 					+ "<a class='remodal-confirm' href='#'>OK</a>";
 		} else if (CON > 9) {
-			$remodal += "<h2>フレンド申請オーバー</h2>"
+			$remodal += "<h3>フレンド申請オーバー</h3>"
 					+ "<a data-remodal-action='confirm' class='remodal-confirm' href='#'>OK</a>";
 		} else if (json.length < 50 && CON < 10) {
-			$remodal += "<h2>リクエスト送信</h2>"
+			$remodal += "<h3>リクエスト送信</h3>"
 					//+ "<a data-remodal-action='confirm' class='remodal-confirm' href='#' onclick='addRequest(document.getElementById(\"user_id\").innerHTML);location.reload()\'>追加</a>"
 					+ "<a data-remodal-action='confirm' class='remodal-confirm' href='#' onclick='addRequest(document.getElementById(\"user_id\").innerHTML);\'>追加</a>"
 					+ "&emsp;<a data-remodal-action='cancel' class='remodal-cancel' href='#'onclick='javascript:return false;'>キャンセル</a>";
@@ -173,10 +173,10 @@ function limitBox() {
 			}
 		}
 		if (friend > 49) {
-			$remodal += "<h2>フレンド数が上限により承認できません</h2>"
+			$remodal += "<h3>フレンド数が上限により承認できません</h3>"
 					+ "<a data-remodal-action='confirm' class='remodal-confirm' href='#'>OK</a>";
 		} else {
-			$remodal += "<h2>フレンド承認</h2>"
+			$remodal += "<h3>フレンド承認</h3>"
 					+ "<a data-remodal-action='confirm' class='remodal-confirm' href='#' onclick='acceptRequest(document.getElementById(\"user_id\").innerHTML);location.reload()\'>OK</a>"
 					+ "<a data-remodal-action='cancel' class='remodal-cancel' href='#' onclick='javascript:return false;'>キャンセル</a>";
 		}
