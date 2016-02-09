@@ -83,6 +83,7 @@ public class ForgotPasswordServlet extends HttpServlet {
 					if (hantei) {
 						userbean.setPassword(pass);
 						userbean.reissuePass();
+						System.out.println(userbean.getNickname());
 
 						// 成功した場合、クッキー情報、削除
 						for (int i = 0; i < cookie.length; i++) {

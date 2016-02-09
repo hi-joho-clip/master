@@ -51,7 +51,7 @@ public class SendMail extends Thread {
 
 		this.message = "<br>★パスワード再発行のお知らせ★<br><br><div>いつも「CLIP」をご利用いただき、ありがとうございます。<br><br>" +
 				"パスワードを再発行しましたので、お知らせいたします。<br><br>パスワードをご確認ください。<br><br><br>" +
-				/*"<br>ニックネーム:" + nickname +*/ "<br>パスワード:" + password +
+				"<br>ニックネーム:" + nickname + "<br>パスワード:" + password +
 				"<br><br><br><a href='http://clip-sc.com/login/login.html'>ログインページ</a>" + header;
 		return true;
 
