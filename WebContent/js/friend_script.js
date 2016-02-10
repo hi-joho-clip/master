@@ -62,16 +62,15 @@ function addRequest(user_id) {
 	console.log($('#nonce').val());
 	var jsonParam = "friend_user_id=" + user_id+"&nonce="+$('#nonce').val();// 送りたいデータ
 	var URL = hostURL + "/addrequest";
-	var friendList = "";
+
 	var setappend = function(json) {
-		/*for ( var i = 0; i < json.length; i++) {
-			friendList += "ID:" + jsonResult[i].friend_user_id + "<br>";
-		}
-		document.getElementById('info').innerHTML = friendList;*/
+
 		if(json.flag==0){
 			toastr.error(json.state);
+			console.log("ERROR");
 		}else{
 			toastr.success(json.state);
+			console.log("SUCCESS");
 			$('#' + json.nickname).remove();
 		}
 	};
@@ -83,22 +82,18 @@ function acceptRequest(user_id) {
 
 	var jsonParam = "friend_user_id=" + user_id+"&nonce="+$('#nonce').val();// 送りたいデータ
 	var URL = hostURL + "/acceptrequest";
-	var friendList = "";
 	var setappend = function(json) {
-	/*	for ( var i = 0; i < json.length; i++) {
-			friendList += "ID:" + jsonResult[i].friend_user_id + "<br>";
-		}
 
-		document.getElementById('info').innerHTML = friendList;*/
 		if(json.flag==0){
 			toastr.error(json.state);
+			console.log("ERROR");
 		}else{
 			toastr.success(json.state);
+			console.log("SUCCESS");
 			$('#' + json.nickname).remove();
 		}
 	};
 	getJSON(URL, jsonParam, setappend);
-	//location.reload();
 }
 
 // リクエストを否認後の画面
@@ -106,12 +101,8 @@ function denyRequest(user_id) {
 
 	var jsonParam = "friend_user_id=" + user_id+"&nonce="+$('#nonce').val();// 送りたいデータ
 	var URL = hostURL + "/denyrequest";
-	var friendList = "";
 	var setappend = function(json) {
-		/*for ( var i = 0; i < jsonResult.length; i++) {
-			friendList += "ID:" + jsonResult[i].friend_user_id + "<br>";
-		}
-		document.getElementById('info').innerHTML = friendList;*/
+
 		if(json.flag==0){
 			toastr.error(json.state);
 		}else{
@@ -160,7 +151,7 @@ function limitBox() {
 					+ "<a data-remodal-action='confirm' class='remodal-confirm' href='#'>OK</a>";
 		} else {
 			$remodal += "<h3>フレンド承認</h3>"
-					+ "<a data-remodal-action='confirm' class='remodal-confirm' href='#' onclick='acceptRequest(document.getElementById(\"user_id\").innerHTML);location.reload()\'>OK</a>"
+					+ "<a data-remodal-action='confirm' class='remodal-confirm' href='#' onclick='acceptRequest(document.getElementById(\"user_id\").innerHTML);\'>OK</a>"
 					+ "<a data-remodal-action='cancel' class='remodal-cancel' href='#' onclick='javascript:return false;'>キャンセル</a>";
 		}
 		$("#limitBox").append($remodal).trigger("create");

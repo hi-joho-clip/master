@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import beansdomain.Friend;
 import beansdomain.User;
 
 @WebServlet("/acceptfriend")
@@ -37,33 +39,40 @@ public class AcceptFriendServlet extends HttpServlet {
 
 		User userbean = new User();
 		String Message = null;
+		Friend friendbeans = new Friend();
 		String resp = "{\"state\": \"unknownError\", \"flag\": 0}";
 		response.setContentType("application/json;charset=UTF-8");
 		response.setHeader("Cache-Control", "private");
 		HttpSession session = request.getSession(true);
+		ArrayList<Friend> friend_list = new ArrayList<Friend>();
 		PrintWriter out = response.getWriter();
-		//String URL = request.getContextPath() + "/login";
-		int user_id=0;
+		// String URL = request.getContextPath() + "/login";
+		int user_id = 0;
 		Nonce nonce = new Nonce(request);
 
-		if(nonce.isNonce()){
+		if (nonce.isNonce()) {
 			try {
 				user_id = (int) session.getAttribute("user_id");
 				userbean.setUser_id(user_id);
-				if(userbean.friend_accept()){
-					resp = "{\"state\": \"許可しました\", \"flag\": 1}";
+				friend_list = friendbeans.getFriendList(user_id);
+				if (friend_list.size() < 50) {
+					if (userbean.friend_accept()) {
+						resp = "{\"state\": \"許可しました\", \"flag\": 1}";
+					} else {
+						resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
+					}
 				}else{
-					resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
+					resp = "{\"state\": \"フレンド数オーバー\", \"flag\": 0}";
 				}
-				//Message = "フレンド申請拒否設定にしました。";
+				// Message = "フレンド申請拒否設定にしました。";
 			} catch (Exception e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			}
 			out.println(resp);
-			//response.sendRedirect(URL + "/info.html");
-		}else{
-			//nonceがない場合のメソッド
+			// response.sendRedirect(URL + "/info.html");
+		} else {
+			// nonceがない場合のメソッド
 			// 不正アクセス
 			resp = "{\"state\": \"不正なアクセス\",  \"flag\": 0}";
 

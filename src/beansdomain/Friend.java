@@ -196,7 +196,7 @@ public class Friend {
 		boolean flag = false;
 
 		this.friendDAO = new FriendDAO();
-		this.friendDAO.deleteFriend(own_user_id, friend_user_id);
+		flag=this.friendDAO.deleteFriend(own_user_id, friend_user_id);
 
 		return flag;
 	}
