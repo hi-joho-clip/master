@@ -14,7 +14,10 @@ function initPromise() {
 		operative.Promise = ES6Promise.Promise;
 	}
 }
-var hostURL = "http://clip-sc.com"; // http://localhost:8080/clipMaster
+
+
+var hostURL = "http://localhost:8080/clipMaster"; // http://clip-sc.com
+
 
 /**
  * URLからJSONオブジェクトを取得する
@@ -182,8 +185,9 @@ function getJSON(URL, param, callback) {
 		getURL(URL, param).then(JSON.parse).then(function(json) {
 			//console.log(json);
 			// リダイレクト
+
 			if (json.redirect === "true") {
-				location.href = hostURL + "/login/login.html";
+				location.href = hostURL + json.redirect_url;
 
 			} else {
 				return json;
@@ -327,6 +331,12 @@ function isSettinOnLine() {
 }
 
 function colorOffline () {
+
+
+	$('#notice').remove();
+	$('#friend-label').remove();
+
+
 	$('.head-bar').css({
 		'background' : '#31708f'
 	});

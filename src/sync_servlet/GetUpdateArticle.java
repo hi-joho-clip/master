@@ -75,6 +75,8 @@ public class GetUpdateArticle extends HttpServlet {
 
 		JsonArticle[] json_list = null;
 
+		System.out.println("リスト来てるよ");
+
 		try {
 
 			// これは手続き過ぎて修正必要か？処理がパラメータによって深刻なエラーを投げるのはよくない
@@ -86,6 +88,8 @@ public class GetUpdateArticle extends HttpServlet {
 				json_list = JSON.decode(strJson, JsonArticle[].class);
 				System.out.println("reseived: " + json_list.length);
 			}
+
+			System.out.println("受け取ったリスト:"  + json_list.length);
 
 			ArticleBean articlebean = new ArticleBean();
 			// サーバのリスト
@@ -112,6 +116,8 @@ public class GetUpdateArticle extends HttpServlet {
 
 			if (json_list.length != 0) {
 
+				// old_json_map ブラウザデータ
+
 				HashMap<Integer, JsonArticle> old_json_map = new HashMap<Integer, JsonArticle>();
 				for (JsonArticle jmap : json_list) {
 					old_json_map.put(jmap.getArticle_id(), jmap);
@@ -123,8 +129,10 @@ public class GetUpdateArticle extends HttpServlet {
 					if (old_json_map.containsKey(art.getArticle_id())) {
 						// 日付を比較する
 						// サーバ＞ブラウザ
+						System.out.println("server.modified=" + article_map.get(art.getArticle_id()).getModified() +", old:" + old_json_map.get(art.getArticle_id()).getModified());
 						if (article_map.get(art.getArticle_id()).getModified() > old_json_map.get(art.getArticle_id())
 								.getModified()) {
+							System.out.println("更新：" + article_map.get(art.getArticle_id()).getModified() + ",id:" + art.getArticle_id());
 							// 存在しなければ新規追加（更新必要）
 							JsonArticle new_json = new JsonArticle();
 							new_json.setArticle_id(art.getArticle_id());
@@ -164,7 +172,9 @@ public class GetUpdateArticle extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");
 		response.setHeader("Cache-Control", "private");
 		PrintWriter out = response.getWriter();
+		System.out.println("これ送ってるんだぜ:" + JSON.encode(update_list, true).toString());
 		out.println(JSON.encode(update_list, true).toString());
+
 	}
 
 	// JSONICで扱うため作成

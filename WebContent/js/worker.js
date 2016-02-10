@@ -66,7 +66,7 @@ self.addEventListener('message', function(e) {
 			//self.postMessage('更新失敗');
 		});
 
-		//console.log('kitakore');
+		console.log('kitakore');
 
 		getIDBAllArticleList(username).then(deleteWorkerArticle).then(function(value){
 			self.postMessage('更新完了');

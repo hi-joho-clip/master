@@ -20,6 +20,7 @@
 <link href="css/Configuration.css" rel="stylesheet">
 <link rel='stylesheet' href='css/toastr.css' />
 <link rel="shortcut icon" href="img/favicon.png">
+<link id="viewcolor" href="css/articlemenu_black.css" rel="stylesheet">
 
 <script src="../js/1.11.1_jquery.min.js"></script>
 <script src="js/articlemenu.js"></script>
@@ -131,7 +132,7 @@
 									<div class="form-item">
 										<!--　パスワード  -->
 										<label for="password"></label> <input type="password"
-											name="password" required="required" placeholder="Password"
+											name="password" class="validate[minSize[8],maxSize[32]] text-input" required="required" placeholder="Password"
 											id="passwd"></input>
 									</div>
 
@@ -149,7 +150,7 @@
 
 									<!--　戻る  -->
 									<p>
-										<a href="info.html">BACK</a>
+										<a class="art-title" href="info.html">BACK</a>
 									</p>
 								</div>
 							</div>
@@ -157,6 +158,8 @@
 								$(document)
 										.ready(
 												function() {
+
+													colorMode();
 													NickName();
 													$('#nonce')
 															.val(

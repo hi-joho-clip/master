@@ -14,11 +14,11 @@ import javax.servlet.http.HttpSession;
 import net.arnx.jsonic.JSON;
 import beansdomain.Friend;
 
-@WebServlet("/friendrequest")
-public class FriendRequestServlet extends HttpServlet {
+@WebServlet("/friendlistaf")
+public class FriendListAFServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public FriendRequestServlet() {
+	public FriendListAFServlet() {
 		super();
 	}
 
@@ -34,7 +34,7 @@ public class FriendRequestServlet extends HttpServlet {
 		perform(request, response);
 	}
 
-	// フレンド承認・否認 状態コード:1 を取得
+	// フレンド登録一覧用
 	private void perform(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
@@ -42,41 +42,47 @@ public class FriendRequestServlet extends HttpServlet {
 		ArrayList<Friend> friend_list = new ArrayList<Friend>();
 		ArrayList<Friend> request_friend_list = new ArrayList<Friend>();
 		HttpSession session = request.getSession(true);
+		String resp = "{\"cnt\": 0,\"size\": 0, \"flag\": 0}";
+		int cnt = 0;
+		int size = 0;
 
-		response.setContentType("application/json; charset=utf-8");
+		if (session != null) {
+
+			response.setContentType("application/json; charset=utf-8");
 			response.setHeader("Cache-Control", "private");
 			PrintWriter out = response.getWriter();
 
-		String username = (String)session.getAttribute("username");
-		if (username != null) {
 			try {
 				int own_user_id = (int) session.getAttribute("user_id");
 				friend_list = friendbeans.getFriendList(own_user_id);
+
 				for (int i = 0; i < friend_list.size(); i++) {
-					if (friend_list.get(i).getStatus() == 1) {
-
+					if (friend_list.get(i).getStatus() != 1) {
+						friend_list.get(i).setUser_name("");
 						request_friend_list.add(friend_list.get(i));
-
-						// setFriend_id(friend_list.get(i).getFriend_id());
-						// request_friend_list.get(i).setOwn_user_id(friend_list.get(i).getOwn_user_id());
-						// request_friend_list.get(i).setFriend_user_id(friend_list.get(i).getFriend_user_id());
-						// request_friend_list.get(i).setShare_id(friend_list.get(i).getShare_id());
-						// request_friend_list.get(i).setStatus(friend_list.get(i).getStatus());
-						// request_friend_list.get(i).setModified(friend_list.get(i).getModified());
-						// request_friend_list.get(i).setCreated(friend_list.get(i).getCreated());
-						// request_friend_list.get(i).setAcceptdate(friend_list.get(i).getAcceptdate());
+						size +=1;
+						if (friend_list.get(i).getStatus() == 2) {
+							cnt += 1;
+						}
 					}
 				}
 
+				if(size > 49){
+					//フレンド数上限オーバー
+					resp = "{\"cnt\":"+ cnt +",\"size\":"+ size +", \"flag\": 2}";
+				}else if(cnt > 9){
+					//フレンド申請オーバー
+					resp = "{\"cnt\":"+ cnt +",\"size\":"+ size +", \"flag\": 1}";
+				}else if(size < 50 && cnt < 10){
+					//申請可能
+					resp = "{\"cnt\":"+ cnt +",\"size\":"+ size +", \"flag\": 0}";
+				}
+				out = response.getWriter();
+				out.println(resp);
 			} catch (Exception e) {
 				// TODO 自動生成された catch ブロック
-				//e.printStackTrace();
+				// e.printStackTrace();
 			}
-			out.println(JSON.encode(request_friend_list, true).toString());
-		} else {
-			String resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
-			out.print(resp);
 		}
 	}
-
 }

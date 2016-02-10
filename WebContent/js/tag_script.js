@@ -46,6 +46,10 @@ function getOffTagMyList(page) {
 		console.log("offline" + page);
 		var username = docCookies.getItem('username');
 
+
+		var title = getSessionStorage('tagLists');
+		$('h1.title').html(title);
+
 		var word = '';
 
 		if ($('#searchMode').val() === "true") {
@@ -61,6 +65,7 @@ function getOffTagMyList(page) {
 				get_mylists_list(json);
 				resolve();
 			}
+			changeViewSwitti(get_mylists, get_mylists_list);
 		})['catch'](function(error) {
 			console.log(error);
 			reject();

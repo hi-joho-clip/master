@@ -19,7 +19,7 @@
 <link href="css/Configuration.css" rel="stylesheet">
 <link rel='stylesheet' href='css/toastr.css' />
 
-<link href="css/articlemenu_black.css" rel="stylesheet">
+<link id="viewcolor" href="css/articlemenu_black.css" rel="stylesheet">
 <link rel="shortcut icon" href="img/favicon.png">
 
 <script src="../js/1.11.1_jquery.min.js"></script>
@@ -99,7 +99,7 @@
 				<a href="friendbox.html"><div id="notice"></div></a>
 			</div>
 			<div id="bg-link">
-				<a href="friendsearch.html"><h4>フレンド検索</h4></a>
+				<a href="friendsearch.html"><h4 id="friend-label">フレンド検索</h4></a>
 			</div>
 			</p>
 		</nav>
@@ -132,15 +132,15 @@
 
 								<!--　ニックネーム変更画面  -->
 								<h5>
-									<a href="nicknamechange.html">ニックネーム変更</a>
+									<a class="art-title" href="nicknamechange.html">ニックネーム変更</a>
 								</h5>
 								<!--　メールアドレス変更画面  -->
 								<h5>
-									<a href="mailchange.html">メールアドレス変更</a>
+									<a class="art-title" href="mailchange.html">メールアドレス変更</a>
 								</h5>
 								<!--　パスワード変更画面  -->
 								<h5>
-									<a href="passchange.html">パスワード変更</a>
+									<a class="art-title" href="passchange.html">パスワード変更</a>
 								</h5>
 								<table>
 									<tr>
@@ -153,12 +153,12 @@
 									</tr>
 								</table>
 								<h5>
-									<a href="#" onclick="javascript:logout();">ログアウト</a>
+									<a class="art-title" href="#" onclick="javascript:logout();">ログアウト</a>
 								</h5>
 
 								<div class="remodal-bg">
 									<h5>
-										<a href="#" data-remodal-target="delete_user">退会</a>
+										<a class="art-title" href="#" data-remodal-target="delete_user">退会</a>
 									</h5>
 								</div>
 								<div class="hiddenarea"></div>
@@ -174,11 +174,16 @@
 	<script>
 		$(document).ready(function() {
 			getUserList();
+			colorMode();
 			notice();
 
 			$("div.hiddenarea").append(
 					'<input type="hidden" id="nonce" value="'
 							+ docCookies.getItem("nonce") + '">');
+
+			if (isSettinOnLine() === false) {
+				colorOffline();
+			}
 		});
 	</script>
 

@@ -20,6 +20,7 @@
 <link href="css/Configuration.css" rel="stylesheet">
 <link rel='stylesheet' href='css/toastr.css' />
 <link rel="shortcut icon" href="img/favicon.png">
+<link id="viewcolor" href="css/articlemenu_black.css" rel="stylesheet">
 
 <script src="../js/1.11.1_jquery.min.js"></script>
 <script src="js/articlemenu.js"></script>
@@ -119,7 +120,7 @@
 									<div class="form-item">
 										<!--　新しいパスワード  -->
 										<label for="newpassword"></label> <input type="password"
-											name="newpassword" class="validate[required] text-input"
+											name="newpassword" class="validate[required,minSize[8],maxSize[32]] text-input"
 											required="required" placeholder="New Password" id="passwd"></input>
 									</div>
 									<div class="form-item">
@@ -150,7 +151,7 @@
 
 									<!--　戻る  -->
 									<p>
-										<a href="info.html">BACK</a>
+										<a class="art-title" href="info.html">BACK</a>
 									</p>
 
 								</div>
@@ -162,6 +163,7 @@
 								$(document)
 										.ready(
 												function() {
+													colorMode();
 													$('#nonce')
 															.val(
 																	docCookies
