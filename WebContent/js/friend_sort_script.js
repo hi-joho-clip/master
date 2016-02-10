@@ -29,7 +29,7 @@ function createFriendList(json) {
 					.append(
 							'<tr class="first"><td><h8 class="request" id="friend'
 									+ json[i].friend_user_id
-									+ '" >'
+									+ '">'
 									+ json[i].nickname
 									+ '</h8></td><td><a href="#" data-remodal-target="delete_request" class="request art-title btn btn-primary" onclick="javascript:remodalCreate('
 									+ json[i].friend_user_id
@@ -40,7 +40,7 @@ function createFriendList(json) {
 			arrayFriend.push(json[i]);
 			$('#table-body')
 					.append(
-							'<tr class="first"><td><h8 id="friend"'
+							'<tr class="first"><td><h8 id="friend'
 									+ json[i].friend_user_id
 									+ '">'
 									+ "<a class='art-title' href='index.html'onclick='"
