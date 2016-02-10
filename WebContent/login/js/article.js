@@ -312,6 +312,8 @@ $(document).ready(
 				initTopPage();
 			} else if(isSettinOnLine() === false) {
 				colorOffline();
+				// menuを削除
+
 			}
 
 		});

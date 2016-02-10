@@ -65,6 +65,10 @@ JavaScriptが無効になっています。
 	<input id="netstate" type="button" name="check" value="確認">
 	<br />
 
+	<p>WORKERTEST</p>
+	<input id="workertest2" type="button" name="check" value="確認">
+	<br />
+
 	<p>JSON取得のスタブのテスト</p>
 	<input id="geturltest" type="button" name="check" value="確認">
 	<input id="url" type="text" name="url"><br />
@@ -175,11 +179,12 @@ JavaScriptが無効になっています。
 			$('#browsertest').click(function() {
 				initTopPage();
 				alert(isSupported(['chrome','opera','firefox','ie11', 'ie10']));
+
 			});
 
 			// なんやかんやと処理
-			$('#localtest').click(function() {
-				console.log("aaa");
+			$('#workertest2').click(function() {
+				alert('true' + window.Worker);
 			});
 
 			$('#promisetest').click(function() {

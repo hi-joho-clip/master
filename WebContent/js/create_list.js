@@ -134,7 +134,7 @@ var get_mylists = function(json) {
 
 							 "<div id='link-body'><a href='../login/article.html?"+json[i].article_id+"'></a></div>" +
 								"<div id='menu-block'>" +
-									"<div id='menu2'>"+
+									"<div class='menu2'>"+
 										"<div class='remodal-bg'>"+
 										"<input type='hidden' value='"+json[i].favflag+"' id='grobalflag"+json[i].article_id+"'>"+
 
@@ -201,6 +201,13 @@ function addViewNext(json) {
 		$('#buttonbox').css({'display' : 'none'});
 		$('#art-add').val('false');
 	}
+
+	// オフラインモードならメニューを削除
+	if (isSettinOnLine() == true) {
+
+	} else if (isSettinOnLine() == false) {
+		$('.menu2').empty();
+	}
 }
 
 
@@ -223,7 +230,7 @@ var get_sharelists = function(json) {
 						"<div class='mosaic-overlay'>"+
 						 "<div id='link-body'><a href='../login/article.html?"+json[i].article_id+"'></a></div>" +
 							"<div id='menu-block'>" +
-								"<div id='menu2'>"+
+								"<div class='menu2'>"+
 									"<div class='remodal-bg'>"+
 
 										"<a href='#' data-remodal-target='deletemodal'onclick='javascript:getArticle_id("+json[i].article_id+");return false;'>" +
@@ -287,7 +294,7 @@ var get_mylists_list = function(json) {
 								"<div class='firstbuttons'>"+
 
 
-										"<div id='menu2'>"+
+										"<div class='menu2'>"+
 											"<div class='remodal-bg'>"+
 											"<input type='hidden' value='"+json[i].favflag+"' id='grobalflag"+json[i].article_id+"'>"+
 
@@ -348,7 +355,7 @@ var get_sharelists_list = function(json) {
 
 							"</div>"+
 							"<div class='firstbuttons'>"+
-									"<div id='menu2'>"+
+									"<div class='menu2'>"+
 										"<div class='remodal-bg'>"+
 										"<a href='#' data-remodal-target='deletemodal'onclick='javascript:getArticle_id("+json[i].article_id+");return false;'>" +
 										"<img src='img/trash1.png' align='right'width='30'height='30'></img>" +
