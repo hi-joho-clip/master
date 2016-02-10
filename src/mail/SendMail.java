@@ -36,7 +36,7 @@ public class SendMail extends Thread {
 		this.message = "<br>★会員登録完了のお知らせ★<br><br><div>CLIPをご登録いただき、ありがとうございます。<br><br>" +
 				"ユーザ登録を下記のとおり完了いたしました。<br><br>ご登録内容のご確認ください。<br><br><br>ユーザネーム:" +
 				username + "<br>ニックネーム:" + nickname +
-				"<br><br><br><a href='http://clip-sc.com/login/login.html'>ログインページ</a>" + header;
+				"<br><br><br><a href='https://clip-sc.com/login/login.html'>ログインページ</a>" + header;
 		return true;
 
 	}
@@ -52,7 +52,7 @@ public class SendMail extends Thread {
 		this.message = "<br>★パスワード再発行のお知らせ★<br><br><div>いつも「CLIP」をご利用いただき、ありがとうございます。<br><br>" +
 				"パスワードを再発行しましたので、お知らせいたします。<br><br>パスワードをご確認ください。<br><br><br>" +
 				"<br>ニックネーム:" + nickname + "<br>パスワード:" + password +
-				"<br><br><br><a href='http://clip-sc.com/login/login.html'>ログインページ</a>" + header;
+				"<br><br><br><a href='https://clip-sc.com/login/login.html'>ログインページ</a>" + header;
 		return true;
 
 	}
@@ -67,7 +67,7 @@ public class SendMail extends Thread {
 		this.message = "<br>★ユーザ名のご確認のお知らせ★<br><br><div>いつも「CLIP」をご利用いただき、ありがとうございます。<br><br>" +
 				"ユーザIDを送信しましたので、ご確認ください。<br><br><br>" +
 				"ニックネーム:" + nickname + "<br>ユーザ名:" + username +
-				"<br><br><br><a href='http://clip-sc.com/login/login.html'>ログインページ</a>" + header;
+				"<br><br><br><a href='https://clip-sc.com/login/login.html'>ログインページ</a>" + header;
 		return true;
 
 	}
@@ -80,8 +80,8 @@ public class SendMail extends Thread {
 		this.title = "[CLIP]会員情報が変更されました";
 
 		this.message = "<br>★CLIP  会員情報変更のお知らせ★<br><br><div>いつも「CLIP」をご利用いただき、ありがとうございます。<br><br>" +
-				"会員情報が変更されましたので、お知らせいたします<br><br>このメールは会員情報が変更された際に、確認のために送信しています。<br><br><br>"+
-				 "<br><br><br><a href='http://clip-sc.com/login/login.html'>ログインページ</a>" + header;
+				"会員情報が変更されましたので、お知らせいたします<br><br>このメールは会員情報が変更された際に、確認のためメールを送信しています。<br><br><br>"+
+				 "<br><br><br><a href='https://clip-sc.com/login/login.html'>ログインページ</a>" + header;
 		return true;
 
 	}
