@@ -14,6 +14,7 @@ function initPromise() {
 		operative.Promise = ES6Promise.Promise;
 	}
 }
+
 var hostURL = "http://localhost:8080/clipMaster"; // http://clip-sc.com
 
 /**
@@ -182,6 +183,7 @@ function getJSON(URL, param, callback) {
 		getURL(URL, param).then(JSON.parse).then(function(json) {
 			//console.log(json);
 			// リダイレクト
+
 			if (json.redirect === "true") {
 				location.href = hostURL + json.redirect_url;
 
