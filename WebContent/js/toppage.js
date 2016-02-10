@@ -65,16 +65,19 @@ function startUpdate(username) {
 		var worker = new Worker('../js/worker.js');
 		worker.addEventListener('message', function(e) {
 			// ここではconsoleでJSONデータを表示する
-			//toastr.warning(e.data);
+			toastr.warning('kousin');
 
 			// testDataなら書き込める
 			console.error('JSON data: ', e.data);
 		}, true);
 
+
+
 		worker.postMessage({
 			'cmd' : 'IDBupdate',
 			'username' : username
 		});
+		console.log(worker);
 
 	}
 

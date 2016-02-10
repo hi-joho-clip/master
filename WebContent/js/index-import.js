@@ -3,12 +3,12 @@ function importJS() {
         var scripts = new Array(
 
     		//"../js/test_ajax.js",
-    		"../js/lib/kagedb.js",
+    		//"../js/lib/kagedb.js",
     		"../js/browsersupport.js",
     		"../js/lib/operative.js",
     		"../js/lib/es6-promise.min.js",
     		"../js/json-xhr.js",
-    		"../js/indexeddb.js",
+    		//"../js/indexeddb.js",
     		"../js/lib/cookie.js",
     		"../js/lib/store.js",
     		"../js/toppage.js"

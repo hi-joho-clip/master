@@ -68,6 +68,8 @@ public class LoginFilter implements Filter {
 
 			// ログインとログアウトのURLパターン以外全部
 			//if (!(target.equals(loginURL) || target.equals(logoutURL))) {
+			System.out.println("not Authorized0:" + resp);
+
 
 			if (session == null) {
 				/* まだ認証されていない */
@@ -79,6 +81,7 @@ public class LoginFilter implements Filter {
 				// 通常リダイレクトできないのでパラメータで送りJSでハンドリングする
 				resp = "{\"redirect\": \"true\", \"redirect_url\": \"" + loginURL + "\"}";
 				out.print(resp);
+				System.out.println("not Authorized1:" + resp);
 				//((HttpServletResponse) response).sendRedirect(loginURL);
 			} else {
 				String username = (String) session.getAttribute("username");

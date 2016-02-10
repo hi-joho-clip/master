@@ -74,7 +74,7 @@ public class FriendRequestServlet extends HttpServlet {
 			}
 			out.println(JSON.encode(request_friend_list, true).toString());
 		} else {
-			String resp = "{\"redirect\": \"true\", \"redirect_url\": \"" + "aaaa" + "\"}";
+			String resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
 			out.print(resp);
 		}
 	}

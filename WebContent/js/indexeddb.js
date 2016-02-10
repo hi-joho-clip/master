@@ -166,7 +166,6 @@ function updateArticleDelete(id) {
 			});
 		});
 	});
-
 };
 
 /**
@@ -199,7 +198,6 @@ function updateIDBUser(prop) {
 			});
 		});
 	});
-
 };
 
 /**
@@ -220,6 +218,7 @@ function updateIDBArticleList(values) {
 	 */
 	for ( var art_json in jsons) {
 		param = "article_id=" + jsons[art_json].article_id;
+		getArticleID(jsons[art_json].article_id).then(updateArticleDelete);
 		// console.log(param);
 		pro_list.push(getRequest().article(param).then(updateArticle));
 	}
