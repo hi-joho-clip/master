@@ -13,6 +13,7 @@
 <link href="css/articlemenu.css" rel="stylesheet">
 <link href="css/grid.css" rel="stylesheet">
 <link href="css/button.css" rel="stylesheet" />
+<link rel="stylesheet" href="../css/stylesheet.css" type="text/css" media="screen" title="no title" charset="utf-8">
 
 <link rel="shortcut icon" href="img/favicon.png">
 <link rel="stylesheet" href="css/lightbox.css" type="text/css" />
@@ -570,9 +571,11 @@ div[data-wysihtml5-dialog="createTable"] td {
 								//alert("current network status is online");
 								notice();
 								// ここはオフライン判定が必要
-								getViewArticle(location.search.substring(1,
-										location.search.length));
+								//getViewArticle(location.search.substring(1,
+										//location.search.length));
+								console.log('artid' + getSessionStorage('article-id'));
 
+								getViewArticle(getSessionStorage('article-id'));
 								//$('.toolbar').css({
 								//		'display' : 'none'
 								//});
@@ -584,8 +587,7 @@ div[data-wysihtml5-dialog="createTable"] td {
 								$('#footerArea').remove();
 								$('#edit-button').remove();
 								$('#addfullbutton').remove();
-								getViewArticleOffline(location.search
-										.substring(1, location.search.length))
+								getViewArticleOffline(getSessionStorage('article-id'));
 
 							} else {
 								//alert("current network status is unknown");

@@ -1,5 +1,8 @@
 CACHE MANIFEST
 
+#02112108
+
+
 #HTML
 ajax_test.html
 /clipMaster/login/index.html
@@ -157,6 +160,12 @@ ajax_test.html
 
 
 #IMG
+/clipMaster/login/css/images/ui-bg_flat_75_ffffff_40x100.png
+/clipMaster/login/css/images/ui-bg_glass_75_e6e6e6_1x400.png
+/clipMaster/login/css/images/ui-icons_222222_256x240.png
+/clipMaster/login/css/images/ui-icons_888888_256x240.png
+
+
 /clipMaster/img/sm2.png
 /clipMaster/img/sort_asc.png
 /clipMaster/img/sort_both.png

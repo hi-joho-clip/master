@@ -209,7 +209,6 @@ function logout() {
 			console.log('logout');
 			// ログアウト時はデータベースを削除する
 			deleteDatabase("article");
-			alert('delete');
 			location.href = hostURL + json.redirect_url;
 		}
 	};
@@ -268,6 +267,8 @@ function getUserList() {
 	var URL = hostURL + "/viewuser";
 	var userList = "";
 	var setappend = function(json) {
+		setLocalStorage('nickname', json.nickname);
+		setLocalStorage('mailaddress' , '********');
 		userList = "<h5>" + "ニックネーム<br>" + json.nickname + "<br>"
 				+ "メールアドレス<br>" + json.mailaddress + "</h5>";
 		document.getElementById('info').innerHTML = userList;
@@ -284,23 +285,6 @@ function getUserList() {
 			kyohi = "checked";
 		}
 
-		var online_flag = "";
-		var on_kyohi = "";
-		var on_kyoka = "";
-		if (getLocalStorage('online') === 'false') {
-			online_flag = "";
-			on_kyohi = "checked";
-			on_kyoka = "";
-			console.log("off");
-		} else if (getLocalStorage('online') === 'true') {
-			online_flag = "checked";
-			on_kyohi = "";
-			on_kyoka = "checked";
-			console.log("on");
-		} else {
-			console.log("unknown");
-		}
-
 		var $onoffkun = $("<input type='checkbox' name='onoffswitch' class='onoffswitch-checkbox' id='myonoffswitch' "
 				+ flag
 				+ ">"
@@ -313,22 +297,41 @@ function getUserList() {
 				+ "></span>"
 				+ "</label>");
 		$("#onoffswitch").append($onoffkun).trigger("create");
-
-		var $online = $("<input type='checkbox' name='onlineswitch' class='onlineswitch-checkbox' id='myonlineswitch' "
-				+ online_flag
-				+ ">"
-				+ "<label class='onlineswitch-label' for='myonlineswitch' onclick='onlineMode()'>"
-				+ "<span  class='onlineswitch-inner'"
-				+ on_kyoka
-				+ "></span>"
-				+ "<span  class='onlineswitch-switch'"
-				+ on_kyohi
-				+ "></span>"
-				+ "</label>");
-		$("#onlineswitch").append($online).trigger("create");
-
 	};
 	getJSON(URL, null, setappend);
+}
+
+
+function addModeButton() {
+	var online_flag = "";
+	var on_kyohi = "";
+	var on_kyoka = "";
+	if (getLocalStorage('online') === 'false') {
+		online_flag = "";
+		on_kyohi = "checked";
+		on_kyoka = "";
+		console.log("off");
+	} else if (getLocalStorage('online') === 'true') {
+		online_flag = "checked";
+		on_kyohi = "";
+		on_kyoka = "checked";
+		console.log("on");
+	} else {
+		console.log("unknown");
+	}
+
+	var $online = $("<input type='checkbox' name='onlineswitch' class='onlineswitch-checkbox' id='myonlineswitch' "
+			+ online_flag
+			+ ">"
+			+ "<label class='onlineswitch-label' for='myonlineswitch' onclick='onlineMode()'>"
+			+ "<span  class='onlineswitch-inner'"
+			+ on_kyoka
+			+ "></span>"
+			+ "<span  class='onlineswitch-switch'"
+			+ on_kyohi
+			+ "></span>"
+			+ "</label>");
+	$("#onlineswitch").append($online).trigger("create");
 }
 
 /**

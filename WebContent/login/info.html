@@ -132,15 +132,15 @@
 
 								<!--　ニックネーム変更画面  -->
 								<h5>
-									<a class="art-title" href="nicknamechange.html">ニックネーム変更</a>
+									<a class="art-title changeform" href="nicknamechange.html">ニックネーム変更</a>
 								</h5>
 								<!--　メールアドレス変更画面  -->
 								<h5>
-									<a class="art-title" href="mailchange.html">メールアドレス変更</a>
+									<a class="art-title changeform" href="mailchange.html">メールアドレス変更</a>
 								</h5>
 								<!--　パスワード変更画面  -->
 								<h5>
-									<a class="art-title" href="passchange.html">パスワード変更</a>
+									<a class="art-title changeform" href="passchange.html">パスワード変更</a>
 								</h5>
 								<table>
 									<tr>
@@ -158,7 +158,7 @@
 
 								<div class="remodal-bg">
 									<h5>
-										<a class="art-title" href="#" data-remodal-target="delete_user">退会</a>
+										<a class="art-title changeform" href="#" data-remodal-target="delete_user">退会</a>
 									</h5>
 								</div>
 								<div class="hiddenarea"></div>
@@ -173,16 +173,21 @@
 
 	<script>
 		$(document).ready(function() {
-			getUserList();
-			colorMode();
-			notice();
 
+			colorMode();
 			$("div.hiddenarea").append(
 					'<input type="hidden" id="nonce" value="'
 							+ docCookies.getItem("nonce") + '">');
 
 			if (isSettinOnLine() === false) {
+				$('#info').append("<h5>" + "ニックネーム<br>" + getLocalStorage('nickname') + "<br></h5>");
+				$('.changeform').empty();
+				addModeButton();
 				colorOffline();
+			} else if(isSettinOnLine() == true) {
+				getUserList();
+				addModeButton();
+				notice();
 			}
 		});
 	</script>

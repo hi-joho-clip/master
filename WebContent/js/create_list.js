@@ -100,6 +100,13 @@ function getTag_id(tag_id){
 	$('#tag_id').val(tag_id);
 }
 
+function locateArticleView(article_id) {
+
+	// IDをセッションに書き込んでリダイレクト
+	setSessionStorage('article-id', article_id);
+	console.log(getSessionStorage('article-id'));
+	location.href = hostURL + '/login/article.html';
+}
 
 // "<a href='../login/article.html?"+json[i].article_id+"'target='_blank'>
 
@@ -132,7 +139,8 @@ var get_mylists = function(json) {
 			$myList = $("<div id='" + json[i].article_id+ "' class='"+item[random][i] + " mosaic-block bar' title='" + json[i].title +"'>" +
 							"<div class='mosaic-overlay'>"+
 
-							 "<div id='link-body'><a href='../login/article.html?"+json[i].article_id+"'></a></div>" +
+							// "<div id='link-body'><a href='../login/article.html?"+json[i].article_id+"'></a></div>" +
+							 "<div id='link-body'><a href='#' onclick='javascript:locateArticleView("+json[i].article_id+");'></a></div>" +
 								"<div id='menu-block'>" +
 									"<div class='menu2'>"+
 										"<div class='remodal-bg'>"+
@@ -228,7 +236,7 @@ var get_sharelists = function(json) {
 	for ( var i = 0; i < listLength ; i++) {
 		$myList = $("<div id='" + json[i].article_id+ "' class='"+item[random][i] + " mosaic-block bar'>" +
 						"<div class='mosaic-overlay'>"+
-						 "<div id='link-body'><a href='../login/article.html?"+json[i].article_id+"'></a></div>" +
+						 "<div id='link-body'><a href='#' onclick='javascript:locateArticleView("+json[i].article_id+");'></a></div>" +
 							"<div id='menu-block'>" +
 								"<div class='menu2'>"+
 									"<div class='remodal-bg'>"+
@@ -277,7 +285,7 @@ var get_mylists_list = function(json) {
 				flag=json[i].title;
 			}
 			$myList = $("<ol id='" + json[i].article_id+ "'>"+
-							"<a class='art-title' href='../login/article.html?"+json[i].article_id+"'><li class='first'>"+
+							"<a class='art-title' href='#' onclick='javascript:locateArticleView("+json[i].article_id+");'><li class='first'>"+
 								"<div class='dan'>"+
 									thumView(json[i], "100px", "100px")+
 								"</div>"+
@@ -341,7 +349,7 @@ var get_sharelists_list = function(json) {
 	}
 	for ( var i = 0; i < listLength ; i++) {
 		$myList = $("<ol id='" + json[i].article_id+ "'>"+
-						"<a class='art-title' href='../login/article.html?"+json[i].article_id+"'><li class='first'>"+
+						"<a class='art-title' href='#' onclick='javascript:locateArticleView("+json[i].article_id+");'><li class='first'>"+
 							"<div class='dan'>"+
 								thumView(json[i], "100px", "100px")+
 							"</div>"+
