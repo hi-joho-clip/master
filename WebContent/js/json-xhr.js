@@ -16,7 +16,7 @@ function initPromise() {
 }
 
 
-var hostURL = "http://localhost:8080/clipMaster"; // http://clip-sc.com
+var hostURL = "https://clip-sc.com"; // http://localhost:8080/clipMaster
 
 
 /**
