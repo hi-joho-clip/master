@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,45 +38,61 @@ public class AddRequestServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 
 		Friend friendbeans = new Friend();
-		//boolean flag = false;
+		// boolean flag = false;
 		HttpSession session = request.getSession(true);
 		Nonce nonce = new Nonce(request);
 		PrintWriter out = response.getWriter();
 		String resp = "{\"state\": \"unknownError\", \"flag\": 0}";
 		response.setContentType("application/json;charset=UTF-8");
 		response.setHeader("Cache-Control", "private");
-		int friend_user_id=0;
-		int own_user_id=0;
-		if(nonce.isNonce()){
-			if(request.getParameter("friend_user_id")!=null){
+		ArrayList<Friend> friend_list = new ArrayList<Friend>();
+		int friend_user_id = 0;
+		int own_user_id = 0;
+		int cnt = 0;
+		if (nonce.isNonce()) {
+			if (request.getParameter("friend_user_id") != null) {
 				try {
 					own_user_id = (int) session.getAttribute("user_id");
-					friend_user_id = Integer.parseInt(request.getParameter("friend_user_id"));
+					friend_user_id = Integer.parseInt(request
+							.getParameter("friend_user_id"));
+					friend_list = friendbeans.getFriendList(own_user_id);
 				} catch (Exception e) {
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
 				}
-				User get_nickname = new User(friend_user_id);
-				String nickname = get_nickname.getNickname();
-				//flag = friendbeans.addRequest(own_user_id, friend_user_id);
-				try {
-					if(friendbeans.addRequest(own_user_id, friend_user_id)){
-						resp = "{\"state\": \"成功しました\", \"flag\": 1,\"nickname\" : \"" + nickname + "\"}";
-					}else{
-						resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
+				for (int i = 0; friend_list.size() > i; i++) {
+					if (friend_list.get(i).getStatus() == 2) {
+						cnt += 1;
 					}
-				} catch (Exception e) {
-					// TODO 自動生成された catch ブロック
-					e.printStackTrace();
+				}
+
+				if (cnt < 10) {
+					User get_nickname = new User(friend_user_id);
+					String nickname = get_nickname.getNickname();
+					// flag = friendbeans.addRequest(own_user_id,
+					// friend_user_id);
+					try {
+						if (friendbeans.addRequest(own_user_id, friend_user_id)) {
+							resp = "{\"state\": \"成功しました\", \"flag\": 1,\"nickname\" : \""
+									+ nickname + "\"}";
+						} else {
+							resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
+						}
+					} catch (Exception e) {
+						// TODO 自動生成された catch ブロック
+						e.printStackTrace();
+					}
+				} else {
+					resp = "{\"state\": \"申請数オーバー\", \"flag\": 0}";
 				}
 				out.println(resp);
-			}else{
-				//friend_user_idがない場合のメソッドunknownError
+			} else {
+				// friend_user_idがない場合のメソッドunknownError
 				out.println(resp);
 			}
-			//out.println(JSON.encode(flag, true).toString());
-		}else{
-			//nonceがない場合のメソッド
+			// out.println(JSON.encode(flag, true).toString());
+		} else {
+			// nonceがない場合のメソッド
 			// 不正アクセス
 			resp = "{\"state\": \"不正なアクセス\",  \"flag\": 0}";
 			out.println(resp);

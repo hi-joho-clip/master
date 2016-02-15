@@ -39,12 +39,10 @@ public class AcceptFriendServlet extends HttpServlet {
 
 		User userbean = new User();
 		String Message = null;
-		Friend friendbeans = new Friend();
 		String resp = "{\"state\": \"unknownError\", \"flag\": 0}";
 		response.setContentType("application/json;charset=UTF-8");
 		response.setHeader("Cache-Control", "private");
 		HttpSession session = request.getSession(true);
-		ArrayList<Friend> friend_list = new ArrayList<Friend>();
 		PrintWriter out = response.getWriter();
 		// String URL = request.getContextPath() + "/login";
 		int user_id = 0;
@@ -54,15 +52,10 @@ public class AcceptFriendServlet extends HttpServlet {
 			try {
 				user_id = (int) session.getAttribute("user_id");
 				userbean.setUser_id(user_id);
-				friend_list = friendbeans.getFriendList(user_id);
-				if (friend_list.size() < 50) {
-					if (userbean.friend_accept()) {
-						resp = "{\"state\": \"許可しました\", \"flag\": 1}";
-					} else {
-						resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
-					}
-				}else{
-					resp = "{\"state\": \"フレンド数オーバー\", \"flag\": 0}";
+				if (userbean.friend_accept()) {
+					resp = "{\"state\": \"許可しました\", \"flag\": 1}";
+				} else {
+					resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
 				}
 				// Message = "フレンド申請拒否設定にしました。";
 			} catch (Exception e) {
