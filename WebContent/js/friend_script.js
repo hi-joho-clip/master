@@ -122,18 +122,18 @@ function limit() {
 	var $remodal = "";
 	var setappend = function(json) {
 
-		if (json.flag == 2) {
+		/*if (json.flag == 2) {
 			$remodal += "<h3>フレンド人数オーバー</h3>"
 					+ "<a class='remodal-confirm' href='#'>OK</a>";
 		} else if (json.flag == 1) {
 			$remodal += "<h3>フレンド申請オーバー</h3>"
 					+ "<a data-remodal-action='confirm' class='remodal-confirm' href='#'>OK</a>";
-		} else if (json.flag == 0) {
+		} else if (json.flag == 0) {*/
 			$remodal += "<h3>リクエスト送信</h3>"
 					//+ "<a data-remodal-action='confirm' class='remodal-confirm' href='#' onclick='addRequest(document.getElementById(\"user_id\").innerHTML);location.reload()\'>追加</a>"
 					+ "<a data-remodal-action='confirm' class='remodal-confirm' href='#' onclick='addRequest(document.getElementById(\"user_id\").innerHTML);\'>追加</a>"
 					+ "&emsp;<a data-remodal-action='cancel' class='remodal-cancel' href='#'onclick='javascript:return false;'>キャンセル</a>";
-		}
+		/*}*/
 		$("#limit").append($remodal).trigger("create");
 	};
 	getJSON(URL, jsonParam, setappend);
