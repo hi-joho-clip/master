@@ -115,6 +115,9 @@ function locateArticleView(article_id) {
 var get_mylists = function(json) {
 
 	return new Promise(function(resolve, reject) {
+
+		console.log(json.length);
+
 		stopload();
 		setLocalStorage("Style","tile");
 		var random =Math.floor(Math.random()*3);
@@ -199,6 +202,7 @@ function addViewNext(json) {
 		console.log('number:' + $('#art-page').val());
 		//サーチをするときなどに有効にしないと消えたままとなる。
 		$('#buttonbox').css({'display' : 'block'});
+		$("#add-button").prop("disabled", false);
 		$('#art-add').val('true');
 		console.log("21page:"+json[json.length-1].article_id);
 		// 最後に読み込んだArticleIDを残す

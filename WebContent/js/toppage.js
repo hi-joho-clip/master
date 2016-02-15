@@ -82,43 +82,39 @@ function startUpdate(username) {
 
 
 	var syncworker = operative({
-	    update: function(username, updatecall) {
+
+		update: function(username) {
 	    	//initPromise();
 	    	//var username = data.username;
-	    	updatecall(username);
+	    	//updatecall(username);
+			console.log('kousin');
+			getIDBAllArticleList(username).then(getArticleListAsync).then(
+	    			updateIDBArticleList)['catch'](function(error) {
+	    		//self.postMessage('更新失敗');
+	    	});
+	    	// 削除処理（サーバになくて、ローカルにあるものを消す
+	    	var deleteWorkerArticle = function(json) {
+	    		return new Promise(function(resolve, reject) {
+	    			// 更新用リストを取ってきて、
+	    			var ret = function (json) {
+	    				updateIDBArticleListDelete(json);
+	    			};
+	    			json = JSON.stringify(json);
+	    			getJSON(hostURL + "/getdeletearticle", "json=" + json, ret);
+
+	    		});
+	    	};
+
+	    	getIDBAllArticleList(username).then(deleteWorkerArticle).then(function(value){
+	    		console.log('success');
+	    	})['catch'](function(error) {
+	    		console.error(error);
+	    	});
 
 	    	// 更新処理
 	    }
-	});
+	},[hostURL + '/js/json-xhr.js',hostURL + '/js/indexeddb.js',hostURL + '/js/lib/es6-promise.min.js',hostURL + '/js/lib/kagedb.js']);
 
-	var update = function (username) {
-
-
-		console.log('kousin');
-		getIDBAllArticleList(username).then(getArticleListAsync).then(
-    			updateIDBArticleList)['catch'](function(error) {
-    		//self.postMessage('更新失敗');
-    	});
-    	// 削除処理（サーバになくて、ローカルにあるものを消す
-    	var deleteWorkerArticle = function(json) {
-    		return new Promise(function(resolve, reject) {
-    			// 更新用リストを取ってきて、
-    			var ret = function (json) {
-    				updateIDBArticleListDelete(json);
-    			};
-    			json = JSON.stringify(json);
-    			getJSON(hostURL + "/getdeletearticle", "json=" + json, ret);
-
-    		});
-    	};
-
-    	getIDBAllArticleList(username).then(deleteWorkerArticle).then(function(value){
-    		console.log('success');
-    	})['catch'](function(error) {
-    		console.error(error);
-    	});
-	};
-
-	syncworker.update(username, update);
+		syncworker.update(username);
 
 }

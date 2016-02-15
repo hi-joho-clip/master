@@ -171,7 +171,7 @@ public class ArticleBean {
 			articleBean.setShare_expior(article.get(i).getShare_expior());
 			articleBean.setFavflag(article.get(i).isFavflag());
 			articleBean.setMylist_id(article.get(i).getMylist_id());
-			articleBean.setThum(article.get(i).getThum());
+			//articleBean.setThum(article.get(i).getThum());
 			articleList.add(articleBean);
 		}
 		return articleList;

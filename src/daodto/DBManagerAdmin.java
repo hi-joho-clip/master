@@ -5,14 +5,14 @@ import java.sql.SQLException;
 public class DBManagerAdmin {
 	private static DBManagerAdmin dbManagerAdmin=null;
 	private static String dbDriver = "com.mysql.jdbc.Driver";
-	//private static String dbUrl = "jdbc:mysql://imac-14-14.mr.hi-joho.ac.jp/clip";
-	private static String dbUrl = "jdbc:mysql://localhost/clip";
+	private static String dbUrl = "jdbc:mysql://imac-14-14.mr.hi-joho.ac.jp/clip";
+	//private static String dbUrl = "jdbc:mysql://localhost/clip";
 	//private static String dbUrl = "jdbc:mysql://clip-sc.com/clip";
 	private Connection con = null;
 	//final static String USER="root";
 	final static String USER = "manager";
-	//final static String PASSWORD = "password";
-	final static String PASSWORD = "clipforspacecat";
+	final static String PASSWORD = "password";
+	//final static String PASSWORD = "clipforspacecat";
 
 	private DBManagerAdmin() throws SQLException{
 		try{

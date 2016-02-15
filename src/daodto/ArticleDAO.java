@@ -915,7 +915,7 @@ public class ArticleDAO {
 				article.setShare_url(rs.getString("share_url"));
 				article.setShare_expior(rs.getDate("share_expior"));
 				article.setFavflag(rs.getBoolean("favflag"));
-				article.setThum(rs.getBytes("thum"));
+				//article.setThum(rs.getBytes("thum"));
 				articleList.add(article);
 			}
 		} catch (Exception e) {

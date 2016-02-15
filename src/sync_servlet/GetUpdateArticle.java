@@ -161,6 +161,9 @@ public class GetUpdateArticle extends HttpServlet {
 					update_list.add(new_json);
 				}
 			}
+			article_list = null;
+			article_map = null;
+			articlebean = null;
 
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
@@ -169,12 +172,14 @@ public class GetUpdateArticle extends HttpServlet {
 
 		//System.out.println("updateList:" + update_list.size());
 
+
 		response.setContentType("application/json;charset=UTF-8");
 		response.setHeader("Cache-Control", "private");
 		PrintWriter out = response.getWriter();
 		//System.out.println("これ送ってるんだぜ:" + JSON.encode(update_list, true).toString());
 		out.println(JSON.encode(update_list, true).toString());
-
+		Runtime rt = Runtime.getRuntime();
+		rt.gc();
 	}
 
 	// JSONICで扱うため作成

@@ -16,7 +16,7 @@ function initPromise() {
 }
 
 
-var hostURL = "https://clip-sc.com"; // http://localhost:8080/clipMaster
+var hostURL = "http://localhost:8080/clipMaster"; // http://localhost:8080/clipMaster
 
 
 /**
@@ -33,7 +33,7 @@ function getURL(URL, param) {
 
 		// サーバからアーティクルリストを取得する
 
-		console.log('parameter:' + URL);
+		//console.log('parameter:' + URL);
 		if (URL === "") {
 			reject(new Error("url is null"));
 		}
@@ -61,8 +61,8 @@ function getURL(URL, param) {
 		req.onerror = function() {
 			reject(new Error(req.statusText));
 		};
-		// タイムアウトは7000ms
-		req.timeout = 20000;
+		// タイムアウトは40s
+		req.timeout = 40000;
 		req.ontimeout = function() {
 			reject(new Error("time out"));
 		};
@@ -114,7 +114,7 @@ function getURLForRedirect(URL, param) {
 			reject(new Error(req.statusText));
 		};
 		// タイムアウトは7000ms
-		req.timeout = 20000;
+		req.timeout = 40000;
 		req.ontimeout = function() {
 			reject(new Error("time out"));
 		};

@@ -67,12 +67,13 @@ public class ViewArticleServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		//System.out.println(article_id + "," +user_id);
+		System.out.println(article_id + "," +user_id);
 
 		if (article_id != 0 && user_id != 0) {
 			ArticleBean articlebean = new ArticleBean();
 			ArticleBean article = new ArticleBean();
 			TagBean tagbean = new TagBean();
+
 
 			try {
 				articlebean.setArticle_id(article_id);
@@ -89,6 +90,12 @@ public class ViewArticleServlet extends HttpServlet {
 
 					PrintWriter out = response.getWriter();
 					out.println(JSON.encode(article, true).toString());
+
+					article = null;
+					Runtime rt = Runtime.getRuntime();
+					rt.gc();
+					System.out.println("gc execute");
+
 				} else {
 					response.setContentType("application/json;charset=UTF-8");
 					response.setHeader("Cache-Control", "private");
