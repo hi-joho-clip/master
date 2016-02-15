@@ -49,6 +49,8 @@ public class AddRequestServlet extends HttpServlet {
 		int friend_user_id = 0;
 		int own_user_id = 0;
 		int cnt = 0;
+		int friend = 0;
+		int sum = 0;
 		if (nonce.isNonce()) {
 			if (request.getParameter("friend_user_id") != null) {
 				try {
@@ -61,29 +63,43 @@ public class AddRequestServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				for (int i = 0; friend_list.size() > i; i++) {
-					if (friend_list.get(i).getStatus() == 2) {
-						cnt += 1;
-					}
-				}
-
-				if (cnt < 10) {
-					User get_nickname = new User(friend_user_id);
-					String nickname = get_nickname.getNickname();
-					// flag = friendbeans.addRequest(own_user_id,
-					// friend_user_id);
-					try {
-						if (friendbeans.addRequest(own_user_id, friend_user_id)) {
-							resp = "{\"state\": \"成功しました\", \"flag\": 1,\"nickname\" : \""
-									+ nickname + "\"}";
+					if (friend_list.get(i).getStatus() != 1) {
+						sum += 1;
+						if (friend_list.get(i).getStatus() == 2) {
+							cnt += 1;
 						} else {
-							resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
+							friend += 1;
 						}
-					} catch (Exception e) {
-						// TODO 自動生成された catch ブロック
-						e.printStackTrace();
+					}
+
+				}
+				if (friend < 50) {
+					if (sum < 50) {
+						if (cnt < 10) {
+							User get_nickname = new User(friend_user_id);
+							String nickname = get_nickname.getNickname();
+							// flag = friendbeans.addRequest(own_user_id,
+							// friend_user_id);
+							try {
+								if (friendbeans.addRequest(own_user_id,
+										friend_user_id)) {
+									resp = "{\"state\": \"成功しました\", \"flag\": 1,\"nickname\" : \""
+											+ nickname + "\"}";
+								} else {
+									resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
+								}
+							} catch (Exception e) {
+								// TODO 自動生成された catch ブロック
+								e.printStackTrace();
+							}
+						} else {
+							resp = "{\"state\": \"申請数オーバー\", \"flag\": 0}";
+						}
+					}else{
+						resp = "{\"state\": \"申請削除する必要あり\", \"flag\": 0}";
 					}
 				} else {
-					resp = "{\"state\": \"申請数オーバー\", \"flag\": 0}";
+					resp = "{\"state\": \"フレンド数オーバー\", \"flag\": 0}";
 				}
 				out.println(resp);
 			} else {
