@@ -334,6 +334,38 @@ function addModeButton() {
 	$("#onlineswitch").append($online).trigger("create");
 }
 
+function addAutoButton() {
+	var online_flag = "";
+	var on_kyohi = "";
+	var on_kyoka = "";
+	if (getLocalStorage('auto') === 'false') {
+		online_flag = "";
+		on_kyohi = "checked";
+		on_kyoka = "";
+		console.log("off");
+	} else if (getLocalStorage('auto') === 'true') {
+		online_flag = "checked";
+		on_kyohi = "";
+		on_kyoka = "checked";
+		console.log("on");
+	} else {
+		console.log("unknown");
+	}
+
+	var $auto = $("<input type='checkbox' name='autoswitch' class='autoswitch-checkbox' id='myautoswitch' "
+			+ online_flag
+			+ ">"
+			+ "<label class='autoswitch-label' for='myautoswitch' onclick='autoMode()'>"
+			+ "<span  class='autoswitch-inner'"
+			+ on_kyoka
+			+ "></span>"
+			+ "<span  class='autoswitch-switch'"
+			+ on_kyohi
+			+ "></span>"
+			+ "</label>");
+	$("#autoswitch").append($auto).trigger("create");
+}
+
 /**
  * オンラインとオフラインモード切替
  */
@@ -343,9 +375,24 @@ function onlineMode() {
 
 	if (data == false) {
 		setLocalStorage('online', 'true');
-		console.log(docCookies.getItem('online'));
+		//console.log(docCookies.getItem('online'));
 	} else if (data == true) {
 		setLocalStorage('online', 'false');
+	}
+}
+
+/**
+ * オンラインとオフラインモード切替
+ */
+function autoMode() {
+	var data = document.getElementById('myautoswitch').checked;
+	console.log(data);
+
+	if (data == false) {
+		setLocalStorage('auto', 'true');
+		//console.log(docCookies.getItem('auto'));
+	} else if (data == true) {
+		setLocalStorage('auto', 'false');
 	}
 }
 

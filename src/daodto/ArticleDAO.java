@@ -917,6 +917,7 @@ public class ArticleDAO {
 				article.setFavflag(rs.getBoolean("favflag"));
 				//article.setThum(rs.getBytes("thum"));
 				articleList.add(article);
+				article = null;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -974,9 +975,10 @@ public class ArticleDAO {
 					imageDTO.setExtenstion(rs.getString("extension"));
 					imageDTO.setBlob_image(rs.getBytes("blob_image"));
 					image_list.add(imageDTO);
+					imageDTO = null;
 				}
 				articleDTO.setImageDTO(image_list);
-
+				//image_list.clear();
 			}
 
 		} catch (Exception e) {
@@ -1118,6 +1120,7 @@ public class ArticleDAO {
 		String sql1 = "INSERT INTO tags(tag_body,created,modified,lastest,user_id) values(?,now(),now(),now(),?)";
 		String sql2 = "INSERT INTO article_tag(article_id, tag_id) VALUES(?,?)";
 		String update_sql = "UPDATE tags SET lastest = now() WHERE tag_id = ?";
+		String modified_update = "update articles set modified = DATE_ADD(modified, INTERVAL 1 SECOND) where article_id = ?";
 		try {
 			con.setAutoCommit(false);
 			//tag_bodyがある限り
@@ -1206,6 +1209,10 @@ public class ArticleDAO {
 					}*/
 				}
 			}
+			pstmt = con.prepareStatement(modified_update);
+			pstmt.setInt(1, article_id);
+			pstmt.executeUpdate();
+
 			con.commit();
 			flag = true;
 		} catch (Exception e) {

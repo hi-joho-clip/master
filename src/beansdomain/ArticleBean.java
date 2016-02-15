@@ -182,10 +182,10 @@ public class ArticleBean {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleBean> viewFavArticleList(int user_id, int page,int article_id) throws Exception {
+	public ArrayList<ArticleBean> viewFavArticleList(int user_id, int page, int article_id) throws Exception {
 		ArrayList<ArticleBean> articleList = new ArrayList<ArticleBean>();
 		this.articleDAO = new ArticleDAO();
-		article = articleDAO.FavoriteLists(user_id, page,article_id);
+		article = articleDAO.FavoriteLists(user_id, page, article_id);
 		for (int i = 0; i < article.size(); i++) {
 			ArticleBean articleBean = new ArticleBean();
 			articleBean.setArticle_id(article.get(i).getArticle_id());
@@ -203,31 +203,32 @@ public class ArticleBean {
 		return articleList;
 	}
 
-/*	*//**
-	 * タグ内でお気に入りした記事一覧
-	 * @return
-	 * @throws Exception
-	 *//*
+	/*	*//**
+			* タグ内でお気に入りした記事一覧
+			* @return
+			* @throws Exception
+			*/
+	/*
 	public ArrayList<ArticleBean> viewTagFavArticleList(int user_id, ArrayList<String> tag_body_list, int page)
-			throws Exception {
-		ArrayList<ArticleBean> articleList = new ArrayList<ArticleBean>();
-		this.articleDAO = new ArticleDAO();
-		article = articleDAO.searchFavoriteTagLists(user_id, tag_body_list, page);
-		for (int i = 0; i < article.size(); i++) {
-			ArticleBean articleBean = new ArticleBean();
-			articleBean.setArticle_id(article.get(i).getArticle_id());
-			articleBean.setTitle(article.get(i).getTitle());
-			articleBean.setUrl(article.get(i).getUrl());
-			articleBean.setCreated(article.get(i).getCreated());
-			articleBean.setModified(article.get(i).getModified());
-			articleBean.setShare_url(article.get(i).getShare_url());
-			articleBean.setShare_expior(article.get(i).getShare_expior());
-			articleBean.setFavflag(article.get(i).isFavflag());
-			articleBean.setMylist_id(article.get(i).getMylist_id());
-			articleBean.setThum(article.get(i).getThum());
-			articleList.add(articleBean);
-		}
-		return articleList;
+		throws Exception {
+	ArrayList<ArticleBean> articleList = new ArrayList<ArticleBean>();
+	this.articleDAO = new ArticleDAO();
+	article = articleDAO.searchFavoriteTagLists(user_id, tag_body_list, page);
+	for (int i = 0; i < article.size(); i++) {
+		ArticleBean articleBean = new ArticleBean();
+		articleBean.setArticle_id(article.get(i).getArticle_id());
+		articleBean.setTitle(article.get(i).getTitle());
+		articleBean.setUrl(article.get(i).getUrl());
+		articleBean.setCreated(article.get(i).getCreated());
+		articleBean.setModified(article.get(i).getModified());
+		articleBean.setShare_url(article.get(i).getShare_url());
+		articleBean.setShare_expior(article.get(i).getShare_expior());
+		articleBean.setFavflag(article.get(i).isFavflag());
+		articleBean.setMylist_id(article.get(i).getMylist_id());
+		articleBean.setThum(article.get(i).getThum());
+		articleList.add(articleBean);
+	}
+	return articleList;
 	}*/
 
 	/**
@@ -415,10 +416,11 @@ public class ArticleBean {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleBean> viewShareArticleList(int user_id, int friend_user_id, int page,int article_id) throws Exception {
+	public ArrayList<ArticleBean> viewShareArticleList(int user_id, int friend_user_id, int page, int article_id)
+			throws Exception {
 		ArrayList<ArticleBean> articleList = new ArrayList<ArticleBean>();
 		this.articleDAO = new ArticleDAO();
-		article = articleDAO.viewShareArticle(user_id, friend_user_id, page,article_id);
+		article = articleDAO.viewShareArticle(user_id, friend_user_id, page, article_id);
 		for (int i = 0; i < article.size(); i++) {
 			ArticleBean articleBean = new ArticleBean();
 			articleBean.setArticle_id(article.get(i).getArticle_id());
@@ -467,10 +469,11 @@ public class ArticleBean {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleBean> viewTag(ArrayList<String> tag_body_list, int user_id, int page,int article_id) throws Exception {
+	public ArrayList<ArticleBean> viewTag(ArrayList<String> tag_body_list, int user_id, int page, int article_id)
+			throws Exception {
 		ArrayList<ArticleBean> articleList = new ArrayList<ArticleBean>();
 		this.articleDAO = new ArticleDAO();
-		article = articleDAO.viewTagArticle(tag_body_list, user_id, page,article_id);
+		article = articleDAO.viewTagArticle(tag_body_list, user_id, page, article_id);
 		for (int i = 0; i < article.size(); i++) {
 			ArticleBean articleBean = new ArticleBean();
 			articleBean.setArticle_id(article.get(i).getArticle_id());
@@ -493,10 +496,11 @@ public class ArticleBean {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleBean> viewMyListSearch(int user_id, ArrayList<String> text_list, int page,int article_id) throws Exception {
+	public ArrayList<ArticleBean> viewMyListSearch(int user_id, ArrayList<String> text_list, int page, int article_id)
+			throws Exception {
 		ArrayList<ArticleBean> articleList = new ArrayList<ArticleBean>();
 		this.articleDAO = new ArticleDAO();
-		article = articleDAO.mylist_search(user_id, text_list, page,article_id);
+		article = articleDAO.mylist_search(user_id, text_list, page, article_id);
 		for (int i = 0; i < article.size(); i++) {
 			ArticleBean articleBean = new ArticleBean();
 			articleBean.setArticle_id(article.get(i).getArticle_id());
@@ -519,11 +523,11 @@ public class ArticleBean {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleBean> viewFavListSearch(int user_id, ArrayList<String> text_list, int page,int article_id)
+	public ArrayList<ArticleBean> viewFavListSearch(int user_id, ArrayList<String> text_list, int page, int article_id)
 			throws Exception {
 		ArrayList<ArticleBean> articleList = new ArrayList<ArticleBean>();
 		this.articleDAO = new ArticleDAO();
-		article = articleDAO.favlist_search(user_id, text_list, page,article_id);
+		article = articleDAO.favlist_search(user_id, text_list, page, article_id);
 		for (int i = 0; i < article.size(); i++) {
 			ArticleBean articleBean = new ArticleBean();
 			articleBean.setArticle_id(article.get(i).getArticle_id());
@@ -546,11 +550,12 @@ public class ArticleBean {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleBean> viewTagSearch(int user_id, ArrayList<String> text_list, String tag, int page,int article_id)
+	public ArrayList<ArticleBean> viewTagSearch(int user_id, ArrayList<String> text_list, String tag, int page,
+			int article_id)
 			throws Exception {
 		ArrayList<ArticleBean> articleList = new ArrayList<ArticleBean>();
 		this.articleDAO = new ArticleDAO();
-		article = articleDAO.tag_search(user_id, text_list, tag, page,article_id);
+		article = articleDAO.tag_search(user_id, text_list, tag, page, article_id);
 		for (int i = 0; i < article.size(); i++) {
 			ArticleBean articleBean = new ArticleBean();
 			articleBean.setArticle_id(article.get(i).getArticle_id());
@@ -574,10 +579,10 @@ public class ArticleBean {
 	 * @throws Exception
 	 */
 	public ArrayList<ArticleBean> viewShareListSearch(int user_id, ArrayList<String> text_list, int friend_user_id,
-			int page,int article_id) throws Exception {
+			int page, int article_id) throws Exception {
 		ArrayList<ArticleBean> articleList = new ArrayList<ArticleBean>();
 		this.articleDAO = new ArticleDAO();
-		article = articleDAO.sharelist_search(user_id, text_list, friend_user_id, page,article_id);
+		article = articleDAO.sharelist_search(user_id, text_list, friend_user_id, page, article_id);
 		for (int i = 0; i < article.size(); i++) {
 			ArticleBean articleBean = new ArticleBean();
 			articleBean.setArticle_id(article.get(i).getArticle_id());
@@ -628,6 +633,32 @@ public class ArticleBean {
 		this.imageDTO.setExtenstion(this.extension);
 		this.imageDTO.setBlob_image(this.blob_image);
 		return imageDTO;
+	}
+
+	public void ArticleDelete() {
+		this.article_id = 0;
+		this.username = null;
+		this.title = null;
+		this.body = null;
+		this.url = null;
+		this.created = null;
+		this.modified = null;
+		this.share_url = null;
+		this.share_expior = null;
+		this.mylist_id = 0;
+		this.articleDTO = null;
+		this.articleDAO = null;
+		this.article.clear();
+		this.image_id = 0;
+		this.uri = null;
+		this.thum = null;
+		this.blob_image = null;
+		this.extension = null;
+		this.imageDTO = null;
+		this.favflag = false;
+		this.share_id = 0;
+		this.imageListDTO.clear();
+		this.tagBeans.clear();
 	}
 
 	public int getArticle_id() {

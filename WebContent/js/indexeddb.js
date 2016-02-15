@@ -283,7 +283,7 @@ function getIDEArticleList(username, page, share_id, title, fav_state, direct) {
 		var offset_filter;
 		//console.log(page);
 		// 1スタートなので
-		page = page - 1;
+		//page = page - 1;
 
 		var direct = "prev";
 
@@ -292,7 +292,7 @@ function getIDEArticleList(username, page, share_id, title, fav_state, direct) {
 			//console.log("fav_false");
 			offset_filter = {
 				filter : fav_true,
-				offset : page * 20 - 18,
+				offset : page * 20 - 20,
 				limit : 21,
 				direction : direct
 			};
@@ -301,7 +301,7 @@ function getIDEArticleList(username, page, share_id, title, fav_state, direct) {
 			//
 			offset_filter = {
 				filter : fav_false,
-				offset : page * 20 - 18,
+				offset : page * 20 - 20,
 				limit : 21,
 				direction : direct
 			};
@@ -338,8 +338,8 @@ function getIDEArticleList(username, page, share_id, title, fav_state, direct) {
 			return record.username === username;
 		}
 		function share_filter(record) {
-			// console.log('share');
-			return record.share_id === share_id;
+			//console.log('share' + record.share_id);
+			return record.share_id == share_id;
 		}
 		function title_filter(record) {
 			// console.log('title');
@@ -370,8 +370,10 @@ function getIDEArticleList(username, page, share_id, title, fav_state, direct) {
 			// console.log('fabf');
 			if (guid_filter(record) && share_filter(record)
 					&& title_filter(record)) {
+				//console.log('true');
 				return true;
 			} else {
+				//console.log('false');
 				return false;
 			}
 		}
@@ -390,14 +392,14 @@ function getIDEArticleTagList(username, page, title, tag, direct) {
 		// console.log(guid + page);
 
 		var offset_filter;
-		page = page - 1;
+		//page = page - 1;
 
 		var direct = "prev";
 
 		//
 		offset_filter = {
 			filter : fav_false,
-			offset : page * 20 - 19,
+			offset : page * 20 - 20,
 			limit : 21,
 			direction : direct
 		};

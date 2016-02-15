@@ -130,6 +130,7 @@ function getFavList(page) {
 // シェア記事一覧
 function getShareList(page) {
 	$('h1.title').html(getSessionStorage('friend'));
+	console.log(getSessionStorage('friend'));
 	var func = get_sharelists;
 
 	func = changeViewSwitti(get_sharelists, get_sharelists_list);
@@ -167,6 +168,8 @@ function getOffShareList(page) {
 					// マイリストの検索をしているページを出す
 					word = getSessionStorage('search');
 				}
+
+				console.log(getSessionStorage('shareListId'));
 				getIDEArticleList(username, page, getSessionStorage('shareListId'), word, false).then(
 						function(json) {
 							// 純粋なリストが必要
