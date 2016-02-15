@@ -67,7 +67,7 @@ public class ViewArticleServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(article_id + "," +user_id);
+		//System.out.println(article_id + "," +user_id);
 
 		if (article_id != 0 && user_id != 0) {
 			ArticleBean articlebean = new ArticleBean();
@@ -78,7 +78,10 @@ public class ViewArticleServlet extends HttpServlet {
 			try {
 				articlebean.setArticle_id(article_id);
 				article = articlebean.viewArticle(user_id, article_id);
-				System.out.println("fav:" + article.isFavflag());
+				// 参照元の参照を削除
+				//articlebean.setImageListDTO(null);
+				//articlebean.ArticleDelete();
+				//System.out.println("fav:" + article.isFavflag());
 				if (article.getTitle() != null) {
 					article.setTagBeans(tagbean.viewExistingTag(user_id, article_id));
 					// ユーザ名も欲しい
@@ -90,12 +93,6 @@ public class ViewArticleServlet extends HttpServlet {
 
 					PrintWriter out = response.getWriter();
 					out.println(JSON.encode(article, true).toString());
-
-					article = null;
-					Runtime rt = Runtime.getRuntime();
-					rt.gc();
-					System.out.println("gc execute");
-
 				} else {
 					response.setContentType("application/json;charset=UTF-8");
 					response.setHeader("Cache-Control", "private");
@@ -104,6 +101,11 @@ public class ViewArticleServlet extends HttpServlet {
 					PrintWriter out = response.getWriter();
 					out.println(resp);
 				}
+				articlebean.ArticleDelete();
+				article.ArticleDelete();
+				Runtime rt = Runtime.getRuntime();
+				rt.gc();
+				//System.out.println(resp);
 
 			} catch (Exception e) {
 				e.getStackTrace();

@@ -104,6 +104,58 @@
 
 <!-- -->
 
+#autoswitch {
+    position: relative; width: 83px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+    left:38%;
+    bottom: -4px;
+
+}
+.autoswitch-checkbox {
+    display: none;
+}
+.autoswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+     border-radius: 25px;
+}
+.autoswitch-inner {
+    display: block; width: 200%; margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+.autoswitch-inner:before, .autoswitch-inner:after {
+    display: block; float: left; width: 50%; height: 28px; padding: 0; line-height: 28px;
+    font-size: 17px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    box-sizing: border-box;
+}
+.autoswitch-inner:before {
+    content: "On";
+    padding-left: 0px;
+    background-color: #03A9F4;
+}
+.autoswitch-inner:after {
+    content: "Off";
+    padding-right: 13px;
+    background-color: #7D7D7D;
+    text-align: right;
+}
+.autoswitch-switch {
+    display: block; width: 30px; margin: -1px;
+    background: #A1A1A1;
+    position: absolute; top: 0; bottom: 0;
+    right: 53px;
+    border: 2px solid #FFF; border-radius: 25px;
+    transition: all 0.3s ease-in 0s;
+}
+.autoswitch-checkbox:checked + .autoswitch-label .autoswitch-inner {
+    margin-left: -10px;
+}
+.autoswitch-checkbox:checked + .autoswitch-label .autoswitch-switch {
+    right: 0px;
+    background-color: #03A9F4;
+}
+
+<!-- -->
+
 #onthemaswitch {
     position: relative; width: 83px;
     -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;

@@ -2,7 +2,6 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -73,9 +72,9 @@ public class MyListServlet extends HttpServlet {
 
 		System.out.println("user_id:" + user_id + "page:" + page + "start_article_id:" + start_article_id);
 		ArticleBean articlebean = new ArticleBean();
-		ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
+		//ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
 		try {
-			article_list = articlebean.viewArticleList(user_id, page,start_article_id);
+			//article_list = articlebean.viewArticleList(user_id, page,start_article_id);
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
@@ -85,12 +84,22 @@ public class MyListServlet extends HttpServlet {
 		response.setHeader("Cache-Control", "private");
 		PrintWriter out = response.getWriter();
 		// 最大深度5階層以下
-		JSON json = new JSON();
-		json.setMaxDepth(4);
-		out.println(json.encode(article_list).toString());
-		out.close();
-		article_list = null;
-		json = null;
+		try {
+			JSON json = new JSON();
+			json.setMaxDepth(3);
+			out.println(json.encode(articlebean.viewArticleList(user_id, page,start_article_id)).toString());
+			//out.println("{\"state\" : 0}");
+			out.close();
+			articlebean.ArticleDelete();
+			articlebean = null;
+			json = null;
+		} catch (Exception e) {
+
+		}
+		//article_list.clear();
+
+		Runtime rt = Runtime.getRuntime();
+		rt.gc();
 	}
 
 }

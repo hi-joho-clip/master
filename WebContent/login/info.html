@@ -151,6 +151,10 @@
 										<td><h6>オンライン :</h6></td>
 										<td><div id="onlineswitch"></div></td>
 									</tr>
+									<tr>
+										<td><h6>自動更新 :</h6></td>
+										<td><div id="autoswitch"></div></td>
+									</tr>
 								</table>
 								<h5>
 									<a class="art-title" href="#" onclick="javascript:logout();">ログアウト</a>
@@ -183,10 +187,12 @@
 				$('#info').append("<h5>" + "ニックネーム<br>" + getLocalStorage('nickname') + "<br></h5>");
 				$('.changeform').empty();
 				addModeButton();
+				addAutoButton();
 				colorOffline();
 			} else if(isSettinOnLine() == true) {
 				getUserList();
 				addModeButton();
+				addAutoButton();
 				notice();
 			}
 		});

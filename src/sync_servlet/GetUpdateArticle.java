@@ -125,6 +125,7 @@ public class GetUpdateArticle extends HttpServlet {
 
 				// マイリストと更新データを比較
 				for (ArticleBean art : article_list) {
+					//System.out.println("article_id" + art.getArticle_id());
 					// ブラウザのリストにサーバの項目が存在する場合（日付比較）
 					if (old_json_map.containsKey(art.getArticle_id())) {
 						// 日付を比較する

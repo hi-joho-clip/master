@@ -68,7 +68,7 @@ public class LoginFilter implements Filter {
 
 			// ログインとログアウトのURLパターン以外全部
 			//if (!(target.equals(loginURL) || target.equals(logoutURL))) {
-			System.out.println("not Authorized0:" + resp);
+			//System.out.println("not Authorized0:" + resp);
 
 
 			if (session == null) {
@@ -77,11 +77,11 @@ public class LoginFilter implements Filter {
 				session = ((HttpServletRequest) request).getSession(true);
 				//session.setAttribute("target", target);
 
-				System.out.println("non session");
+				//System.out.println("non session");
 				// 通常リダイレクトできないのでパラメータで送りJSでハンドリングする
 				resp = "{\"redirect\": \"true\", \"redirect_url\": \"" + loginURL + "\"}";
 				out.print(resp);
-				System.out.println("not Authorized1:" + resp);
+				//System.out.println("not Authorized1:" + resp);
 				//((HttpServletResponse) response).sendRedirect(loginURL);
 			} else {
 				String username = (String) session.getAttribute("username");
@@ -89,7 +89,7 @@ public class LoginFilter implements Filter {
 				if (username == null) {
 					/* まだ認証されていない */
 					resp = "{\"redirect\": \"true\", \"redirect_url\": \"" + loginURL + "\"}";
-					System.out.println("not Authorized:" + resp);
+					//System.out.println("not Authorized:" + resp);
 					out.print(resp);
 
 					//session.setAttribute("target", target);
@@ -97,6 +97,7 @@ public class LoginFilter implements Filter {
 				} else {
 					// ここは認証成功
 					// pass the request along the filter chain
+					//System.out.println("認証成功");
 					chain.doFilter(request, response);
 				}
 			}
