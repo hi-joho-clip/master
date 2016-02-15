@@ -38,7 +38,7 @@ var getBrowser = function(){
     }else if (ua.indexOf('firefox') != -1){
         name = 'firefox';
     }
-    alert(name);
+    //alert(name);
     return name;
 };
 

@@ -62,7 +62,7 @@ public class GetUpdateArticle extends HttpServlet {
 		if (session.getAttribute("user_id") != null) {
 			user_id = (int) session.getAttribute("user_id");
 		}
-		System.out.println(user_id);
+		//System.out.println(user_id);
 
 		// ブラウザからのリスト
 		String strJson = (String) request.getParameter("json");
@@ -75,7 +75,7 @@ public class GetUpdateArticle extends HttpServlet {
 
 		JsonArticle[] json_list = null;
 
-		System.out.println("リスト来てるよ");
+		//System.out.println("リスト来てるよ");
 
 		try {
 
@@ -89,14 +89,14 @@ public class GetUpdateArticle extends HttpServlet {
 				System.out.println("reseived: " + json_list.length);
 			}
 
-			System.out.println("受け取ったリスト:"  + json_list.length);
+			//System.out.println("受け取ったリスト:"  + json_list.length);
 
 			ArticleBean articlebean = new ArticleBean();
 			// サーバのリスト
 			ArrayList<ArticleBean> article_list = new ArrayList<ArticleBean>();
 			article_list = articlebean.viewALLArticleList(user_id);
 
-			System.out.println("allsize:" + article_list.size());
+			//System.out.println("allsize:" + article_list.size());
 
 			/*
 			 * ハッシュマップ作成（Articleは画像がついてるので高速化を含めて実装
@@ -129,10 +129,10 @@ public class GetUpdateArticle extends HttpServlet {
 					if (old_json_map.containsKey(art.getArticle_id())) {
 						// 日付を比較する
 						// サーバ＞ブラウザ
-						System.out.println("server.modified=" + article_map.get(art.getArticle_id()).getModified() +", old:" + old_json_map.get(art.getArticle_id()).getModified());
+						//System.out.println("server.modified=" + article_map.get(art.getArticle_id()).getModified() +", old:" + old_json_map.get(art.getArticle_id()).getModified());
 						if (article_map.get(art.getArticle_id()).getModified() > old_json_map.get(art.getArticle_id())
 								.getModified()) {
-							System.out.println("更新：" + article_map.get(art.getArticle_id()).getModified() + ",id:" + art.getArticle_id());
+							//System.out.println("更新：" + article_map.get(art.getArticle_id()).getModified() + ",id:" + art.getArticle_id());
 							// 存在しなければ新規追加（更新必要）
 							JsonArticle new_json = new JsonArticle();
 							new_json.setArticle_id(art.getArticle_id());
@@ -161,20 +161,25 @@ public class GetUpdateArticle extends HttpServlet {
 					update_list.add(new_json);
 				}
 			}
+			article_list = null;
+			article_map = null;
+			articlebean = null;
 
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
 
-		System.out.println("updateList:" + update_list.size());
+		//System.out.println("updateList:" + update_list.size());
+
 
 		response.setContentType("application/json;charset=UTF-8");
 		response.setHeader("Cache-Control", "private");
 		PrintWriter out = response.getWriter();
-		System.out.println("これ送ってるんだぜ:" + JSON.encode(update_list, true).toString());
+		//System.out.println("これ送ってるんだぜ:" + JSON.encode(update_list, true).toString());
 		out.println(JSON.encode(update_list, true).toString());
-
+		Runtime rt = Runtime.getRuntime();
+		rt.gc();
 	}
 
 	// JSONICで扱うため作成

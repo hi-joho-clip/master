@@ -72,8 +72,8 @@ public class TestLogin extends HttpServlet {
 		loginsession.setAttribute("guid", guid.toString());
 
 
-		// セッションの有効期限を1日にする
-		loginsession.setMaxInactiveInterval(86400);
+		// セッションの有効期限を2日にする
+		loginsession.setMaxInactiveInterval(172800);
 
 		response.sendRedirect(request.getContextPath() + "/login/index.html");
 

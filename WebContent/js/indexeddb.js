@@ -20,26 +20,26 @@ function getArticle(username, article_id) {
 
 	return new Promise(function(resolve, reject) {
 
-			// 成功の場合
-			var tutorial = getArticleInstance();
+		// 成功の場合
+		var tutorial = getArticleInstance();
 
-			console.log('offline' + username + article_id);
-			tutorial.tx([ "article" ], function(tx, todo) {
-				todo.fetch({
-					filter : article_filter,
-				// filter : user_filter
-				}, function(values) {
-					// console.log("values = " + JSON.stringify(values));
-					console.log("done.");
-					resolve(values);
-					// console.log(values.body.created);
-				});
+		//console.log('offline' + username + article_id);
+		tutorial.tx([ "article" ], function(tx, todo) {
+			todo.fetch({
+				filter : article_filter,
+			// filter : user_filter
+			}, function(values) {
+				// console.log("values = " + JSON.stringify(values));
+				//console.log("done.");
+				resolve(values);
+				// console.log(values.body.created);
 			});
-//		} else {
-//			// エラー処理のコールバック
-//			rejece(new Error());
-//
-//		}
+		});
+		// } else {
+		// // エラー処理のコールバック
+		// rejece(new Error());
+		//
+		// }
 		function article_filter(record) {
 			// GUIDが自身であり、アーティクルIDが同一
 			return record.article_id == article_id;
@@ -60,26 +60,31 @@ function getArticle(username, article_id) {
  */
 function getArticleID(article_id) {
 	return new Promise(function(resolve, reject) {
-		//if (KageDB.isAvailable()) {
-			// 成功の場合
-			var tutorial = getArticleInstance();
+		// if (KageDB.isAvailable()) {
+		// 成功の場合
+		var tutorial = getArticleInstance();
 
-			tutorial.tx([ "article" ], function(tx, todo) {
-				todo.fetch({
-					filter : article_filter
-				}, function(values) {
-					// console.log("values = " + JSON.stringify(values));
-					// console.log("done.");
-					console.log(values[0]['id']);
+		tutorial.tx([ "article" ], function(tx, todo) {
+			todo.fetch({
+				filter : article_filter
+			}, function(values) {
+				// console.log("values = " + JSON.stringify(values));
+				// console.log("done.");
+				// console.log(values[0]['id']);
+
+				try {
 					resolve(values[0]['id']);
-					// console.log(values.body.created);
-				});
+				} catch (e) {
+					reject();
+				}
+				// console.log(values.body.created);
 			});
+		});
 		// } else {
 		// // エラー処理のコールバック
 		// rejece(new Error());
 		//
-		//		}
+		// }
 		function article_filter(record) {
 			// GUIDが自身であり、アーティクルIDが同一
 			return record.article_id === article_id;
@@ -126,7 +131,7 @@ function updateArticle(json_article) {
 				// 登録日時はサーバで管理するべき（ブラウザ依存は排除）
 				modified : article.modified
 			}, function(key) {
-				console.log("done. key = " + key);
+				//console.log("done. key = " + key);
 				// 成功時はキーを渡す
 				resolve(key);
 			});
@@ -192,7 +197,7 @@ function updateIDBUser(prop) {
 				guid : prop.guid,
 				started : prop.started
 			}, function(key) {
-				console.log("done. key = " + key);
+				//console.log("done. key = " + key);
 				// 成功時はキーを渡す
 				resolve(key);
 			});
@@ -255,7 +260,7 @@ function updateIDBArticleListDelete(values) {
 		pro_list.push(getArticleID(param).then(updateArticleDelete));
 	}
 	if (pro_list) {
-		console.log(pro_list);
+		//console.log(pro_list);
 		return Promise.all(pro_list).then('success')['catch'](function(error) {
 			return (error);
 		});
@@ -276,19 +281,19 @@ function getIDEArticleList(username, page, share_id, title, fav_state, direct) {
 		// console.log(guid + page);
 
 		var offset_filter;
-		console.log(page);
+		//console.log(page);
 		// 1スタートなので
-		page = page -1;
+		page = page - 1;
 
 		var direct = "prev";
 
 		if (fav_state) {
 			// 絶対お気に入り
-			console.log("fav_false");
+			//console.log("fav_false");
 			offset_filter = {
 				filter : fav_true,
 				offset : page * 20 - 18,
-				limit : 20,
+				limit : 21,
 				direction : direct
 			};
 
@@ -297,7 +302,7 @@ function getIDEArticleList(username, page, share_id, title, fav_state, direct) {
 			offset_filter = {
 				filter : fav_false,
 				offset : page * 20 - 18,
-				limit : 20,
+				limit : 21,
 				direction : direct
 			};
 		}
@@ -317,9 +322,9 @@ function getIDEArticleList(username, page, share_id, title, fav_state, direct) {
 					var val = [];
 					for ( var i in values) {
 						val.push(values[i]["article"]);
-						//console.log("art:" + values[i]['modified']);
+						// console.log("art:" + values[i]['modified']);
 					}
-					//console.log(val.length);
+					// console.log(val.length);
 					resolve(val);
 				} else {
 					reject(new Error("not found"));
@@ -329,15 +334,15 @@ function getIDEArticleList(username, page, share_id, title, fav_state, direct) {
 		});
 
 		function guid_filter(record) {
-			//console.log('guid');
+			// console.log('guid');
 			return record.username === username;
 		}
 		function share_filter(record) {
-			//console.log('share');
+			// console.log('share');
 			return record.share_id === share_id;
 		}
 		function title_filter(record) {
-			//console.log('title');
+			// console.log('title');
 			flag = false;
 			if (record.article.title.indexOf(title) != -1) {
 				flag = true;
@@ -345,7 +350,7 @@ function getIDEArticleList(username, page, share_id, title, fav_state, direct) {
 			return flag;
 		}
 		function fav_filter(record) {
-			//console.log('fav');
+			// console.log('fav');
 			flag = false;
 			if (record.article.favflag === true) {
 				flag = true;
@@ -353,7 +358,7 @@ function getIDEArticleList(username, page, share_id, title, fav_state, direct) {
 			return flag;
 		}
 		function fav_true(record) {
-			//console.log('fabt');
+			// console.log('fabt');
 			if (guid_filter(record) && share_filter(record)
 					&& title_filter(record) && fav_filter(record)) {
 				return true;
@@ -362,7 +367,7 @@ function getIDEArticleList(username, page, share_id, title, fav_state, direct) {
 			}
 		}
 		function fav_false(record) {
-			//console.log('fabf');
+			// console.log('fabf');
 			if (guid_filter(record) && share_filter(record)
 					&& title_filter(record)) {
 				return true;
@@ -385,7 +390,7 @@ function getIDEArticleTagList(username, page, title, tag, direct) {
 		// console.log(guid + page);
 
 		var offset_filter;
-		page = page -1;
+		page = page - 1;
 
 		var direct = "prev";
 
@@ -393,7 +398,7 @@ function getIDEArticleTagList(username, page, title, tag, direct) {
 		offset_filter = {
 			filter : fav_false,
 			offset : page * 20 - 19,
-			limit : 20,
+			limit : 21,
 			direction : direct
 		};
 
@@ -412,9 +417,9 @@ function getIDEArticleTagList(username, page, title, tag, direct) {
 					var val = [];
 					for ( var i in values) {
 						val.push(values[i]["article"]);
-						//console.log("art:" + values[i]['modified']);
+						// console.log("art:" + values[i]['modified']);
 					}
-					//console.log(val.length);
+					// console.log(val.length);
 					resolve(val);
 				} else {
 					reject(new Error("not found"));
@@ -424,12 +429,12 @@ function getIDEArticleTagList(username, page, title, tag, direct) {
 		});
 
 		function guid_filter(record) {
-			//console.log('guid');
+			// console.log('guid');
 			return record.username === username;
 		}
 
 		function title_filter(record) {
-			//console.log('title');
+			// console.log('title');
 			flag = false;
 			if (record.article.title.indexOf(title) != -1) {
 				flag = true;
@@ -440,10 +445,10 @@ function getIDEArticleTagList(username, page, title, tag, direct) {
 		function tag_filter(record) {
 			tags = record.article.tagBeans;
 
-			flag= false;
+			flag = false;
 			for ( var i in tags) {
-				//console.log(JSON.stringify(tags[i].tag_body));
-				if (JSON.stringify(tags[i].tag_body).indexOf(tag) != -1){
+				// console.log(JSON.stringify(tags[i].tag_body));
+				if (JSON.stringify(tags[i].tag_body).indexOf(tag) != -1) {
 					flag = true;
 				}
 			}
@@ -452,15 +457,15 @@ function getIDEArticleTagList(username, page, title, tag, direct) {
 
 		function fav_false(record) {
 			if (guid_filter(record) && title_filter(record)) {
-				//console.log('true');
+				// console.log('true');
 				if (tag_filter(record)) {
-					//console.log('tagtrue');
+					// console.log('tagtrue');
 					return true;
 				} else {
-					//console.log('tagfalse');
+					// console.log('tagfalse');
 				}
 			} else {
-				//console.log('false');
+				// console.log('false');
 				return false;
 			}
 		}
@@ -482,7 +487,7 @@ function getIDBAllArticleList(username) {
 		var article_db = getArticleInstance();
 		article_db.onerror = function(event) {
 			// エラーの詳細をコンソールに出力する
-			console.log(event);
+			//console.log(event);
 			reject(event.kage_message);
 		};
 
@@ -602,17 +607,17 @@ function deleteDatabase(database) {
 		if (database == "article") {
 			var tutorial = getArticleInstance();
 			tutorial.deleteDatabase(function() {
-				console.log("done");
+				//console.log("done");
 			});
 		} else if (database == "image") {
 			// 画像テーブルの削除
 		} else if (database == "friend") {
 			// フレンドテーブルの削除
 		} else {
-			console.log("not found DB");
+			//console.log("not found DB");
 		}
 	} else {
-		console.log("indexedDB not supported");
+		//console.log("indexedDB not supported");
 	}
 }
 
@@ -641,7 +646,7 @@ function updateGuid(guid) {
 				guid : guid,
 			// 登録日時はサーバで管理するべき（ブラウザ依存は排除）
 			}, function(key) {
-				console.log("done. key = " + key);
+				//console.log("done. key = " + key);
 				// 成功時はキーを渡す
 				resolve(key);
 			});
@@ -661,7 +666,7 @@ function UserAdd() {
 	};
 
 	updateIDBUser(user_data).then(function(value) {
-		console.log("success:" + values);
+		//console.log("success:" + values);
 	})['catch'](function(error) {
 		console.error(error);
 	});

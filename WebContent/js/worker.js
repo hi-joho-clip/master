@@ -16,7 +16,8 @@ importScripts('json-xhr.js', 'indexeddb.js', 'lib/es6-promise.min.js',
 /**
  * ワーカーの起動を受け取る 引数はe.dataで受け取れるmessageはリスナー名
  */
-self.addEventListener('message', function(e) {
+//self.addEventListener('message', function(e) {
+onmessage =  function(e) {
 
 	/*
 	 * ここの処理は別スレッドとなるためメインスレッドは参照できない
@@ -24,6 +25,12 @@ self.addEventListener('message', function(e) {
 
 	var data = e.data;
 	switch (data.cmd) {
+	case 'test' :
+		self.postMessage('testworld');
+
+		break;
+
+
 	case 'article':
 
 		var param = data.param;
@@ -58,6 +65,7 @@ self.addEventListener('message', function(e) {
 		/*
 		 * 処理流れ→自身のDBないのマイリスト一覧を送る →更新すべきリストが返ってくる →更新する分だけ記事取得（記事内に画像取得のXHR）
 		 */
+		initPromise();
 		var username = data.username;
 
 		// 更新処理
@@ -68,15 +76,8 @@ self.addEventListener('message', function(e) {
 
 		console.log('kitakore');
 
-		getIDBAllArticleList(username).then(deleteWorkerArticle).then(function(value){
-			self.postMessage('更新完了');
-		})['catch'](function(error) {
-			self.postMessage(error);
-		});
-
-
 		// 削除処理（サーバになくて、ローカルにあるものを消す
-		function deleteWorkerArticle(json) {
+		var deleteWorkerArticle = function(json) {
 			return new Promise(function(resolve, reject) {
 				// 更新用リストを取ってきて、
 				var ret = function (json) {
@@ -86,11 +87,18 @@ self.addEventListener('message', function(e) {
 				getJSON(hostURL + "/getdeletearticle", "json=" + json, ret);
 
 			});
-		}
+		};
+
+		getIDBAllArticleList(username).then(deleteWorkerArticle).then(function(value){
+			self.postMessage('更新完了');
+		})['catch'](function(error) {
+			self.postMessage(error);
+		});
 
 		break;
 	}
-}, false);
+//}, false);
+};
 
 
 

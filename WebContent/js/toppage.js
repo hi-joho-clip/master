@@ -12,72 +12,109 @@ function initTopPage() {
 	store.set('username', username);
 	store.set('auto', true);
 
-	//alert("initPage");
+	// alert("initPage");
 	/*
 	 * 対応ブラウザならオフライン処理を開始 （ここでダイアログ
 	 */
 
+	setLocalStorage('auto', 'true');
 
-	setLocalStorage('auto','true');
-
-	if (true) {//isSupported([ 'chrome', 'opera', 'firefox', 'ie11', 'ie10' ])) {
+	if (true) {// isSupported([ 'chrome', 'opera', 'firefox', 'ie11', 'ie10'
+				// ])) {
 
 		// IDBに自身のキャッシュデータがない場合にアラート
-//		getIDBAllArticleList(username).then(
-//				function(values) {
-//
-//					// 返り値はオブジェクトでないとダメ
-//					if (values.length === 0) {
+		// getIDBAllArticleList(username).then(
+		// function(values) {
+		//
+		// // 返り値はオブジェクトでないとダメ
+		// if (values.length === 0) {
 
-//						if (confirm("キャッシュデータがありません。\n"
-//								+ "すべての記事をダウンロードしますか？\n"
-//								+ "大量のデータをダウンロードする可能性があります。\n")) {
-//							// 「はい」選択時の処理
-//
-//							// usernameがある場合
-//							if (username) {
-//								startUpdate(username);
-//							}
-//						} else {
-//							// 「いいえ」選択時の処理
-//							console.log('alert no');
-//						}
-//					} else {
-						//alert(getLocalStorage('auto'));
-						// 自動更新の設定ならそのまま
-						if (getLocalStorage('auto') === 'true') {
-							//alert(username);
-							startUpdate(username);
-						} else {
-							console.log('not autoupdate');
-						}
-					}
-			//	});
+		// if (confirm("キャッシュデータがありません。\n"
+		// + "すべての記事をダウンロードしますか？\n"
+		// + "大量のデータをダウンロードする可能性があります。\n")) {
+		// // 「はい」選択時の処理
+		//
+		// // usernameがある場合
+		// if (username) {
+		// startUpdate(username);
+		// }
+		// } else {
+		// // 「いいえ」選択時の処理
+		// console.log('alert no');
+		// }
+		// } else {
+		// alert(getLocalStorage('auto'));
+		// 自動更新の設定ならそのまま
+		if (getLocalStorage('auto') === 'true') {
+			// alert(username);
+			startUpdate(username);
+		} else {
+			console.log('not autoupdate');
+		}
 	}
-//}
+	// });
+}
+// }
 function startUpdate(username) {
 
-	//alert(window.Worker);
-	//if (window.Worker) {
-	if (true)
-		console.log('worker start:' + username);
-		// これが疑似的なPromiseオブジェクト→Deferredオブジェクト
-		var worker = new Worker('../js/worker.js');
-		worker.addEventListener('message', function(e) {
-			// ここではconsoleでJSONデータを表示する
-			toastr.warning('kousin');
+	// alert(window.Worker);
+	// if (window.Worker) {
+//	if (true)
+//		console.log('worker start:' + username);
+//	// これが疑似的なPromiseオブジェクト→Deferredオブジェクト
+//	var worker = new Worker('../js/worker.js');
+//	// worker.addEventListener('message', function(e) {
+//
+//	worker.onmessage = function(e) {
+//		// ここではconsoleでJSONデータを表示する
+//		toastr.warning('kousin');
+//
+//		// testDataなら書き込める
+//		console.error('JSON data: ', e.data);
+//	};
+//
+//	worker.postMessage({
+//		'cmd' : 'IDBupdate',
+//		'username' : username
+//	});
+//	console.log(worker);
 
-			// testDataなら書き込める
-			console.error('JSON data: ', e.data);
-		}, true);
 
 
+	var syncworker = operative({
 
-		worker.postMessage({
-			'cmd' : 'IDBupdate',
-			'username' : username
-		});
-		console.log(worker);
+		update: function(username) {
+	    	//initPromise();
+	    	//var username = data.username;
+	    	//updatecall(username);
+			console.log('kousin');
+			getIDBAllArticleList(username).then(getArticleListAsync).then(
+	    			updateIDBArticleList)['catch'](function(error) {
+	    		//self.postMessage('更新失敗');
+	    	});
+	    	// 削除処理（サーバになくて、ローカルにあるものを消す
+	    	var deleteWorkerArticle = function(json) {
+	    		return new Promise(function(resolve, reject) {
+	    			// 更新用リストを取ってきて、
+	    			var ret = function (json) {
+	    				updateIDBArticleListDelete(json);
+	    			};
+	    			json = JSON.stringify(json);
+	    			getJSON(hostURL + "/getdeletearticle", "json=" + json, ret);
 
-	}
+	    		});
+	    	};
 
+	    	getIDBAllArticleList(username).then(deleteWorkerArticle).then(function(value){
+	    		console.log('success');
+	    	})['catch'](function(error) {
+	    		console.error(error);
+	    	});
+
+	    	// 更新処理
+	    }
+	},[hostURL + '/js/json-xhr.js',hostURL + '/js/indexeddb.js',hostURL + '/js/lib/es6-promise.min.js',hostURL + '/js/lib/kagedb.js']);
+
+		syncworker.update(username);
+
+}

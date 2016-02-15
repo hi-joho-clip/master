@@ -80,7 +80,7 @@ function addListView(json) {
 		flag=json.title;
 	}
 	$myList = $("<ol id='" + json.article_id+ "'>"+
-			"<a class='art-title' href='../login/article.html?"+json.article_id+"'><li class='first'>"+
+			"<a class='art-title' href='#' onclick='javascript:locateArticleView("+json.article_id+");'><li class='first'>"+
 				"<div class='dan'>"+
 					thumView(json, "100px", "100px")+
 				"</div>"+
@@ -141,7 +141,7 @@ function addTileView(json) {
 	$myList = $("<div id='" + json.article_id+ "' class='"+item[3][1] + " mosaic-block bar' title='" + json.title +"'>" +
 					"<div class='mosaic-overlay'>"+
 
-					 "<div id='link-body'><a href='../login/article.html?"+json.article_id+"'></a></div>" +
+					 "<div id='link-body'><a href='#' onclick='javascript:locateArticleView("+json.article_id+");'></a></div>" +
 						"<div id='menu-block'>" +
 							"<div id='menu2'>"+
 								"<div class='remodal-bg'>"+

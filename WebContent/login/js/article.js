@@ -47,11 +47,10 @@ function initPagingMylist(callback) {
 			}, 800);
 		});
 	};
-	// モードがタイルの場合
+
 	if ($('#art-page').val() === '1') {
 		$('#lastid').val('0');
-		var last_promise = proMylist();
-		last_promise.then();
+		callback(1);
 	} else {
 		// 1でないときはその分までループする
 		// 最後のIDは初期化しておく
@@ -222,58 +221,6 @@ $(document).ready(
 				}
 
 			});
-
-			// $('.pure-pusher-container').on("scroll", function() {
-			// var scrollHeight = $('#wrap').height();
-			// var scrollPosition = $('.pure-pusher-container').height()
-			// +Math.round($('.pure-pusher-container').scrollTop()) - 200;
-			//
-			// console.log(scrollPosition + ':' +
-			// $('.pure-pusher-container').height() + ':' +
-			// $('.pure-pusher-container').scrollTop());
-			//
-			// console.log(scrollHeight + ':' + scrollPosition + ':' +
-			// scrollHeight );
-			// console.log((scrollHeight - scrollPosition) / scrollHeight );
-			// if ((scrollHeight - scrollPosition) / scrollHeight == 0) {
-			// // when scroll to bottom of the page
-			//
-			// if ($('#art-add').val() === 'true') {
-			// // 今のページ番号を取得
-			// console.log("ｹﾂ");
-			//
-			// var page = parseInt($('#art-page').val()) + 1;
-			// $('#art-page').val(page);
-			// switch (getSessionStorage("viewMode")) {
-			// case "0":
-			// console.log("netstat" + isSettinOnLine());
-			// if (isSettinOnLine === true) {
-			// console.log("マイリスト");
-			// getMyList(page);
-			// } else {
-			// getMyList(page);
-			// }
-			// break;
-			// case "2":
-			//
-			// // お気に入り
-			// if (isSettinOnLine === true) {
-			// //getFavList(page);
-			// } else {
-			// //getFavList(page);
-			// }
-			// break;
-			// case "3":
-			// getShareList($.cookie("shareLists"), page);
-			// break;
-			// case "4":
-			// //getMyListList(page);
-			// break;
-			// }
-			// }
-			// }
-			// });
-
 			// 記事追加用のリスナー
 			$(document).on('click', '#add-article', function() {
 				// 今のページ番号を取得
@@ -309,9 +256,11 @@ $(document).ready(
 			styleListChange();
 			console.log("onnline:" + isSettinOnLine());
 			if (isSettinOnLine() === true) {
-				initTopPage();
+
 			} else if(isSettinOnLine() === false) {
 				colorOffline();
+				// menuを削除
+
 			}
 
 		});
@@ -334,9 +283,13 @@ function styleListChange() {
 			if ($('#searchMode').val() === "true") {
 				// マイリストの検索をしているページを出す
 				initPagingMylist(myListSearch);
+
 			} else {
 				// 普通のマイリストを出す
 				initPagingMylist(getMyList);
+
+				// 更新処理
+				initTopPage();
 			}
 		} else if (isSettinOnLine() === false) {
 
@@ -402,6 +355,15 @@ function styleListChange() {
 		} else if (isSettinOnLine() === false) {
 			initPagingMylist(getOffShareList);
 		}
+		break;
 	}
 
+	if (isSettinOnLine() === true) {
+		//alert('stop!');
+		//initTopPage();
+	} else if(isSettinOnLine() === false) {
+		colorOffline();
+		// menuを削除
+
+	}
 }

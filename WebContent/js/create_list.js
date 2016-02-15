@@ -100,6 +100,13 @@ function getTag_id(tag_id){
 	$('#tag_id').val(tag_id);
 }
 
+function locateArticleView(article_id) {
+
+	// IDをセッションに書き込んでリダイレクト
+	setSessionStorage('article-id', article_id);
+	console.log(getSessionStorage('article-id'));
+	location.href = hostURL + '/login/article.html';
+}
 
 // "<a href='../login/article.html?"+json[i].article_id+"'target='_blank'>
 
@@ -108,6 +115,9 @@ function getTag_id(tag_id){
 var get_mylists = function(json) {
 
 	return new Promise(function(resolve, reject) {
+
+		console.log(json.length);
+
 		stopload();
 		setLocalStorage("Style","tile");
 		var random =Math.floor(Math.random()*3);
@@ -132,9 +142,10 @@ var get_mylists = function(json) {
 			$myList = $("<div id='" + json[i].article_id+ "' class='"+item[random][i] + " mosaic-block bar' title='" + json[i].title +"'>" +
 							"<div class='mosaic-overlay'>"+
 
-							 "<div id='link-body'><a href='../login/article.html?"+json[i].article_id+"'></a></div>" +
+							// "<div id='link-body'><a href='../login/article.html?"+json[i].article_id+"'></a></div>" +
+							 "<div id='link-body'><a href='#' onclick='javascript:locateArticleView("+json[i].article_id+");'></a></div>" +
 								"<div id='menu-block'>" +
-									"<div id='menu2'>"+
+									"<div class='menu2'>"+
 										"<div class='remodal-bg'>"+
 										"<input type='hidden' value='"+json[i].favflag+"' id='grobalflag"+json[i].article_id+"'>"+
 
@@ -191,6 +202,7 @@ function addViewNext(json) {
 		console.log('number:' + $('#art-page').val());
 		//サーチをするときなどに有効にしないと消えたままとなる。
 		$('#buttonbox').css({'display' : 'block'});
+		$("#add-button").prop("disabled", false);
 		$('#art-add').val('true');
 		console.log("21page:"+json[json.length-1].article_id);
 		// 最後に読み込んだArticleIDを残す
@@ -200,6 +212,13 @@ function addViewNext(json) {
 		// 無限読み込み停止用
 		$('#buttonbox').css({'display' : 'none'});
 		$('#art-add').val('false');
+	}
+
+	// オフラインモードならメニューを削除
+	if (isSettinOnLine() == true) {
+
+	} else if (isSettinOnLine() == false) {
+		$('.menu2').empty();
 	}
 }
 
@@ -221,9 +240,9 @@ var get_sharelists = function(json) {
 	for ( var i = 0; i < listLength ; i++) {
 		$myList = $("<div id='" + json[i].article_id+ "' class='"+item[random][i] + " mosaic-block bar'>" +
 						"<div class='mosaic-overlay'>"+
-						 "<div id='link-body'><a href='../login/article.html?"+json[i].article_id+"'></a></div>" +
+						 "<div id='link-body'><a href='#' onclick='javascript:locateArticleView("+json[i].article_id+");'></a></div>" +
 							"<div id='menu-block'>" +
-								"<div id='menu2'>"+
+								"<div class='menu2'>"+
 									"<div class='remodal-bg'>"+
 
 										"<a href='#' data-remodal-target='deletemodal'onclick='javascript:getArticle_id("+json[i].article_id+");return false;'>" +
@@ -270,7 +289,7 @@ var get_mylists_list = function(json) {
 				flag=json[i].title;
 			}
 			$myList = $("<ol id='" + json[i].article_id+ "'>"+
-							"<a class='art-title' href='../login/article.html?"+json[i].article_id+"'><li class='first'>"+
+							"<a class='art-title' href='#' onclick='javascript:locateArticleView("+json[i].article_id+");'><li class='first'>"+
 								"<div class='dan'>"+
 									thumView(json[i], "100px", "100px")+
 								"</div>"+
@@ -287,7 +306,7 @@ var get_mylists_list = function(json) {
 								"<div class='firstbuttons'>"+
 
 
-										"<div id='menu2'>"+
+										"<div class='menu2'>"+
 											"<div class='remodal-bg'>"+
 											"<input type='hidden' value='"+json[i].favflag+"' id='grobalflag"+json[i].article_id+"'>"+
 
@@ -334,7 +353,7 @@ var get_sharelists_list = function(json) {
 	}
 	for ( var i = 0; i < listLength ; i++) {
 		$myList = $("<ol id='" + json[i].article_id+ "'>"+
-						"<a class='art-title' href='../login/article.html?"+json[i].article_id+"'><li class='first'>"+
+						"<a class='art-title' href='#' onclick='javascript:locateArticleView("+json[i].article_id+");'><li class='first'>"+
 							"<div class='dan'>"+
 								thumView(json[i], "100px", "100px")+
 							"</div>"+
@@ -348,7 +367,7 @@ var get_sharelists_list = function(json) {
 
 							"</div>"+
 							"<div class='firstbuttons'>"+
-									"<div id='menu2'>"+
+									"<div class='menu2'>"+
 										"<div class='remodal-bg'>"+
 										"<a href='#' data-remodal-target='deletemodal'onclick='javascript:getArticle_id("+json[i].article_id+");return false;'>" +
 										"<img src='img/trash1.png' align='right'width='30'height='30'></img>" +

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja"
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja" manifest="../cache.manifest"
 	dir="ltr">
 <head>
 <meta charset="UTF-8">
@@ -13,6 +13,7 @@
 <link href="css/articlemenu.css" rel="stylesheet">
 <link href="css/grid.css" rel="stylesheet">
 <link href="css/button.css" rel="stylesheet" />
+<link rel="stylesheet" href="../css/stylesheet.css" type="text/css" media="screen" title="no title" charset="utf-8">
 
 <link rel="shortcut icon" href="img/favicon.png">
 <link rel="stylesheet" href="css/lightbox.css" type="text/css" />
@@ -413,7 +414,7 @@ div[data-wysihtml5-dialog="createTable"] td {
 											data-wysihtml5-command="italic" title="Italic"><img
 											src='img/italic.png' width='25' height='25'></img></a> <a
 											data-wysihtml5-command="underline" title="Under line"><img
-											src='img/under line.png' width='25' height='25'></img></a>
+											src='img/underline.png' width='25' height='25'></img></a>
 
 
 										<!-- <a
@@ -570,9 +571,11 @@ div[data-wysihtml5-dialog="createTable"] td {
 								//alert("current network status is online");
 								notice();
 								// ここはオフライン判定が必要
-								getViewArticle(location.search.substring(1,
-										location.search.length));
+								//getViewArticle(location.search.substring(1,
+										//location.search.length));
+								console.log('artid' + getSessionStorage('article-id'));
 
+								getViewArticle(getSessionStorage('article-id'));
 								//$('.toolbar').css({
 								//		'display' : 'none'
 								//});
@@ -584,8 +587,7 @@ div[data-wysihtml5-dialog="createTable"] td {
 								$('#footerArea').remove();
 								$('#edit-button').remove();
 								$('#addfullbutton').remove();
-								getViewArticleOffline(location.search
-										.substring(1, location.search.length))
+								getViewArticleOffline(getSessionStorage('article-id'));
 
 							} else {
 								//alert("current network status is unknown");

@@ -33,10 +33,10 @@ public class imageTrans extends Thread {
 		this.user_id = user_id;
 	}
 
-//	public static void main(String[] args) {
-//
-//		getImage("http://pc.watch.impress.co.jp/img/pcw/docs/738/654/2_s.jpg");
-//	}
+	//	public static void main(String[] args) {
+	//
+	//		getImage("http://pc.watch.impress.co.jp/img/pcw/docs/738/654/2_s.jpg");
+	//	}
 
 	/**
 	 * 画像を保存する。
@@ -49,7 +49,7 @@ public class imageTrans extends Thread {
 
 		String image_url = null;
 		Boolean flag = true;
-		ImageDTO thumDTO = null;
+		ImageDTO thumDTO = new ImageDTO();
 		//System.out.println(image.size());
 		for (Image img : image) {
 			imDTO = new ImageDTO();
@@ -73,7 +73,7 @@ public class imageTrans extends Thread {
 					imDTO.setUri(image_url);
 					this.imageDTO.add(imDTO);
 					if (flag) {
-						thumDTO = imDTO;
+						thumDTO.setBlob_image(getThumImage(image_url));;
 						flag = false;
 					}
 				}
@@ -140,13 +140,87 @@ public class imageTrans extends Thread {
 				URL url = uri.toURL();
 				BufferedImage buf_img = ImageIO.read(url);
 
-				if (buf_img.getHeight() >= 200) {
+				int width = 0;
+				int height = 0;
 
-					float hiritu = (float) buf_img.getHeight() / (float) buf_img.getWidth();
-					int width = 800;
-					int height = Math.round((float) width * hiritu);
+				// 高さ200px以上、かつ幅が100px以上
+				if (buf_img.getHeight() > 150 && buf_img.getWidth() > 150) {
 
-					//	System.out.println("takasa:" + height + "hiritu:" + hiritu);
+					//これは横のほうが長い
+					if (buf_img.getWidth() >= buf_img.getHeight()) {
+						float hiritu = (float) buf_img.getHeight() / (float) buf_img.getWidth();
+						width = 540;
+						height = Math.round((float) width * hiritu);
+
+						//	System.out.println("takasa:" + height + "hiritu:" + hiritu);
+
+					} else {
+						// こっちは縦が長い
+						float hiritu = (float) buf_img.getWidth() / (float) buf_img.getHeight();
+						height = 540;
+						width = Math.round((float) height * hiritu);
+					}
+
+					BufferedImage new_img = rescale(buf_img, width, height);
+
+					//				System.out.println("img:" + buf_img.getWidth());
+					//				System.out.println("new_img:" + new_img.getWidth());
+					//				System.out.println("new_img:" + new_img.getHeight());
+
+					//ImageIO.write(new_img, "gif", new FileOutputStream("C:\\Users\\121013\\Pictures\\testunfe.jpg"));
+					new_ByteImage = getBytesFromImage(new_img, extentHantei(str_url));
+
+					//			} catch (URISyntaxException e) {
+					//				e.printStackTrace();
+					//			} catch (MalformedURLException e) {
+					//				e.printStackTrace();
+					//			} catch (IOException e) {
+					//				e.printStackTrace();
+					buf_img = null;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return new_ByteImage;
+	}
+
+	/**
+	 * 画像のURLからイメージを縮小してイメージバッファーを返す
+	 * @param str_url
+	 * @return
+	 */
+	public byte[] getThumImage(String str_url) {
+
+		byte[] new_ByteImage = null;
+
+		// 未対応の場合は処理せずナルを返す（念のため）
+		if (!extentHantei(str_url).equals("FALSE")) {
+			try {
+				URI uri = new URI(str_url);
+				URL url = uri.toURL();
+				BufferedImage buf_img = ImageIO.read(url);
+
+				int width = 0;
+				int height = 0;
+
+				// 高さ200px以上、かつ幅が100px以上
+				if (buf_img.getHeight() > 200 && buf_img.getWidth() > 100) {
+
+					//これは横のほうが長い
+					if (buf_img.getWidth() >= buf_img.getHeight()) {
+						float hiritu = (float) buf_img.getHeight() / (float) buf_img.getWidth();
+						width = 340;
+						height = Math.round((float) width * hiritu);
+
+						//	System.out.println("takasa:" + height + "hiritu:" + hiritu);
+
+					} else {
+						// こっちは縦が長い
+						float hiritu = (float) buf_img.getWidth() / (float) buf_img.getHeight();
+						height = 340;
+						width = Math.round((float) height * hiritu);
+					}
 
 					BufferedImage new_img = rescale(buf_img, width, height);
 

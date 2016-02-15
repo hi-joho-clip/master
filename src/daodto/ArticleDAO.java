@@ -502,7 +502,7 @@ public class ArticleDAO {
 		String sql = "INSERT INTO article_tag(article_id,tag_id) VALUES(?,"
 				+ " (SELECT tag_id FROM tags " + " WHERE user_id = ? "
 				+ " AND tag_body = 'お気に入り'))";
-		String article_fav = "update articles set favflag = TRUE , modified = DATE_ADD(modified, INTERVAL 10 SECOND) where article_id = ?";
+		String article_fav = "update articles set favflag = TRUE , modified = DATE_ADD(modified, INTERVAL 1 SECOND) where article_id = ?";
 
 		try {
 			con.setAutoCommit(false);
@@ -915,7 +915,7 @@ public class ArticleDAO {
 				article.setShare_url(rs.getString("share_url"));
 				article.setShare_expior(rs.getDate("share_expior"));
 				article.setFavflag(rs.getBoolean("favflag"));
-				article.setThum(rs.getBytes("thum"));
+				//article.setThum(rs.getBytes("thum"));
 				articleList.add(article);
 			}
 		} catch (Exception e) {
