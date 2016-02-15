@@ -6,7 +6,7 @@ body {
 position:relative;
 margin-left:auto; margin-right:auto; width:auto; height:auto;
 background:#333;
-font-family:Avenir , "Open Sans" , "Helvetica Neue" , Helvetica , Arial , Verdana , Roboto ,"游ゴシック" ,  "ヒラギノ角ゴ Pro W3"  , "メイリオ"  , "ＭＳ Ｐゴシック"  ,  sans-serif;
+font-family: 游ゴシック体, 'Yu Gothic', YuGothic, 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
 font-weight:100;
 -webkit-text-size-adjust: 100%;
 }
@@ -47,6 +47,7 @@ font-size:6.5em;
 -webkit-margin-before: 0.1em;
 -webkit-margin-after: 0.1em;
  margin: 0.1em;
+     font-weight: 100;
 }
 
 
