@@ -62,7 +62,7 @@
 
 					<div class="form-item">
 						<!--　ユーザネーム  -->
-						<label for="username"></label> <input class="validate[custom[onlyLetterNumber]] text-input" type="text" name="username"
+						<label for="username"></label> <input class="validate[custom[onlyLetterNumber],minSize[5],maxSize[32]] text-input" type="text" name="username"
 							required="required" placeholder="User Name" id="username"></input>
 					</div>
 					<div class="form-item">
@@ -82,7 +82,7 @@
 					</div>
 					<div class="form-item">
 						<!--　メールアドレス  -->
-						<label for="email"></label> <input type="email" name="email" class="validate[required,custom[email]] text-input"
+						<label for="email"></label> <input type="email" name="email" class="validate[required,custom[email],maxSize[255]] text-input"
 							required="required" placeholder="Email Address" id="email"></input>
 					</div>
 					<div class="form-item">
