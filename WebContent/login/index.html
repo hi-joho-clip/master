@@ -206,9 +206,24 @@
 							onclick="javascript:return false;">キャンセル</a>
 					</div>
 
+					<div class="remodal" data-remodal-id="updatemodal"
+						data-remodal-options="hashTracking: false,closeOnOutsideClick:false"">
+						<a data-remodal-action="close" class="remodal-close"></a>
+						<div id="updatetext"></div>
+						<div id="updatesize"></div>
+						<input type="hidden" id="updatekazu" value="0">
+						<p style="color:red;font-size:1.2em;">※ダウンロードサイズが大きくなる場合があります。<br>WiFi接続を推奨します。</p>
+						<a data-remodal-action="confirm" class="remodal-confirm"
+							href="#"
+							onclick="javascript:manualStartUpdate();return false;">Download</a>
+						<a data-remodal-action="cancel" class="remodal-cancel" href="#"
+							onclick="javascript:return false;">Cancel</a>
+					</div>
 
 					<div class="container" style="margin-top: 9em; margin-bottom:4em;">
 						<div id="title">
+						<div class="kore" id="kore"></div>
+						<div class="kore" id="autoupdate"></div>
 							<h1 class="title"></h1>
 							<div class="stylebutton" style="text-align: right;"></div>
 

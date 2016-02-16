@@ -202,6 +202,11 @@ function userID_lock() {
 function logout() {
 	var jsonParam = "nonce=" + $('#nonce').val();;// 送りたいデータ
 	var URL = hostURL + "/logout";
+	deleteDatabase("article");
+	var localstorage = localStorage;
+	var sesstorage = sessionStorage;
+	localstorage.clear();
+	sesstorage.clear();
 	var setappend = function(json) {
 		userList = "";
 
@@ -259,6 +264,16 @@ function deleteuser() {
 		document.getElementById('deleteUser').innerHTML = userList;
 	};
 	getJSON(URL, jsonParam, setappend);
+}
+
+function getCacheUserList() {
+	var URL = hostURL + "/viewuser";
+	var setappend = function(json) {
+		setLocalStorage('nickname', json.nickname);
+		setLocalStorage('mailaddress' , '********');
+	};
+	getJSON(URL, null, setappend);
+
 }
 
 // ユーザ情報の表示

@@ -62,7 +62,7 @@ function getURL(URL, param) {
 			reject(new Error(req.statusText));
 		};
 		// タイムアウトは40s
-		req.timeout = 40000;
+		req.timeout = 100000;
 		req.ontimeout = function() {
 			reject(new Error("time out"));
 		};
@@ -114,7 +114,7 @@ function getURLForRedirect(URL, param) {
 			reject(new Error(req.statusText));
 		};
 		// タイムアウトは7000ms
-		req.timeout = 40000;
+		req.timeout = 100000;
 		req.ontimeout = function() {
 			reject(new Error("time out"));
 		};
@@ -340,4 +340,45 @@ function colorOffline () {
 	$('.head-bar').css({
 		'background' : '#31708f'
 	});
+}
+
+/**
+ * オフラインのためのキャッシュ
+ */
+function getTagCache() {
+	var jsonParam = null;// 送りたいデータ
+	var URL = hostURL + "/taglist";
+
+	var savetag = function (json) {
+		setLocalStorage('tagList', JSON.stringify(json));
+	};
+	getJSON(URL, jsonParam, savetag);
+}
+
+function getUserListCache() {
+	var URL = hostURL + "/viewuser";
+	var setappend = function(json) {
+		setLocalStorage('nickname', json.nickname);
+		setLocalStorage('mailaddress' , '********');
+	};
+	getJSON(URL, null, setappend);
+}
+
+function getFriendListCache() {
+	var jsonParam = null;// 送りたいデータ
+	var URL = hostURL + "/friendlist";
+	var cacheFriend = function(json) {
+		for ( var i = 0; i < json.length; i++) {
+			var arrayFriend = [];
+			// リクエスト中の一覧
+			if (json[i].status === 3) {
+				// フレンドの場合
+				arrayFriend.push(json[i]);
+			}
+		}
+		if (isSettinOnLine() == true) {
+			setLocalStorage('friendList', JSON.stringify(json));
+		}
+	};
+	getJSON(URL, jsonParam, cacheFriend);
 }

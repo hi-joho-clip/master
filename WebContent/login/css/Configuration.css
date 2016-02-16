@@ -3,7 +3,7 @@
 #onoffswitch {
     position: relative; width: 83px;
     -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
-    left:38%;
+    left:20%;
     bottom: -4px;
 
 }
@@ -55,7 +55,7 @@
 #onlineswitch {
     position: relative; width: 83px;
     -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
-    left:38%;
+    left:20%;
     bottom: -4px;
 
 }
@@ -107,7 +107,7 @@
 #autoswitch {
     position: relative; width: 83px;
     -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
-    left:38%;
+    left:20%;
     bottom: -4px;
 
 }
@@ -159,7 +159,7 @@
 #onthemaswitch {
     position: relative; width: 83px;
     -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
-    left:38%;
+    left:20%;
     bottom: -4px;
 
 }

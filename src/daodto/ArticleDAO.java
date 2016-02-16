@@ -35,8 +35,16 @@ public class ArticleDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
 
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		return mylist_id;
 	}
 
@@ -61,6 +69,15 @@ public class ArticleDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return mylist_id;
 	}
@@ -132,6 +149,19 @@ public class ArticleDAO {
 			throw new Exception();
 		} finally {
 			con.setAutoCommit(true);
+
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 		}
 		return article_id;
 	}
@@ -208,6 +238,19 @@ public class ArticleDAO {
 			throw new Exception();
 		} finally {
 			con.setAutoCommit(true);
+
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 		}
 		return flag;
 	}
@@ -237,6 +280,15 @@ public class ArticleDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return flag;
 	}
@@ -264,6 +316,16 @@ public class ArticleDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return flag;
 	}
@@ -314,6 +376,18 @@ public class ArticleDAO {
 			con.rollback();
 			con.setAutoCommit(true);
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return flag;
 	}
@@ -364,6 +438,18 @@ public class ArticleDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return flag;
 	}
@@ -401,6 +487,18 @@ public class ArticleDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return hantei_flag;
 
@@ -441,6 +539,18 @@ public class ArticleDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return mylist_id;
 	}
@@ -483,6 +593,18 @@ public class ArticleDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return ret_id;
 	}
@@ -532,6 +654,17 @@ public class ArticleDAO {
 			throw new Exception();
 		} finally {
 			con.setAutoCommit(true);
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return flag;
 	}
@@ -566,6 +699,14 @@ public class ArticleDAO {
 			throw new Exception();
 		} finally {
 			con.setAutoCommit(true);
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
 		}
 		return flag;
@@ -578,7 +719,7 @@ public class ArticleDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleDTO> FavoriteLists(int user_id, int page,int article_id) throws Exception {
+	public ArrayList<ArticleDTO> FavoriteLists(int user_id, int page, int article_id) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int def_page = 0;
@@ -593,9 +734,10 @@ public class ArticleDAO {
 				+ " (SELECT article_id FROM article_tag WHERE tag_id ="
 				+ " (SELECT tag_id FROM tags WHERE tag_body = 'お気に入り' AND user_id = ?)) order by modified desc limit 21 offset ?";
 
-		String art_sql =  "SELECT * FROM articles WHERE article_id IN"
+		String art_sql = "SELECT * FROM articles WHERE article_id IN"
 				+ " (SELECT article_id FROM article_tag WHERE tag_id ="
-				+ " (SELECT tag_id FROM tags WHERE tag_body = 'お気に入り' AND user_id = ?)) AND modified <= (select modified from articles where article_id = ?) " +
+				+ " (SELECT tag_id FROM tags WHERE tag_body = 'お気に入り' AND user_id = ?)) AND modified <= (select modified from articles where article_id = ?) "
+				+
 				" order by modified desc limit 21 offset ?;";
 		try {
 			if (article_id == 0) {
@@ -617,7 +759,7 @@ public class ArticleDAO {
 			int count = 1;
 			while (rs.next()) {
 				ArticleDTO article = new ArticleDTO();
-				if(count<21){
+				if (count < 21) {
 					article.setArticle_id(rs.getInt("article_id"));
 					article.setTitle(rs.getString("title"));
 					article.setUrl(rs.getString("url"));
@@ -628,7 +770,7 @@ public class ArticleDAO {
 					article.setShare_expior(rs.getDate("share_expior"));
 					article.setThum(rs.getBytes("thum"));
 					articleList.add(article);
-				}else if(count==21){
+				} else if (count == 21) {
 					article.setArticle_id(rs.getInt("article_id"));
 					articleList.add(article);
 				}
@@ -637,45 +779,58 @@ public class ArticleDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return articleList;
 	}
 
-/*	*//**
-	 * タグ内でお気に入り検索
-	 * paginator(OK)
-	 *
-	 * @return
-	 * @throws Exception
-	 *//*
+	/*	*//**
+			* タグ内でお気に入り検索
+			* paginator(OK)
+			*
+			* @return
+			* @throws Exception
+			*/
+	/*
 	public ArrayList<ArticleDTO> searchFavoriteTagLists(int user_id,
-			ArrayList<String> tag_body_list, int page) throws Exception {
+		ArrayList<String> tag_body_list, int page) throws Exception {
 
-		ArrayList<Integer> fav_id_list = new ArrayList<Integer>();
-		ArrayList<Integer> search_id_list = new ArrayList<Integer>();
+	ArrayList<Integer> fav_id_list = new ArrayList<Integer>();
+	ArrayList<Integer> search_id_list = new ArrayList<Integer>();
 
-		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
+	ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
 
-		try {
-			ArrayList<String> favorite = new ArrayList<String>();
-			favorite.add("お気に入り");
-			fav_id_list = getArticleId(favorite, user_id, page);
-			search_id_list = getArticleId(tag_body_list, user_id, page);
+	try {
+		ArrayList<String> favorite = new ArrayList<String>();
+		favorite.add("お気に入り");
+		fav_id_list = getArticleId(favorite, user_id, page);
+		search_id_list = getArticleId(tag_body_list, user_id, page);
 
-			for (int fav_id : fav_id_list) {
-				// System.out.println("fav:" + fav_id);
-				for (int search_id : search_id_list) {
-					// System.out.println("search_id:" + search_id);
-					if (fav_id == search_id) {
-						articleList.add(view(fav_id, getMylistID(user_id)));
-					}
+		for (int fav_id : fav_id_list) {
+			// System.out.println("fav:" + fav_id);
+			for (int search_id : search_id_list) {
+				// System.out.println("search_id:" + search_id);
+				if (fav_id == search_id) {
+					articleList.add(view(fav_id, getMylistID(user_id)));
 				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception();
 		}
-		return articleList;
+	} catch (Exception e) {
+		e.printStackTrace();
+		throw new Exception();
+	}
+	return articleList;
 	}*/
 
 	/**
@@ -685,7 +840,7 @@ public class ArticleDAO {
 	 * @throws Exception
 	 */
 	private ArrayList<Integer> getArticleId(ArrayList<String> tag_body_list,
-			int user_id, int page,int article_id) throws Exception {
+			int user_id, int page, int article_id) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int def_page = 0;
@@ -698,8 +853,9 @@ public class ArticleDAO {
 		String tag_sql = "select tag_id from tags where tag_body like ? and user_id = ?";
 		String article_id_sql = "select article_id from article_tag where tag_id = ? limit 21 offset ?";
 
-		String art_sql = "select article_id from articles where article_id IN (select article_id from article_tag where tag_id=?) "+
-		"and modified <= (select modified from articles where article_id = ?) order by modified desc limit 21 offset ?";
+		String art_sql = "select article_id from articles where article_id IN (select article_id from article_tag where tag_id=?) "
+				+
+				"and modified <= (select modified from articles where article_id = ?) order by modified desc limit 21 offset ?";
 		ArrayList<Integer> tag_id_list = new ArrayList<Integer>();
 		ArrayList<Integer> article_id_list = new ArrayList<Integer>();
 
@@ -737,7 +893,7 @@ public class ArticleDAO {
 					pstmt.setInt(3, 0);
 				}
 				rs = pstmt.executeQuery();
-				int count=0;
+				int count = 0;
 				while (rs.next()) {
 					count++;
 					System.out.println(count);
@@ -756,6 +912,18 @@ public class ArticleDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return article_id_list;
 	}
@@ -767,14 +935,15 @@ public class ArticleDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleDTO> viewTagArticle(ArrayList<String> tag_body_list, int user_id, int page,int start_article_id)
+	public ArrayList<ArticleDTO> viewTagArticle(ArrayList<String> tag_body_list, int user_id, int page,
+			int start_article_id)
 			throws Exception {
 		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
 
 		ArrayList<Integer> article_id_list = new ArrayList<Integer>();
 
 		try {
-			article_id_list = getArticleId(tag_body_list, user_id,page,start_article_id);
+			article_id_list = getArticleId(tag_body_list, user_id, page, start_article_id);
 
 			// 記事リストがあるだけ記事のデータを取得
 			for (int article_id : article_id_list) {
@@ -784,6 +953,8 @@ public class ArticleDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
+		} finally {
+
 		}
 		return articleList;
 	}
@@ -807,6 +978,15 @@ public class ArticleDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return flag;
 	}
@@ -883,6 +1063,18 @@ public class ArticleDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return articleList;
 	}
@@ -922,6 +1114,17 @@ public class ArticleDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return articleList;
 	}
@@ -984,6 +1187,18 @@ public class ArticleDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return articleDTO;
 	}
@@ -1024,6 +1239,18 @@ public class ArticleDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return articleDTO;
 	}
@@ -1035,7 +1262,7 @@ public class ArticleDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleDTO> viewShareArticle(int user_id, int friend_user_id, int page,int article_id)
+	public ArrayList<ArticleDTO> viewShareArticle(int user_id, int friend_user_id, int page, int article_id)
 			throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -1052,9 +1279,9 @@ public class ArticleDAO {
 				"(SELECT M.id FROM friends F,mylists M WHERE F.own_user_id = ? AND F.friend_user_id = ? " +
 				"AND M.id = F.id AND M.share_flag=1) order by modified desc limit 21 offset ?";
 
-		String art_sql ="SELECT * FROM articles WHERE articles.id = " +
+		String art_sql = "SELECT * FROM articles WHERE articles.id = " +
 				"(SELECT M.id FROM friends F,mylists M WHERE F.own_user_id = ? AND F.friend_user_id = ? " +
-				"AND M.id = F.id AND M.share_flag=1) and "+
+				"AND M.id = F.id AND M.share_flag=1) and " +
 				"modified <= (select modified from articles where article_id = ?) " +
 				" order by modified desc limit 21 offset ?;";
 		try {
@@ -1076,10 +1303,10 @@ public class ArticleDAO {
 				pstmt.setInt(4, 0);
 			}
 			rs = pstmt.executeQuery();
-			int count=1;
+			int count = 1;
 			while (rs.next()) {
 				ArticleDTO article = new ArticleDTO();
-				if(count<21){
+				if (count < 21) {
 					article.setArticle_id(rs.getInt("article_id"));
 					article.setTitle(rs.getString("title"));
 					article.setUrl(rs.getString("url"));
@@ -1090,7 +1317,7 @@ public class ArticleDAO {
 					article.setShare_expior(rs.getDate("share_expior"));
 					article.setThum(rs.getBytes("thum"));
 					articleList.add(article);
-				}else if(count==21){
+				} else if (count == 21) {
 					article.setArticle_id(rs.getInt("article_id"));
 					articleList.add(article);
 				}
@@ -1099,6 +1326,18 @@ public class ArticleDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return articleList;
 	}
@@ -1222,6 +1461,17 @@ public class ArticleDAO {
 			throw new Exception();
 		} finally {
 			con.setAutoCommit(true);
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return flag;
 	}
@@ -1233,7 +1483,8 @@ public class ArticleDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleDTO> mylist_search(int user_id, ArrayList<String> text_list, int page,int article_id) throws Exception {
+	public ArrayList<ArticleDTO> mylist_search(int user_id, ArrayList<String> text_list, int page, int article_id)
+			throws Exception {
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -1260,10 +1511,11 @@ public class ArticleDAO {
 		count++;
 		System.out.println(like);
 
-		sql = "SELECT * FROM articles WHERE " + like
+		sql = "SELECT * FROM articles WHERE "
+				+ like
 				+ " AND id = ANY (SELECT id FROM mylists WHERE user_id = ? and share_flag = 0) order by modified desc limit 21 offset ?";
-		String art_sql ="SELECT * FROM articles WHERE " + like
-				+ " AND id = ANY (SELECT id FROM mylists WHERE user_id = ? and share_flag = 0) and "+
+		String art_sql = "SELECT * FROM articles WHERE " + like
+				+ " AND id = ANY (SELECT id FROM mylists WHERE user_id = ? and share_flag = 0) and " +
 				"modified <= (select modified from articles where article_id = ?) " +
 				" order by modified desc limit 21 offset ?;";
 		try {
@@ -1290,10 +1542,10 @@ public class ArticleDAO {
 			}
 
 			rs = pstmt.executeQuery();
-			int cnt=1;
+			int cnt = 1;
 			while (rs.next()) {
 				ArticleDTO article = new ArticleDTO();
-				if(cnt<21){
+				if (cnt < 21) {
 					article.setArticle_id(rs.getInt("article_id"));
 					article.setTitle(rs.getString("title"));
 					article.setUrl(rs.getString("url"));
@@ -1304,7 +1556,7 @@ public class ArticleDAO {
 					article.setFavflag(rs.getBoolean("favflag"));
 					article.setThum(rs.getBytes("thum"));
 					articleList.add(article);
-				}else if(cnt==21){
+				} else if (cnt == 21) {
 					article.setArticle_id(rs.getInt("article_id"));
 					articleList.add(article);
 				}
@@ -1313,6 +1565,18 @@ public class ArticleDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return articleList;
 	}
@@ -1324,7 +1588,8 @@ public class ArticleDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleDTO> favlist_search(int user_id, ArrayList<String> text_list, int page,int article_id) throws Exception {
+	public ArrayList<ArticleDTO> favlist_search(int user_id, ArrayList<String> text_list, int page, int article_id)
+			throws Exception {
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -1352,13 +1617,15 @@ public class ArticleDAO {
 
 		System.out.println(like);
 
-		sql = "SELECT * FROM articles WHERE " + like + " AND article_id IN"
+		sql = "SELECT * FROM articles WHERE "
+				+ like
+				+ " AND article_id IN"
 				+ " (SELECT article_id FROM article_tag WHERE tag_id ="
 				+ " (SELECT tag_id FROM tags WHERE tag_body = 'お気に入り' AND user_id = ?)) order by modified desc limit 21 offset ?";
 
-		String art_sql ="SELECT * FROM articles WHERE " + like + " AND article_id IN"
+		String art_sql = "SELECT * FROM articles WHERE " + like + " AND article_id IN"
 				+ " (SELECT article_id FROM article_tag WHERE tag_id ="
-				+ " (SELECT tag_id FROM tags WHERE tag_body = 'お気に入り' AND user_id = ?)) and "+
+				+ " (SELECT tag_id FROM tags WHERE tag_body = 'お気に入り' AND user_id = ?)) and " +
 				"modified <= (select modified from articles where article_id = ?) " +
 				" order by modified desc limit 21 offset ?;";
 		try {
@@ -1384,10 +1651,10 @@ public class ArticleDAO {
 				pstmt.setInt(count + 3, 0);
 			}
 			rs = pstmt.executeQuery();
-			int cnt=1;
+			int cnt = 1;
 			while (rs.next()) {
 				ArticleDTO article = new ArticleDTO();
-				if(cnt<21){
+				if (cnt < 21) {
 					article.setArticle_id(rs.getInt("article_id"));
 					article.setTitle(rs.getString("title"));
 					article.setUrl(rs.getString("url"));
@@ -1398,7 +1665,7 @@ public class ArticleDAO {
 					article.setFavflag(rs.getBoolean("favflag"));
 					article.setThum(rs.getBytes("thum"));
 					articleList.add(article);
-				}else if(cnt==21){
+				} else if (cnt == 21) {
 					article.setArticle_id(rs.getInt("article_id"));
 					articleList.add(article);
 				}
@@ -1407,6 +1674,18 @@ public class ArticleDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return articleList;
 	}
@@ -1419,7 +1698,8 @@ public class ArticleDAO {
 	 * @throws Exception
 	 */
 	@SuppressWarnings("resource")
-	public ArrayList<ArticleDTO> tag_search(int user_id, ArrayList<String> text_list, String tag, int page,int article_id)
+	public ArrayList<ArticleDTO> tag_search(int user_id, ArrayList<String> text_list, String tag, int page,
+			int article_id)
 			throws Exception {
 
 		PreparedStatement pstmt = null;
@@ -1451,11 +1731,14 @@ public class ArticleDAO {
 		System.out.println(like);
 
 		String get_tagid = "SELECT tag_id FROM tags WHERE tag_body = ? AND user_id = ?";
-		sql = "SELECT * FROM articles WHERE " + like + " AND id = ? AND " +
+		sql = "SELECT * FROM articles WHERE "
+				+ like
+				+ " AND id = ? AND "
+				+
 				"article_id IN (SELECT article_id FROM article_tag WHERE tag_id = ?) order by modified desc limit 21 offset ?";
 
-		String art_sql ="SELECT * FROM articles WHERE " + like + " AND id = ? AND " +
-				"article_id IN (SELECT article_id FROM article_tag WHERE tag_id = ?) and "+
+		String art_sql = "SELECT * FROM articles WHERE " + like + " AND id = ? AND " +
+				"article_id IN (SELECT article_id FROM article_tag WHERE tag_id = ?) and " +
 				"modified <= (select modified from articles where article_id = ?) " +
 				" order by modified desc limit 21 offset ?;";
 		mylist_id = getMylistID(user_id);
@@ -1492,12 +1775,11 @@ public class ArticleDAO {
 				pstmt.setInt(count + 4, 0);
 			}
 
-
 			rs = pstmt.executeQuery();
-			int cnt=1;
+			int cnt = 1;
 			while (rs.next()) {
 				ArticleDTO article = new ArticleDTO();
-				if(cnt<21){
+				if (cnt < 21) {
 					article.setArticle_id(rs.getInt("article_id"));
 					article.setTitle(rs.getString("title"));
 					article.setUrl(rs.getString("url"));
@@ -1508,7 +1790,7 @@ public class ArticleDAO {
 					article.setFavflag(rs.getBoolean("favflag"));
 					article.setThum(rs.getBytes("thum"));
 					articleList.add(article);
-				}else if(cnt==21){
+				} else if (cnt == 21) {
 					article.setArticle_id(rs.getInt("article_id"));
 					articleList.add(article);
 				}
@@ -1517,6 +1799,18 @@ public class ArticleDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return articleList;
 	}
@@ -1528,7 +1822,8 @@ public class ArticleDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<ArticleDTO> sharelist_search(int user_id, ArrayList<String> text_list, int friend_user_id, int page,int article_id)
+	public ArrayList<ArticleDTO> sharelist_search(int user_id, ArrayList<String> text_list, int friend_user_id,
+			int page, int article_id)
 			throws Exception {
 
 		PreparedStatement pstmt = null;
@@ -1561,9 +1856,9 @@ public class ArticleDAO {
 				"(SELECT M.id FROM friends F,mylists M WHERE F.own_user_id = ? AND F.friend_user_id = ? " +
 				"AND M.id = F.id AND M.share_flag=1) order by modified desc limit 21 offset ?";
 
-		String art_sql ="SELECT * FROM articles WHERE " + like + " AND articles.id = " +
+		String art_sql = "SELECT * FROM articles WHERE " + like + " AND articles.id = " +
 				"(SELECT M.id FROM friends F,mylists M WHERE F.own_user_id = ? AND F.friend_user_id = ? " +
-				"AND M.id = F.id AND M.share_flag=1) and "+
+				"AND M.id = F.id AND M.share_flag=1) and " +
 				"modified <= (select modified from articles where article_id = ?) " +
 				" order by modified desc limit 21 offset ?;";
 		try {
@@ -1592,10 +1887,10 @@ public class ArticleDAO {
 			}
 
 			rs = pstmt.executeQuery();
-			int cnt =1;
+			int cnt = 1;
 			while (rs.next()) {
 				ArticleDTO article = new ArticleDTO();
-				if(cnt<21){
+				if (cnt < 21) {
 					article.setArticle_id(rs.getInt("article_id"));
 					article.setTitle(rs.getString("title"));
 					article.setUrl(rs.getString("url"));
@@ -1606,7 +1901,7 @@ public class ArticleDAO {
 					article.setFavflag(rs.getBoolean("favflag"));
 					article.setThum(rs.getBytes("thum"));
 					articleList.add(article);
-				}else if(cnt==21){
+				} else if (cnt == 21) {
 					article.setArticle_id(rs.getInt("article_id"));
 					articleList.add(article);
 				}
@@ -1615,6 +1910,17 @@ public class ArticleDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return articleList;
 	}

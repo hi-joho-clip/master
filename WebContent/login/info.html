@@ -60,7 +60,8 @@
 			<div class="container-fluid">
 				<h1 class="text-center">
 
-					<a href="index.html" onclick="javascript:setSessionStorage('viewMode','0');">CLIP</a>
+					<a href="index.html"
+						onclick="javascript:setSessionStorage('viewMode','0');">CLIP</a>
 
 				</h1>
 			</div>
@@ -70,9 +71,9 @@
 
 	<div class="pure-container" data-effect="pure-effect-slide">
 		<input type="checkbox" id="pure-toggle-left" class="pure-toggle"
-			data-toggle="left" />  <label
-			class="pure-toggle-label" for="pure-toggle-left"
-			data-toggle-label="left"><span class="pure-toggle-icon"></span></label>
+			data-toggle="left" /> <label class="pure-toggle-label"
+			for="pure-toggle-left" data-toggle-label="left"><span
+			class="pure-toggle-icon"></span></label>
 
 
 		<nav class="pure-drawer" data-position="left">
@@ -84,10 +85,12 @@
 				<a href="info.html"><h4>ユーザ情報</h4></a>
 			</div>
 			<div id="bg-link">
-				<a href="index.html" onclick="javascript:setSessionStorage('viewMode','0');"><h4>マイリスト</h4></a>
+				<a href="index.html"
+					onclick="javascript:setSessionStorage('viewMode','0');"><h4>マイリスト</h4></a>
 			</div>
 			<div id="bg-link">
-				<a href="index.html" onclick="javascript:setSessionStorage('viewMode','1');"><h4>お気に入り</h4></a>
+				<a href="index.html"
+					onclick="javascript:setSessionStorage('viewMode','1');"><h4>お気に入り</h4></a>
 			</div>
 			<div id="bg-link">
 				<a href="taglist.html"><h4>タグ</h4></a>
@@ -114,14 +117,13 @@
 					<div class="remodal" data-remodal-id="delete_user">
 						<a data-remodal-action="close" class="remodal-close"></a>
 						<h3>退会</h3>
-
 						<a class="remodal-confirm" href="login.html"
 							onclick="javascript:deleteuser();">OK</a> <a
 							class="remodal-cancel" href="#">キャンセル</a>
 					</div>
 				</div>
 				<div class="container">
-										<div style="margin: 100px auto;">
+					<div style="margin: 100px auto;">
 						<h1 class="title">ユーザー情報</h1>
 						<div class="form-wrapper" style="max-width: 400px;">
 
@@ -142,19 +144,24 @@
 								<h5>
 									<a class="art-title changeform" href="passchange.html">パスワード変更</a>
 								</h5>
-								<table>
-									<tr>
+								<table style="margin-left : auto ; margin-right : auto ;">
+									<tr class="changeform">
 										<td><h6>ユーザ申請 :</h6></td>
 										<td><div id="onoffswitch"></div></td>
 									</tr>
 									<tr>
+										<td><h6>キャッシュ :</h6></td>
+										<td><div id="cachesupport"></div></td>
+									</tr>
+									<tr class="support">
 										<td><h6>オンライン :</h6></td>
 										<td><div id="onlineswitch"></div></td>
 									</tr>
-									<tr>
+									<tr class="support changeform">
 										<td><h6>自動更新 :</h6></td>
 										<td><div id="autoswitch"></div></td>
 									</tr>
+
 								</table>
 								<h5>
 									<a class="art-title" href="#" onclick="javascript:logout();">ログアウト</a>
@@ -162,7 +169,8 @@
 
 								<div class="remodal-bg">
 									<h5>
-										<a class="art-title changeform" href="#" data-remodal-target="delete_user">退会</a>
+										<a class="art-title changeform" href="#"
+											data-remodal-target="delete_user">退会</a>
 									</h5>
 								</div>
 								<div class="hiddenarea"></div>
@@ -176,26 +184,45 @@
 
 
 	<script>
-		$(document).ready(function() {
+		$(document).ready(
+				function() {
 
-			colorMode();
-			$("div.hiddenarea").append(
-					'<input type="hidden" id="nonce" value="'
-							+ docCookies.getItem("nonce") + '">');
+					colorMode();
+					$("div.hiddenarea").append(
+							'<input type="hidden" id="nonce" value="'
+									+ docCookies.getItem("nonce") + '">');
 
-			if (isSettinOnLine() === false) {
-				$('#info').append("<h5>" + "ニックネーム<br>" + getLocalStorage('nickname') + "<br></h5>");
-				$('.changeform').empty();
+					if (isSettinOnLine() === false) {
+						$('#info').append(
+								"<h5>" + "ニックネーム<br>"
+										+ getLocalStorage('nickname')
+										+ "<br></h5>");
+						$('.changeform').empty();
+						isSupport();
+						colorOffline();
+					} else if (isSettinOnLine() == true) {
+						getUserList();
+						isSupport();
+						notice();
+					}
+				});
+
+		function isSupport() {
+			if (KageDB.isAvailable()) {
 				addModeButton();
 				addAutoButton();
-				colorOffline();
-			} else if(isSettinOnLine() == true) {
-				getUserList();
-				addModeButton();
-				addAutoButton();
-				notice();
+				$('#cachesupport').append('<h6 style="padding-left:1em;">利用可能</h6>');
+				$('#cachesupport').attr({
+					'style' : 'color:#03A9F4'
+				});
+			} else {
+				$('.support').empty();
+				$('#cachesupport').append('<h6 style="padding-left:1em;">利用不可</h6>');
+				$('#cachesupport').attr({
+					'style' : 'color:#D3381C'
+				});
 			}
-		});
+		}
 	</script>
 
 

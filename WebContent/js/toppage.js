@@ -12,15 +12,8 @@ function initTopPage() {
 	store.set('username', username);
 	store.set('auto', true);
 
-	// alert("initPage");
-	/*
-	 * 対応ブラウザならオフライン処理を開始 （ここでダイアログ
-	 */
-
-	setLocalStorage('auto', 'true');
-
 	if (true) {// isSupported([ 'chrome', 'opera', 'firefox', 'ie11', 'ie10'
-				// ])) {
+		// ])) {
 
 		// IDBに自身のキャッシュデータがない場合にアラート
 		// getIDBAllArticleList(username).then(
@@ -56,65 +49,106 @@ function initTopPage() {
 }
 // }
 function startUpdate(username) {
-
-	// alert(window.Worker);
-	// if (window.Worker) {
-//	if (true)
-//		console.log('worker start:' + username);
-//	// これが疑似的なPromiseオブジェクト→Deferredオブジェクト
-//	var worker = new Worker('../js/worker.js');
-//	// worker.addEventListener('message', function(e) {
-//
-//	worker.onmessage = function(e) {
-//		// ここではconsoleでJSONデータを表示する
-//		toastr.warning('kousin');
-//
-//		// testDataなら書き込める
-//		console.error('JSON data: ', e.data);
-//	};
-//
-//	worker.postMessage({
-//		'cmd' : 'IDBupdate',
-//		'username' : username
-//	});
-//	console.log(worker);
-
-
-
 	var syncworker = operative({
 
-		update: function(username) {
-	    	//initPromise();
-	    	//var username = data.username;
-	    	//updatecall(username);
+		update : function(username, callback) {
+			// initPromise();
+			// var username = data.username;
+			// updatecall(username);
 			console.log('kousin');
 			getIDBAllArticleList(username).then(getArticleListAsync).then(
-	    			updateIDBArticleList)['catch'](function(error) {
-	    		//self.postMessage('更新失敗');
-	    	});
-	    	// 削除処理（サーバになくて、ローカルにあるものを消す
-	    	var deleteWorkerArticle = function(json) {
-	    		return new Promise(function(resolve, reject) {
-	    			// 更新用リストを取ってきて、
-	    			var ret = function (json) {
-	    				updateIDBArticleListDelete(json);
-	    			};
-	    			json = JSON.stringify(json);
-	    			getJSON(hostURL + "/getdeletearticle", "json=" + json, ret);
+					updateIDBArticleList).then(function() {
+						callback();
+					})['catch'](function(error) {
+				// self.postMessage('更新失敗');
+			});
+			// 削除処理（サーバになくて、ローカルにあるものを消す
+			var deleteWorkerArticle = function(json) {
+				return new Promise(
+						function(resolve, reject) {
+							// 更新用リストを取ってきて、
+							var ret = function(json) {
+								updateIDBArticleListDelete(json);
+							};
+							json = JSON.stringify(json);
+							getJSON(hostURL + "/getdeletearticle", "json="
+									+ json, ret);
 
-	    		});
-	    	};
+						});
+			};
 
-	    	getIDBAllArticleList(username).then(deleteWorkerArticle).then(function(value){
-	    		console.log('success');
-	    	})['catch'](function(error) {
-	    		console.error(error);
-	    	});
+			getIDBAllArticleList(username).then(deleteWorkerArticle).then(
+					function(value) {
+						console.log('success');
+					})['catch'](function(error) {
+				console.error(error);
+			});
+			// 更新処理
+			getFriendListCache();
+			getTagCache();
+			getUserListCache();
+		}
+	}, [ hostURL + '/js/json-xhr.js', hostURL + '/js/indexeddb.js',
+			hostURL + '/js/lib/es6-promise.min.js',
+			hostURL + '/js/lib/kagedb.js' ]);
 
-	    	// 更新処理
-	    }
-	},[hostURL + '/js/json-xhr.js',hostURL + '/js/indexeddb.js',hostURL + '/js/lib/es6-promise.min.js',hostURL + '/js/lib/kagedb.js']);
+	var suctoastr = function() {
+		toastr.info('同期完了');
+	};
+	syncworker.update(username, suctoastr);
 
-		syncworker.update(username);
+}
 
+function updateManualStatus(key) {
+
+	$('#kore').empty();
+
+	if ((parseInt($('#updatekazu').val()) - key) != 0) {
+		$('#kore')
+				.prepend(
+						'<h6>残り：' + (parseInt($('#updatekazu').val()) - key)
+								+ '件</h6>');
+	} else {
+		toastr.success('更新完了');
+	}
+
+}
+
+function manualStartUpdate() {
+
+	// Downloadボタンを無効に
+
+	initPromise();
+
+	alert('gorigorigori');
+	console.log('manualaaaaaaaaaaa');
+
+	var username = docCookies.getItem('username');
+
+	getIDBAllArticleList(username).then(getArticleListAsync).then(
+			updateManualIDBArticleList)['catch'](function(error) {
+		// self.postMessage('更新失敗');
+	});
+	// 削除処理（サーバになくて、ローカルにあるものを消す
+	var deleteWorkerArticle = function(json) {
+		return new Promise(function(resolve, reject) {
+			// 更新用リストを取ってきて、
+			var ret = function(json) {
+				updateIDBArticleListDelete(json);
+			};
+			json = JSON.stringify(json);
+			getJSON(hostURL + "/getdeletearticle", "json=" + json, ret);
+
+		});
+	};
+
+	getIDBAllArticleList(username).then(deleteWorkerArticle).then(
+			function(value) {
+				console.log('success');
+			})['catch'](function(error) {
+		console.error(error);
+	});
+	getFriendListCache();
+	getTagCache();
+	getUserListCache();
 }
