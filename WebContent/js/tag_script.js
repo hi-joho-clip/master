@@ -89,20 +89,6 @@ function getTagList() {
 	getJSON(URL, jsonParam, get_taglists);
 }
 
-/**
- * オフラインのためのキャッシュ
- */
-function getTagCache() {
-	var jsonParam = null;// 送りたいデータ
-	var URL = hostURL + "/taglist";
-
-	var savetag = function (json) {
-		setLocalStorage('tagList', JSON.stringify(json));
-	};
-	getJSON(URL, jsonParam, savetag);
-}
-
-
 
 //更新日時が新しいタグ20件を表示
 function getUsingTags(){

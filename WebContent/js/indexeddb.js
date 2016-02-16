@@ -131,7 +131,7 @@ function updateArticle(json_article) {
 				// 登録日時はサーバで管理するべき（ブラウザ依存は排除）
 				modified : article.modified
 			}, function(key) {
-				//console.log("done. key = " + key);
+				console.log("done. key = " + key);
 				// 成功時はキーを渡す
 				resolve(key);
 			});
@@ -226,6 +226,37 @@ function updateIDBArticleList(values) {
 		getArticleID(jsons[art_json].article_id).then(updateArticleDelete);
 		// console.log(param);
 		pro_list.push(getRequest().article(param).then(updateArticle));
+	}
+	if (pro_list) {
+		return Promise.all(pro_list).then('success')['catch'](function(error) {
+			return (error);
+		});
+	} else {
+		return Promise.reject("no update");
+	}
+}
+
+/**
+ * 取得したArticleリストから取得する記事毎にプロミス作成
+ *
+ * @param articles
+ */
+function updateManualIDBArticleList(values) {
+
+	// GUIDはセッションから持ってくると値を渡すことがないので良い。
+	var jsons = JSON.parse(values);
+
+	var pro_list = [];
+
+	/*
+	 * PromiseAll（promiseサーバ通信→promise書き込み）これをリスト分回す（全部完了したら成功にする） param :
+	 * "article_id="?
+	 */
+	for ( var art_json in jsons) {
+		param = "article_id=" + jsons[art_json].article_id;
+		getArticleID(jsons[art_json].article_id).then(updateArticleDelete);
+		// console.log(param);
+		pro_list.push(getRequest().article(param).then(updateArticle).then(updateManualStatus));
 	}
 	if (pro_list) {
 		return Promise.all(pro_list).then('success')['catch'](function(error) {

@@ -62,6 +62,17 @@ public class UserDAO {
 			throw new Exception();
 		}finally {
 			con.setAutoCommit(true);
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return insert_user_id;
 	}
@@ -97,7 +108,17 @@ public class UserDAO {
 			e.printStackTrace();
 			throw new Exception();
 		} finally {
-			pstmt.close();
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		System.out.println(userDTO.getUser_id());
 		return userDTO;
@@ -135,7 +156,16 @@ public class UserDAO {
 			e.printStackTrace();
 			throw new Exception();
 		} finally {
-			pstmt.close();
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return userDTO;
 
@@ -166,7 +196,17 @@ public class UserDAO {
 			e.printStackTrace();
 			throw new Exception();
 		} finally {
-			pstmt.close();
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return flag;
 	}
@@ -195,7 +235,17 @@ public class UserDAO {
 			e.printStackTrace();
 			throw new Exception();
 		} finally {
-			pstmt.close();
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return flag;
 	}
@@ -236,6 +286,14 @@ public class UserDAO {
 			throw new Exception();
 		} finally {
 			con.setAutoCommit(true);
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return flag;
 
@@ -271,7 +329,14 @@ public class UserDAO {
 			e.printStackTrace();
 			throw new Exception();
 		} finally {
-			pstmt.close();
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		if (state == 1) {
@@ -313,7 +378,17 @@ public class UserDAO {
 			e.printStackTrace();
 			throw new Exception();
 		} finally {
-			pstmt.close();
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return userDTO;
 
@@ -351,7 +426,17 @@ public class UserDAO {
 			e.printStackTrace();
 			throw new Exception();
 		} finally {
-			pstmt.close();
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return userDTO;
 
@@ -391,7 +476,17 @@ public class UserDAO {
 			e.printStackTrace();
 			throw new Exception();
 		} finally {
-			pstmt.close();
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return userDTO;
 	}
@@ -429,7 +524,16 @@ public class UserDAO {
 			e.printStackTrace();
 			throw new Exception();
 		} finally {
-			pstmt.close();
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return userDTO;
 	}
@@ -470,7 +574,16 @@ public class UserDAO {
 			e.printStackTrace();
 			throw new Exception();
 		} finally {
-			pstmt.close();
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return userDTO;
 	}
@@ -497,7 +610,14 @@ public class UserDAO {
 			e.printStackTrace();
 			throw new Exception();
 		} finally {
-			pstmt.close();
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		if (state == 0) {
@@ -527,7 +647,14 @@ public class UserDAO {
 			e.printStackTrace();
 			throw new Exception();
 		} finally {
-			pstmt.close();
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		if (state == 0) {
@@ -564,7 +691,14 @@ public class UserDAO {
 			e.printStackTrace();
 			throw new Exception();
 		} finally {
-			pstmt.close();
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		if (state == 1) {

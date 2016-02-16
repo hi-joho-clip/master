@@ -18,19 +18,28 @@ function getFriendRequest() {
 
 }*/
 
-
 // フレンドボックス画面
 function getFriendRequest() {
 	var jsonParam = null;// 送りたいデータ
 	var URL = hostURL + "/friendrequest";
 	var setappend = function(json) {
 		for ( var i = 0; i < json.length; i++) {
-			$('#table-body').append('<tr id="'+json[i].nickname+'" class="first"><td><h8 style="padding-right:1em; font-size:4em">' + json[i].nickname + "</h8></td><td><h8 style='padding-right:0.2em'>" + "<a style='font-size:0.7em;' href='#' class='btn btn-primary' data-remodal-target='kyoka' onclick='document.getElementById(\"user_id\").innerHTML=\""
-					+ json[i].friend_user_id + "\";'>承認</a></h8></td>" + "&emsp;"
-					+ "<td><h8><a style='font-size:0.7em;' href='#' class='btn btn-danger' data-remodal-target='kyohi' onclick='document.getElementById(\"user_id\").innerHTML=\""
-					+ json[i].friend_user_id + "\";'>拒否</a></h8></td>");
+			$('#table-body')
+					.append(
+							'<tr id="'
+									+ json[i].nickname
+									+ '" class="first"><td><h8 style="padding-right:1em; font-size:4em">'
+									+ json[i].nickname
+									+ "</h8></td><td><h8 style='padding-right:0.2em'>"
+									+ "<a style='font-size:0.7em;' href='#' class='btn btn-primary' data-remodal-target='kyoka' onclick='document.getElementById(\"user_id\").innerHTML=\""
+									+ json[i].friend_user_id
+									+ "\";'>承認</a></h8></td>"
+									+ "&emsp;"
+									+ "<td><h8><a style='font-size:0.7em;' href='#' class='btn btn-danger' data-remodal-target='kyohi' onclick='document.getElementById(\"user_id\").innerHTML=\""
+									+ json[i].friend_user_id
+									+ "\";'>拒否</a></h8></td>");
 		}
-		/*document.getElementById('info').innerHTML = friendList + "</div>";*/
+		/* document.getElementById('info').innerHTML = friendList + "</div>"; */
 	};
 	getJSON(URL, jsonParam, setappend);
 
@@ -44,7 +53,10 @@ function getFriendSearch(nickname) {
 	var setappend = function(json) {
 		if (json.length != 0) {
 			for ( var i = 0; i < json.length; i++) {
-				friendList +="<tr><td id='"+json[i].nickname+"'><h8 style='padding-right: 1em;'>" + json[i].nickname
+				friendList += "<tr><td id='"
+						+ json[i].nickname
+						+ "'><h8 style='padding-right: 1em;'>"
+						+ json[i].nickname
 						+ "</h8><a class='btn btn-success' href='#' data-remodal-target='add' onclick='document.getElementById(\"user_id\").innerHTML=\""
 						+ json[i].user_id + "\";'>追加</a></td><tr>";
 
@@ -52,7 +64,8 @@ function getFriendSearch(nickname) {
 		} else {
 			friendList += "空入力 または、検索結果が1件もありません。";
 		}
-		document.getElementById('info').innerHTML = friendList + "<tbody></table></div>";
+		document.getElementById('info').innerHTML = friendList
+				+ "<tbody></table></div>";
 	};
 	getJSON(URL, jsonParam, setappend);
 }
@@ -60,15 +73,15 @@ function getFriendSearch(nickname) {
 // リクエストを申請後の画面
 function addRequest(user_id) {
 	console.log($('#nonce').val());
-	var jsonParam = "friend_user_id=" + user_id+"&nonce="+$('#nonce').val();// 送りたいデータ
+	var jsonParam = "friend_user_id=" + user_id + "&nonce=" + $('#nonce').val();// 送りたいデータ
 	var URL = hostURL + "/addrequest";
 
 	var setappend = function(json) {
 
-		if(json.flag==0){
+		if (json.flag == 0) {
 			toastr.error(json.state);
 			console.log("ERROR");
-		}else{
+		} else {
 			toastr.success(json.state);
 			console.log("SUCCESS");
 			$('#' + json.nickname).remove();
@@ -80,14 +93,14 @@ function addRequest(user_id) {
 // リクエストを承認後の画面
 function acceptRequest(user_id) {
 
-	var jsonParam = "friend_user_id=" + user_id+"&nonce="+$('#nonce').val();// 送りたいデータ
+	var jsonParam = "friend_user_id=" + user_id + "&nonce=" + $('#nonce').val();// 送りたいデータ
 	var URL = hostURL + "/acceptrequest";
 	var setappend = function(json) {
 
-		if(json.flag==0){
+		if (json.flag == 0) {
 			toastr.error(json.state);
 			console.log("ERROR");
-		}else{
+		} else {
 			toastr.success(json.state);
 			console.log("SUCCESS");
 			$('#' + json.nickname).remove();
@@ -99,19 +112,19 @@ function acceptRequest(user_id) {
 // リクエストを否認後の画面
 function denyRequest(user_id) {
 
-	var jsonParam = "friend_user_id=" + user_id+"&nonce="+$('#nonce').val();// 送りたいデータ
+	var jsonParam = "friend_user_id=" + user_id + "&nonce=" + $('#nonce').val();// 送りたいデータ
 	var URL = hostURL + "/denyrequest";
 	var setappend = function(json) {
 
-		if(json.flag==0){
+		if (json.flag == 0) {
 			toastr.error(json.state);
-		}else{
+		} else {
 			toastr.success(json.state);
 			$('#' + json.nickname).remove();
 		}
 	};
 	getJSON(URL, jsonParam, setappend);
-	//location.reload();
+	// location.reload();
 }
 
 // フレンド検索のフレンド、申請に上限
@@ -122,18 +135,20 @@ function limit() {
 	var $remodal = "";
 	var setappend = function(json) {
 
-		/*if (json.flag == 2) {
-			$remodal += "<h3>フレンド人数オーバー</h3>"
-					+ "<a class='remodal-confirm' href='#'>OK</a>";
-		} else if (json.flag == 1) {
-			$remodal += "<h3>フレンド申請オーバー</h3>"
-					+ "<a data-remodal-action='confirm' class='remodal-confirm' href='#'>OK</a>";
-		} else if (json.flag == 0) {*/
-			$remodal += "<h3>リクエスト送信</h3>"
-					//+ "<a data-remodal-action='confirm' class='remodal-confirm' href='#' onclick='addRequest(document.getElementById(\"user_id\").innerHTML);location.reload()\'>追加</a>"
-					+ "<a data-remodal-action='confirm' class='remodal-confirm' href='#' onclick='addRequest(document.getElementById(\"user_id\").innerHTML);\'>追加</a>"
-					+ "&emsp;<a data-remodal-action='cancel' class='remodal-cancel' href='#'onclick='javascript:return false;'>キャンセル</a>";
-		/*}*/
+		/*
+		 * if (json.flag == 2) { $remodal += "<h3>フレンド人数オーバー</h3>" + "<a
+		 * class='remodal-confirm' href='#'>OK</a>"; } else if (json.flag == 1) {
+		 * $remodal += "<h3>フレンド申請オーバー</h3>" + "<a
+		 * data-remodal-action='confirm' class='remodal-confirm' href='#'>OK</a>"; }
+		 * else if (json.flag == 0) {
+		 */
+		$remodal += "<h3>リクエスト送信</h3>"
+				// + "<a data-remodal-action='confirm' class='remodal-confirm'
+				// href='#'
+				// onclick='addRequest(document.getElementById(\"user_id\").innerHTML);location.reload()\'>追加</a>"
+				+ "<a data-remodal-action='confirm' class='remodal-confirm' href='#' onclick='addRequest(document.getElementById(\"user_id\").innerHTML);\'>追加</a>"
+				+ "&emsp;<a data-remodal-action='cancel' class='remodal-cancel' href='#'onclick='javascript:return false;'>キャンセル</a>";
+		/* } */
 		$("#limit").append($remodal).trigger("create");
 	};
 	getJSON(URL, jsonParam, setappend);
@@ -159,14 +174,14 @@ function limitBox() {
 	getJSON(URL, jsonParam, setappend);
 }
 
-//フレンド登録者のリストをもらう処理
+// フレンド登録者のリストをもらう処理
 function getFriends() {
 	var jsonParam = null;// 送りたいデータ
 	var URL = hostURL + "/friendlistff";
 	getJSON(URL, jsonParam, get_friends);
 }
 
-//フレンド申請があると、申請通知が来る
+// フレンド申請があると、申請通知が来る
 function notice() {
 	var jsonParam = null;// 送りたいデータ
 	var URL = hostURL + "/friendrequest";

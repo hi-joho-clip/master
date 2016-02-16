@@ -115,10 +115,8 @@ $(document).ready(
 		function() {
 
 			$('#search-2').on('click', function(e) {
-				  e.target.setSelectionRange(0, e.target.value.length);
+				e.target.setSelectionRange(0, e.target.value.length);
 			});
-
-
 
 			$grid = $('.grid').isotope({
 				itemSelector : '.grid-item',
@@ -148,15 +146,15 @@ $(document).ready(
 			$('#add-button').on("click", function() {
 				if ($('#art-add').val() === 'true') {
 					// 今のページ番号を取得
-					console.log("lastidマン"+$('#lastid').val());
+					console.log("lastidマン" + $('#lastid').val());
 
 					var page = parseInt($('#art-page').val()) + 1;
 					$('#art-page').val(page);
-					console.log("pageマン"+page);
+					console.log("pageマン" + page);
 					switch (getSessionStorage("viewMode")) {
 					case "0":
 						console.log("netstat" + isSettinOnLine());
-						//マイリスト
+						// マイリスト
 						if (isSettinOnLine() == true) {
 							console.log("マイリスト");
 							if ($('#searchMode').val() === "true") {
@@ -166,7 +164,7 @@ $(document).ready(
 								// 普通のマイリストを出す
 								getMyList(page);
 							}
-						} else if (isSettinOnLine() == false){
+						} else if (isSettinOnLine() == false) {
 							console.log('オフラインマイリスト');
 							getOffMyList(page);
 						}
@@ -182,12 +180,12 @@ $(document).ready(
 								// 普通のマイリストを出す
 								getFavList(page);
 							}
-						} else if (isSettinOnLine() == false){
+						} else if (isSettinOnLine() == false) {
 							getOffFavList(page);
 						}
 						break;
 					case "2":
-						//特定のタグ
+						// 特定のタグ
 
 						if (isSettinOnLine) {
 							if ($('#searchMode').val() === "true") {
@@ -197,13 +195,13 @@ $(document).ready(
 								// 普通のマイリストを出す
 								getTagArticleList(page);
 							}
-						} else if (isSettinOnLine() == true){
+						} else if (isSettinOnLine() == true) {
 							getTagOffArticleList(page);
 						}
 
 						break;
 					case "3":
-						//シェア画面
+						// シェア画面
 						if (isSettinOnLine) {
 							if ($('#searchMode').val() === "true") {
 								// シェアの検索をしているページを出す
@@ -212,7 +210,7 @@ $(document).ready(
 								// 普通のマイリストを出す
 								getShareList(page);
 							}
-						} else if (isSettinOnLine() == false){
+						} else if (isSettinOnLine() == false) {
 							console.log('offline share');
 							getOffShareList(page);
 						}
@@ -247,7 +245,6 @@ $(document).ready(
 					$('#lastid').val('0');
 					$('#art-add').val("true");
 					console.log("今の状態：" + getLocalStorage('Style'));
-
 					// こいつがリロード
 					styleListChange();
 				}
@@ -257,7 +254,7 @@ $(document).ready(
 			console.log("onnline:" + isSettinOnLine());
 			if (isSettinOnLine() === true) {
 
-			} else if(isSettinOnLine() === false) {
+			} else if (isSettinOnLine() === false) {
 				colorOffline();
 				// menuを削除
 
@@ -288,8 +285,78 @@ function styleListChange() {
 				// 普通のマイリストを出す
 				initPagingMylist(getMyList);
 
-				// 更新処理
-				initTopPage();
+				var flag = false;
+				// 更新処理（お使いの端末で初めてのログイン）
+				if (getLocalStorage('auto') == null) {
+					getIDBAllArticleList(docCookies.getItem('username')).then(
+							getArticleListAsync).then(
+							function(json) {
+								var itemlength = JSON.parse(json).length;
+
+								if (itemlength > 0) {
+									flag = true;
+									setLocalStorage('auto', 'false');
+									$('#updatetext').append(
+											'<h2>キャッシュをダウンロードしますか？</h2>'
+													+ 'お使いの端末にキャッシュがありません'
+													+ '<BR>ダウンロードしますか？');
+									$('[data-remodal-id=updatemodal]')
+											.remodal().open();
+									$('#updatekazu').val(itemlength);
+									$('#updatesize').append(
+											'<h6>更新:' + itemlength + '件</h6>');
+								}
+							});
+				}
+				if (getLocalStorage('auto') == 'true') {
+					$('#autoupdate').empty();
+					getIDBAllArticleList(docCookies.getItem('username')).then(
+							getArticleListAsync).then(
+							function(json) {
+								var itemlength = JSON.parse(json).length;
+								if (itemlength >= 30) {
+									$('#updatekazu').val(itemlength);
+									$('#updatetext').append(
+											'<h2>自動更新が有効です。</h2>'
+													+ '更新ファイルが30件以上あります。'
+													+ '<BR>ダウンロードしますか？');
+									$('[data-remodal-id=updatemodal]')
+											.remodal().open();
+									$('#updatesize').append(
+											'<h6>更新:' + JSON.parse(json).length
+													+ '件</h6>');
+								} else {
+									initTopPage();
+								}
+							});
+				} else {
+					// 無効になってる旨のとーすた
+					$('#autoupdate').prepend('<h6>更新:OFF </h6>');
+					if (flag) {
+						// toastr.options = {
+						// "closeButton" : false,
+						// "debug" : false,
+						// "newestOnTop" : false,
+						// "progressBar" : true,
+						// "positionClass" : "toast-bottom-right",
+						// "preventDuplicates" : false,
+						// "showDuration" : "300",
+						// "hideDuration" : "1000",
+						// "timeOut" : "5000",
+						// "extendedTimeOut" : "1000",
+						// "showEasing" : "swing",
+						// "hideEasing" : "linear",
+						// "showMethod" : "fadeIn",
+						// "hideMethod" : "fadeOut"
+						// };
+						// toastr["warning"]("自動更新はオフです");
+						// toastr.options = {
+						// "timeOut" : "1000",
+						// };
+
+
+					}
+				}
 			}
 		} else if (isSettinOnLine() === false) {
 
@@ -350,8 +417,7 @@ function styleListChange() {
 			 * initPagingSharelist(getShareList,
 			 * getSessionStorage("shareLists")); initTopPage();
 			 */
-			//toastr.warning("オンライン");
-
+			// toastr.warning("オンライン");
 		} else if (isSettinOnLine() === false) {
 			initPagingMylist(getOffShareList);
 		}
@@ -359,9 +425,9 @@ function styleListChange() {
 	}
 
 	if (isSettinOnLine() === true) {
-		//alert('stop!');
-		//initTopPage();
-	} else if(isSettinOnLine() === false) {
+		// alert('stop!');
+		// initTopPage();
+	} else if (isSettinOnLine() === false) {
 		colorOffline();
 		// menuを削除
 

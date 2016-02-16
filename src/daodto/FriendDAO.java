@@ -61,6 +61,18 @@ public class FriendDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		System.out.println(userList.size());
 		return userList;
@@ -114,6 +126,17 @@ public class FriendDAO {
 			throw new Exception();
 		} finally {
 			con.setAutoCommit(true);
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		return flag;
@@ -201,6 +224,17 @@ public class FriendDAO {
 			throw new Exception();
 		} finally {
 			con.setAutoCommit(true);
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		return flag;
@@ -227,13 +261,22 @@ public class FriendDAO {
 			pstmt.setInt(4, friend_user_id);
 			count = pstmt.executeUpdate();
 
-			if(count != 0){
+			if (count != 0) {
 				flag = true;
 			}
 
 		} catch (Exception e) {
 			e.getStackTrace();
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		return flag;
@@ -296,11 +339,21 @@ public class FriendDAO {
 			throw new Exception();
 		} finally {
 			con.setAutoCommit(true);
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		return flag;
 	}
-
 
 	/**
 	 *  フレンドとの一件のデータ取得
@@ -313,9 +366,9 @@ public class FriendDAO {
 		ResultSet rs = null;
 		FriendDTO friendDTO = new FriendDTO();
 
-
 		return friendDTO;
 	}
+
 	/**
 	 *
 	 * 申請しているユーザとフレンドになったユーザの一覧を取得
@@ -332,7 +385,7 @@ public class FriendDAO {
 		try {
 			pstmt = con.prepareStatement(friend_sql);
 			pstmt.setInt(1, own_user_id);
-			rs= pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				FriendDTO friendDTO = new FriendDTO();
 				friendDTO.setFriend_id(rs.getInt("friend_id"));
@@ -346,9 +399,22 @@ public class FriendDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return friendList;
 	}
+
 	/**
 	 *
 	 * フレンドになったユーザの一覧を取得
@@ -365,7 +431,7 @@ public class FriendDAO {
 		try {
 			pstmt = con.prepareStatement(friend_sql);
 			pstmt.setInt(1, own_user_id);
-			rs= pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				FriendDTO friendDTO = new FriendDTO();
 				friendDTO.setFriend_id(rs.getInt("friend_id"));
@@ -379,6 +445,18 @@ public class FriendDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return friendList;
 	}

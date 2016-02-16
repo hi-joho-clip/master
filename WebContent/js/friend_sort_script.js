@@ -13,7 +13,7 @@ function getOffFriendList() {
 
 function createFriendList(json) {
 
-	//console.log(json);
+	// console.log(json);
 
 	var date_obj;
 	for ( var i = 0; i < json.length; i++) {
@@ -48,7 +48,9 @@ function createFriendList(json) {
 									+ json[i].nickname
 									+ "\");setSessionStorage(\"viewMode\",\"3\");setSessionStorage(\"shareLists\",\""
 									+ +json[i].friend_user_id
-									+ "\");setSessionStorage(\"shareListId\",\"" + json[i].share_id + "\")'>"
+									+ "\");setSessionStorage(\"shareListId\",\""
+									+ json[i].share_id
+									+ "\")'>"
 									+ json[i].nickname
 									+ '</h8></td><td><a href="#" data-remodal-target="delete_friend" class="friend art-title btn btn-danger" onclick="javascript:remodalCreate('
 									+ json[i].friend_user_id
@@ -56,7 +58,7 @@ function createFriendList(json) {
 		}
 	}
 
-	//console.log( JSON.stringify(arrayFriend));
+	// console.log( JSON.stringify(arrayFriend));
 	if (isSettinOnLine() == true) {
 		setLocalStorage('friendList', JSON.stringify(json));
 	}
@@ -68,12 +70,6 @@ function createFriendList(json) {
 		filterText : '名前検索... '
 	});
 };
-
-
-
-
-
-
 
 function remodalCreate(friend_user_id) {
 
@@ -122,7 +118,6 @@ function deleteFriend(friend_user_id, row) {
 	};
 	getJSON(URL, jsonParam, setappend);
 }
-
 
 // // フレンド申請があると、申請通知が来る
 function notice() {

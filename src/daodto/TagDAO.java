@@ -49,6 +49,16 @@ public class TagDAO {
 			throw new Exception();
 		}finally{
 			con.setAutoCommit(true);
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return flag;
 	}
@@ -72,6 +82,14 @@ public class TagDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return flag;
 	}
@@ -95,6 +113,14 @@ public class TagDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return flag;
 	}
@@ -125,6 +151,18 @@ public class TagDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return tagList;
 	}
@@ -158,6 +196,18 @@ public class TagDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return tagList;
 	}
@@ -188,6 +238,17 @@ public class TagDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return tagList;
 	}
