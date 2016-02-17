@@ -41,6 +41,7 @@ div.absolute :hover {
     color: #666;
     width: 7em;
     background-color: rgba(255,255,255,0);
+    border-style: none;
 }
 
 
@@ -279,10 +280,12 @@ h6 {
 h1.text-center {
 font-size:4em;
 line-height:50px;
+
 }
 /*ページタイトル*/
 h1.title {
 font-size:2.5em;
+    margin-top: -35px;
 }
 p {
 font-size:24px;

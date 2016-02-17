@@ -103,10 +103,10 @@ function updateManualStatus(key) {
 
 	$('#kore').empty();
 
-	if ((parseInt($('#updatekazu').val()) - key) != 0) {
+	if ((parseInt($('#updatekazu').val()) - 1) != 0) {
 		$('#kore')
 				.prepend(
-						'<h6>残り：' + (parseInt($('#updatekazu').val()) - key)
+						'<h6>残り：' + (parseInt($('#updatekazu').val()) - 1)
 								+ '件</h6>');
 	} else {
 		toastr.success('更新完了');
@@ -119,16 +119,15 @@ function manualStartUpdate() {
 	// Downloadボタンを無効に
 
 	initPromise();
-
-	alert('gorigorigori');
-	console.log('manualaaaaaaaaaaa');
-
 	var username = docCookies.getItem('username');
 
 	getIDBAllArticleList(username).then(getArticleListAsync).then(
 			updateManualIDBArticleList)['catch'](function(error) {
 		// self.postMessage('更新失敗');
 	});
+
+	// 更新処理
+	//alert('manualStartupdate');
 	// 削除処理（サーバになくて、ローカルにあるものを消す
 	var deleteWorkerArticle = function(json) {
 		return new Promise(function(resolve, reject) {

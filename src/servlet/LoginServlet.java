@@ -41,7 +41,7 @@ public class LoginServlet extends HttpServlet {
 		String inputid = request.getParameter("mail_or_name");
 		inputid = new String(inputid.getBytes("UTF-8"), "UTF-8");
 		String inputpass = request.getParameter("password");
-		System.out.println("inputid:"+inputid+"inputpass:"+inputpass);
+		System.out.println("inputid:" + inputid + "inputpass:" + inputpass);
 		String URL = request.getContextPath() + "/login";
 
 		UserAuth userauth = new UserAuth();
@@ -105,44 +105,47 @@ public class LoginServlet extends HttpServlet {
 			// セッションの有効期限を1日にする
 			loginsession.setMaxInactiveInterval(86400);
 
-			// 成功した場合、クッキー情報、削除
-			for (int i = 0; i < cookie.length; i++) {
-				if (cookie[i].getName().equals("visited")) {
-					visitedCookie = cookie[i];
-					visitedCookie.setPath("/");
-					visitedCookie.setMaxAge(0);
-					response.addCookie(visitedCookie);
-				}
+			try {
+				// 成功した場合、クッキー情報、削除
+				for (int i = 0; i < cookie.length; i++) {
+					if (cookie[i].getName().equals("visited")) {
+						visitedCookie = cookie[i];
+						visitedCookie.setPath("/");
+						visitedCookie.setMaxAge(0);
+						response.addCookie(visitedCookie);
+					}
 
-				if (cookie[i].getName().equals("LOCK_USERID")) {
-					visitedCookie = cookie[i];
-					visitedCookie.setPath("/");
-					visitedCookie.setMaxAge(0);
-					response.addCookie(visitedCookie);
-				}
+					if (cookie[i].getName().equals("LOCK_USERID")) {
+						visitedCookie = cookie[i];
+						visitedCookie.setPath("/");
+						visitedCookie.setMaxAge(0);
+						response.addCookie(visitedCookie);
+					}
 
-				if (cookie[i].getName().equals("ForgotPASS")) {
-					visitedCookie = cookie[i];
-					visitedCookie.setPath("/");
-					visitedCookie.setMaxAge(0);
-					response.addCookie(visitedCookie);
-				}
+					if (cookie[i].getName().equals("ForgotPASS")) {
+						visitedCookie = cookie[i];
+						visitedCookie.setPath("/");
+						visitedCookie.setMaxAge(0);
+						response.addCookie(visitedCookie);
+					}
 
-				if (cookie[i].getName().equals("lock_pass")) {
-					visitedCookie = cookie[i];
-					visitedCookie.setPath("/");
-					visitedCookie.setMaxAge(0);
-					response.addCookie(visitedCookie);
-				}
+					if (cookie[i].getName().equals("lock_pass")) {
+						visitedCookie = cookie[i];
+						visitedCookie.setPath("/");
+						visitedCookie.setMaxAge(0);
+						response.addCookie(visitedCookie);
+					}
 
-				if (cookie[i].getName().equals("lock_user")) {
-					visitedCookie = cookie[i];
-					visitedCookie.setPath("/");
-					visitedCookie.setMaxAge(0);
-					response.addCookie(visitedCookie);
+					if (cookie[i].getName().equals("lock_user")) {
+						visitedCookie = cookie[i];
+						visitedCookie.setPath("/");
+						visitedCookie.setMaxAge(0);
+						response.addCookie(visitedCookie);
+					}
 				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-
 
 			// URLは絶対パスで書かない。
 			// 本番環境でURL=nullにすれば簡単に動く

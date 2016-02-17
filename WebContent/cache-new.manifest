@@ -58,6 +58,7 @@ ajax_test.html
 /js/lib/operative.js
 /js/lib/store.js
 /js/lib/WorkerConsole.js
+/js/lib/es6-promise.min.js
 
 #js/wysithml
 /js/wysihtml/advanced_and_extended.js
