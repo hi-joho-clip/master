@@ -65,75 +65,80 @@ public class UpdateMailAddressServlet extends HttpServlet {
 					}
 				}
 
-				if (flag && request.getParameter("newemail").length() < 256
+				if (request.getParameter("newemail").length() < 256
 						&& request.getParameter("password").length() < 33) {
+					if (flag) {
+						try {
+							int user_id = (int) session.getAttribute("user_id");
 
-					try {
-						int user_id = (int) session.getAttribute("user_id");
+							String inputmail = request.getParameter("newemail");
+							inputmail = new String(inputmail.getBytes("UTF-8"),
+									"UTF-8");
+							String inputpass = request.getParameter("password");
+							inputpass = new String(inputpass.getBytes("UTF-8"),
+									"UTF-8");
+							System.out.println("request受け取った" + inputmail);
+							System.out.println("request受け取った" + inputpass);
 
-						String inputmail = request.getParameter("newemail");
-						inputmail = new String(inputmail.getBytes("UTF-8"),
-								"UTF-8");
-						String inputpass = request.getParameter("password");
-						inputpass = new String(inputpass.getBytes("UTF-8"),
-								"UTF-8");
-						System.out.println("request受け取った" + inputmail);
-						System.out.println("request受け取った" + inputpass);
+							userbean = new User(user_id);
+							// hantei =
+							// userauth.loginUserName(userbean.getUser_name(),inputpass);
 
-						userbean = new User(user_id);
-						// hantei =
-						// userauth.loginUserName(userbean.getUser_name(),inputpass);
+							if (userauth.loginUserName(userbean.getUser_name(),
+									inputpass)) {
+								System.out.println("ユーザ成功");
+								userbean.setMailaddress(inputmail);
+								userbean.setPassword(inputpass);
+								if (userbean.updateMailaddress()) {
+									System.out.println("メールアドレス成功");
+									// userbean.updateMailaddress();
+									resp = "{\"state\": \"更新しました\",  \"flag\": 1}";
 
-						if (userauth.loginUserName(userbean.getUser_name(),
-								inputpass)) {
-							System.out.println("ユーザ成功");
-							userbean.setMailaddress(inputmail);
-							userbean.setPassword(inputpass);
-							if (userbean.updateMailaddress()) {
-								System.out.println("メールアドレス成功");
-								// userbean.updateMailaddress();
-								resp = "{\"state\": \"更新しました\",  \"flag\": 1}";
-
-								SendMail mail = new SendMail();
-								// コンストラクタ替わりに設定必要
-								mail.userInfoMail(userbean.getMailaddress(),
-										userbean.getUser_name(),
-										userbean.getNickname());
-								// スレッドスタート
-								mail.start();
-
-							} else {
-								if (userbean.getErrorMessages().containsKey(
-										"mailaddress")) {
-									System.out.println(userbean
-											.getErrorMessages().get(
-													"mailaddress"));
-									ErrorMessage = userbean.getErrorMessages()
-											.get("mailaddress");
-									resp = "{\"state\":\"" + ErrorMessage
-											+ "\",  \"flag\": 0}";
+									SendMail mail = new SendMail();
+									// コンストラクタ替わりに設定必要
+									mail.userInfoMail(
+											userbean.getMailaddress(),
+											userbean.getUser_name(),
+											userbean.getNickname());
+									// スレッドスタート
+									mail.start();
 
 								} else {
-									ErrorMessage = userbean.getErrorMessages()
-											.get("ErrorMessage");
-									resp = "{\"state\":\"" + ErrorMessage
-											+ "\",  \"flag\": 0}";
+									if (userbean.getErrorMessages()
+											.containsKey("mailaddress")) {
+										System.out.println(userbean
+												.getErrorMessages().get(
+														"mailaddress"));
+										ErrorMessage = userbean
+												.getErrorMessages().get(
+														"mailaddress");
+										resp = "{\"state\":\"" + ErrorMessage
+												+ "\",  \"flag\": 0}";
+
+									} else {
+										ErrorMessage = userbean
+												.getErrorMessages().get(
+														"ErrorMessage");
+										resp = "{\"state\":\"" + ErrorMessage
+												+ "\",  \"flag\": 0}";
+									}
 								}
+							} else {
+								System.out.println("パスワード間違ってる");
+								// パスワードが一致しなかった処理
+								resp = "{\"state\": \"パスワードが間違ってます\",  \"flag\": 0}";
+
 							}
 
-						} else {
-							System.out.println("パスワード間違ってる");
-							// パスワードが一致しなかった処理
-							resp = "{\"state\": \"パスワードが間違ってます\",  \"flag\": 0}";
-
+						} catch (Exception e) {
+							// TODO 自動生成された catch ブロック
+							e.printStackTrace();
 						}
-
-					} catch (Exception e) {
-						// TODO 自動生成された catch ブロック
-						e.printStackTrace();
+					}else{
+						resp = "{\"state\": \"メールアドレスが不適切です\",  \"flag\": 0}";
 					}
 					out.println(resp);
-				}else{
+				} else {
 					resp = "{\"state\": \"文字数制限エラー\",  \"flag\": 0}";
 					out.println(resp);
 				}
