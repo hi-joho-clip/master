@@ -36,12 +36,11 @@ public class UpdateNicknameServlet extends HttpServlet {
 	private void perform(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-
 		HttpSession session = request.getSession(true);
 
 		User userbean = null;
 		UserAuth userauth = new UserAuth();
-		//boolean hantei = false;
+		// boolean hantei = false;
 		String resp = "{\"state\": \"unknownError\", \"flag\": 0}";
 		Nonce nonce = new Nonce(request);
 
@@ -50,54 +49,63 @@ public class UpdateNicknameServlet extends HttpServlet {
 		response.setHeader("Cache-Control", "private");
 		PrintWriter out = response.getWriter();
 
-
 		System.out.println("かと");
 
-		if(nonce.isNonce()){
-			if(request.getParameter("newnickname")!=null &&request.getParameter("password")!=null){
-				try {
-					int user_id = (int) session.getAttribute("user_id");
+		if (nonce.isNonce()) {
+			if (request.getParameter("newnickname") != null
+					&& request.getParameter("password") != null) {
+				if (request.getParameter("newnickname").length() < 33
+						&& request.getParameter("password").length() < 33) {
+					try {
+						int user_id = (int) session.getAttribute("user_id");
 
-					String inputname = request.getParameter("newnickname");
-					inputname = new String(inputname.getBytes("UTF-8"), "UTF-8");
-					String inputpass = request.getParameter("password");
-					inputpass = new String(inputpass.getBytes("UTF-8"), "UTF-8");
-					System.out.println("request受け取った" + inputname);
-					System.out.println("request受け取った" + inputpass);
+						String inputname = request.getParameter("newnickname");
+						inputname = new String(inputname.getBytes("UTF-8"),
+								"UTF-8");
+						String inputpass = request.getParameter("password");
+						inputpass = new String(inputpass.getBytes("UTF-8"),
+								"UTF-8");
+						System.out.println("request受け取った" + inputname);
+						System.out.println("request受け取った" + inputpass);
 
-					userbean = new User(user_id);
+						userbean = new User(user_id);
 
-					if (userauth.loginUserName(userbean.getUser_name(),inputpass)) {
-						userbean.setNickname(inputname);
-						userbean.setPassword(inputpass);
-						userbean.updateNickname();
-						resp = "{\"state\": \"更新しました\",  \"flag\": 1}";
+						if (userauth.loginUserName(userbean.getUser_name(),
+								inputpass)) {
+							userbean.setNickname(inputname);
+							userbean.setPassword(inputpass);
+							userbean.updateNickname();
+							resp = "{\"state\": \"更新しました\",  \"flag\": 1}";
 
-					} else {
-						System.out.println("間違ってる");
-						// パスワードが一致しなかった処理
-						resp = "{\"state\": \"パスワードが間違ってます\",  \"flag\": 0}";
-						//resp = "{\"state\": \"パスワードが間違ってます\",  \"flag\": 2}";
+						} else {
+							System.out.println("間違ってる");
+							// パスワードが一致しなかった処理
+							resp = "{\"state\": \"パスワードが間違ってます\",  \"flag\": 0}";
+							// resp =
+							// "{\"state\": \"パスワードが間違ってます\",  \"flag\": 2}";
 
+						}
+
+					} catch (Exception e) {
+						// TODO 自動生成された catch ブロック
+						e.printStackTrace();
 					}
-
-				} catch (Exception e) {
-					// TODO 自動生成された catch ブロック
-					e.printStackTrace();
+					out = response.getWriter();
+					out.println(resp);
+				}else{
+					resp = "{\"state\": \"文字制限エラー\",  \"flag\": 0}";
 				}
-				out = response.getWriter();
-				out.println(resp);
-			}else{
-				//newnickname passwordがnullならunknownerror
+			} else {
+				// newnickname passwordがnullならunknownerror
 				out.println(resp);
 			}
-		}else{
+		} else {
 			// 不正アクセス
 			resp = "{\"state\": \"不正なアクセス\",  \"flag\": 0}";
 			out = response.getWriter();
 			out.println(resp);
 		}
-		//response.sendRedirect(URL + "/info.html");
+		// response.sendRedirect(URL + "/info.html");
 	}
 
 }

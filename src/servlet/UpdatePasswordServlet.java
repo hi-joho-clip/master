@@ -42,7 +42,7 @@ public class UpdatePasswordServlet extends HttpServlet {
 
 		User userbean = null;
 		UserAuth userauth = new UserAuth();
-		//boolean hantei = false;
+		// boolean hantei = false;
 		String resp = "{\"state\": \"unknown\", \"flag\": 0}";
 		Nonce nonce = new Nonce(request);
 
@@ -52,47 +52,60 @@ public class UpdatePasswordServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 
 		if (nonce.isNonce()) {
-			if(request.getParameter("newpassword")!=null &&request.getParameter("password")!=null){
-				try {
-					int user_id = (int) session.getAttribute("user_id");
+			if (request.getParameter("newpassword") != null
+					&& request.getParameter("password") != null) {
+				if (request.getParameter("newpassword").length() < 33
+						&& request.getParameter("password").length() < 33) {
+					try {
+						int user_id = (int) session.getAttribute("user_id");
 
-					String inputpass = request.getParameter("password");
-					inputpass = new String(inputpass.getBytes("UTF-8"), "UTF-8");
-					String newpass = request.getParameter("newpassword");
-					newpass = new String(newpass.getBytes("UTF-8"), "UTF-8");
-					System.out.println("request受け取った古いパス:" + inputpass);
-					System.out.println("request受け取った新パス:" + newpass);
+						String inputpass = request.getParameter("password");
+						inputpass = new String(inputpass.getBytes("UTF-8"),
+								"UTF-8");
+						String newpass = request.getParameter("newpassword");
+						newpass = new String(newpass.getBytes("UTF-8"), "UTF-8");
+						System.out.println("request受け取った古いパス:" + inputpass);
+						System.out.println("request受け取った新パス:" + newpass);
 
-					userbean = new User(user_id);
-					//hantei = userauth.loginUserName(userbean.getUser_name(),inputpass);
+						userbean = new User(user_id);
+						// hantei =
+						// userauth.loginUserName(userbean.getUser_name(),inputpass);
 
-					if (userauth.loginUserName(userbean.getUser_name(),inputpass)) {
-						userbean.setPassword(newpass);
-						userbean.updatePassword();
-						resp = "{\"state\": \"更新しました\",  \"flag\": 1}";
+						if (userauth.loginUserName(userbean.getUser_name(),
+								inputpass)) {
+							userbean.setPassword(newpass);
+							userbean.updatePassword();
+							resp = "{\"state\": \"更新しました\",  \"flag\": 1}";
 
-						SendMail mail = new SendMail();
-						// コンストラクタ替わりに設定必要
-						mail.userInfoMail(userbean.getMailaddress(), userbean.getUser_name(), userbean.getNickname());
-						// スレッドスタート
-						mail.start();
+							SendMail mail = new SendMail();
+							// コンストラクタ替わりに設定必要
+							mail.userInfoMail(userbean.getMailaddress(),
+									userbean.getUser_name(),
+									userbean.getNickname());
+							// スレッドスタート
+							mail.start();
 
-					} else {
-						System.out.println("間違ってる");
-						// パスワードが一致しなかった処理
-						resp = "{\"state\": \"パスワードが間違ってます\",  \"flag\": 0}";
-						//resp = "{\"ErrorMessage\": \"パスワードが間違ってます\",  \"flag\": 2}";
-						//out.println(resp);
-						//return;
+						} else {
+							System.out.println("間違ってる");
+							// パスワードが一致しなかった処理
+							resp = "{\"state\": \"パスワードが間違ってます\",  \"flag\": 0}";
+							// resp =
+							// "{\"ErrorMessage\": \"パスワードが間違ってます\",  \"flag\": 2}";
+							// out.println(resp);
+							// return;
+						}
+
+					} catch (Exception e) {
+						// TODO 自動生成された catch ブロック
+						e.printStackTrace();
 					}
-
-				} catch (Exception e) {
-					// TODO 自動生成された catch ブロック
-					e.printStackTrace();
+					out.println(resp);
+				}else{
+					resp = "{\"state\": \"文字制限エラー\",  \"flag\": 0}";
+					out.println(resp);
 				}
-				out.println(resp);
-			}else{
-				//newpassword passwordがnullならunknownerror
+			} else {
+				// newpassword passwordがnullならunknownerror
 				out.println(resp);
 			}
 		} else {
@@ -101,8 +114,7 @@ public class UpdatePasswordServlet extends HttpServlet {
 			out = response.getWriter();
 			out.println(resp);
 		}
-		//response.sendRedirect(URL + "/UserInfo.html");
-
+		// response.sendRedirect(URL + "/UserInfo.html");
 
 	}
 

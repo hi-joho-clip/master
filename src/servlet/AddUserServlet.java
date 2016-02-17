@@ -36,6 +36,7 @@ public class AddUserServlet extends HttpServlet {
 	private void perform(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		User userbean = new User();
+		boolean flag = true;
 		String ErrorMessage = null;
 		String URL = request.getContextPath() + "/login";
 		String resp = "{\"ErrorMessage\": \"unknownError\", \"flag\": 0}";
@@ -45,70 +46,109 @@ public class AddUserServlet extends HttpServlet {
 		Nonce nonce = new Nonce(request);
 		System.out.println(request.getParameter("nonce"));
 		if (nonce.isNonce()) {
-			if (request.getParameter("username") != null&& request.getParameter("nickname") != null&& request.getParameter("birth") != null&& request.getParameter("email") != null&& request.getParameter("password") != null) {
-				String user_name = request.getParameter("username");
-				String nickname = request.getParameter("nickname");
-				nickname = new String(nickname.getBytes("UTF-8"), "UTF-8");
-				String birth = request.getParameter("birth");
-				String inputmail = request.getParameter("email"); // メールアドレス取得
-				inputmail = new String(inputmail.getBytes("UTF-8"), "UTF-8");
-				String inputpass = request.getParameter("password"); // パスワードを取得
-				inputpass = new String(inputpass.getBytes("UTF-8"), "UTF-8");
-				userbean.setUser_name(user_name);
-				userbean.setNickname(nickname);
-				userbean.setBirth(birth);
-				userbean.setMailaddress(inputmail);
-				userbean.setPassword(inputpass);
+			if (request.getParameter("username") != null
+					&& request.getParameter("nickname") != null
+					&& request.getParameter("birth") != null
+					&& request.getParameter("email") != null
+					&& request.getParameter("password") != null) {
 
-
-				try {
-					// 0でない限り成功
-					int insert_id = userbean.addUser();
-					if (insert_id != 0) {
-						// 成功処理
-						System.out.println("登録した");
-						ErrorMessage = "登録完了しました。";
-						resp = "{\"ErrorMessage\":\"登録完了 \",  \"flag\": 1}";
-						out = response.getWriter();
-						out.println(resp);
-
-						// メール送信
-						User user = new User(insert_id);
-						SendMail mail = new SendMail();
-						// コンストラクタ替わりに設定必要
-						mail.addUserMail(user.getMailaddress(), user.getUser_name(), user.getNickname());
-						// スレッドスタート
-						mail.start();
-
+				char[] chars = request.getParameter("email").toCharArray();
+				for (int i = 0; i < chars.length; i++) {
+					if (String.valueOf(chars[i]).getBytes().length < 2) {
 					} else {
-						if (userbean.getErrorMessages().containsKey("user_name") && userbean.getErrorMessages().containsKey("mailaddress")) {
-							System.out.println(userbean.getErrorMessages().get("user_name"));
-							System.out.println(userbean.getErrorMessages().get("mailaddress"));
-							ErrorMessage = userbean.getErrorMessages().get("user_name") + userbean.getErrorMessages().get("mailaddress");
-							resp = "{\"ErrorMessage\":\"" + ErrorMessage + "\",  \"flag\": 0}";
-							out = response.getWriter();
-							out.println(resp);
-						}
-						if (userbean.getErrorMessages().containsKey("user_name")) {
-							System.out.println(userbean.getErrorMessages().get("user_name"));
-							ErrorMessage = userbean.getErrorMessages().get("user_name");
-							resp = "{\"ErrorMessage\":\"" + ErrorMessage + "\",  \"flag\": 0}";
-							out = response.getWriter();
-							out.println(resp);
-						}
-						if (userbean.getErrorMessages().containsKey("mailaddress")) {
-							System.out.println(userbean.getErrorMessages().get("mailaddress"));
-							ErrorMessage = userbean.getErrorMessages().get("mailaddress");
-							resp = "{\"ErrorMessage\":\"" + ErrorMessage + "\",  \"flag\": 0}";
-							out = response.getWriter();
-							out.println(resp);
-						}
+						flag = false;
+						break;
 					}
+				}
 
+				if (flag && request.getParameter("username").length() < 33
+						&& request.getParameter("password").length() < 33
+						&& request.getParameter("nickname").length() < 33
+						&& request.getParameter("email").length() < 256) {
+					String user_name = request.getParameter("username");
+					String nickname = request.getParameter("nickname");
+					nickname = new String(nickname.getBytes("UTF-8"), "UTF-8");
+					String birth = request.getParameter("birth");
+					String inputmail = request.getParameter("email"); // メールアドレス取得
+					inputmail = new String(inputmail.getBytes("UTF-8"), "UTF-8");
+					String inputpass = request.getParameter("password"); // パスワードを取得
+					inputpass = new String(inputpass.getBytes("UTF-8"), "UTF-8");
+					userbean.setUser_name(user_name);
+					userbean.setNickname(nickname);
+					userbean.setBirth(birth);
+					userbean.setMailaddress(inputmail);
+					userbean.setPassword(inputpass);
 
-				} catch (Exception e) {
-					// TODO 自動生成された catch ブロック
-					e.printStackTrace();
+					try {
+						// 0でない限り成功
+						int insert_id = userbean.addUser();
+						if (insert_id != 0) {
+							// 成功処理
+							System.out.println("登録した");
+							ErrorMessage = "登録完了しました。";
+							resp = "{\"ErrorMessage\":\"登録完了 \",  \"flag\": 1}";
+							out = response.getWriter();
+							out.println(resp);
+
+							// メール送信
+							User user = new User(insert_id);
+							SendMail mail = new SendMail();
+							// コンストラクタ替わりに設定必要
+							mail.addUserMail(user.getMailaddress(),
+									user.getUser_name(), user.getNickname());
+							// スレッドスタート
+							mail.start();
+
+						} else {
+							if (userbean.getErrorMessages().containsKey(
+									"user_name")
+									&& userbean.getErrorMessages().containsKey(
+											"mailaddress")) {
+								System.out.println(userbean.getErrorMessages()
+										.get("user_name"));
+								System.out.println(userbean.getErrorMessages()
+										.get("mailaddress"));
+								ErrorMessage = userbean.getErrorMessages().get(
+										"user_name")
+										+ userbean.getErrorMessages().get(
+												"mailaddress");
+								resp = "{\"ErrorMessage\":\"" + ErrorMessage
+										+ "\",  \"flag\": 0}";
+								out = response.getWriter();
+								out.println(resp);
+							}
+							if (userbean.getErrorMessages().containsKey(
+									"user_name")) {
+								System.out.println(userbean.getErrorMessages()
+										.get("user_name"));
+								ErrorMessage = userbean.getErrorMessages().get(
+										"user_name");
+								resp = "{\"ErrorMessage\":\"" + ErrorMessage
+										+ "\",  \"flag\": 0}";
+								out = response.getWriter();
+								out.println(resp);
+							}
+							if (userbean.getErrorMessages().containsKey(
+									"mailaddress")) {
+								System.out.println(userbean.getErrorMessages()
+										.get("mailaddress"));
+								ErrorMessage = userbean.getErrorMessages().get(
+										"mailaddress");
+								resp = "{\"ErrorMessage\":\"" + ErrorMessage
+										+ "\",  \"flag\": 0}";
+								out = response.getWriter();
+								out.println(resp);
+							}
+						}
+
+					} catch (Exception e) {
+						// TODO 自動生成された catch ブロック
+						e.printStackTrace();
+					}
+				} else {
+					resp = "{\"ErrorMessage\": \"文字制限エラー\",  \"flag\": 0}";
+					out = response.getWriter();
+					out.println(resp);
 				}
 			} else {
 				out.println(JSON.encode("unknownError", true).toString());
