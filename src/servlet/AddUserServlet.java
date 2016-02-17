@@ -113,21 +113,22 @@ public class AddUserServlet extends HttpServlet {
 					if (flag) {
 						if (flag_user) {
 							if (flag_birth) {
-								String user_name = request
-										.getParameter("username");
-								String nickname = request
-										.getParameter("nickname");
-								nickname = new String(
-										nickname.getBytes("UTF-8"), "UTF-8");
+								String user_name = request.getParameter("username");
+								String nickname = request.getParameter("nickname");
+								nickname = new String(nickname.getBytes("UTF-8"), "UTF-8");
 								String birth = request.getParameter("birth");
-								String inputmail = request
-										.getParameter("email"); // メールアドレス取得
-								inputmail = new String(
-										inputmail.getBytes("UTF-8"), "UTF-8");
-								String inputpass = request
-										.getParameter("password"); // パスワードを取得
-								inputpass = new String(
-										inputpass.getBytes("UTF-8"), "UTF-8");
+								String mail2 = request.getParameter("email"); // メールアドレス取得
+
+								//サニタイジング
+								String inputmail = mail2.replaceAll("&", "&amp;");
+								inputmail = inputmail.replaceAll("<", "&lt;");
+								inputmail = inputmail.replaceAll(">", "&gt;");
+								inputmail = inputmail.replaceAll("\"", "&quot;");
+								inputmail = inputmail.replaceAll("'", "&#39;");
+
+								inputmail = new String(inputmail.getBytes("UTF-8"), "UTF-8");
+								String inputpass = request.getParameter("password"); // パスワードを取得
+								inputpass = new String(inputpass.getBytes("UTF-8"), "UTF-8");
 								userbean.setUser_name(user_name);
 								userbean.setNickname(nickname);
 								userbean.setBirth(birth);
