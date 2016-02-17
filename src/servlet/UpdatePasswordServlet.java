@@ -55,7 +55,9 @@ public class UpdatePasswordServlet extends HttpServlet {
 			if (request.getParameter("newpassword") != null
 					&& request.getParameter("password") != null) {
 				if (request.getParameter("newpassword").length() < 33
-						&& request.getParameter("password").length() < 33) {
+						&& request.getParameter("newpassword").length() > 7
+						&& request.getParameter("password").length() < 33
+						&& request.getParameter("password").length() > 7) {
 					try {
 						int user_id = (int) session.getAttribute("user_id");
 

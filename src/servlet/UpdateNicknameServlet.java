@@ -55,7 +55,9 @@ public class UpdateNicknameServlet extends HttpServlet {
 			if (request.getParameter("newnickname") != null
 					&& request.getParameter("password") != null) {
 				if (request.getParameter("newnickname").length() < 33
-						&& request.getParameter("password").length() < 33) {
+						&& request.getParameter("newnickname").length() > 0
+						&& request.getParameter("password").length() < 33
+						&& request.getParameter("password").length() > 7) {
 					try {
 						int user_id = (int) session.getAttribute("user_id");
 
