@@ -66,7 +66,8 @@ public class UpdateMailAddressServlet extends HttpServlet {
 				}
 
 				if (request.getParameter("newemail").length() < 256
-						&& request.getParameter("password").length() < 33) {
+						&& request.getParameter("password").length() < 33
+						&& request.getParameter("password").length() > 7) {
 					if (flag) {
 						try {
 							int user_id = (int) session.getAttribute("user_id");
