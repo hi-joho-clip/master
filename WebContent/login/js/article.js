@@ -114,13 +114,24 @@ var $grid;
 $(document).ready(
 		function() {
 
+			// アプリケーションキャッシュの更新
+			var cache = window.applicationCache;
+			cache.addEventListener("updateready", function() {
+				if (confirm('アプリケーションの新しいバージョンが利用可能です。更新しますか？')) {
+					cache.swapCache();
+					location.reload();
+				}
+			});
+			if (navigator.onLine) {
+				// cache.update();
+			}
+
 			$('#search-2').on('click', function(e) {
 				e.target.setSelectionRange(0, e.target.value.length);
 			});
 
 			$grid = $('.grid').isotope({
 				itemSelector : '.grid-item',
-
 				percentPosition : true,
 				masonry : {
 					columnWidth : '.grid-sizer'
@@ -144,80 +155,7 @@ $(document).ready(
 							+ docCookies.getItem("nonce") + '">');
 
 			$('#add-button').on("click", function() {
-				if ($('#art-add').val() === 'true') {
-					// 今のページ番号を取得
-					console.log("lastidマン" + $('#lastid').val());
-
-					var page = parseInt($('#art-page').val()) + 1;
-					$('#art-page').val(page);
-					console.log("pageマン" + page);
-					switch (getSessionStorage("viewMode")) {
-					case "0":
-						console.log("netstat" + isSettinOnLine());
-						// マイリスト
-						if (isSettinOnLine() == true) {
-							console.log("マイリスト");
-							if ($('#searchMode').val() === "true") {
-								// マイリストの検索をしているページを出す
-								myListSearch(page);
-							} else {
-								// 普通のマイリストを出す
-								getMyList(page);
-							}
-						} else if (isSettinOnLine() == false) {
-							console.log('オフラインマイリスト');
-							getOffMyList(page);
-						}
-						break;
-					case "1":
-						// お気に入り
-
-						if (isSettinOnLine) {
-							if ($('#searchMode').val() === "true") {
-								// お気に入りの検索をしているページを出す
-								favListSearch(page);
-							} else {
-								// 普通のマイリストを出す
-								getFavList(page);
-							}
-						} else if (isSettinOnLine() == false) {
-							getOffFavList(page);
-						}
-						break;
-					case "2":
-						// 特定のタグ
-
-						if (isSettinOnLine) {
-							if ($('#searchMode').val() === "true") {
-								// タグの検索をしているページを出す
-								tagSearch(page);
-							} else {
-								// 普通のマイリストを出す
-								getTagArticleList(page);
-							}
-						} else if (isSettinOnLine() == true) {
-							getTagOffArticleList(page);
-						}
-
-						break;
-					case "3":
-						// シェア画面
-						if (isSettinOnLine) {
-							if ($('#searchMode').val() === "true") {
-								// シェアの検索をしているページを出す
-								shareListSearch(page);
-							} else {
-								// 普通のマイリストを出す
-								getShareList(page);
-							}
-						} else if (isSettinOnLine() == false) {
-							console.log('offline share');
-							getOffShareList(page);
-						}
-						break;
-					}
-				}
-
+				//addButton();
 			});
 			// 記事追加用のリスナー
 			$(document).on('click', '#add-article', function() {
@@ -271,6 +209,10 @@ function styleListChange() {
 		'display' : 'block'
 	});
 
+	// キャッシュ保存用
+	$('#updatekazu').val(0);
+	$('#autoupdate').empty();
+
 	// 1ページ目へ戻すよ
 	switch (getSessionStorage("viewMode")) {
 	case "0":// マイリスト画面を表示しているとき
@@ -293,6 +235,7 @@ function styleListChange() {
 							function(json) {
 								var itemlength = JSON.parse(json).length;
 
+								// 更新リストがない場合は表示しない
 								if (itemlength > 0) {
 									flag = true;
 									setLocalStorage('auto', 'false');
@@ -305,6 +248,10 @@ function styleListChange() {
 									$('#updatekazu').val(itemlength);
 									$('#updatesize').append(
 											'<h6>更新:' + itemlength + '件</h6>');
+								} else {
+									// 作成後ログイン後はここに来る
+									// Autoがなくて、更新0件の場合
+									// alert('こんにちは');
 								}
 							});
 				}
@@ -326,7 +273,9 @@ function styleListChange() {
 											'<h6>更新:' + JSON.parse(json).length
 													+ '件</h6>');
 								} else {
-									initTopPage();
+									$('#updatekazu').val(itemlength);
+									manualStartUpdate();
+									// initTopPage();
 								}
 							});
 				} else {
@@ -354,7 +303,6 @@ function styleListChange() {
 						// "timeOut" : "1000",
 						// };
 
-
 					}
 				}
 			}
@@ -376,6 +324,10 @@ function styleListChange() {
 			} else {
 				// 普通のお気に入りを出す
 				initPagingMylist(getFavList);
+
+				if (getLocalStorage('auto') == 'false') {
+					$('#autoupdate').prepend('<h6>更新:OFF </h6>');
+				}
 			}
 		} else if (isSettinOnLine() === false) {
 
@@ -394,6 +346,9 @@ function styleListChange() {
 			} else {
 				// 普通の特定のタグを出す
 				initPagingMylist(getTagArticleList);
+				if (getLocalStorage('auto') == 'false') {
+					$('#autoupdate').prepend('<h6>更新:OFF </h6>');
+				}
 
 			}
 		} else {
@@ -412,6 +367,9 @@ function styleListChange() {
 			} else {
 				// 普通の特定のタグを出す
 				initPagingMylist(getShareList);
+				if (getLocalStorage('auto') == 'false') {
+					$('#autoupdate').prepend('<h6>更新:OFF </h6>');
+				}
 			}
 			/*
 			 * initPagingSharelist(getShareList,
@@ -431,5 +389,81 @@ function styleListChange() {
 		colorOffline();
 		// menuを削除
 
+	}
+}
+
+function addButton() {
+	if ($('#art-add').val() === 'true') {
+		// 今のページ番号を取得
+		console.log("lastidマン" + $('#lastid').val());
+
+		var page = parseInt($('#art-page').val()) + 1;
+		$('#art-page').val(page);
+		console.log("pageマン" + page);
+		switch (getSessionStorage("viewMode")) {
+		case "0":
+			console.log("netstat" + isSettinOnLine());
+			// マイリスト
+			if (isSettinOnLine() == true) {
+				console.log("マイリスト");
+				if ($('#searchMode').val() === "true") {
+					// マイリストの検索をしているページを出す
+					myListSearch(page);
+				} else {
+					// 普通のマイリストを出す
+					getMyList(page);
+				}
+			} else if (isSettinOnLine() == false) {
+				console.log('オフラインマイリスト');
+				getOffMyList(page);
+			}
+			break;
+		case "1":
+			// お気に入り
+
+			if (isSettinOnLine) {
+				if ($('#searchMode').val() === "true") {
+					// お気に入りの検索をしているページを出す
+					favListSearch(page);
+				} else {
+					// 普通のマイリストを出す
+					getFavList(page);
+				}
+			} else if (isSettinOnLine() == false) {
+				getOffFavList(page);
+			}
+			break;
+		case "2":
+			// 特定のタグ
+
+			if (isSettinOnLine) {
+				if ($('#searchMode').val() === "true") {
+					// タグの検索をしているページを出す
+					tagSearch(page);
+				} else {
+					// 普通のマイリストを出す
+					getTagArticleList(page);
+				}
+			} else if (isSettinOnLine() == true) {
+				getTagOffArticleList(page);
+			}
+
+			break;
+		case "3":
+			// シェア画面
+			if (isSettinOnLine) {
+				if ($('#searchMode').val() === "true") {
+					// シェアの検索をしているページを出す
+					shareListSearch(page);
+				} else {
+					// 普通のマイリストを出す
+					getShareList(page);
+				}
+			} else if (isSettinOnLine() == false) {
+				console.log('offline share');
+				getOffShareList(page);
+			}
+			break;
+		}
 	}
 }

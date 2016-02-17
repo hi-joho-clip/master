@@ -11,12 +11,16 @@
 function initPromise() {
 
 	if (!window.Promise) {
-		operative.Promise = ES6Promise.Promise;
+		//operative.Promise = ES6Promise.Promise;
+		//var promise = new Promise(...);
 	}
 }
 
 
-var hostURL = "http://localhost:8080/clipMaster"; // http://localhost:8080/clipMaster
+initPromise();
+
+
+var hostURL = "http://localhost:8080/clipMaster"; // https://clip-sc.com
 
 
 /**

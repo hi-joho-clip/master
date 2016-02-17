@@ -116,6 +116,7 @@ h1.title {
 	/*ページタイトル用*/
 	font-size: 4em;
 	margin: 0.1em;
+	padding-top:20px
 	/**border-bottom: 1px solid #ccc*/
 }
 

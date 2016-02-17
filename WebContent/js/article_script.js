@@ -247,7 +247,7 @@ function setViewArticle(json) {
 
 	// console.log(json);
 
-	$('#image').append(thumView(json, "300px", "100%"));
+	$('#image').append(thumView(json, "300px", "auto"));
 
 	// nonceとArticleID設定
 	$("div.hiddenarea").append(

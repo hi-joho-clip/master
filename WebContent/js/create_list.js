@@ -173,15 +173,13 @@ var get_mylists = function(json) {
 						"</div>");
 
 			// http://www.kk1up.jp/wp-content/uploads/2015/07/201507290001-17.jpg
-
-
 			$grid.prepend($myList).isotope('insert', $myList).trigger('create');
 			if(json[i].favflag==true){
 				//console.log('#favtitle'+json[i].article_id);
 				$('#favtitle'+json[i].article_id).attr('style', 'color:#FF9800');
 			}
 		}
-
+		addTileButton();
 		// ページング処理
 		addViewNext(json);
 		jQuery(function($){
@@ -195,8 +193,35 @@ var get_mylists = function(json) {
 	});
 };
 
+// リスト表示の時
+function addListMoreButton() {
+	// 消して入れる
+	// モード切替時のために要素自体
+	$('#buttonbox').remove();
+	$('#buttonbox').empty();
+	$button = $('<input type="button" id="add-button"  value="次を読み込む" onclick="javascript:addButton();disabled = true;"></div>');
+	$('#buttonbox').append($button).trigger('create');
+}
+
+//
+function addTileButton() {
+	 // 追加ボタン復活
+	$('#buttonbox').empty();
+	$('#buttonbox').append('<input type="button" id="add-button"  value="次を読み込む" onclick="javascript:addButton();disabled = true;">');
+}
+
+// リストへ追加ボタン
+function addListButton(i) {
+	$('#buttonbox').empty();
+	$('.list-buttonbox').remove();
+	if (i == 19) {
+		$button = $('<div class="list-buttonbox" style="text-align:center"><input type="button" id="add-button"  value="次を読み込む" onclick="javascript:addButton();disabled = true;"></div>');
+		$grid.append($button).isotope('insert', $button).trigger('create');
+	}
+}
 
 function addViewNext(json) {
+
 	// 20件以上の場合はValueを加算し、20件未満の場合はボタンを削除する。
 	if (json.length > 20) {
 		console.log('number:' + $('#art-page').val());
@@ -329,6 +354,9 @@ var get_mylists_list = function(json) {
 							"</li></a>"+
 						"</ol>");
 			$grid.append($myList).isotope('insert', $myList).trigger('create');
+			// i = 20
+			addListButton(i);
+
 			if(json[i].favflag==true){
 				//console.log('#favtitle'+json[i].article_id);
 				$('#favtitle'+json[i].article_id).attr('style', 'color:#FF9800');
