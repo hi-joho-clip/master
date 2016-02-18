@@ -49,7 +49,7 @@ public class AddTagArticleServlet extends HttpServlet {
 		}*/
 		String resp = "{\"state\": \"unknownError\", \"flag\": 0}";
 		Nonce nonce = new Nonce(request);
-
+		boolean flag = true;
 		// ***&nonce=nonnsutati
 
 		int user_id = 0;//sessionからuser_idを取得
@@ -69,26 +69,34 @@ public class AddTagArticleServlet extends HttpServlet {
 
 				}
 				System.out.println("article_id:" + article_id);
-				for (int i = 0; i < tag_body.length - 1; i++) {
-					tag_body[i]=tag_body[i].replaceAll("お気に入り","");
-					System.out.println("tag_bodykun:"+tag_body[i]);
-					tag_body_list.add(i, tag_body[i + 1]);
-					System.out.println("tagbody:" + tag_body_list.get(i) + "&user_id:" + user_id);
-				}
-
-				try {
-					ArticleBean articlebean = new ArticleBean();
-
-					if (articlebean.addArticleTag(user_id, tag_body_list, article_id)) {
-						//成功したポップアップを表示
-						resp = "{\"state\": \"タグを更新しました\", \"flag\": 1}";
-					} else {
-						//失敗したポップアップを表示
-						resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
+				for (int i = 0; i < tag_body.length-1; i++) {
+					if(tag_body[i+1].length()<=15){
+						System.out.println(tag_body[i].length());
+						tag_body[i+1]=tag_body[i+1].replaceAll("お気に入り","").replaceAll("<","＜").replaceAll(">","＞");
+						System.out.println("tag_bodykun:"+tag_body[i+1]);
+						tag_body_list.add(i, tag_body[i+1]);
+						System.out.println("tagbody:" + tag_body_list.get(i) + "&user_id:" + user_id);
+					}else{
+						resp = "{\"state\": \"文字数オーバー\", \"flag\": 0}";
+						flag=false;
+						break;
 					}
-				} catch (Exception e) {
-					// TODO 自動生成された catch ブロック
-					e.printStackTrace();
+				}
+				if(flag){
+					try {
+						ArticleBean articlebean = new ArticleBean();
+
+						if (articlebean.addArticleTag(user_id, tag_body_list, article_id)) {
+							//成功したポップアップを表示
+							resp = "{\"state\": \"タグを更新しました\", \"flag\": 1}";
+						} else {
+							//失敗したポップアップを表示
+							resp = "{\"state\": \"失敗しました\", \"flag\": 0}";
+						}
+					} catch (Exception e) {
+						// TODO 自動生成された catch ブロック
+						e.printStackTrace();
+					}
 				}
 				PrintWriter out = response.getWriter();
 				out.println(resp);
