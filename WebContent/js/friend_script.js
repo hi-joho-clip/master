@@ -28,7 +28,7 @@ function getFriendRequest() {
 					.append(
 							'<tr id="'
 									+ json[i].nickname
-									+ '" class="first"><td><h8 style="padding-right:1em; font-size:4em">'
+									+ '" class="first"><td><h8 style="padding-right:1em;">'
 									+ json[i].nickname
 									+ "</h8></td><td><h8 style='padding-right:0.2em'>"
 									+ "<a style='font-size:0.7em;' href='#' class='btn btn-primary' data-remodal-target='kyoka' onclick='document.getElementById(\"user_id\").innerHTML=\""

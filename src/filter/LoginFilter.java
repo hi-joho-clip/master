@@ -24,7 +24,8 @@ import javax.servlet.http.HttpSession;
 		"/sharelist",
 		"/viewarticle",
 		"/favlist",
-		"/viewuser" })
+		"/viewuser",
+		"/autologin"})
 public class LoginFilter implements Filter {
 
 	private String encoding = "UTF-8";

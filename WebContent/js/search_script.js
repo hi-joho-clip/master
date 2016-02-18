@@ -17,8 +17,7 @@ function onclickSearch() {
 
 	var word = document.getElementById('searchbox').value;
 
-	var sesStorage = sessionStorage;
-	sesStorage.setItem('search', word);
+	setSessionStorage('search', word);
 	// sesStorage.setItem('searchMode', true);
 	$('#searchMode').val("true");
 
@@ -26,9 +25,10 @@ function onclickSearch() {
 	$('#art-add').val('true');
 	// lastIDは使わない
 	$('#lastid').val('0');
-	var username = docCookies.getItem('username');
+	var username = getLocalStorage('username');
 
-	switch ($('#viewmode').val()) {
+	//switch ($('#viewmode').val()) {
+	switch (getSessionStorage('viewMode')) {
 	case "0":
 		// マイリストの検索
 		if (isSettinOnLine() === true) {
@@ -36,7 +36,7 @@ function onclickSearch() {
 			$('.grid').empty();
 			// 最初は1ページ目
 			myListSearch(1);
-		} else if (isSettinOnLine() === false){
+		} else if (isSettinOnLine() === false) {
 
 			$('.grid').empty();
 			page = 1;
@@ -49,8 +49,9 @@ function onclickSearch() {
 		if (isSettinOnLine() === true) {
 			$('.grid').empty();
 			favListSearch(1);
-		} else if (isSettinOnLine() === false){
+		} else if (isSettinOnLine() === false) {
 			// テスト用修正必要
+			$('.grid').empty();
 			page = 1;
 			getOffFavList(page);
 		}
@@ -58,18 +59,28 @@ function onclickSearch() {
 		break;
 	case "2":
 		// タグの検索
-		if (isSettinOnLine()) {
+		if (isSettinOnLine() === true) {
 			$('.grid').empty();
 			tagSearch(1);
+		} else if (isSettinOnLine() === false) {
+			// テスト用修正必要
+			$('.grid').empty();
+			page = 1;
+			getOffTagMyList(page);
 		}
 
 		break;
 	case "3":
 		// シェアの検索
-		if (isSettinOnLine()) {
+		if (isSettinOnLine() === true) {
 			$('.grid').empty();
 			shareListSearch(1);
-		}
+		} else if (isSettinOnLine() === false){
+			// テスト用修正必要
+			$('.grid').empty();
+			page = 1;
+			getOffShareList(page);
+			}
 
 		break;
 	}
@@ -98,7 +109,8 @@ function myListSearch(page) {
 				.html(
 						'<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
 	}
-	var jsonParam = "text=" + getSessionStorage('search') + "&page=" + page+"&article_id="+$('#lastid').val();// 送りたいデータ
+	var jsonParam = "text=" + getSessionStorage('search') + "&page=" + page
+			+ "&article_id=" + $('#lastid').val();// 送りたいデータ
 	var URL = hostURL + "/mylistsearch";
 	getJSON(URL, jsonParam, func);
 }
@@ -125,7 +137,8 @@ function favListSearch(page) {
 				.html(
 						'<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
 	}
-	var jsonParam = "text=" + getSessionStorage('search') + "&page=" +  page+"&article_id="+$('#lastid').val();// 送りたいデータ
+	var jsonParam = "text=" + getSessionStorage('search') + "&page=" + page
+			+ "&article_id=" + $('#lastid').val();// 送りたいデータ
 	var URL = hostURL + "/favlistsearch";
 
 	getJSON(URL, jsonParam, func);
@@ -133,7 +146,7 @@ function favListSearch(page) {
 // タグのタイトル検索
 function tagSearch(page) {
 	var func = get_mylists;
-	$('h1.title').html(getSessionStorage("tagLists")+'の検索結果');
+	$('h1.title').html(getSessionStorage("tagLists") + 'の検索結果');
 	if (tileView()) {
 		func = get_mylists;
 		$('div#themebutton')
@@ -153,14 +166,16 @@ function tagSearch(page) {
 				.html(
 						'<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
 	}
-	var jsonParam = "tag=" + getSessionStorage("tagLists") + "&text=" + getSessionStorage('search') + '&page=' + page + "&article_id="+$('#lastid').val();
+	var jsonParam = "tag=" + getSessionStorage("tagLists") + "&text="
+			+ getSessionStorage('search') + '&page=' + page + "&article_id="
+			+ $('#lastid').val();
 	var URL = hostURL + "/tagsearch";
 	getJSON(URL, jsonParam, func);
 }
 // シェアのタイトル検索
 function shareListSearch(page) {
 	var func = get_sharelists;
-	$('h1.title').html(getSessionStorage("friend")+'の検索結果');
+	$('h1.title').html(getSessionStorage("friend") + 'の検索結果');
 	if (tileView()) {
 		func = get_sharelists;
 		$('div#themebutton')
@@ -181,7 +196,8 @@ function shareListSearch(page) {
 						'<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
 	}
 	var jsonParam = "friend_user_id=" + getSessionStorage("shareLists")
-			+ "&text=" + getSessionStorage('search') + '&page=' + page+"&article_id="+$('#lastid').val();
+			+ "&text=" + getSessionStorage('search') + '&page=' + page
+			+ "&article_id=" + $('#lastid').val();
 	var URL = hostURL + "/sharelistsearch";
 	getJSON(URL, jsonParam, func);
 };

@@ -18,7 +18,8 @@ function getOffMyList(page) {
 	return new Promise(function(resolve, reject) {
 
 		console.log("offline" + page);
-		var username = docCookies.getItem('username');
+		//var username = docCookies.getItem('username');
+		var username = getLocalStorage('username');
 
 		$('h1.title').html('マイリスト');
 		var word = '';
@@ -56,8 +57,8 @@ function getOffFavList(page) {
 	return new Promise(function(resolve, reject) {
 
 		console.log("offline" + page);
-		var username = docCookies.getItem('username');
-
+		//var username = docCookies.getItem('username');
+		var username = getLocalStorage('username');
 		$('h1.title').html('お気に入り');
 		var word = '';
 
@@ -160,7 +161,8 @@ function getOffShareList(page) {
 				$('h1.title').html(getSessionStorage('friend'));
 
 				console.log("offline" + page);
-				var username = docCookies.getItem('username');
+				//var username = docCookies.getItem('username');
+				var username = getLocalStorage('username');
 
 				var word = '';
 
@@ -193,6 +195,7 @@ function getOffShareList(page) {
 
 function changeViewSwitti(tile, list) {
 	var func;
+	//console.log(tileView());
 	if (tileView()) {
 		func = tile;
 		$('div.stylebutton')

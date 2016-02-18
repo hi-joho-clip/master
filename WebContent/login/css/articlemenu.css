@@ -11,14 +11,26 @@ font-weight:100;
 -webkit-text-size-adjust: 100%;
 }
 
-.kore {
-	color: #f5f5f5;
-    background-color: #428bca;
+.offnotice {
+	color: #f4f4f6;
+	background-color: #999;
+   /* background-color: #428bca;*/
     text-align: center;
     width: 150px;
     margin-top: 20px;
     margin-left: auto;
     border-radius: 10px;
+}
+
+.kore {
+	color: black;
+   /* background-color: #428bca;*/
+    text-align: center;
+    width: 150px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 0px;
 }
 
 a.art-title :hover {
@@ -38,7 +50,7 @@ div.absolute :hover {
 #add-button {
 	margin-bottom: 3em;
     font-size: 3em;
-    color: #666;
+    color: #aaa;
     width: 7em;
     background-color: rgba(255,255,255,0);
     border-style: none;
@@ -285,7 +297,11 @@ line-height:50px;
 /*ページタイトル*/
 h1.title {
 font-size:2.5em;
-    margin-top: -35px;
+    margin-top: -20px;
+}
+
+div#title {
+	margin-top:-50px;
 }
 p {
 font-size:24px;

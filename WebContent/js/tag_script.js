@@ -44,7 +44,8 @@ function getOffTagMyList(page) {
 	return new Promise(function(resolve, reject) {
 
 		console.log("offline" + page);
-		var username = docCookies.getItem('username');
+		//var username = docCookies.getItem('username');
+		var username = getLocalStorage('username');
 
 
 		var title = getSessionStorage('tagLists');
@@ -134,29 +135,29 @@ function getTagArticleList(page) {
 	var title = getSessionStorage('tagLists');
 	var func = get_mylists;
 	$('h1.title').html(title);
-	if (tileView()) {
-		func = get_mylists;
-		$('div.stylebutton')
-		.html('<button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button>');
-
-		$('div#themebutton').html('<button id="themachange" title="テーマ切り替え"onclick="javascript:changeColor()" style="visibility: hidden;">'+
-			'<img src="img/thema.png"style="visibility: visible; width: 25px;"></button>');
-		//document.getElementById('title').innerHTML = '<h1 class="title">'+title+'</h1>'+'<div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
-	} else {
-		func = get_mylists_list;
-		$('div.stylebutton')
-		.html('<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
-
-		$('div#themebutton').html('<button id="themachange" title="テーマ切り替え"onclick="javascript:changeColor()" style="visibility: hidden;">'+
-		'<img src="img/thema.png"style="visibility: visible; width: 25px;"></button>');
-
+//	if (tileView()) {
+//		func = get_mylists;
+//		$('div.stylebutton')
+//		.html('<button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button>');
+//
+//		$('div#themebutton').html('<button id="themachange" title="テーマ切り替え"onclick="javascript:changeColor()" style="visibility: hidden;">'+
+//			'<img src="img/thema.png"style="visibility: visible; width: 25px;"></button>');
+//		//document.getElementById('title').innerHTML = '<h1 class="title">'+title+'</h1>'+'<div style="text-align: right;"><button id="stylechange" title="リスト表示切り替え"style="visibility:hidden"><img src="img/list.png" style="visibility:visible"></button></div>';
+//	} else {
+//		func = get_mylists_list;
+//		$('div.stylebutton')
+//		.html('<button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button>');
+//
+//		$('div#themebutton').html('<button id="themachange" title="テーマ切り替え"onclick="javascript:changeColor()" style="visibility: hidden;">'+
+//		'<img src="img/thema.png"style="visibility: visible; width: 25px;"></button>');
+	//changeViewSwitti( get_mylists, get_mylists_list);
 
 		//document.getElementById('title').innerHTML =  '<h1 class="title">'+title+'</h1>'+'<div style="text-align: right;"><button id="stylechange" title="タイル表示切り替え"style="visibility:hidden"><img src="img/tile.png" style="visibility:visible"></button></div>';
-	}
+
 	$('#viewmode').val('2');
 	setSessionStorage('viewMode', '2');
 	var URL = hostURL + "/tagarticlelist";
-	getJSON(URL, taglists, func);
+	getJSON(URL, taglists, changeViewSwitti( get_mylists, get_mylists_list));
 }
 //特定のタグの記事一覧（リスト表示）
 //function getTagArticleList(tag_list,tag_id) {

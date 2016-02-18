@@ -103,13 +103,25 @@ function updateManualStatus(key) {
 
 	$('#kore').empty();
 
-	if ((parseInt($('#updatekazu').val()) - 1) != 0) {
+
+	var kazu = parseInt($('#updatekazu').val());
+	kazu = kazu - 1;
+	if (kazu > 0) {
 		$('#kore')
-				.prepend(
-						'<h6>残り：' + (parseInt($('#updatekazu').val()) - 1)
+				.append(
+						'<h6>残り：' + kazu
 								+ '件</h6>');
+		$('#updatekazu').val(kazu);
 	} else {
-		toastr.success('更新完了');
+		// リモーダル閉じる
+		$('[data-remodal-id=updatemodal]')
+		.remodal().close();
+		$('#updatenow').val('false');
+		// 自動更新を有効にする
+		setLocalStorage('auto', 'true');
+		// 表示を消す
+		$('#autoupdate').empty();
+		toastr.info('同期完了');
 	}
 
 }
@@ -117,10 +129,18 @@ function updateManualStatus(key) {
 function manualStartUpdate() {
 
 	// Downloadボタンを無効に
+	$('#downloadbutton').remove();
+	// アップデートフラッグを有効
+	$('#updatenow').val('true');
 
 	initPromise();
-	var username = docCookies.getItem('username');
+	//var username = docCookies.getItem('username');
 
+	if (getLocalStorage('username') == null) {
+		setLocalStorage('username',docCookies.getItem('username'));
+	}
+
+	var username = docCookies.getItem('username');
 	getIDBAllArticleList(username).then(getArticleListAsync).then(
 			updateManualIDBArticleList)['catch'](function(error) {
 		// self.postMessage('更新失敗');
