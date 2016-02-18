@@ -471,7 +471,7 @@ function getIDEArticleTagList(username, page, title, tag, direct) {
 			flag = false;
 			if (record.article.title.indexOf(title) != -1) {
 				flag = true;
-			}
+		}
 			return flag;
 		}
 
@@ -480,7 +480,7 @@ function getIDEArticleTagList(username, page, title, tag, direct) {
 
 			flag = false;
 			for ( var i in tags) {
-				// console.log(JSON.stringify(tags[i].tag_body));
+				 console.log(JSON.stringify(tags[i].tag_body));
 				if (JSON.stringify(tags[i].tag_body).indexOf(tag) != -1) {
 					flag = true;
 				}

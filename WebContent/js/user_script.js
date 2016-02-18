@@ -582,3 +582,9 @@ function userjump(){
 function indexjump(){
 	location.href = hostURL + "/login/index.html";
 }
+
+function autologin() {
+	var jsonParam = null;
+	var URL = hostURL + "/autologin";
+	getJSON(URL, jsonParam, null);
+}

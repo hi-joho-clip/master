@@ -22,7 +22,8 @@ initPromise();
 
 var hostURL = "http://localhost:8080/clipMaster"; // https://clip-sc.com
 
-
+// 望ましくないがキャンセル用のグローバル変数
+var cancelFlag = false;
 /**
  * URLからJSONオブジェクトを取得する
  *
@@ -36,7 +37,8 @@ function getURL(URL, param) {
 	return new Promise(function(resolve, reject) {
 
 		// サーバからアーティクルリストを取得する
-
+		// フラグは常にfalse
+		cancelFlag = false;
 		//console.log('parameter:' + URL);
 		if (URL === "") {
 			reject(new Error("url is null"));
@@ -60,13 +62,19 @@ function getURL(URL, param) {
 					// 正常に取得できない
 					reject(req.statusText);
 				}
+			} else if (req.readyState == 3){
+				// キャンセルできる
+				// ここの処理はゆくゆくは変更するが今はキャンセルとして利用する
+				if (cancelFlag) {
+					req.abort();
+				}
 			}
 		};
 		req.onerror = function() {
 			reject(new Error(req.statusText));
 		};
 		// タイムアウトは40s
-		req.timeout = 100000;
+		req.timeout = 130000;
 		req.ontimeout = function() {
 			reject(new Error("time out"));
 		};
@@ -345,6 +353,18 @@ function colorOffline () {
 		'background' : '#31708f'
 	});
 }
+
+/**
+ * 同期のキャンセル
+ */
+function cancelUpdate() {
+
+	if($('#updatenow').val() == 'true') {
+		cancelFlag=true;
+	}
+
+}
+
 
 /**
  * オフラインのためのキャッシュ

@@ -212,6 +212,8 @@ function styleListChange() {
 	// キャッシュ保存用
 	$('#updatekazu').val(0);
 	$('#autoupdate').empty();
+	$('#updatetext').empty();
+	$('#updatesize').empty();
 
 	// 1ページ目へ戻すよ
 	switch (getSessionStorage("viewMode")) {
@@ -234,11 +236,11 @@ function styleListChange() {
 							getArticleListAsync).then(
 							function(json) {
 								var itemlength = JSON.parse(json).length;
-
+								setLocalStorage('auto', 'false');
 								// 更新リストがない場合は表示しない
 								if (itemlength > 0) {
+
 									flag = true;
-									setLocalStorage('auto', 'false');
 									$('#updatetext').append(
 											'<h2>キャッシュをダウンロードしますか？</h2>'
 													+ 'お使いの端末にキャッシュがありません'
@@ -248,9 +250,14 @@ function styleListChange() {
 									$('#updatekazu').val(itemlength);
 									$('#updatesize').append(
 											'<h6>更新:' + itemlength + '件</h6>');
-								} else {
+								} else if (itemlength == 0){
 									// 作成後ログイン後はここに来る
 									// Autoがなくて、更新0件の場合
+									$('#infotext').append('<h2 style="color:#1DA1F2">CLIPへようこそ</h2>' +
+											'<h3>クリップではWebページの保存が行えます<br>' +
+											'右のメニューから登録してみましょう</h3>');
+									$('[data-remodal-id=infomodal]')
+									.remodal().open();
 									// alert('こんにちは');
 								}
 							});
@@ -261,17 +268,20 @@ function styleListChange() {
 							getArticleListAsync).then(
 							function(json) {
 								var itemlength = JSON.parse(json).length;
-								if (itemlength >= 30) {
+								if (itemlength >= 20) {
 									$('#updatekazu').val(itemlength);
 									$('#updatetext').append(
 											'<h2>自動更新が有効です。</h2>'
-													+ '更新ファイルが30件以上あります。'
+													+ '更新ファイルが20件以上あります。'
 													+ '<BR>ダウンロードしますか？');
 									$('[data-remodal-id=updatemodal]')
 											.remodal().open();
 									$('#updatesize').append(
 											'<h6>更新:' + JSON.parse(json).length
 													+ '件</h6>');
+								} else if (itemlength === 0) {
+									manualStartUpdate();
+									toastr.info('更新完了');
 								} else {
 									$('#updatekazu').val(itemlength);
 									manualStartUpdate();
